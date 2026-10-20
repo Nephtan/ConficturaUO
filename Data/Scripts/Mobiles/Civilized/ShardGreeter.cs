@@ -83,7 +83,9 @@ namespace Server.Mobiles
 
             public override void OnClick()
             {
-                if (!(m_Mobile is PlayerMobile))
+                if (!(m_Mobile is PlayerMobile) || m_Mobile.Deleted || !m_Mobile.Alive
+                    || m_Mobile.Backpack == null || m_Giver == null || m_Giver.Deleted
+                    || m_Mobile.Map != m_Giver.Map || !m_Mobile.InRange(m_Giver.Location, 3))
                     return;
 
                 PlayerMobile mobile = (PlayerMobile)m_Mobile;
@@ -200,58 +202,70 @@ namespace Server.Gumps
 
     public class GypsyTarotGump : Gump
     {
-        public bool visitLodor(Mobile from)
+        private readonly Mobile m_From;
+        private readonly Map m_Map;
+        private readonly Point3D m_Location;
+        private readonly int m_RaceID;
+        private readonly int m_Page;
+        private bool m_Responded;
+
+        private bool CanRespond(Mobile from)
         {
-            bool visited = false;
+            return from is PlayerMobile && from == m_From && !from.Deleted && from.Alive
+                && from.Backpack != null && !m_Responded && m_Map != null && m_Map != Map.Internal
+                && from.Map == m_Map
+                && from.InRange(m_Location, 3) && from.RaceID == m_RaceID;
+        }
 
-            Account a = from.Account as Account;
+        private bool CanChoosePage(Mobile from, int page)
+        {
+            if (from.RaceID > 0)
+            {
+                if (page < 1 || page > 4)
+                    return false;
+                if ((page == 2 || page == 4) && Server.Items.BaseRace.IsGood(from))
+                    return false;
+                return page < 3 || visitLodor(from);
+            }
 
-            if (a == null)
+            if (page < 1 || page > 13)
+                return false;
+            if ((page == 10 || page == 11) && !visitLodor(from))
+                return false;
+            if (page == 12 && !visitSavage(from))
+                return false;
+            return page != 13 || MyServerSettings.AllowAlienChoice();
+        }
+
+        private static bool HasAccountDiscovery(Mobile from, int slot)
+        {
+            Account account = from.Account as Account;
+            if (account == null)
                 return false;
 
-            int index = 0;
-
-            for (int i = 0; i < a.Length; ++i)
+            for (int i = 0; i < account.Length; ++i)
             {
-                Mobile m = a[i];
+                PlayerMobile player = account[i] as PlayerMobile;
+                if (player == null || player.Deleted || player.CharacterDiscovered == null)
+                    continue;
 
-                if (m != null)
-                {
-                    if (PlayerSettings.GetDiscovered(m, "the Land of Lodoria"))
-                    {
-                        visited = true;
-                    }
-                }
-                ++index;
+                // GetDiscovered normalizes saved records. Eligibility only reads
+                // the existing slot, including for other characters on the account.
+                string[] entries = player.CharacterDiscovered.Split('#');
+                if (entries.Length > slot && entries[slot] == "1")
+                    return true;
             }
-            return visited;
+            return false;
+        }
+
+        public bool visitLodor(Mobile from)
+        {
+            return HasAccountDiscovery(from, 0);
         }
 
         public bool visitSavage(Mobile from)
         {
-            bool visited = false;
-
-            Account a = from.Account as Account;
-
-            if (a == null)
-                return false;
-
-            int index = 0;
-
-            for (int i = 0; i < a.Length; ++i)
-            {
-                Mobile m = a[i];
-
-                if (m != null)
-                {
-                    if (PlayerSettings.GetDiscovered(m, "the Savaged Empire"))
-                    {
-                        visited = true;
-                    }
-                }
-                ++index;
-            }
-            return visited;
+            return HasAccountDiscovery(from, 6);
         }
 
         public int pageShow(Mobile from, int page, bool forward)
@@ -386,8 +400,19 @@ namespace Server.Gumps
         }
 
         public GypsyTarotGump(Mobile from, int page)
+            : this(from, page, from.Map, from.Location)
+        {
+        }
+
+        private GypsyTarotGump(Mobile from, int page, Map map, Point3D location)
             : base(50, 50)
         {
+            m_From = from;
+            m_Map = map;
+            m_Location = location;
+            m_RaceID = from.RaceID;
+            m_Page = page;
+
             this.Closable = true;
             this.Disposable = true;
             this.Dragable = true;
@@ -877,6 +902,38 @@ namespace Server.Gumps
 
         public void EnterLand(int page, Mobile m)
         {
+            if (!CanRespond(m) || page != m_Page || !CanChoosePage(m, page))
+                return;
+
+            // A new window after a staff return is valid. Only this particular
+            // choice is consumed; there is no permanent origin-completion flag.
+            m_Responded = true;
+
+            PlayerMobile player = (PlayerMobile)m;
+            int setupOrigin = 0;
+            if (m.RaceID <= 0 && m.AccessLevel < AccessLevel.GameMaster)
+            {
+                if (page == 9)
+                    setupOrigin = MyServerSettings.SkillOrigin("fugitive");
+                else if (page == 12 && player.SkillStart != 11000)
+                    setupOrigin = MyServerSettings.SkillOrigin("savage");
+                else if (page == 13 && player.SkillStart != 40000)
+                    setupOrigin = MyServerSettings.SkillOrigin("alien");
+            }
+
+            // Regions perform the actual setup on arrival. Validate without
+            // publishing SkillStart early, which would skip that setup.
+            int cap;
+            if (setupOrigin != 0 && !MyServerSettings.TryGetSkillCap(setupOrigin, MyServerSettings.SkillBoost(), player.SkillEther, out cap))
+            {
+                player.SendMessage("Your progression needs a staff review before changing origin.");
+                return;
+            }
+
+            if (m.RaceID > 0 && (page == 2 || page == 4)
+                && !MyServerSettings.SkillBegin("fugitive", player))
+                return;
+
             Point3D loc = new Point3D(2999, 1030, 0);
             Map map = Map.Sosaria;
 
@@ -1011,7 +1068,6 @@ namespace Server.Gumps
                 {
                     PlayerSettings.SetDiscovered(m, "the Land of Sosaria", true);
                     PlayerSettings.SetBardsTaleQuest(m, "BardsTaleWin", true);
-                    Server.Misc.MyServerSettings.SkillBegin("fugitive", (PlayerMobile)m);
                     m.Kills = 1;
                     ((PlayerMobile)m).Profession = 1;
                 }
@@ -1024,7 +1080,6 @@ namespace Server.Gumps
                 {
                     PlayerSettings.SetDiscovered(m, "the Land of Lodoria", true);
                     PlayerSettings.SetBardsTaleQuest(m, "BardsTaleWin", true);
-                    Server.Misc.MyServerSettings.SkillBegin("fugitive", (PlayerMobile)m);
                     m.Kills = 1;
                     ((PlayerMobile)m).Profession = 1;
                     world = "the Land of Lodoria";
@@ -1126,31 +1181,43 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState state, RelayInfo info)
         {
-            Mobile from = state.Mobile;
+            Mobile from = state == null ? null : state.Mobile;
+            if (info == null || !CanRespond(from))
+                return;
 
-            from.CloseGump(typeof(GypsyTarotGump));
-            from.CloseGump(typeof(WelcomeGump));
-            from.CloseGump(typeof(RacePotions.RacePotionsGump));
-
-            if (info.ButtonID == 99)
+            if (info.ButtonID >= 100)
             {
-                from.SendGump(new GypsyTarotGump(from, 1));
-                from.SendSound(0x5BB);
+                EnterLand(info.ButtonID - 100, from);
             }
-            else if (info.ButtonID >= 100)
+            else
             {
-                int go = info.ButtonID - 100;
-                EnterLand(go, from);
-            }
-            else if (info.ButtonID > 0)
-            {
-                int page = info.ButtonID;
-                if (page == 20)
+                int page;
+                if (info.ButtonID == 0)
                 {
-                    page = 0;
+                    m_Responded = true;
+                    return;
                 }
-                from.SendGump(new GypsyTarotGump(from, page));
-                from.SendSound(0x5B9);
+                if (info.ButtonID == 99 && m_Page == 0)
+                    page = 1;
+                else if (m_Page > 0 && info.ButtonID != 20 && CanChoosePage(from, m_Page)
+                    && (info.ButtonID == pageShow(from, m_Page, false)
+                        || info.ButtonID == pageShow(from, m_Page, true)))
+                    page = info.ButtonID == 20 ? 0 : info.ButtonID;
+                else
+                    return;
+
+                if (page != 0 && !CanChoosePage(from, page))
+                    return;
+
+                m_Responded = true;
+                from.SendGump(new GypsyTarotGump(from, page, m_Map, m_Location));
+                from.SendSound(info.ButtonID == 99 ? 0x5BB : 0x5B9);
+            }
+
+            if (m_Responded)
+            {
+                from.CloseGump(typeof(WelcomeGump));
+                from.CloseGump(typeof(RacePotions.RacePotionsGump));
             }
         }
     }

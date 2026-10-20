@@ -23,7 +23,12 @@ namespace Server.Items
 
         public override bool OnMoveOver(Mobile m)
         {
-            if (m is PlayerMobile)
+            PlayerMobile pm = m as PlayerMobile;
+            if (Deleted || pm == null || pm.Deleted || !pm.Alive || pm.Backpack == null
+                || Map == null || Map == Map.Internal || pm.Map != Map || !pm.InRange(Location, 1))
+                return true;
+
+            if (pm.SkillEther == 0 && pm.StatCap <= 250)
             {
                 if (m.Backpack.FindItemByType(typeof(ObeliskTip)) != null)
                 {
@@ -32,9 +37,10 @@ namespace Server.Items
                     if (triangle is ObeliskTip)
                     {
                         ObeliskTip tip = (ObeliskTip)triangle;
-                        int quest = tip.WonAir + tip.WonFire + tip.WonEarth + tip.WonWater;
-
-                        if (tip.ObeliskOwner == m && quest > 3)
+                        if (!tip.Deleted && tip.ObeliskOwner == m
+                            && tip.WonAir > 0 && tip.WonFire > 0
+                            && tip.WonEarth > 0 && tip.WonWater > 0
+                            && MyServerSettings.TryCompleteEther(pm))
                         {
                             triangle.Delete();
 
@@ -52,10 +58,6 @@ namespace Server.Items
                             }
 
                             TitanRiches(m);
-
-                            m.Skills.Cap = m.Skills.Cap + 5000;
-                            ((PlayerMobile)m).SkillEther = 5000;
-                            m.StatCap = 300;
 
                             Server.Items.QuestSouvenir.GiveReward(m, "Obelisk Tip", 0, 0x185F);
                             Server.Items.QuestSouvenir.GiveReward(m, "Breath of Air", 0, 0x1860);

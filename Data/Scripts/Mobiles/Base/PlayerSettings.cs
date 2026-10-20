@@ -50,8 +50,12 @@ namespace Server.Misc
 
         public static void SetSavage(Mobile m) // -------------------------------------------------------------------------------------------------
         {
+            PlayerMobile pm = m as PlayerMobile;
+            if (pm == null || pm.Deleted || !pm.Alive || pm.Backpack == null
+                || !MyServerSettings.SkillBegin("savage", pm))
+                return;
+
             PlayerSettings.SetDiscovered(m, "the Savaged Empire", true);
-            Server.Misc.MyServerSettings.SkillBegin("savage", (PlayerMobile)m);
             Server.Misc.MorphingTime.RemoveMyClothes(m);
 
             if (m.Female)
@@ -136,10 +140,14 @@ namespace Server.Misc
 
         public static void SetSpaceMan(Mobile m) // -------------------------------------------------------------------------------------------------
         {
+            PlayerMobile pm = m as PlayerMobile;
+            if (pm == null || pm.Deleted || !pm.Alive || pm.Backpack == null
+                || !MyServerSettings.SkillBegin("alien", pm))
+                return;
+
             Point3D loc = new Point3D(7000, 4000, 0);
             m.MoveToWorld(loc, Map.Lodor);
 
-            Server.Misc.MyServerSettings.SkillBegin("alien", (PlayerMobile)m);
             Server.Misc.MorphingTime.RemoveMyClothes(m);
 
             List<Item> contents = new List<Item>();
@@ -186,6 +194,11 @@ namespace Server.Misc
 
         public static void SetWanted(Mobile m) // -------------------------------------------------------------------------------------------------
         {
+            PlayerMobile pm = m as PlayerMobile;
+            if (pm == null || pm.Deleted || !pm.Alive || pm.Backpack == null
+                || !MyServerSettings.SkillBegin("fugitive", pm))
+                return;
+
             string wName = NameList.RandomName("male");
             string wTitle = "King";
             string wPron = "he";
@@ -311,7 +324,6 @@ namespace Server.Misc
 
             m.Profile = ((PlayerMobile)m).CharacterWanted;
             SetBardsTaleQuest(m, "BardsTaleWin", true);
-            Server.Misc.MyServerSettings.SkillBegin("fugitive", (PlayerMobile)m);
             m.Kills = 1;
             ((PlayerMobile)m).Profession = 1;
 
