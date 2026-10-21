@@ -569,17 +569,26 @@ namespace Server
 
                 if (m_Base != sv)
                 {
-                    m_Owner.Total = (m_Owner.Total - m_Base) + sv;
-
                     m_Base = sv;
+                    m_Owner.RecalculateTotal();
 
-                    m_Owner.OnSkillChange(this);
+                    try
+                    {
+                        m_Owner.OnSkillChange(this);
 
-                    Mobile m = m_Owner.Owner;
-
-                    if (m != null)
-                        m.OnSkillChange(SkillName, (double)oldBase / 10);
+                        Mobile m = m_Owner.Owner;
+                        if (m != null)
+                            m.OnSkillChange(SkillName, (double)oldBase / 10);
+                    }
+                    finally
+                    {
+                        // Explicit staff/NPC setters and their callbacks may change
+                        // other bases. Reconcile accounting without deleting points.
+                        m_Owner.RecalculateTotal();
+                    }
                 }
+                else
+                    m_Owner.RecalculateTotal();
             }
         }
 
@@ -1461,7 +1470,11 @@ namespace Server
         public int Total
         {
             get { return m_Total; }
-            set { m_Total = value; }
+        }
+
+        internal void RecalculateTotal()
+        {
+            m_Total = GetBaseTotal();
         }
 
         public int GetBaseTotal()

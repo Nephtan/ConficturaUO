@@ -68,6 +68,40 @@ namespace Server.Mobiles
             ProtectedPropertiesList.Add(new ProtectedProperty(typeof(Item), "stafflevel"));
         }
 
+        private static bool IsProtectedInstance(object target, string property)
+        {
+            if (target == null || property == null)
+                return false;
+            if (IsProtected(target.GetType(), property))
+                return true;
+
+            Mobile mobile = target as Mobile;
+            Skills skills = target as Skills;
+            Skill skill = target as Skill;
+            if (mobile != null && Insensitive.Equals(property, "Player"))
+                return true;
+
+            if (skills != null)
+                mobile = skills.Owner;
+            else if (skill != null && skill.Owner != null)
+                mobile = skill.Owner.Owner;
+
+            if (mobile == null || (!(mobile is PlayerMobile) && !mobile.Player))
+                return false;
+
+            // Classify the resolved object, including NPC-to-player reference chains
+            // and cached PropertyInfo lookups. XmlSet shares this automatic boundary.
+            if (skills != null)
+                return Insensitive.Equals(property, "Total") || Insensitive.Equals(property, "Cap");
+            if (skill != null)
+                return Insensitive.Equals(property, "Base") || Insensitive.Equals(property, "BaseFixedPoint")
+                    || Insensitive.Equals(property, "Cap") || Insensitive.Equals(property, "CapFixedPoint");
+
+            return Insensitive.Equals(property, "SkillsCap") || Insensitive.Equals(property, "SkillsTotal")
+                || Insensitive.Equals(property, "Skill_Start") || Insensitive.Equals(property, "Skill_Boost")
+                || Insensitive.Equals(property, "Skill_Ether");
+        }
+
         #endregion
 
         #region Type support
@@ -1244,6 +1278,13 @@ namespace Server.Mobiles
             int index
         )
         {
+            if (o == null || p == null)
+                return "Null object or property.";
+            if (IsProtectedInstance(o, p.Name))
+                return "Property is protected.";
+            if (!p.CanWrite)
+                return "Property is read only.";
+
             object toSet = null;
             Type ptype = p.PropertyType;
 
@@ -1435,7 +1476,7 @@ namespace Server.Mobiles
                     //if ( !plookup.CanWrite )
                     //return "Property is read only.";
 
-                    if (BaseXmlSpawner.IsProtected(type, propname))
+                    if (IsProtectedInstance(o, propname))
                         return "Property is protected.";
 
                     ptype = plookup.PropertyType;
@@ -1459,7 +1500,7 @@ namespace Server.Mobiles
                             //if ( !p.CanWrite )
                             //return "Property is read only.";
 
-                            if (BaseXmlSpawner.IsProtected(type, propname))
+                            if (IsProtectedInstance(o, propname))
                                 return "Property is protected.";
 
                             ptype = p.PropertyType;
@@ -1483,7 +1524,7 @@ namespace Server.Mobiles
                     if (!plookup.CanWrite)
                         return "Property is read only.";
 
-                    if (BaseXmlSpawner.IsProtected(type, propname))
+                    if (IsProtectedInstance(o, propname))
                         return "Property is protected.";
 
                     string returnvalue = InternalSetValue(null, o, plookup, value, false, index);
@@ -1502,7 +1543,7 @@ namespace Server.Mobiles
                             if (!p.CanWrite)
                                 return "Property is read only.";
 
-                            if (BaseXmlSpawner.IsProtected(type, propname))
+                            if (IsProtectedInstance(o, propname))
                                 return "Property is protected.";
 
                             string returnvalue = InternalSetValue(null, o, p, value, false, index);
@@ -1532,9 +1573,12 @@ namespace Server.Mobiles
                 if (amount > 0)
                     return skill.Owner.TryGrant(skill, amount, null)
                         ? "Property has been set." : "Skill grant rejected by locks or caps.";
+                if (amount < 0)
+                    return "Player skill reductions require an explicit staff tool.";
+                return "Property has been set.";
             }
 
-            // Scripted reductions and NPC initialization remain explicit raw paths.
+            // NPC initialization remains a raw path; player XML rewards only grant.
             skill.BaseFixedPoint = newBase;
             return "Property has been set.";
         }
@@ -1575,7 +1619,7 @@ namespace Server.Mobiles
                     //if ( !plookup.CanWrite )
                     //return "Property is read only.";
 
-                    if (BaseXmlSpawner.IsProtected(type, arglist[0]))
+                    if (IsProtectedInstance(o, arglist[0]))
                         return "Property is protected.";
 
                     ptype = plookup.PropertyType;
@@ -1594,7 +1638,7 @@ namespace Server.Mobiles
                             //if ( !p.CanWrite )
                             //return "Property is read only.";
 
-                            if (BaseXmlSpawner.IsProtected(type, arglist[0]))
+                            if (IsProtectedInstance(o, arglist[0]))
                                 return "Property is protected.";
 
                             ptype = p.PropertyType;
@@ -1619,7 +1663,7 @@ namespace Server.Mobiles
                     if (!plookup.CanWrite)
                         return "Property is read only.";
 
-                    if (BaseXmlSpawner.IsProtected(type, name))
+                    if (IsProtectedInstance(o, name))
                         return "Property is protected.";
 
                     if (plookup.PropertyType == typeof(Server.Mobile))
@@ -1642,7 +1686,7 @@ namespace Server.Mobiles
                             if (!p.CanWrite)
                                 return "Property is read only.";
 
-                            if (BaseXmlSpawner.IsProtected(type, name))
+                            if (IsProtectedInstance(o, name))
                                 return "Property is protected.";
 
                             if (p.PropertyType == typeof(Server.Mobile))

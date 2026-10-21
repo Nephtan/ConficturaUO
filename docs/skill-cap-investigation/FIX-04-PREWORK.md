@@ -1,5 +1,7 @@
 # FIX-04 read-only preparation
 
+Historical checkpoint: this preparation predates the resumed FIX-04 implementation and acceptance. Current results, source boundaries, restoration and delivery are recorded in the [FIX-04 report](FIX-04-REPORT.md) and [controller handoff](ACCOUNT-HANDOFF.md). The statements below describe the earlier paused baseline.
+
 2026-10-20. This is source planning during the user's client/Qwen/native-control pause. No FIX-04 production change, implementation acceptance or commit has occurred. The ordered gate remains FIX-03 acceptance and local commit before FIX-04 implementation. Recheck these traces against that accepted snapshot before editing.
 
 ## Current evidence

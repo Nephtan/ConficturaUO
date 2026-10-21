@@ -203,7 +203,7 @@ namespace Server.Misc
             gainer = gainer - Server.Misc.MyServerSettings.SkillGain();
 
             bool success = (chance >= Utility.RandomDouble());
-            double gc = (double)(from.Skills.Cap - from.Skills.Total) / from.Skills.Cap;
+            double gc = (double)(from.Skills.Cap - from.Skills.GetBaseTotal()) / from.Skills.Cap;
             gc += (skill.Cap - skill.Base) / skill.Cap;
             gc /= gainer;
 
