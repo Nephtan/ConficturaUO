@@ -30,7 +30,7 @@ namespace Server.Items
 
         public override string DefaultTitle
         {
-            get { return Name; }
+            get { return String.Format("{0} ({1} Skill Cap)", Name, Value); }
         }
         public override int Title
         {
@@ -150,27 +150,28 @@ namespace Server.Items
         {
             base.AddNameProperties(list);
 
-            if (GetPower() == 105)
+            // Champion rewards use the generic class, so their cap must come from Value.
+            if (Value == 105)
             {
                 list.Add(1070722, "105 Skill");
                 list.Add(1049644, "Wondrous Scroll");
             }
-            else if (GetPower() == 110)
+            else if (Value == 110)
             {
                 list.Add(1070722, "110 Skill");
                 list.Add(1049644, "Exalted Scroll");
             }
-            else if (GetPower() == 115)
+            else if (Value == 115)
             {
                 list.Add(1070722, "115 Skill");
                 list.Add(1049644, "Mythical Scroll");
             }
-            else if (GetPower() == 120)
+            else if (Value == 120)
             {
                 list.Add(1070722, "120 Skill");
                 list.Add(1049644, "Legendary Scroll");
             }
-            else if (GetPower() == 125)
+            else if (Value == 125)
             {
                 list.Add(1070722, "125 Skill");
                 list.Add(1049644, "Power Scroll");

@@ -4,9 +4,11 @@ using System.IO;
 using System.Reflection;
 using Server;
 using Server.Engines.CannedEvil;
+using Server.Gumps;
 using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
+using Server.Network;
 
 // Runs against freshly compiled scripts via scripts/Test-ChampionRewards.ps1.
 // No saves, script initialization, timer thread, listeners, or clients are started.
@@ -86,6 +88,106 @@ internal static class ChampionRewardRegression
     private static Item[] Items(Container container, Type type)
     {
         return container.FindItemsByType(type, true);
+    }
+
+    private static Dictionary<int, string> TooltipProperties(Item item)
+    {
+        ObjectPropertyList list = new ObjectPropertyList(item);
+        item.GetProperties(list);
+        list.Terminate();
+        list.Acquire();
+        try
+        {
+            int length;
+            byte[] packet = list.Compile(false, out length);
+            Check(length >= 19 && packet[0] == 0xD6, "tooltip produces an object property packet");
+            PacketReader reader = new PacketReader(packet, length, false);
+            // Property entries follow the 15-byte serial/hash header in a 0xD6 packet.
+            reader.Seek(15, SeekOrigin.Begin);
+            Dictionary<int, string> properties = new Dictionary<int, string>();
+            int number;
+            while ((number = reader.ReadInt32()) != 0)
+            {
+                int byteCount = reader.ReadUInt16();
+                properties.Add(number, reader.ReadUnicodeStringLESafe(byteCount / 2));
+            }
+            return properties;
+        }
+        finally
+        {
+            list.Release();
+        }
+    }
+
+    private static void CheckPowerScrollDisplay(PowerScroll scroll, PlayerMobile viewer, string skillName, int cap, string tier)
+    {
+        string description = scroll.GetType().Name + " " + cap;
+        Dictionary<int, string> properties = TooltipProperties(scroll);
+        string argument;
+        Check(properties.TryGetValue(1042971, out argument) && argument == skillName,
+            description + " tooltip shows the skill name");
+        Check(properties.TryGetValue(1070722, out argument) && argument == cap + " Skill",
+            description + " tooltip shows the stored cap");
+        Check(properties.TryGetValue(1049644, out argument) && argument == tier,
+            description + " tooltip shows the matching tier");
+
+        string title = skillName + " (" + cap + " Skill Cap)";
+        SpecialScroll.InternalGump gump = new SpecialScroll.InternalGump(viewer, scroll);
+        bool foundTitle = false;
+        foreach (GumpEntry entry in gump.Entries)
+        {
+            GumpHtml html = entry as GumpHtml;
+            if (html != null && html.X == 11 && html.Y == 10 && html.Text.Contains(">" + title + "</BASEFONT>"))
+                foundTitle = true;
+        }
+        Check(foundTitle, description + " confirmation displays the skill and cap");
+        Check(!scroll.Deleted && scroll.Value == cap && scroll.Name == skillName,
+            description + " display does not consume or modify the scroll");
+    }
+
+    private static void TestPowerScrollDisplays()
+    {
+        PlayerMobile viewer = Player(Map.Sosaria, false, 0);
+        int[] caps = new int[] { 105, 110, 115, 120, 125 };
+        string[] tiers = new string[] { "Wondrous Scroll", "Exalted Scroll", "Mythical Scroll", "Legendary Scroll", "Power Scroll" };
+        PowerScroll[] vendorScrolls = new PowerScroll[]
+        {
+            new DJ_SW_Magery(), new DJ_SE_Magery(), new DJ_SM_Magery(), new DJ_SL_Magery(), new DJ_SP_Magery()
+        };
+        for (int i = 0; i < caps.Length; ++i)
+        {
+            if (i < 4)
+            {
+                PowerScroll generic = new PowerScroll(SkillName.Magery, caps[i]);
+                CheckPowerScrollDisplay(generic, viewer, "Magery", caps[i], tiers[i]);
+                generic.Delete();
+            }
+            CheckPowerScrollDisplay(vendorScrolls[i], viewer, "Magery", caps[i], tiers[i]);
+            vendorScrolls[i].Delete();
+        }
+
+        PowerScroll original = new PowerScroll(SkillName.Swords, 115);
+        MemoryStream stream = new MemoryStream();
+        BinaryFileWriter writer = new BinaryFileWriter(stream, true);
+        original.Serialize(writer);
+        writer.Write(123456789);
+        writer.Flush();
+        byte[] bytes = stream.ToArray();
+        Serial serial = original.Serial;
+        original.Delete();
+        PowerScroll loaded = new PowerScroll(serial);
+        World.AddItem(loaded);
+        BinaryFileReader reader = new BinaryFileReader(new BinaryReader(new MemoryStream(bytes)));
+        loaded.Deserialize(reader);
+        Check(reader.ReadInt() == 123456789, "power scroll reload consumes exactly its save record");
+        reader.Close();
+        writer.Close();
+        Check(loaded.Skill == SkillName.Swords && loaded.Value == 115 && loaded.Name == "Swords",
+            "power scroll reload preserves skill, cap and name");
+        CheckPowerScrollDisplay(loaded, viewer, "Swords", 115, "Mythical Scroll");
+        loaded.Delete();
+        viewer.Delete();
+        Console.WriteLine("PASS: generic and vendor power scroll tooltip packets, confirmation titles, and save round-trip");
     }
 
     private static void TestBossMaps(Map[] maps)
@@ -280,6 +382,7 @@ internal static class ChampionRewardRegression
             typeof(World).GetField("m_Mobiles", BindingFlags.Static | BindingFlags.NonPublic).SetValue(null, new Dictionary<Serial, Mobile>());
             typeof(World).GetField("m_Items", BindingFlags.Static | BindingFlags.NonPublic).SetValue(null, new Dictionary<Serial, Item>());
             MapDefinitions.Configure();
+            TestPowerScrollDisplays();
             Map[] maps = new Map[] { Map.Lodor, Map.Sosaria, Map.Underworld, Map.SerpentIsland, Map.IslesDread, Map.SavagedEmpire, Map.Atlantis };
             TestBossMaps(maps);
             TestRightsAndDelivery();
