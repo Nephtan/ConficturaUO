@@ -1,3 +1,30 @@
+[*]October 10th, 2026
+Nephtan
+Announcements:
+
+ClassicUO and ClassicAssist updates are now available through the Confictura launcher. Please run the launcher and let it finish updating before playing.
+
+These updates bring the following changes since August 8th, 2026.
+
+ClassicUO:
+
+- Open bags should no longer close just because you change facets.
+- Added support for creature and mount animations supplied through legacy animation patches, including animations missing from the base animation files.
+- Corrected handling of terrain and scenery patches sent by the server.
+- Added support for shard-supplied item and ground artwork, interface artwork, sounds, and text. When the shard provides these custom assets, they can be reloaded from Options > Experimental without restarting the client.
+
+ClassicAssist:
+
+- Object Inspector windows no longer block the rest of the assistant, so you can leave an inspection window open while continuing to work.
+- Container-viewer filters now have an improved tree layout for nested groups, making it easier to arrange more detailed AND/OR/NOT filtering rules.
+- Added WaitForRemoveObject for macro authors. It waits for the server to remove a specified item or creature from view, with an optional timeout.
+- Includes an upstream fix for crashes when closing the ClassicAssist launcher.
+- Added optional MCP server (AI agents) support for compatible AI tools. It can create, edit, run and stop macros, call macro commands, and inspect information such as your character, inventory, journal, open menus, and agent settings. The local server is off by default and must be enabled in ClassicAssist's Options each session.
+
+Please report bags that still close during travel, misplaced riders, missing animations, or problems with ClassicAssist macros and container filters. Include what you were doing and the relevant location, mount, filter, or macro.
+
+Good hunting!
+
 [*]August 9th, 2026
 Nephtan
 Announcements:
