@@ -1,3 +1,49 @@
+[*]October 24th, 2026
+Nephtan
+Announcements:
+
+Server changes since the August 9th announcement:
+
+Character progress and skills:
+
+- Region-entry checks flag inconsistent data without resetting your skills, stats, or profession.
+- Skill gains, Alacrity, NPC training, Transcendence scrolls, Soulstones, and Skill Stones now check skill locks and caps before changing points. Failed grants do not lower other skills first.
+- Skill-transfer menus reject stale responses. Skill Stones spend points only on successful grants; Cancel closes the menu.
+- Skill accounting uses actual totals, with added protection against automatic quest/spawner overrides of player skills and caps.
+- Origin, boost, and Ether caps are consistent; supported saved boosts survive reloads.
+- Staff-returned characters can reselect an origin under its normal reset rules; stale menu responses are rejected.
+- Titan of Ether completion checks the quest item and trials, and grants its cap bonus and rewards only once.
+
+Champions, creatures, and encounters:
+
+- Champion Power Scrolls and Skulls can be awarded on every playable facet under the same eligibility rules.
+- Champion-wave Scrolls of Transcendence now use the same chance and value range across playable facets.
+- Town guards can die instead of instantly healing; normal kill awards remain disabled.
+- Draguuls now deal 75% physical and 25% fire damage. The old incomplete profile is repaired on load; customized profiles are preserved.
+- Dungeon, cave, and bard-dungeon encounter checks now run every five minutes instead of every two and a half minutes.
+
+Magic:
+
+- Sanctify's buff countdown now matches the spell's actual duration.
+- Repeated Research Enchant and Sneak casts no longer add extra logout work. Old Enchant timers cannot end newer enchantments.
+- Create Food removes conjured food, drink, blood, or brains that cannot fit in your backpack, with clearer delivery messages.
+
+Housing, cities, and games:
+
+- Townhouse and rental regions cover the correct floors, restoring house commands and tools. Tenant commands take priority over the parent house.
+- City voting rechecks eligibility, distance, and the current election before accepting a vote.
+- New or loaded Liar's Dice items preserve the shared game. Stale turn timers cannot warn or remove players.
+
+Stability and player references:
+
+- Paced item and property updates reduce crowded-area disconnect risk during travel and reconnect. Large scenes may fill in gradually.
+- Wanted reports batch disk writes while preserving reports and Town Crier notices.
+- New references cover stats and caps, Searching/Hiding/Stealth, Begging, traps, game systems, and a FAQ drawn from Discord questions.
+
+Please report unexpected skill changes, missing rewards, broken house commands, or crowded-area disconnects.
+
+Good hunting!
+
 [*]October 10th, 2026
 Nephtan
 Announcements:
