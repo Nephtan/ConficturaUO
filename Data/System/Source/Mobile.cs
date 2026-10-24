@@ -8354,6 +8354,9 @@ namespace Server
         {
             NetState ns = m_NetState;
 
+            if (ns != null)
+                ns.BeginWorldViewChange();
+
             if (m_Map != null && ns != null)
             {
                 IPooledEnumerable eable = m_Map.GetObjectsInRange(
@@ -8375,7 +8378,7 @@ namespace Server
                         Item item = (Item)o;
 
                         if (InRange(item.Location, item.GetUpdateRange(this)))
-                            ns.Send(item.RemovePacket);
+                            ns.SendWorldItemRemove(item);
                     }
                 }
 
@@ -8619,7 +8622,7 @@ namespace Server
                         Item item = (Item)o;
 
                         if (CanSee(item) && InRange(item.Location, item.GetUpdateRange(this)))
-                            item.SendInfoTo(ns);
+                            ns.SendWorldItem(item);
                     }
                     else if (o is Mobile)
                     {
@@ -10877,7 +10880,7 @@ namespace Server
                                     && Utility.InRange(newLocation, loc, range)
                                     && CanSee(item)
                                 )
-                                    item.SendInfoTo(ourState);
+                                    ourState.SendWorldItem(item);
                             }
                             else if (o != this && o is Mobile)
                             {

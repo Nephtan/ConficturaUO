@@ -4712,7 +4712,7 @@ namespace Server.Mobiles
                 ObjectTypes = ObjectTypes.Both;
                 Usage = "XmlSet <propertyName> <value>";
                 Description =
-                    "Sets a property value by name of a targeted object. Provides access to all public properties.";
+                    "Sets an unprotected public property. Player progression overrides require explicit staff property or skill tools.";
             }
 
             public override void Execute(CommandEventArgs e, object obj)

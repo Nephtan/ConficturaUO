@@ -1,5 +1,8 @@
 # Entry routes, supporting paths and unresolved evidence
 
+Current behavior for the ordered repairs is in the [controller handoff](ACCOUNT-HANDOFF.md) and [FIX-04 accounting/XML report](FIX-04-REPORT.md). The route classifications below retain their historical investigation baseline; they do not describe the repaired Total setter or automatic XML policy.
+
+
 Read together with `mutation-path-register.csv` and `reflection-write-register.csv`. Those enumerate every compiled sink reference, including repeated writes in the same method and backing-field stores. This register accounts for upstream entry points that do not themselves write a skill field, and for incident questions that compiled source cannot resolve. Line numbers refer to baseline `75bc9dfb`. Values expressed as points use one decimal place; serialized/fixed-point values are ten times larger.
 
 ## Player and configured entry routes

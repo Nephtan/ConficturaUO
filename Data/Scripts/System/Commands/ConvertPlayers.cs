@@ -21,6 +21,7 @@ namespace Server.Commands
 
         public static void Convert_OnCommand(CommandEventArgs e)
         {
+            CommandLogging.WriteLine(e.Mobile, "{0} beginning ConvertPlayers migration", CommandLogging.Format(e.Mobile));
             e.Mobile.SendMessage(
                 "Converting all players to PlayerMobile.  You will be disconnected.  Please Restart the server after the world has finished saving."
             );

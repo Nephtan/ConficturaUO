@@ -125,11 +125,14 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (!(from is PlayerMobile) || from.Deleted || Deleted || !from.Alive)
+                return;
+
             // Close any existing SetSkillsGump gumps for the player.
             from.CloseGump(typeof(SetSkillsGump));
 
             // Check if the player has a backpack.
-            if (from.Backpack == null)
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 // If the player does not have a backpack, send a message and return.
                 from.SendMessage("This must be in your backpack to function.");
@@ -217,6 +220,7 @@ namespace Server.Items
 
         // Skill stone.
         private readonly SkillStone m_SkillStone;
+        private bool m_Handled;
 
         // Color of labels.
         private const int LabelColor = 0x7FFF;
@@ -362,12 +366,22 @@ namespace Server.Items
 
             // Close Button at Bottom
             // Add the skill label, a text entry for the skill value, and a "Set Skill" button
-            AddButton(425, 520, 4005, 4007, 0x2, GumpButtonType.Reply, 0); // x, y, off click , on click, button type
+            AddButton(425, 520, 4005, 4007, 0, GumpButtonType.Reply, 0); // x, y, off click , on click, button type
             AddHtmlLocalized(460, 520, 140, 25, 1011012, false, false); // CANCEL
         }
 
         public override void OnResponse(NetState state, RelayInfo info)
         {
+            if (info.ButtonID <= 0 || info.ButtonID > m_Player.Skills.Length || m_Handled
+                || state.Mobile != m_Player || !(m_Player is PlayerMobile)
+                || m_Player.Deleted || !m_Player.Alive || m_SkillStone == null || m_SkillStone.Deleted
+                || m_SkillStone.AssignedPlayer != m_Player || m_Player.Backpack == null
+                || !m_SkillStone.IsChildOf(m_Player.Backpack))
+                return;
+
+            m_Handled = true;
+            bool[] seen = new bool[m_Player.Skills.Length];
+
             // Switch statement to handle the button press
             switch (info.ButtonID)
             {
@@ -377,6 +391,11 @@ namespace Server.Items
                     // Foreach loop to iterate through the text entries in the relay info
                     foreach (TextRelay textEntry in info.TextEntries)
                     {
+                        int index = textEntry.EntryID - 1;
+                        if (index < 0 || index >= m_Player.Skills.Length || seen[index])
+                            continue;
+                        seen[index] = true;
+
                         // Declare variables for the new skill value, difference in skill value, and the target skill
                         double newSkillValue;
                         double skillDiff;
@@ -403,8 +422,16 @@ namespace Server.Items
                             );
                         }
 
+                        if (double.IsNaN(newSkillValue) || double.IsInfinity(newSkillValue)
+                            || newSkillValue < 0.0 || newSkillValue > ushort.MaxValue / 10.0)
+                            continue;
+
+                        int newBase = (int)(newSkillValue * 10.0);
+                        int amount = newBase - targetSkill.BaseFixedPoint;
+                        newSkillValue = (double)newBase / 10.0;
+
                         // Calculate the difference between the new skill value and the old skill value
-                        skillDiff = newSkillValue - targetSkill.Base;
+                        skillDiff = (double)amount / 10.0;
 
                         // Rules out some weird conditions with adding.
                         // If the difference between the new skill value and the target skill's base value is negative, set it to 0.
@@ -463,7 +490,7 @@ namespace Server.Items
                             }
                             // Check if setting the skill to the new value would cause the player to go over their total skill cap
                             else if (
-                                m_Player.Skills.Cap < ((m_Player.SkillsTotal) + (skillDiff * 10))
+                                m_Player.Skills.Cap < (m_Player.Skills.GetBaseTotal() + amount)
                             ) // Skill max
                             {
                                 // Inform player that setting the skill to the new value would cause them to go over their total skill cap
@@ -486,10 +513,15 @@ namespace Server.Items
                             }
                             else
                             {
-                                // Set the skill to the new value
-                                targetSkill.Base = newSkillValue;
+                                if (m_SkillStone.Deleted || m_SkillStone.AssignedPlayer != m_Player
+                                    || !m_SkillStone.IsChildOf(m_Player.Backpack)
+                                    || !m_Player.Skills.TryGrant(targetSkill, amount, null))
+                                {
+                                    m_Player.SendMessage("This skill must be set to raise and have room within both skill caps.");
+                                    continue;
+                                }
                                 // Deduct the points used to set the skill from the skill stone's total points
-                                m_SkillStone.SkillPoints -= (int)(skillDiff * 10);
+                                m_SkillStone.SkillPoints -= amount;
                                 // Send a message to the player indicating that the skill has been set and how many points remain on the stone
                                 m_Player.SendMessage(
                                     String.Format(

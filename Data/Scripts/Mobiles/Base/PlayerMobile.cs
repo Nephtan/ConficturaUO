@@ -1794,9 +1794,9 @@ namespace Server.Mobiles
 
                 int cap = skills.Cap;
                 long record = (long)pm.SkillStart + pm.SkillBoost + pm.SkillEther;
-                bool legacyCap = cap == 10000 || cap == 11000 || cap == 13000
-                    || cap == 15000 || cap == 16000 || cap == 18000
-                    || cap == 40000 || cap == 45000;
+                int supportedCap;
+                bool supported = MyServerSettings.TryGetSkillCap(
+                    pm.SkillStart, pm.SkillBoost, pm.SkillEther, out supportedCap);
 
                 // GetKeys normalizes/writes CharacterKeys. Read its tenth (Virtue) slot
                 // directly here so even malformed or uninitialized records are preserved.
@@ -1808,11 +1808,11 @@ namespace Server.Mobiles
                     reasons += "real_total_exceeds_cap;";
                 if (skills.Total != realTotal)
                     reasons += "cached_total_mismatch;";
-                if (!legacyCap)
-                    reasons += "legacy_cap_unrecognized;";
-                if ((cap == 13000 || cap == 18000) && pm.Profession != 1 && !virtue)
-                    reasons += "legacy_profession_mismatch;";
-                if (record != cap)
+                if (!supported)
+                    reasons += "cap_components_unrecognized;";
+                if (pm.SkillStart == 13000 && pm.Profession != 1 && !virtue)
+                    reasons += "origin_profession_mismatch;";
+                if (record != cap || (supported && supportedCap != cap))
                     reasons += "cap_components_mismatch;";
                 if (!pm.Player)
                     reasons += "player_flag_false;";
@@ -1820,8 +1820,8 @@ namespace Server.Mobiles
                 if (reasons.Length == 0)
                     return;
 
-                // The legacy whitelist disagrees with configurable caps. Region entry
-                // cannot decide a correction: retain all progress for a reviewed repair.
+                // Region entry diagnoses the shared cap policy without resetting
+                // progress, origin, profession, stats or deliberately reduced caps.
                 ReportSkillVerification(pm, String.Format(
                     System.Globalization.CultureInfo.InvariantCulture,
                     "reasons={0} real={1} cached={2} cap={3} start={4} boost={5} ether={6} "
@@ -4601,58 +4601,6 @@ namespace Server.Mobiles
                         SkillBoost = reader.ReadInt();
                         SkillEther = reader.ReadInt();
 
-                        if (SkillStart < 1)
-                        {
-                            SkillBoost = Server.Misc.MyServerSettings.SkillBoost();
-
-                            if (Skills.Cap == 11000)
-                            {
-                                SkillStart = 11000;
-                            }
-                            else if (Skills.Cap == 16000)
-                            {
-                                SkillStart = 11000;
-                                SkillEther = 5000;
-                            }
-                            else if (Skills.Cap == 10000)
-                            {
-                                SkillStart = 10000;
-                            }
-                            else if (Skills.Cap == 15000)
-                            {
-                                SkillStart = 10000;
-                                SkillEther = 5000;
-                            }
-                            else if (Skills.Cap == 13000)
-                            {
-                                SkillStart = 13000;
-                            }
-                            else if (Skills.Cap == 18000)
-                            {
-                                SkillStart = 13000;
-                                SkillEther = 5000;
-                            }
-                            else if (Skills.Cap == 40000)
-                            {
-                                SkillStart = 40000;
-                            }
-                            else if (Skills.Cap == 45000)
-                            {
-                                SkillStart = 40000;
-                                SkillEther = 5000;
-                            }
-                            else
-                            {
-                                SkillStart = 10000;
-                                SkillEther = 0;
-                            }
-                        }
-
-                        if (SkillBoost < Server.Misc.MyServerSettings.SkillBoost())
-                            SkillBoost = Server.Misc.MyServerSettings.SkillBoost();
-
-                        Skills.Cap = SkillStart + SkillBoost + SkillEther;
-
                         goto case 34;
                     }
                 case 34:
@@ -4977,6 +4925,8 @@ namespace Server.Mobiles
                         break;
                     }
             }
+
+            MyServerSettings.RestoreSkillCap(this);
 
             if (m_RecentlyReported == null)
                 m_RecentlyReported = new List<Mobile>();

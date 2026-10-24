@@ -1380,47 +1380,166 @@ namespace Server.Misc
 
         public static string SkillGypsy(string area)
         {
-            int skills = 10;
-
-            if (area == "savage")
-                skills = 11;
-            else if (area == "alien")
-                skills = 40;
-            else if (area == "fugitive")
-                skills = 13;
-            else
-                skills = 10;
-
-            if (S_SkillBoost > 10)
-                S_SkillBoost = 10;
-
-            if (S_SkillBoost < 1)
-                S_SkillBoost = 0;
-
-            skills = skills + S_SkillBoost;
-
-            return skills.ToString();
+            int cap;
+            TryGetSkillCap(SkillOrigin(area), SkillBoost(), 0, out cap);
+            return (cap / 1000).ToString();
         }
 
-        public static void SkillBegin(string area, PlayerMobile pm)
+        public static int SkillOrigin(string area)
         {
-            pm.SkillBoost = SkillBoost();
-
             if (area == "savage")
-                pm.SkillStart = 11000;
-            else if (area == "alien")
-                pm.SkillStart = 40000;
-            else if (area == "fugitive")
-                pm.SkillStart = 13000;
-            else
-                pm.SkillStart = 10000;
+                return 11000;
+            if (area == "alien")
+                return 40000;
+            if (area == "fugitive")
+                return 13000;
+            return 10000;
+        }
 
-            pm.Skills.Cap = pm.SkillStart + pm.SkillBoost + pm.SkillEther;
+        public static bool TryGetSkillCap(int start, int boost, int ether, out int cap)
+        {
+            cap = 0;
+            if ((start != 10000 && start != 11000 && start != 13000 && start != 40000)
+                || boost < 0 || boost > 10000 || boost % 1000 != 0
+                || (ether != 0 && ether != 5000))
+                return false;
+
+            cap = start + boost + ether;
+            return true;
+        }
+
+        public static bool SkillBegin(string area, PlayerMobile pm)
+        {
+            if (pm == null || pm.Deleted)
+                return false;
+
+            int start = SkillOrigin(area);
+            int boost = SkillBoost();
+            int cap;
+            if (!TryGetSkillCap(start, boost, pm.SkillEther, out cap))
+            {
+                pm.SendMessage("Your progression needs a staff review before changing origin.");
+                return false;
+            }
+
+            // Re-selection is permitted. Only the origin's own setup may reset bases;
+            // a lower cap alone retains them, with further grants blocked by TryGrant.
+            pm.SkillStart = start;
+            pm.SkillBoost = boost;
+            pm.Skills.Cap = cap;
+            return true;
+        }
+
+        public static bool RestoreSkillCap(PlayerMobile pm)
+        {
+            if (pm == null || pm.Deleted)
+                return false;
+
+            int start = pm.SkillStart;
+            int boost = pm.SkillBoost;
+            int ether = pm.SkillEther;
+            int cap;
+
+            if (start < 1)
+            {
+                if (start != 0 || boost != 0 || ether != 0)
+                    return false;
+
+                // Preserve the recognized legacy tiers without guessing an origin
+                // from an unknown cap. The existing serialized fields stay unchanged.
+                switch (pm.Skills.Cap)
+                {
+                    case 10000:
+                    {
+                        start = 10000;
+                        ether = 0;
+                        break;
+                    }
+                    case 11000:
+                    {
+                        start = 11000;
+                        ether = 0;
+                        break;
+                    }
+                    case 13000:
+                    {
+                        start = 13000;
+                        ether = 0;
+                        break;
+                    }
+                    case 40000:
+                    {
+                        start = 40000;
+                        ether = 0;
+                        break;
+                    }
+                    case 15000:
+                    {
+                        start = 10000;
+                        ether = 5000;
+                        break;
+                    }
+                    case 16000:
+                    {
+                        start = 11000;
+                        ether = 5000;
+                        break;
+                    }
+                    case 18000:
+                    {
+                        start = 13000;
+                        ether = 5000;
+                        break;
+                    }
+                    case 45000:
+                    {
+                        start = 40000;
+                        ether = 5000;
+                        break;
+                    }
+                    default:
+                        return false;
+                }
+                boost = SkillBoost();
+            }
+
+            if (!TryGetSkillCap(start, boost, ether, out cap))
+                return false;
+
+            boost = Math.Max(boost, SkillBoost());
+            TryGetSkillCap(start, boost, ether, out cap);
+            pm.SkillStart = start;
+            pm.SkillBoost = boost;
+            pm.SkillEther = ether;
+            pm.Skills.Cap = cap;
+            return true;
+        }
+
+        public static bool TryCompleteEther(PlayerMobile pm)
+        {
+            if (pm == null || pm.Deleted || !pm.Alive || pm.SkillEther != 0 || pm.StatCap > 250)
+                return false;
+
+            int currentCap;
+            int completedCap;
+            if (!TryGetSkillCap(pm.SkillStart, pm.SkillBoost, 0, out currentCap)
+                || pm.Skills.Cap != currentCap
+                || !TryGetSkillCap(pm.SkillStart, pm.SkillBoost, 5000, out completedCap))
+                return false;
+
+            // Publish the persisted completion marker before any reward or item
+            // callback can try to complete the quest a second time.
+            pm.SkillEther = 5000;
+            pm.Skills.Cap = completedCap;
+            pm.StatCap = 300;
+            return true;
         }
 
         public static int SkillBase()
         {
-            return (10000 + SkillBoost());
+            int cap;
+            TryGetSkillCap(SkillOrigin("default"), SkillBoost(), 0, out cap);
+            return cap;
         }
 
         public static double SkillGain()

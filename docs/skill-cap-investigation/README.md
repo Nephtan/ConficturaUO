@@ -1,6 +1,8 @@
 # Real skill cap and region reset investigation
 
-**Current repair status (2026-10-18):** [FIX-01 protection repair](FIX-01-REPORT.md) is locally verified and implemented in commit `1b49df74e8b972eb53805a790797f1f4872ab001`, not pushed or deployed. This evidence batch accompanies that implementation. Region verification now preserves progress and writes bounded diagnostics. The investigation below describes the historical `75bc9dfb` baseline; its wipe fixtures are historical evidence. FIX-02 through FIX-04 remain separate deferred work. The directly authorized local continuation passed bounded Player/Qwen progress acceptance; the report retains the inventory discrepancy and verified full rollback.
+**Current ordered-repair closeout (2026-10-20 local):** FIX-05, FIX-02, FIX-03 and FIX-04 completed scoped isolated acceptance and independent review in order, with focused local source/artifact commits. See the [controller handoff](ACCOUNT-HANDOFF.md), [ordered sequence](REPAIR-SEQUENCE-GOAL.md) and [FIX-04 report](FIX-04-REPORT.md) for current behavior, commits, restored inputs and limitations. No deployment or live historical-incident attribution is claimed.
+
+The investigation/recommendations below describe the historical baseline. In particular, its public Total setter, automatic XML raw-write and deferred repair descriptions are superseded by the linked repair reports; characterization evidence is retained as historical evidence. The separate FIX-06/FIX-07/FIX-08 recommendations and wider audit blockers are not blanket-closed by this four-repair status.
 
 Baseline: `main` at `75bc9dfb`. Investigation date: 2026-10-05. Production source, public APIs, serialization formats, and player saves are unchanged. This is a dedicated investigation, not completion of the repository's separate fourteen-phase reorganization program.
 

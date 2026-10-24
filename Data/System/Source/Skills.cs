@@ -569,18 +569,33 @@ namespace Server
 
                 if (m_Base != sv)
                 {
-                    m_Owner.Total = (m_Owner.Total - m_Base) + sv;
-
                     m_Base = sv;
+                    m_Owner.RecalculateTotal();
 
-                    m_Owner.OnSkillChange(this);
+                    try
+                    {
+                        m_Owner.OnSkillChange(this);
 
-                    Mobile m = m_Owner.Owner;
-
-                    if (m != null)
-                        m.OnSkillChange(SkillName, (double)oldBase / 10);
+                        Mobile m = m_Owner.Owner;
+                        if (m != null)
+                            m.OnSkillChange(SkillName, (double)oldBase / 10);
+                    }
+                    finally
+                    {
+                        // Explicit staff/NPC setters and their callbacks may change
+                        // other bases. Reconcile accounting without deleting points.
+                        m_Owner.RecalculateTotal();
+                    }
                 }
+                else
+                    m_Owner.RecalculateTotal();
             }
+        }
+
+        // Skills publishes a complete validated grant before invoking callbacks.
+        internal void SetBaseForGrant(int value)
+        {
+            m_Base = (ushort)value;
         }
 
         [CommandProperty(AccessLevel.Counselor, AccessLevel.GameMaster)]
@@ -1033,6 +1048,8 @@ namespace Server
         private int m_Total,
             m_Cap;
         private Skill m_Highest;
+        private bool m_ApplyingGrant;
+        private static DateTime m_NextGrantDiagnostic;
 
         #region Skill Getters & Setters
         [CommandProperty(AccessLevel.Counselor)]
@@ -1453,7 +1470,159 @@ namespace Server
         public int Total
         {
             get { return m_Total; }
-            set { m_Total = value; }
+        }
+
+        internal void RecalculateTotal()
+        {
+            m_Total = GetBaseTotal();
+        }
+
+        public int GetBaseTotal()
+        {
+            int total = 0;
+
+            for (int i = 0; i < m_Skills.Length; ++i)
+            {
+                if (m_Skills[i] != null)
+                    total += m_Skills[i].BaseFixedPoint;
+            }
+
+            return total;
+        }
+
+        public bool TryGrant(Skill target, int amount, int[] donorLosses)
+        {
+            if (
+                m_ApplyingGrant
+                || (Core.Thread != null && System.Threading.Thread.CurrentThread != Core.Thread)
+                || m_Owner == null
+                || m_Owner.Deleted
+                || m_Owner.Skills != this
+                || m_Cap <= 0
+                || target == null
+                || target.Owner != this
+                || target.SkillID < 0
+                || target.SkillID >= m_Skills.Length
+                || m_Skills[target.SkillID] != target
+                || target.Lock != SkillLock.Up
+                || amount <= 0
+                || amount > target.CapFixedPoint - target.BaseFixedPoint
+                || (donorLosses != null && donorLosses.Length != m_Skills.Length)
+            )
+                return false;
+
+            int realTotal = GetBaseTotal();
+
+            if (realTotal > m_Cap)
+                return false;
+
+            int[] oldBases = new int[m_Skills.Length];
+            int[] newBases = new int[m_Skills.Length];
+            int totalLoss = 0;
+
+            for (int i = 0; i < m_Skills.Length; ++i)
+            {
+                Skill skill = m_Skills[i];
+                int loss = donorLosses == null ? 0 : donorLosses[i];
+                int oldBase = skill == null ? 0 : skill.BaseFixedPoint;
+
+                if (
+                    loss < 0
+                    || loss > oldBase
+                    || (loss > 0 && (skill == target || skill.Lock != SkillLock.Down))
+                    || loss > amount - totalLoss
+                )
+                    return false;
+
+                totalLoss += loss;
+                oldBases[i] = oldBase;
+                newBases[i] = oldBase - loss;
+            }
+
+            long finalTotal = (long)realTotal - totalLoss + amount;
+
+            if (finalTotal > m_Cap)
+                return false;
+
+            newBases[target.SkillID] += amount;
+            m_ApplyingGrant = true;
+
+            try
+            {
+                // No callbacks run until every base and the real total are published.
+                // Raw setters remain available to explicit staff, NPC and load paths.
+                for (int i = 0; i < m_Skills.Length; ++i)
+                {
+                    if (oldBases[i] != newBases[i])
+                        m_Skills[i].SetBaseForGrant(newBases[i]);
+                }
+
+                m_Total = (int)finalTotal;
+                m_Highest = null;
+
+                for (int i = 0; i < m_Skills.Length; ++i)
+                {
+                    if (i != target.SkillID && oldBases[i] != newBases[i])
+                        NotifyGrant(m_Skills[i], oldBases[i]);
+                }
+
+                NotifyGrant(target, oldBases[target.SkillID]);
+                return true;
+            }
+            finally
+            {
+                try
+                {
+                    // Trusted callbacks may use raw setters; never repair their state
+                    // by deleting points, and do not leave a falsified cache behind.
+                    m_Total = GetBaseTotal();
+                }
+                finally
+                {
+                    m_ApplyingGrant = false;
+                }
+            }
+        }
+
+        private void NotifyGrant(Skill skill, int oldBase)
+        {
+            try
+            {
+                OnSkillChange(skill);
+            }
+            catch (Exception exception)
+            {
+                ReportGrantCallbackFailure(skill, exception);
+            }
+
+            try
+            {
+                m_Owner.OnSkillChange(skill.SkillName, (double)oldBase / 10);
+            }
+            catch (Exception exception)
+            {
+                ReportGrantCallbackFailure(skill, exception);
+            }
+        }
+
+        private void ReportGrantCallbackFailure(Skill skill, Exception exception)
+        {
+            try
+            {
+                DateTime now = DateTime.UtcNow;
+
+                if (now < m_NextGrantDiagnostic)
+                    return;
+
+                m_NextGrantDiagnostic = now + TimeSpan.FromMinutes(1.0);
+                Console.WriteLine(
+                    "Committed skill grant callback failed: mobile={0}, skill={1}, exception={2}",
+                    m_Owner.Serial,
+                    skill.SkillName,
+                    exception.GetType().Name
+                );
+            }
+            catch { }
         }
 
         public Mobile Owner

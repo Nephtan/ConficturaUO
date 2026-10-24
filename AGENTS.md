@@ -55,6 +55,15 @@ Notes:
 - `Release|x86` server output goes to `Data/System/Source/bin/Release/`.
 - A successful server project build proves the source executable compiles. It does not prove runtime scripts compile.
 
+### Matching executable in core-fix commits
+
+When a fix changes source compiled into `ConficturaServer.exe`, build and validate the matching executable in an isolated output directory, then include the rebuilt tracked root `ConficturaServer.exe` in the same focused source commit. This executable is an intended deliverable, not incidental generated output. Script-only changes under `Data/Scripts` do not inherently require a core executable rebuild; their runtime script compile verification still applies.
+
+- Verify the exact source snapshot, build configuration and executable SHA-256, and record the build and relevant test evidence. Use an accepted artifact only after verifying that its complete core source snapshot matches the committed candidate.
+- Never commit a stale or test-instrumented executable. Keep test overlays, script caches, logs, symbols and intermediate build products out of the commit unless separately intended.
+- Before replacing the tracked executable, verify that no running production process uses it. Do not run the repository executable against production data as a verification step; stop and report an actual running-process conflict.
+- Keep unfinished or unrelated source changes out of the executable. Reconcile an already committed core fix through an additive matching-artifact commit; do not rewrite history.
+
 ### Runtime script compile smoke
 
 For script changes, or any change that may affect startup behavior, run the built server executable locally with a time limit and capture the startup compiler output:
@@ -71,7 +80,7 @@ Notes:
 - `-service` avoids the interactive retry prompt on script compile failure.
 - Do not run a startup smoke against live production data or an occupied production port.
 - Terminate the local process after the verification milestone is reached, such as script compile failure, script initialization failure, or server started/listening confirmation.
-- Restore or leave untracked any generated executables, logs, caches, or data files according to the task; do not commit generated runtime output unless explicitly intended.
+- Include the matching tracked executable for core fixes under the rule above. Restore or leave untracked incidental executables, logs, caches, or data files; do not commit other generated runtime output unless explicitly intended.
 
 ### Optional Visual Studio project hygiene
 
@@ -456,6 +465,7 @@ There is no single test command for the whole repository. Verification depends o
 - Run serializer checks if persistence was touched.
 - Run hook scans if runtime wiring was touched.
 - Run the narrowest `Server.csproj` build available when source executable behavior is touched.
+- For core-source fixes, validate and commit the matching tracked `ConficturaServer.exe` with its source as required above.
 - Run a time-boxed server startup script compile smoke for script changes.
 - Run optional solution or `Scripts.csproj` builds only as IDE/project hygiene checks.
 

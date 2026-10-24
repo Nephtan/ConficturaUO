@@ -606,7 +606,16 @@ namespace Server.Network
         public Mobile Mobile
         {
             get { return m_Mobile; }
-            set { m_Mobile = value; }
+            set
+            {
+                lock (m_WorldSendLock)
+                {
+                    if (m_Mobile != value)
+                        ClearWorldSendQueue();
+
+                    m_Mobile = value;
+                }
+            }
         }
 
         public ServerInfo[] ServerInfo
@@ -721,7 +730,509 @@ namespace Server.Network
             }
         }
 
+        // World producers/draining are game-thread owned; console/IRC packet sends
+        // can be background callers. Admission and encoder use share this lock,
+        // but virtual item methods never run with it held.
+        private readonly object m_WorldSendLock = new object();
+        private const int WorldSendEntryLimit = 65536;
+        private const int WorldSendPacketLimit = 96 * 1024;
+        private const int WorldSendGroupLimit = 64 * 1024;
+        private const int WorldSendPendingLimit = 16 * 1024;
+        private Queue<WorldSendEntry> m_WorldSendQueue;
+        private Dictionary<Item, WorldSendEntry> m_WorldSendItems;
+        private int m_WorldSendPacketBytes;
+        private int m_WorldViewGeneration;
+        private int m_WorldSendCoalesceEpoch;
+        private int m_WorldSendBudget;
+        private int m_WorldSendExamineBudget;
+        private DateTime m_NextWorldSendSlice;
+        private WorldSendTimer m_WorldSendTimer;
+        private bool m_DrainingWorldSend;
+        private int m_WorldSendDrainThread;
+        private List<byte[]> m_WorldSendCapture;
+        private int m_WorldSendCaptureBytes;
+        private bool m_WorldSendCaptureFailed;
+        private DateTime m_NextWorldSendDiagnostic;
+        private static int m_WorldSendDiagnosticPending;
+
+        private sealed class WorldSendEntry
+        {
+            public Item Item;
+            public bool Remove;
+            public bool SendOpl;
+            public bool PropertiesOnly;
+            public bool PropertyListOnly;
+            public int Generation;
+            public int CoalesceEpoch;
+            public byte[] Packet;
+        }
+
+        private sealed class WorldSendTimer : Timer
+        {
+            private NetState m_State;
+
+            public WorldSendTimer(NetState state)
+                : base(TimeSpan.FromMilliseconds(25.0), TimeSpan.FromMilliseconds(25.0))
+            {
+                m_State = state;
+                Priority = TimerPriority.TwentyFiveMS;
+            }
+
+            protected override void OnTick()
+            {
+                lock (m_State.m_WorldSendLock)
+                {
+                    if (m_State.m_WorldSendTimer != this)
+                    {
+                        Stop();
+                        return;
+                    }
+                }
+
+                m_State.DrainWorldSendQueue();
+                m_State.Flush();
+            }
+        }
+
+        public int PendingWorldSends
+        {
+            get
+            {
+                lock (m_WorldSendLock)
+                    return m_WorldSendQueue == null ? 0 : m_WorldSendQueue.Count;
+            }
+        }
+
+        public int PendingSendBytes
+        {
+            get
+            {
+                lock (m_SendQueue)
+                    return m_SendQueue.PendingBytes;
+            }
+        }
+
+        public void BeginWorldViewChange()
+        {
+            // Earlier item snapshots are stale; their ordered removes/control packets
+            // still have to run before the next view. Do not clear that FIFO here.
+            lock (m_WorldSendLock)
+                ++m_WorldViewGeneration;
+        }
+
+        private bool CanSendWorldItem(Item item)
+        {
+            Mobile viewer = m_Mobile;
+            return item != null && !item.Deleted && item.Parent == null
+                && viewer != null && !viewer.Deleted && viewer.NetState == this
+                && viewer.Map != null && viewer.Map != Map.Internal && item.Map == viewer.Map
+                && viewer.CanSee(item) && viewer.InRange(item.Location, item.GetUpdateRange(viewer));
+        }
+
+        public void SendWorldItem(Item item)
+        {
+            SendWorldItem(item, ObjectPropertyList.Enabled);
+        }
+
+        public void SendWorldItem(Item item, bool sendOplPacket)
+        {
+            QueueWorldItem(item, sendOplPacket, false);
+        }
+
+        public void SendWorldItemProperties(Item item)
+        {
+            QueueWorldItem(item, true, true);
+        }
+
+        public void SendItemProperties(Item item)
+        {
+            if (item == null || item.Deleted)
+                return;
+
+            if (item.Parent != null)
+            {
+                item.SendPropertiesTo(m_Mobile);
+                return;
+            }
+
+            if (!CanSendWorldItem(item))
+                return;
+
+            lock (m_WorldSendLock)
+            {
+                if (m_Socket == null || m_Disposing || m_BlockAllPackets)
+                    return;
+
+                // Full query replies retain their position and virtual dispatch,
+                // without copying a crowded view's property lists into control data.
+                WorldSendEntry entry = new WorldSendEntry();
+                entry.Item = item;
+                entry.PropertyListOnly = true;
+                entry.Generation = m_WorldViewGeneration;
+                ++m_WorldSendCoalesceEpoch;
+                if (!QueueWorldSend(entry))
+                    return;
+            }
+
+            DrainWorldSendQueue();
+        }
+
+        private void QueueWorldItem(Item item, bool sendOplPacket, bool propertiesOnly)
+        {
+            if (!CanSendWorldItem(item))
+                return;
+
+            lock (m_WorldSendLock)
+            {
+                if (m_Socket == null || m_Disposing || m_BlockAllPackets)
+                    return;
+
+                WorldSendEntry pending;
+                if (m_WorldSendItems != null && m_WorldSendItems.TryGetValue(item, out pending)
+                    && pending.Generation == m_WorldViewGeneration
+                    && pending.CoalesceEpoch == m_WorldSendCoalesceEpoch)
+                {
+                    pending.SendOpl |= sendOplPacket;
+                    pending.PropertiesOnly &= propertiesOnly;
+                    return;
+                }
+
+                WorldSendEntry entry = new WorldSendEntry();
+                entry.Item = item;
+                entry.SendOpl = sendOplPacket;
+                entry.PropertiesOnly = propertiesOnly;
+                entry.Generation = m_WorldViewGeneration;
+                entry.CoalesceEpoch = m_WorldSendCoalesceEpoch;
+                if (!QueueWorldSend(entry))
+                    return;
+
+                m_WorldSendItems[item] = entry;
+            }
+
+            DrainWorldSendQueue();
+        }
+
+        public void SendWorldItemRemove(Item item)
+        {
+            lock (m_WorldSendLock)
+            {
+                if (item == null || m_Socket == null || m_Disposing || m_BlockAllPackets)
+                    return;
+
+                WorldSendEntry entry = new WorldSendEntry();
+                entry.Item = item;
+                entry.Remove = true;
+                ++m_WorldSendCoalesceEpoch;
+                if (!QueueWorldSend(entry))
+                    return;
+            }
+
+            DrainWorldSendQueue();
+        }
+
+        private bool QueueWorldSend(WorldSendEntry entry)
+        {
+            if (PendingWorldSends >= WorldSendEntryLimit)
+            {
+                ReportWorldSend("entry_limit", true);
+                Dispose(false);
+                return false;
+            }
+
+            if (m_WorldSendQueue == null)
+            {
+                m_WorldSendQueue = new Queue<WorldSendEntry>();
+                m_WorldSendItems = new Dictionary<Item, WorldSendEntry>();
+            }
+
+            m_WorldSendQueue.Enqueue(entry);
+            if (m_WorldSendQueue.Count >= 1024)
+                ReportWorldSend("crowded_view", false);
+
+            return true;
+        }
+
+        private void ClearWorldSendQueue()
+        {
+            lock (m_WorldSendLock)
+            {
+                if (m_WorldSendTimer != null)
+                {
+                    m_WorldSendTimer.Stop();
+                    m_WorldSendTimer = null;
+                }
+
+                m_WorldSendQueue = null;
+                m_WorldSendItems = null;
+                m_WorldSendPacketBytes = 0;
+                ++m_WorldViewGeneration;
+            }
+        }
+
+        private void DrainWorldSendQueue()
+        {
+            lock (m_WorldSendLock)
+            {
+                if (m_DrainingWorldSend || m_WorldSendQueue == null)
+                    return;
+
+                if (m_Socket == null || m_Disposing || m_BlockAllPackets)
+                {
+                    ClearWorldSendQueue();
+                    return;
+                }
+
+                DateTime now = DateTime.UtcNow;
+                if (now >= m_NextWorldSendSlice)
+                {
+                    m_NextWorldSendSlice = now + TimeSpan.FromMilliseconds(25.0);
+                    m_WorldSendBudget = 64;
+                    m_WorldSendExamineBudget = 512;
+                }
+
+                m_DrainingWorldSend = true;
+                m_WorldSendDrainThread = Thread.CurrentThread.ManagedThreadId;
+            }
+
+            try
+            {
+                while (true)
+                {
+                    WorldSendEntry entry;
+                    lock (m_WorldSendLock)
+                    {
+                        if (m_WorldSendQueue == null || m_WorldSendQueue.Count == 0
+                            || m_WorldSendBudget <= 0 || m_WorldSendExamineBudget <= 0
+                            || m_Socket == null || m_Disposing || PendingSendBytes > WorldSendPendingLimit)
+                            break;
+
+                        --m_WorldSendExamineBudget;
+                        entry = m_WorldSendQueue.Dequeue();
+                        if (entry.Packet != null)
+                            m_WorldSendPacketBytes -= entry.Packet.Length;
+                        else if (!entry.Remove)
+                        {
+                            WorldSendEntry pending;
+                            if (m_WorldSendItems.TryGetValue(entry.Item, out pending)
+                                && Object.ReferenceEquals(entry, pending))
+                                m_WorldSendItems.Remove(entry.Item);
+
+                            if (entry.Generation != m_WorldViewGeneration)
+                                continue;
+                        }
+
+                        --m_WorldSendBudget;
+                    }
+
+                    if (entry.Packet != null)
+                    {
+                        SendCompiledBuffer(entry.Packet, entry.Packet.Length);
+                    }
+                    else if (entry.Remove)
+                    {
+                        Send(entry.Item.RemovePacket);
+                    }
+                    else if (CanSendWorldItem(entry.Item))
+                    {
+                        SendWorldItemGroup(entry.Item, entry.SendOpl, entry.PropertiesOnly, entry.PropertyListOnly);
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                lock (m_WorldSendLock)
+                    ReportWorldSend("dispatch_exception_" + exception.GetType().Name, true);
+                Dispose(false);
+            }
+            finally
+            {
+                lock (m_WorldSendLock)
+                {
+                    m_DrainingWorldSend = false;
+                    m_WorldSendDrainThread = 0;
+                    if (m_WorldSendQueue == null || m_WorldSendQueue.Count == 0 || m_Disposing || m_Socket == null)
+                        ClearWorldSendQueue();
+                    else if (m_WorldSendTimer == null)
+                    {
+                        m_WorldSendTimer = new WorldSendTimer(this);
+                        m_WorldSendTimer.Start();
+                    }
+                }
+            }
+        }
+
+        private void SendWorldItemGroup(Item item, bool sendOplPacket, bool propertiesOnly, bool propertyListOnly)
+        {
+            Mobile viewer;
+            int generation;
+            List<byte[]> packets = new List<byte[]>();
+            lock (m_WorldSendLock)
+            {
+                viewer = m_Mobile;
+                generation = m_WorldViewGeneration;
+                m_WorldSendCapture = packets;
+                m_WorldSendCaptureBytes = 0;
+                m_WorldSendCaptureFailed = false;
+            }
+            try
+            {
+                // Include every packet from virtual corpse/house implementations. Encode
+                // only after capture so stateful encoders retain actual wire order.
+                if (propertyListOnly)
+                    item.SendPropertiesTo(viewer);
+                else if (propertiesOnly)
+                    Send(item.OPLPacket);
+                else
+                    item.SendInfoTo(this, sendOplPacket);
+            }
+            finally
+            {
+                lock (m_WorldSendLock)
+                    m_WorldSendCapture = null;
+            }
+
+            lock (m_WorldSendLock)
+            {
+                if (m_Socket == null || m_Disposing)
+                    return;
+
+                if (viewer != m_Mobile || generation != m_WorldViewGeneration || !CanSendWorldItem(item))
+                {
+                    ReportWorldSend("view_changed_during_dispatch", true);
+                    Dispose(false);
+                    return;
+                }
+
+                if (m_WorldSendCaptureFailed)
+                {
+                    ReportWorldSend("item_group_limit", true);
+                    Dispose(false);
+                    return;
+                }
+
+                using (MemoryStream group = new MemoryStream())
+                {
+                    foreach (byte[] packet in packets)
+                    {
+                        byte[] buffer = packet;
+                        int length = buffer.Length;
+                        if (m_Encoder != null)
+                            m_Encoder.EncodeOutgoingPacket(this, ref buffer, ref length);
+
+                        if (buffer == null || length < 0 || length > buffer.Length
+                            || group.Length + length > WorldSendGroupLimit)
+                        {
+                            ReportWorldSend("encoded_item_group_limit", true);
+                            Dispose(false);
+                            return;
+                        }
+
+                        group.Write(buffer, 0, length);
+                    }
+
+                    if (group.Length > 0)
+                        EnqueueSendBuffer(group.ToArray(), (int)group.Length);
+                }
+            }
+        }
+
+        private bool CaptureOrQueueWorldPacket(byte[] buffer, int length)
+        {
+            bool drainingThread = m_DrainingWorldSend
+                && m_WorldSendDrainThread == Thread.CurrentThread.ManagedThreadId;
+            if (m_WorldSendCapture != null && drainingThread)
+            {
+                if ((long)m_WorldSendCaptureBytes + length > WorldSendGroupLimit
+                    || m_WorldSendCapture.Count >= 256)
+                {
+                    m_WorldSendCaptureFailed = true;
+                    return true;
+                }
+
+                byte[] copy = new byte[length];
+                System.Buffer.BlockCopy(buffer, 0, copy, 0, length);
+                m_WorldSendCapture.Add(copy);
+                m_WorldSendCaptureBytes += length;
+                return true;
+            }
+
+            if (drainingThread || (!m_DrainingWorldSend && PendingWorldSends == 0))
+                return false;
+
+            if ((long)m_WorldSendPacketBytes + length > WorldSendPacketLimit)
+            {
+                ReportWorldSend("control_packet_limit", true);
+                Dispose(false);
+                return true;
+            }
+
+            WorldSendEntry entry = new WorldSendEntry();
+            entry.Packet = new byte[length];
+            System.Buffer.BlockCopy(buffer, 0, entry.Packet, 0, length);
+            // A later incoming must not merge into an earlier one across a removal
+            // or interaction response, even when the item has returned to view.
+            ++m_WorldSendCoalesceEpoch;
+            if (QueueWorldSend(entry))
+                m_WorldSendPacketBytes += length;
+
+            return true;
+        }
+
+        private void ReportWorldSend(string reason, bool terminal)
+        {
+            try
+            {
+                DateTime now = DateTime.UtcNow;
+                if (!terminal && now < m_NextWorldSendDiagnostic)
+                    return;
+
+                m_NextWorldSendDiagnostic = now + TimeSpan.FromMinutes(5.0);
+                if (Interlocked.CompareExchange(ref m_WorldSendDiagnosticPending, 1, 0) != 0)
+                    return;
+
+                bool queued = false;
+                try
+                {
+                    Mobile viewer = m_Mobile;
+                    string message = String.Format(System.Globalization.CultureInfo.InvariantCulture,
+                        "utc={0:o} reason={1} serial={2} map={3} location={4} work={5} controlBytes={6} pendingBytes={7} action={8}",
+                        now, reason, viewer == null ? Serial.MinusOne : viewer.Serial,
+                        viewer == null || viewer.Map == null ? -1 : viewer.Map.MapIndex,
+                        viewer == null ? Point3D.Zero : viewer.Location, PendingWorldSends,
+                        m_WorldSendPacketBytes, PendingSendBytes, terminal ? "disconnect" : "paced");
+                    queued = ThreadPool.QueueUserWorkItem(WriteWorldSendDiagnostic, message);
+                }
+                finally
+                {
+                    if (!queued)
+                        Interlocked.Exchange(ref m_WorldSendDiagnosticPending, 0);
+                }
+            }
+            catch (Exception) { }
+        }
+
+        private static void WriteWorldSendDiagnostic(object state)
+        {
+            try
+            {
+                string directory = Path.Combine(Core.BaseDirectory, "Logs");
+                Directory.CreateDirectory(directory);
+                File.AppendAllText(Path.Combine(directory, "WorldItemStreaming.log"), (string)state + Environment.NewLine);
+            }
+            catch (Exception) { }
+            finally
+            {
+                Interlocked.Exchange(ref m_WorldSendDiagnosticPending, 0);
+            }
+        }
+
         public virtual void Send(Packet p)
+        {
+            lock (m_WorldSendLock)
+                SendPacket(p);
+        }
+
+        private void SendPacket(Packet p)
         {
             if (m_Socket == null || m_BlockAllPackets)
             {
@@ -747,50 +1258,8 @@ namespace Server.Network
                     prof.Start();
                 }
 
-                if (m_Encoder != null)
-                {
-                    m_Encoder.EncodeOutgoingPacket(this, ref buffer, ref length);
-                }
-
-                try
-                {
-                    SendQueue.Gram gram;
-
-                    lock (m_SendQueue)
-                    {
-                        gram = m_SendQueue.Enqueue(buffer, length);
-                    }
-
-                    if (gram != null)
-                    {
-#if Framework_4_0
-                        m_SendEventArgs.SetBuffer(gram.Buffer, 0, gram.Length);
-                        Send_Start();
-#else
-                        try
-                        {
-                            m_Socket.BeginSend(
-                                gram.Buffer,
-                                0,
-                                gram.Length,
-                                SocketFlags.None,
-                                m_OnSend,
-                                m_Socket
-                            );
-                        }
-                        catch (Exception ex)
-                        {
-                            TraceException(ex);
-                            Dispose(false);
-                        }
-#endif
-                    }
-                }
-                catch (CapacityExceededException)
-                {
-                    Console.WriteLine("Client: {0}: Too much data pending, disconnecting...", this);
-                    Dispose(false);
-                }
+                if (!CaptureOrQueueWorldPacket(buffer, length))
+                    length = SendCompiledBuffer(buffer, length);
 
                 p.OnSend();
 
@@ -813,6 +1282,65 @@ namespace Server.Network
                 }
                 Dispose();
             }
+        }
+
+        private int SendCompiledBuffer(byte[] buffer, int length)
+        {
+            lock (m_WorldSendLock)
+            {
+                if (m_Encoder != null)
+                    m_Encoder.EncodeOutgoingPacket(this, ref buffer, ref length);
+
+                EnqueueSendBuffer(buffer, length);
+                return length;
+            }
+        }
+
+        private void EnqueueSendBuffer(byte[] buffer, int length)
+        {
+            if (m_Socket == null || m_Disposing)
+                return;
+
+            try
+            {
+                SendQueue.Gram gram;
+
+                lock (m_SendQueue)
+                {
+                    gram = m_SendQueue.Enqueue(buffer, length);
+                }
+
+                if (gram != null)
+                {
+#if Framework_4_0
+                    m_SendEventArgs.SetBuffer(gram.Buffer, 0, gram.Length);
+                    Send_Start();
+#else
+                    try
+                    {
+                        m_Socket.BeginSend(
+                            gram.Buffer,
+                            0,
+                            gram.Length,
+                            SocketFlags.None,
+                            m_OnSend,
+                            m_Socket
+                        );
+                    }
+                    catch (Exception ex)
+                    {
+                        TraceException(ex);
+                        Dispose(false);
+                    }
+#endif
+                }
+            }
+            catch (CapacityExceededException)
+            {
+                Console.WriteLine("Client: {0}: Too much data pending, disconnecting...", this);
+                Dispose(false);
+            }
+
         }
 
 #if Framework_4_0
@@ -1438,6 +1966,8 @@ namespace Server.Network
                 ++breakout;
 
                 NetState ns = (NetState)m_Disposed.Dequeue();
+
+                ns.ClearWorldSendQueue();
 
                 Mobile m = ns.m_Mobile;
                 IAccount a = ns.m_Account;

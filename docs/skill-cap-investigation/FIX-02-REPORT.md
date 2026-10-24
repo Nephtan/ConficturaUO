@@ -1,0 +1,64 @@
+# FIX-02: transactional player skill grants
+
+2026-10-19, branch `main`. The ten-source candidate002 passes isolated build, runtime script compile, component, network, full-world save/load and real Player/client acceptance. Final review, tracker reconciliation and local commit are recorded in the [account handoff](ACCOUNT-HANDOFF.md). No push, deployment, live restart or production-save operation was performed. FIX-03 and FIX-04 remain separate ordered batches.
+
+## Result and source boundary
+
+Normal gain could lower a donor before computing the final Alacrity increment, then reject the target grant and retain that loss. Ordinary raw skill setters also notified callbacks after each individual mutation, exposing incomplete transfers. The new transaction validates the complete operation against independently summed bases, publishes all bases and the cache together, then sends notifications. A rejection changes no bases or resources. A notification failure after commitment is contained and diagnosed; the caller still consumes the successfully used resource. Nested grants to the same collection reject until notifications finish.
+
+| Source and entry | Implemented behavior |
+| --- | --- |
+| `Data/System/Source/Skills.cs:1467`, `GetBaseTotal`, `TryGrant` | Positive amount; exact owner/target membership; Up target; individual and aggregate caps; same-index Down donors; sufficient bases; no excess donor loss; nondeleted owner; game-thread requirement when initialized. Reentrant calls reject. Already excessive totals reject without deleting points. Raw setters/load behavior remain available to trusted paths. |
+| `Data/Scripts/System/Skills/SkillCheck.cs:683`, `Gain` | Compute accelerated amount and individual headroom before the existing single full-increment donor policy. Route PlayerMobile even when its mutable Player flag is false. NPC raw initialization/gain and separate stat-gain flow remain. |
+| `Data/Scripts/Items/Special/Special Scrolls/ScrollofTranscendence.cs:109` | Preserve individual clamping and existing full-increment single-donor semantics; consume only a committed grant. Fixed-point headroom avoids a floating-point 0.1 remainder truncating to zero. |
+| `Data/Scripts/Items/Special/SoulStone.cs:573`, transfer/removal responses | Preserve ordinary account/location/skill eligibility and pooled deficit donors. Pin intended actor and displayed skill/value; reject stale, deleted or repeated responses; clear contents after successful grant. Existing cap-error explanation remains reachable. No serialized content revision is added. |
+| `Data/Scripts/Custom/Skill Stone/SkillStone.cs:373` | Validate actor, life, assignment, backpack, stone, response and finite entries. Require Up and both caps; reject duplicate/replayed entries. Quantize once, charge the committed delta, preserve absolute-target affordability and per-entry purchases. Cancel uses response0. |
+| `Data/Scripts/Custom/Government System/Gumps/VotingStoneGump.cs:95` | Revalidate actor, stone, city, range/map, voter-list generation and candidate identity. Preserve normal CheckSkill and the distinct one-tenth bonus; enforce locks/caps for the bonus without undoing a valid vote. |
+| `Data/Scripts/Custom/XMLSpawner/BaseXmlSpawner.cs:1533` | Positive player assignments through SKILL or reflection resolving to Skill.Base/BaseFixedPoint use the transaction. NPC initialization and reductions retain their prior paths. Broader protected XML property policy remains FIX-04. |
+| `Data/Scripts/Mobiles/Base/BaseCreature.cs:8302`, teaching | Plan pooled Down donors before mutation, preserve partial lessons, and commit before charging accepted tuition. |
+| `Data/Scripts/System/Misc/TestCenter.cs:207` | Configured TestCenter remains a deliberate lock exception, with finite input and real-total checks. Its normal configuration gate is unchanged. |
+| `Data/Scripts/System/Commands/ConvertPlayers.cs:24` | Explicit Administrator migration audit precedes the existing process-terminating conversion path. Other reviewed staff, clone/control restoration, character creation, NPC and load setters remain classified trusted operations. |
+
+All 20 affected serialization/load method bodies match the baseline after newline normalization. No serialized fields, versions, saved types, namespaces or project includes changed. Trusted raw callback writes remain possible; the transaction recomputes the cached sum afterward rather than claiming general rollback. Exact identical-content SoulStone replacement does not carry a new generation identifier. Wider candidate eligibility/gump work stays in the existing later backlog.
+
+## Frozen candidate and required executable
+
+Evidence root: `D:\ConficturaUOTestTools\ordered-repairs-20261018\fix02\nonui-candidate-002`.
+
+- Source manifest SHA-256: `8c9d43f6f7a576f66f75a5e193afe196b72fb3d19eb1ebdab9465045a6b07758`.
+- Operational Release/x86 core SHA-256: `9f0351b5af5ea4ccafa5e897150551c6a80bbb4167061747c1df9e5852eda8c3`.
+- Production runtime script assembly SHA-256: `8ef5eea67e616905ee3de3489a376ba4c40951a31988257940a73c71e43a6ece`.
+- Latest grant fixture SHA-256: `96a31716eae8f74fc5f9b81d7be7167ae080b1b727ec1e5886263062bc627337`.
+
+The tracked root `ConficturaServer.exe` accompanies this source commit with that exact validated core hash, per the user-added repository rule. At2026-10-19T15:07:55Z executable provenance verified all125 frozen core files against current source and found no running ConficturaServer before replacement. The repository executable was not launched. The core contains no test evaluator or script overlay. Test evaluators and the eight external-service/startup isolation overlays exist only in disposable copies; their script assemblies are separately identified. Evidence: `fix02/executable-provenance.json`.
+
+## Acceptance matrix
+
+| Evidence | Result and limits |
+| --- | --- |
+| `build-validation.json`, `evidence/server-build.log` | Release/x86 operational Server.csproj build passed in20.78s. No optional solution/Scripts.csproj build was needed; no project inclusion changed. |
+| `evidence/runtime-compile-service-console.log` | Forced `-service -nocache -compileonly` runtime script compilation passed in41.88s. Clean full startup also passed in world001 and corrected client002. |
+| `fixtures/grants-003` | 2,493 assertions passed: real/cache totals, locks/caps, acceleration, donor conservation, fractional inputs, stale/deleted/replayed responses, all routed families, atomic callback observations, valid reentrant attempts rejected, post-fault recovery, resource consumption and actual Teach/OnGoldGiven payment. TestCenter helper coverage is component evidence, not a newly enabled TestCenter session. |
+| `fixtures` existing regressions | Food1,853; Research logout46; FIX-01 protection817 plus60 registered-region transitions passed. The external FIX-01 adaptation omits only its historical TestGains characterization, whose old expected bypasses are deliberately repaired here. Protection test bodies are unchanged; the new grant suite supplies gain coverage. |
+| `fixtures/network` | 2,771 actual loopback network checks passed on the current core/script candidate, including query barriers and concurrent workers. Manually advanced drain tests are network/component evidence, not client rendering. |
+| `world-001-evidence` | Full copied-world prepare1,298,679 checks and reload737,329 checks passed. Original/before-save/reloaded inventory70,281 rows and progression1,398 rows match exactly. Preserve documented original empty-bank normalization and passive Focus/Meditation controls. Exercised full saves archived, complete copied Saves restored; exact owned runtimes stopped. |
+| `client-002/evidence/actual-client.jsonl`, response XML | Ordinary authenticated Nephtest521/Player: actual locked scroll confirmation rejected with unchanged target/donors/resource; after explicit fixture unlock, local Qwen confirmed the scroll, resulting in Magery500→501 and Alchemy3→2. Native ordinary account-bound SoulStone confirmation yielded Magery501→511, Alchemy2→0, Anatomy8→0 and empty stone. Total remained10000 throughout. |
+| Native SkillStone and `check-stone` response | Native page navigation, focused Magery text entry52.1 and response produced Magery511→521, stone2000→1990, total/cache10000. Initial headroom came from an explicitly privileged disposable setup step. Gump rendering, purchase and point display were observed in the actual client. |
+| `client-002/evidence/reconnect-passed.json` | Actual server disconnect, native saved-login authentication, Nephtest re-entry/rendering, bridge fail-closed stop and explicit guarded-macro restart. Fresh bridge and server observations agree on52.1 Magery, zero donors,1000.0 total, consumed scroll, empty SoulStone and1,990 points. Queues were empty at this verified reconnect snapshot. |
+| `client-002/evidence/online-restoration.json`, `cleanup-result.json` | Original in-memory Player progression/inventory matched exactly before stopping. At2026-10-19T15:02:22Z all owned server/client/bridge/model identities were absent; complete copied saves/profiles restored; all14 protected originals/backups unchanged; assigned ports free. Supervisors forcibly ended their owned server/client after milestones, not graceful shutdown proof. |
+
+The clean client002 runtime script assembly is `27ae298ab34ad4fc918a4d88d1bd203645b81270da7be2bee44e97d2a292be07`; source manifest is `ed75c90246be61ffba52edfab35943871a63287b381d433771d53b035d4308a2`. Ordinary startup recompiles the same pinned sources after compile-only; the gameplay hash is recorded separately from compile-only. Its immediate tool parent is corrected client001, descended from client011 guarded tools; copied client/configuration lineage remains verified restored client004. No client003 setup was used.
+
+## Retained failures and review
+
+- The first component attempt used an unconstructed NetState through its normal transport property. The harness was corrected to supply a response-only fixture; neither that failure nor the fix is described as real network evidence.
+- Initial client001 fixture compilation failed on unsupported Lock assignment and the nonexistent ItemID alias. Only the external fixture was corrected; production candidate hashes stayed fixed.
+- Independent review found the nested test class SafeRegion shadowed the production short-name XML lookup and caused14 region construction failures. Client001 was rejected as a clean acceptance run, stopped and restored. Client002 uses the unique Fix02AcceptanceLogoutRegion and explicitly rejects region construction errors at startup. Its complete acceptance was rerun.
+- Client002's first inspect ran before a bridge heartbeat and failed closed. A fresh status preceded the successful retry. A repeated one-time check-stone after reconnect rejected the already-completed stage; its failed response is retained. Separate fresh reconnect inspection asserts the completed stage and every exact value without changing that assertion.
+- Qwen chose the valid observed confirmation but incorrectly described the Up lock as something the scroll would unlock. [Resident feedback](FIX-02-RESIDENT-FEEDBACK.md) separates that error from the successful supervised action. This is neither autonomous play acceptance nor model training.
+
+Independent reviews: [design](../codebase-audit/outputs/subagent-findings/fix02-design-review.md), [implementation](../codebase-audit/outputs/subagent-findings/fix02-implementation-review.md), [fixture and acceptance](../codebase-audit/outputs/subagent-findings/fix02-client001-review.md). Prior FIX-05 rendering/crowded recovery acceptance remains tied to its unchanged five core source files; current-candidate network/world/client regression supplies additional compatibility evidence without relabeling older tests.
+
+Tracker reconciliation changes only the existing FIX-02 record (workbook row6822):6,824 records,955 Fixed and2 Deferred. All other record XML and unrelated workbook parts remain unchanged. Both final dashboard and analysis previews were inspected. Eight numeric recalculation checks passed; the artifact engine does not support the date COUNTIF wildcard used by the existing workbook, so its date preview and cached OK label are not credited as recalculation proof. Native formulas remain intact and saved summary caches were independently reconciled against every CSV date. Native Excel recalculation was not performed. Evidence: `fix02/backlog/FIX02-client002/backlog-update/validation.json` and `fix02/backlog/final-import-checks.json`.
+
+No production deployment, production-save migration, live Mira control, long autonomous run or new staff migration execution is claimed. Preserved unrelated files remain excluded from Git: the HTML backlog review and original FIX-01 PowerShell/C# harnesses.

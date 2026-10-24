@@ -99,40 +99,28 @@ namespace Server.Items
             if (!CanUse(from))
                 return;
 
-            double tskill = from.Skills[Skill].Base; // value of skill without item bonuses etc
-            double tcap = from.Skills[Skill].Cap; // maximum value permitted
-            bool canGain = false;
+            Skill target = from.Skills[Skill];
+            if (target == null || double.IsNaN(Value) || double.IsInfinity(Value) || Value <= 0.0)
+                return;
 
-            double newValue = Value;
+            int amount = Math.Min((int)(Math.Min(Value, target.Cap) * 10.0), target.CapFixedPoint - target.BaseFixedPoint);
+            int[] losses = new int[from.Skills.Length];
 
-            if ((tskill + newValue) > tcap)
-                newValue = tcap - tskill;
-
-            if (tskill < tcap && from.Skills[Skill].Lock == SkillLock.Up)
+            if (from.Skills.GetBaseTotal() + amount > from.SkillsCap)
             {
-                if ((from.SkillsTotal + newValue * 10) > from.SkillsCap)
+                for (int i = 0; i < from.Skills.Length; ++i)
                 {
-                    int ns = from.Skills.Length; // number of items in from.Skills[]
-
-                    for (int i = 0; i < ns; i++)
+                    Skill donor = from.Skills[i];
+                    // Scrolls retain their single donor, full-increment rule.
+                    if (donor != target && donor.Lock == SkillLock.Down && donor.BaseFixedPoint >= amount)
                     {
-                        // skill must point down and its value must be enough
-                        if (
-                            from.Skills[i].Lock == SkillLock.Down
-                            && from.Skills[i].Base >= newValue
-                        )
-                        {
-                            from.Skills[i].Base -= newValue;
-                            canGain = true;
-                            break;
-                        }
+                        losses[i] = amount;
+                        break;
                     }
                 }
-                else
-                    canGain = true;
             }
 
-            if (!canGain)
+            if (!from.Skills.TryGrant(target, amount, losses))
             {
                 from.SendLocalizedMessage(1094935); /*You cannot increase this skill at this time. The skill may be locked or set to lower in your skill menu.
 														*If you are at your total skill cap, you must use a Powerscroll to increase your current skill cap.*/
@@ -140,8 +128,6 @@ namespace Server.Items
             }
 
             from.SendLocalizedMessage(1049513, GetNameLocalized()); // You feel a surge of magic as the scroll enhances your ~1_type~!
-
-            from.Skills[Skill].Base += newValue;
 
             Effects.PlaySound(from.Location, from.Map, 0x1F7);
             Effects.SendTargetParticles(
