@@ -2,6 +2,18 @@
 Nephtan
 Announcements:
 
+The Power Scroll display fix is now live!
+
+- Power Scrolls from champion bosses and champion-spawn waves now show their skill cap and scroll tier in their tooltips.
+- Power Scroll confirmation windows now show the skill and cap before use, such as Magery (120 Skill Cap).
+- Existing champion Power Scrolls receive the corrected display too; you do not need to replace them.
+
+Good hunting!
+
+[*]October 24th, 2026
+Nephtan
+Announcements:
+
 Server changes since the August 9th announcement:
 
 Character progress and skills:
