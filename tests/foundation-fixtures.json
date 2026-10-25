@@ -1,0 +1,9 @@
+{
+  "payments": {"classification": "current-regression", "sources": ["tests/FoundationPaymentRegression.cs"], "main": "FoundationPaymentRegression", "marker": "PASS current payments"},
+  "payments-historical": {"classification": "historical-characterization", "sources": ["tests/FoundationPaymentRegression.cs"], "main": "FoundationPaymentRegression", "args": ["historical"], "marker": "REPRODUCED historical payments"},
+  "champion": {"classification": "current-regression", "sources": ["tests/ChampionRewardRegression.cs"], "main": "ChampionRewardRegression", "marker": "assertions; no world saves loaded or listeners started."},
+  "research": {"classification": "current-regression", "sources": ["tests/ResearchLogoutRegression.cs"], "main": "ResearchLogoutRegression", "marker": "assertions; no world saves loaded or listeners started."},
+  "food": {"classification": "current-regression", "sources": ["D:/ConficturaUOTestTools/ordered-repairs-20261018/fixtures/reference/create-food/CreateFoodRegression.cs"], "main": "CreateFoodRegression", "args": ["repaired"], "marker": "actual production methods; no world saves loaded, listeners or timer thread started."},
+  "accounting": {"classification": "current-regression", "sources": ["D:/ConficturaUOTestTools/ordered-repairs-20261018/fix04/SkillAccountingRegression.cs"], "main": "SkillAccountingRegression", "marker": "assertions; isolated production methods, no world or listener."},
+  "skill-investigation-historical": {"classification": "historical-characterization", "sources": ["tests/SkillCapInvestigation.cs", "tests/SkillCapMutationInventory.cs"], "main": "SkillCapInvestigation", "marker": "NOT A CURRENT ACCEPTANCE GATE"}
+}

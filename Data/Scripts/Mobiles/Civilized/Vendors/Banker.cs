@@ -65,6 +65,9 @@ namespace Server.Mobiles
 
         public static bool Withdraw(Mobile from, int amount)
         {
+            if (amount < 0)
+                return false;
+
             Item[] gold,
                 checks;
             int balance = GetBalance(from, out gold, out checks);

@@ -1439,3 +1439,5 @@ Fresh Release/x86 source build, forced runtime compile, production-method regres
 Canonical details: [FIX-01 report](../skill-cap-investigation/FIX-01-REPORT.md), [independent review](outputs/subagent-findings/fix01-independent-review.md), and the active CSV/workbook (6,823 rows; original 6,819 preserved). External evidence and rollback: `D:\ConficturaUOTestTools\fix01-20261018`. Local commits are authorized; push and activation remain user-owned. New regression fixtures are intentionally excluded from Git and preserved with hashes under the external `regression-harness/` directory.
 
 Foundation sequence 2026-10-25: scoped post-audit FIX-09..15 logged in outputs/foundation-batches-20261025.md. Batch 1 InProgress, batches 2/3 NotStarted. Historical phase dispositions unchanged; no acceptance claimed.
+
+Foundation Batch 1 FIX-09/10 Complete: isolated build/runtime compile,74 payment assertions and accepted regressions; independent review accepted. Matching tested core packaged; local commit follows. Batches2/3 NotStarted; historical phases unchanged.

@@ -6707,6 +6707,9 @@ namespace Server
 
         public virtual void Consume(int amount)
         {
+            if (amount < 0)
+                return;
+
             this.Amount -= amount;
 
             if (this.Amount <= 0)

@@ -343,6 +343,9 @@ namespace Server.Items
             if (grouper == null)
                 throw new ArgumentNullException();
 
+            if (amount < 0)
+                return false;
+
             Item[] typedItems = FindItemsByType(type, recurse);
 
             List<List<Item>> groups = new List<List<Item>>();
@@ -440,6 +443,10 @@ namespace Server.Items
                 throw new ArgumentException();
             else if (grouper == null)
                 throw new ArgumentNullException();
+
+            for (int i = 0; i < amounts.Length; ++i)
+                if (amounts[i] < 0)
+                    return i;
 
             Item[][][] items = new Item[types.Length][][];
             int[][] totals = new int[types.Length][];
@@ -547,6 +554,10 @@ namespace Server.Items
                 throw new ArgumentException();
             else if (grouper == null)
                 throw new ArgumentNullException();
+
+            for (int i = 0; i < amounts.Length; ++i)
+                if (amounts[i] < 0)
+                    return i;
 
             Item[][][] items = new Item[types.Length][][];
             int[][] totals = new int[types.Length][];
@@ -661,6 +672,10 @@ namespace Server.Items
             if (types.Length != amounts.Length)
                 throw new ArgumentException();
 
+            for (int i = 0; i < amounts.Length; ++i)
+                if (amounts[i] < 0)
+                    return i;
+
             Item[][] items = new Item[types.Length][];
             int[] totals = new int[types.Length];
 
@@ -722,6 +737,10 @@ namespace Server.Items
             if (types.Length != amounts.Length)
                 throw new ArgumentException();
 
+            for (int i = 0; i < amounts.Length; ++i)
+                if (amounts[i] < 0)
+                    return i;
+
             Item[][] items = new Item[types.Length][];
             int[] totals = new int[types.Length];
 
@@ -780,6 +799,9 @@ namespace Server.Items
 
         public bool ConsumeTotal(Type type, int amount, bool recurse, OnItemConsumed callback)
         {
+            if (amount < 0)
+                return false;
+
             Item[] items = FindItemsByType(type, recurse);
 
             // First pass, compute total
@@ -830,6 +852,9 @@ namespace Server.Items
 
         public int ConsumeUpTo(Type type, int amount, bool recurse)
         {
+            if (amount < 0)
+                return 0;
+
             int consumed = 0;
 
             Queue<Item> toDelete = new Queue<Item>();

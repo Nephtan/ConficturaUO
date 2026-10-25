@@ -2521,7 +2521,18 @@ namespace Server.Mobiles
             return null;
         }
 
-        private void ProcessSinglePurchase(
+        private static bool TryAddPurchaseCost(int price, int amount, ref int totalCost)
+        {
+            long cost = (long)price * amount + totalCost;
+
+            if (price < 0 || amount < 0 || totalCost < 0 || cost > int.MaxValue)
+                return false;
+
+            totalCost = (int)cost;
+            return true;
+        }
+
+        private bool ProcessSinglePurchase(
             BuyItemResponse buy,
             IBuyItemInfo bii,
             List<BuyItemResponse> validBuy,
@@ -2536,22 +2547,30 @@ namespace Server.Mobiles
                 amount = bii.Amount;
 
             if (amount <= 0)
-                return;
+                return true;
 
-            int slots = bii.ControlSlots * amount;
+            int cost = totalCost;
+            if (!TryAddPurchaseCost(bii.Price, amount, ref cost))
+                return false;
+
+            long slots = (long)bii.ControlSlots * amount;
+
+            if (slots < 0)
+                return false;
 
             if (controlSlots >= slots)
             {
-                controlSlots -= slots;
+                controlSlots -= (int)slots;
             }
             else
             {
                 fullPurchase = false;
-                return;
+                return true;
             }
 
-            totalCost += bii.Price * amount;
+            totalCost = cost;
             validBuy.Add(buy);
+            return true;
         }
 
         private void ProcessValidPurchase(
@@ -2653,6 +2672,19 @@ namespace Server.Mobiles
 
         public virtual bool OnBuyItems(Mobile buyer, List<BuyItemResponse> list)
         {
+            if (buyer == null || list == null)
+                return false;
+
+            // Quote each stock entry once, before either payment or delivery changes it.
+            Dictionary<Serial, bool> seen = new Dictionary<Serial, bool>();
+            foreach (BuyItemResponse buy in list)
+            {
+                if (buy == null || buy.Amount < 0 || seen.ContainsKey(buy.Serial))
+                    return false;
+
+                seen.Add(buy.Serial, true);
+            }
+
             if (!IsActiveSeller)
                 return false;
 
@@ -2701,14 +2733,15 @@ namespace Server.Mobiles
 
                     if (gbi != null)
                     {
-                        ProcessSinglePurchase(
+                        if (!ProcessSinglePurchase(
                             buy,
                             gbi,
                             validBuy,
                             ref controlSlots,
                             ref fullPurchase,
                             ref totalCost
-                        );
+                        ))
+                            return false;
                     }
                     else if (item != this.BuyPack && item.IsChildOf(this.BuyPack))
                     {
@@ -2724,7 +2757,8 @@ namespace Server.Mobiles
                             {
                                 if (ssi.IsResellable(item))
                                 {
-                                    totalCost += ssi.GetBuyPriceFor(item) * amount;
+                                    if (!TryAddPurchaseCost(ssi.GetBuyPriceFor(item), amount, ref totalCost))
+                                        return false;
                                     validBuy.Add(buy);
                                     break;
                                 }
@@ -2742,14 +2776,15 @@ namespace Server.Mobiles
                     GenericBuyInfo gbi = LookupDisplayObject(mob);
 
                     if (gbi != null)
-                        ProcessSinglePurchase(
+                        if (!ProcessSinglePurchase(
                             buy,
                             gbi,
                             validBuy,
                             ref controlSlots,
                             ref fullPurchase,
                             ref totalCost
-                        );
+                        ))
+                            return false;
                 }
             } //foreach
 
