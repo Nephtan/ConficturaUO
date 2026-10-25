@@ -1445,3 +1445,5 @@ Foundation Batch 1 FIX-09/10 code/regression complete; in-game acceptance pendin
 Foundation current checkpoint2026-10-25: all three batches code/regression complete and independently reviewed. FIX09..15 final in-game Qwen acceptance pending through the existing session; all seven active-overlay rows remain Open. Historical phase dispositions and FIX01..05 remain unchanged.
 
 Foundation handoff ready: code commits d9b4703f /7f146df6 /143e9fb3, exact tracked-core combined candidate verified; CSV/workbook6,831 rows/957 Fixed/7 foundation Open. All prior rows preserved. No owned test/preview process or repository runtime at15:07:25Z. Final in-game acceptance remains pending; parent activates the original session. See outputs/foundation-ingame-handoff.md.
+
+Foundation acceptance/pause checkpoint2026-10-25: FIX09-14 Fixed after final independent in-game reviews; FIX15 Open, code/regression complete but all in-game cases unrun and PAUSED. No auto-resume/heartbeat/schedule; explicit human instruction required. CSV/workbook6831 records/963 Fixed/one Open. Exact resume handoff and limitations: outputs/foundation-acceptance-pause-20261025.md.

@@ -1,5 +1,8 @@
 # Foundation Batch 2: FIX-11 through FIX-14
 
+**Current disposition: accepted within the final reviewed isolated in-game scope.** See [acceptance/pause checkpoint](foundation-acceptance-pause-20261025.md). Earlier component-only statements below are historical, not the current acceptance status.
+
+
 Code/regression work and independent review are complete. **In-game acceptance is pending** in the previous FIX-01–05 Qwen session, as requested on 2026-10-25. This report does not claim batch completion or client testing.
 
 ## Bounded changes

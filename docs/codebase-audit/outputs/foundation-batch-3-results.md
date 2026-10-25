@@ -1,5 +1,8 @@
 # Foundation Batch 3: FIX-15
 
+**Current disposition: code/regression complete; all in-game cases unrun and PAUSED by user. No auto-resume.** See [acceptance/pause checkpoint](foundation-acceptance-pause-20261025.md). Earlier component-only statements below are historical, not the current acceptance status.
+
+
 **Code/regression work and independent review complete; in-game acceptance pending** in the existing FIX-01–05 Qwen session. Only `Data/Scripts/Items/Trades/Misc/Bandage.cs` changes production behavior. No other timer or spell repair was selected.
 
 ## Ownership repair

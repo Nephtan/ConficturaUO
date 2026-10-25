@@ -2020,3 +2020,5 @@ Canonical details: [FIX-01 report](../../skill-cap-investigation/FIX-01-REPORT.m
 - [Foundation batches 2026-10-25](foundation-batches-20261025.md): ordered FIX-09..15 scope, ID reconciliation, acceptance and closeout evidence.
 
 - [Foundation in-game handoff](foundation-ingame-handoff.md): all three code/regression batches ready; prior Qwen session required for final acceptance, exact candidate hashes and scenario matrix.
+
+- [Foundation acceptance and pause](foundation-acceptance-pause-20261025.md): FIX09-14 accepted in scoped in-game evidence; FIX15 paused pending in-game work, exact resume handoff and no-auto-resume state.

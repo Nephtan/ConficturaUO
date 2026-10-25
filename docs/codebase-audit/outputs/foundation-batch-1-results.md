@@ -1,5 +1,8 @@
 # Foundation Batch 1: FIX-09 and FIX-10
 
+**Current disposition: accepted within the final reviewed isolated in-game scope.** See [acceptance/pause checkpoint](foundation-acceptance-pause-20261025.md). Earlier component-only statements below are historical, not the current acceptance status.
+
+
 **Code/regression complete; in-game acceptance pending** in the previous FIX-01–05 Qwen session under the user's updated 2026-10-25 requirement. Commit `d9b4703f` and its evidence remain valid.
 
 Scope: shared negative deductions, vendor quote arithmetic/duplicates, and a thin component preflight. No serializer, price, global timer, skill/origin policy, namespace or project include changes.

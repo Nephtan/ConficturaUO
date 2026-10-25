@@ -1,0 +1,58 @@
+{
+  "utc": "2026-10-25T19:51:29.728757+00:00",
+  "records": 6831,
+  "statuses": {
+    "Fixed": 963,
+    "ReviewedNoChange": 2650,
+    "FalsePositive": 330,
+    "SafeNoChange": 678,
+    "IntentionalLegacy": 1395,
+    "AcceptedFence": 83,
+    "Documented": 352,
+    "BlocksOnlyThisDomain": 7,
+    "PolicyResolvedNoChange": 372,
+    "Open": 1
+  },
+  "changed_record_rows": [
+    6826,
+    6827,
+    6828,
+    6829,
+    6830,
+    6831,
+    6832
+  ],
+  "all_rows_match_csv": true,
+  "untouched_record_xml_byte_identical": true,
+  "changed_package_parts": [
+    "xl/worksheets/sheet1.xml",
+    "xl/worksheets/sheet2.xml",
+    "xl/worksheets/sheet3.xml",
+    "xl/charts/chart1.xml"
+  ],
+  "all_other_package_parts_byte_identical": true,
+  "native_features_preserved": true,
+  "cached_summary_results_reconciled_from_csv": true,
+  "native_excel_recalculation_performed": false,
+  "artifact_tool_authored_and_recalculated": false,
+  "artifact_engine_reconciliation_numeric_checks_passed": 0,
+  "artifact_engine_date_check": "Not rerun. Prior documented wildcard/shared-formula limitations retained; native formulas preserved and saved caches reconciled.",
+  "normalized_duplicate_summary_addresses": {
+    "2": [],
+    "3": []
+  },
+  "artifact_export_unrelated_parts_changed": 0,
+  "native_preservation_serialization": "Original package retained; only reviewed data/formula/cache/table/chart XML updated",
+  "visual_verification": "Not rerun: explicit minimal bookkeeping instruction; native package preservation and saved values checked.",
+  "csv_sha256": "c75ed38ab7bd2aa5d536205587848c07ee3b3ab46918200a45bc3edd6512a5cb",
+  "workbook_sha256": "b40ce2c215ffaf5a6cf5ef89e6c9637a8d41edc0cdad11829fdc1377e6cf0af4",
+  "reviewed_evidence_sha256": {
+    "D:\\ConficturaUOTestTools\\foundation-ingame-20261025\\BATCH2-PAUSE-HANDOFF-20261025.md": "fab577016e0d0eb861cff50c3e82c1e38fbbfad5a838b204eb98813e5ad00553",
+    "D:\\ConficturaUOTestTools\\foundation-ingame-20261025\\reviews\\batch1-final-evidence-review.md": "7c1b2f9b8d1023b8e9d6177dfd8fad3d5b45c2b0f9f1d35d60b36f3414b36708",
+    "D:\\ConficturaUOTestTools\\foundation-ingame-20261025\\reviews\\batch2-xml-final-evidence-review.md": "c0565dc054f2714bec0c50e3167caf4f6fdcf9144a5ea101836d4c0dbaec6ba6",
+    "D:\\ConficturaUOTestTools\\foundation-ingame-20261025\\reviews\\batch2-bod-final-evidence-review.md": "e923ba1683c906fac3517e4c5e5244c415a5f4616da90ec6ee3f191c76dab82c",
+    "D:\\ConficturaUOTestTools\\foundation-ingame-20261025\\reviews\\batch2-city-final-evidence-review.md": "206665861a53c45cddd007ecf77d02275a028a9185cace80b1319431d4b40147",
+    "D:\\ConficturaUOTestTools\\foundation-ingame-20261025\\reviews\\batch2-corpse-final-evidence-review.md": "353c663fc6ca27f5d3448f0ad9a5123898fe617554bb5188d71b44706e6ae4ef"
+  },
+  "state": "Batch1/2 accepted in scoped evidence; Batch3 in-game pending and paused, no auto-resume"
+}
