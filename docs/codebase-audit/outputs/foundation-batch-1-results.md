@@ -1,5 +1,7 @@
 # Foundation Batch 1: FIX-09 and FIX-10
 
+**Code/regression complete; in-game acceptance pending** in the previous FIX-01–05 Qwen session under the user's updated 2026-10-25 requirement. Commit `d9b4703f` and its evidence remain valid.
+
 Scope: shared negative deductions, vendor quote arithmetic/duplicates, and a thin component preflight. No serializer, price, global timer, skill/origin policy, namespace or project include changes.
 
 ## Repairs
@@ -33,4 +35,4 @@ Host CIM inspection at 2026-10-25T14:19:56Z found no Confictura/RunUO process or
 
 RuntimeScriptCompileTruth passed; this compile-only path returns before world load/listening. IDE/project builds were not run because no project entries changed. Full-world save/load, real Player/native UI, Qwen, deployment and live behavior were not tested in this bounded component batch. The shared core and affected callback behavior are proven only by the stated production-method fixtures and prior regressions.
 
-Independent review: [foundation-batch-1-review.md](subagent-findings/foundation-batch-1-review.md). Final acceptance and local commit are recorded in the sequence register after review. `git diff --check` passed; only intended files and the matching executable are staged. Historical recommendations/dispositions and the four unrelated untracked paths remain preserved.
+Independent review: [foundation-batch-1-review.md](subagent-findings/foundation-batch-1-review.md). Code/regression review and local commit are recorded in the sequence register. Final in-game acceptance is pending. `git diff --check` passed; only intended files and the matching executable are staged. Historical recommendations/dispositions and the four unrelated untracked paths remain preserved.

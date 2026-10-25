@@ -11,6 +11,7 @@ namespace Server.Prompts
     {
         private CityManagementStone m_Stone;
         private Mobile m_From;
+        private bool m_Responded;
 
         public CityTaxesIncomePrompt(CityManagementStone stone, Mobile from)
         {
@@ -18,59 +19,68 @@ namespace Server.Prompts
             m_From = from;
         }
 
+        private void Reopen(Mobile from)
+        {
+            if (from == m_From && CityManagementGump.CanManage(m_Stone, from))
+            {
+                from.CloseGump(typeof(CityManagementGump));
+                from.SendGump(new CityManagementGump(m_Stone, from));
+            }
+        }
+
         public override void OnCancel(Mobile from)
         {
-            m_From.CloseGump(typeof(CityManagementGump));
-            m_From.SendGump(new CityManagementGump(m_Stone, m_From));
+            if (m_Responded)
+                return;
+
+            m_Responded = true;
+            Reopen(from);
         }
 
         public override void OnResponse(Mobile from, string text)
         {
-            text = text.Trim();
+            if (m_Responded)
+                return;
 
+            m_Responded = true;
+            if (from != m_From || !CityManagementGump.CanManage(m_Stone, from))
+                return;
+
+            text = text == null ? String.Empty : text.Trim();
             if (text.Length > 40)
                 text = text.Substring(0, 40);
 
-            if (text.Length > 0)
+            int amount;
+            if (text.Length == 0)
             {
-                try
+                Reopen(from);
+                return;
+            }
+            if (!Int32.TryParse(text, out amount))
+                from.SendMessage("You must enter a number amount.");
+            else if (amount < 0 || amount > 100)
+                from.SendMessage("Income Tax can only range from 0 - 100");
+            else
+            {
+                m_Stone.IncomeTax = amount;
+                if (m_Stone.Vendors != null)
                 {
-                    int amount = Convert.ToInt32(text);
-
-                    if (amount <= -1)
+                    foreach (Mobile mob in m_Stone.Vendors)
                     {
-                        from.SendMessage("Income Tax can only range from 0 - 100");
-                    }
-                    else if (amount <= 100)
-                    {
-                        from.SendMessage("You have set the cities income tax to {0}.", amount);
-                        m_Stone.IncomeTax = amount;
-
-                        if (m_Stone.Vendors.Count > 0)
-                            foreach (Mobile mob in m_Stone.Vendors)
-                            {
-                                CityPlayerVendor vend = (CityPlayerVendor)mob;
-                                vend.TaxRate = amount;
-                            }
-
-                        foreach (Mobile m in m_Stone.Citizens)
-                        {
-                            m.SendMessage(53, "The cities income tax has changed to {0}.", amount);
-                        }
-                    }
-                    else
-                    {
-                        from.SendMessage("Taxes can only range from 0 - 100");
+                        CityPlayerVendor vendor = mob as CityPlayerVendor;
+                        if (vendor != null && !vendor.Deleted)
+                            vendor.TaxRate = amount;
                     }
                 }
-                catch
+                from.SendMessage("You have set the cities income tax to {0}.", amount);
+                if (m_Stone.Citizens != null)
                 {
-                    from.SendMessage("You must enter a number amount.");
+                    foreach (Mobile citizen in m_Stone.Citizens)
+                        if (citizen != null && !citizen.Deleted)
+                            citizen.SendMessage(53, "The cities income tax has changed to {0}.", amount);
                 }
             }
-
-            m_From.CloseGump(typeof(CityManagementGump));
-            m_From.SendGump(new CityManagementGump(m_Stone, m_From));
+            Reopen(from);
         }
     }
 }

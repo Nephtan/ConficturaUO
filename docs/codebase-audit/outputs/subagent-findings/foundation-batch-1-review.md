@@ -2,6 +2,8 @@
 
 Reviewed 2026-10-25 against baseline `c747ecd8`. Reviewer scope is read-only production review; this report is the only reviewer-authored file. Root and audit `AGENTS.md` apply. The four pre-existing untracked paths were observed and left untouched. No prior controller, server, client, model, build, or fixture was launched by this reviewer.
 
+**Current status: code/regression review complete; in-game acceptance pending.** The user's later October 25 requirement adds isolated in-game Qwen testing through the existing FIX-01–05 test session before Batch 1 may be called fully accepted or complete. The successful component review and local commit remain valid evidence; they do not fulfill this additional gate. Earlier review conclusions below are limited accordingly.
+
 ## Design review: acceptance pending
 
 The bounded FIX-09/FIX-10 plan is appropriate. Preserve FIX-06 through FIX-08 as the distinct historical recommendations in `docs/skill-cap-investigation/REPAIR_RECOMMENDATIONS.md`; do not credit neighboring RB dispositions for these newly confirmed defects. Static design review does not accept implementation or runtime behavior.
@@ -37,7 +39,7 @@ Classify historical defect-characterization separately from current regressions;
 - RuntimeScriptCompileTruth: forced isolated runtime compile succeeds. Operational core build is from the same frozen source snapshot; no serialized methods/layouts change. Matching production core hash is recorded and packaged with source only after no production process is found using the tracked executable.
 - Tooling negative tests prove wrong API, wrong reference, stale inputs, absent marker and timeout fail with stage/reason. Current component regressions execute against exact assemblies; historical reproductions are reported separately.
 
-## Candidate and evidence review: accepted for the scoped batch
+## Candidate and evidence review: code/regression review complete
 
 The final production diff implements R1-R3 without changing serializers, type identity, timer semantics, prices, or skill/origin policy. Every negative amount-array guard precedes discovery/callbacks/deductions; `ConsumeUpTo` is also guarded. Vendor duplicate/negative-request validation precedes stock lookup and staff/payment/delivery branches. Ordinary stock and resale costs use the same wide arithmetic boundary; an invalid quote rejects the whole request. Control-slot multiplication is wide while ordinary insufficient-slot handling remains local to that stock line.
 
@@ -52,8 +54,8 @@ Evidence roots under `C:/Users/nepht/AppData/Local/Temp/`:
 - `confictura-foundation-20261025-batch1-001`: operational build and runtime compile passed. Final `payments-run-attempt-2.log` reports **74 assertions**, with fixture identity `payments-286ce731.identity.json`; fixture SHA-256 `52b45cf0e5c923486812acc144aac38bacd7315d72ec2d3586eb983ed15abc36`. It covers all six positive/negative total/grouped paths, nested up-to, zero/exact/multiple-stack behavior, gold/check bank cases, real ordinary/resale purchases, per-line and aggregate overflow, duplicate/negative requests, stock clamping, bank payment, staff free purchase and slot overflow. Expanded tests resolved the initial coverage gap.
 - Same candidate: Food **1,853**, accounting **3,972**, champion **679**, Research **46** assertions passed against the candidate assemblies. Successful processes exited normally, with exit zero and required markers. Payment fixture compile attempt 2 failed on an invalid `Serial` constructor call; its log is retained. Attempt 3 corrected that test-only call to the existing cast API and passed. No production patch was required for this harness failure.
 
-`git diff --check` passed. No unresolved material production or scoped acceptance finding remains. This approves the exact reviewed candidate for the Batch 1 source-plus-matching-executable local commit. Parent packaging must retain the recorded core hash, recheck full source correspondence and absence of a process using the tracked executable, and stage only intended files; those are completion steps, not permission to deploy.
+`git diff --check` passed. No unresolved material production or component-review finding remains. This approved the exact reviewed candidate for the Batch 1 source-plus-matching-executable local commit, subsequently delivered as `d9b4703f`. The later in-game Qwen acceptance requirement remains pending; the local commit does not mark the entire batch complete or authorize deployment.
 
 ### Limits
 
-This is no-save/no-listener component and production-runtime-compiler acceptance. No live shard, real client, copied full-world save/load, production balance reachability, upstream price-scalar policy, arbitrary callback rollback, or all serialized properties are certified. All source and tooling observations are independent review of recorded evidence; the reviewer did not launch tests or own runtime processes. Historical FIX-01 through FIX-08 and unrelated audit dispositions remain unchanged by this review.
+This is no-save/no-listener component and production-runtime-compiler evidence. No live shard, real client, copied full-world save/load, production balance reachability, upstream price-scalar policy, arbitrary callback rollback, or all serialized properties are certified. All source and tooling observations are independent review of recorded evidence; the reviewer did not launch tests or own runtime processes. Historical FIX-01 through FIX-08 and unrelated audit dispositions remain unchanged by this review.

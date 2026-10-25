@@ -21,6 +21,9 @@ namespace Server.Gumps
     public class PointsRewardGump : Gump
     {
         private ArrayList Rewards;
+        private ArrayList m_Offers = new ArrayList();
+        private Mobile m_From;
+        private bool m_Responded;
 
         private int y_inc = 35;
         private int x_creditoffset = 350;
@@ -34,7 +37,10 @@ namespace Server.Gumps
             from.CloseGump(typeof(PointsRewardGump));
 
             // determine the gump size based on the number of rewards
-            Rewards = XmlPointsRewards.RewardsList;
+            Rewards = (ArrayList)XmlPointsRewards.RewardsList.Clone();
+            m_From = from;
+            foreach (object reward in Rewards)
+                m_Offers.Add(new XmlRewardOffer(reward));
 
             viewpage = page;
 
@@ -139,10 +145,14 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState state, RelayInfo info)
         {
-            if (info == null || state == null || state.Mobile == null || Rewards == null)
+            if (m_Responded || info == null || state == null || state.Mobile == null
+                || state.Mobile != m_From || state.Mobile.Deleted || Rewards == null)
                 return;
 
+            m_Responded = true;
             Mobile from = state.Mobile;
+            if (info.ButtonID <= 0)
+                return;
 
             switch (info.ButtonID)
             {
@@ -170,78 +180,13 @@ namespace Server.Gumps
                     break;
                 default:
                 {
-                    if (info.ButtonID >= 1000)
+                    int selection = info.ButtonID - 1000;
+                    if (selection >= 0 && selection < m_Offers.Count
+                        && selection / maxItemsPerPage == viewpage)
                     {
-                        int selection = info.ButtonID - 1000;
-                        if (selection < Rewards.Count)
-                        {
-                            XmlPointsRewards r = Rewards[selection] as XmlPointsRewards;
-
-                            // check the price
-                            if (XmlPoints.HasCredits(from, r.Cost))
-                            {
-                                // create an instance of the reward type
-                                object o = null;
-
-                                try
-                                {
-                                    o = Activator.CreateInstance(r.RewardType, r.RewardArgs);
-                                }
-                                catch { }
-
-                                bool received = true;
-
-                                if (o is Item)
-                                {
-                                    // and give them the item
-                                    from.AddToBackpack((Item)o);
-                                }
-                                else if (o is Mobile)
-                                {
-                                    // if it is controllable then set the buyer as master.  Note this does not check for control slot limits.
-                                    if (o is BaseCreature)
-                                    {
-                                        BaseCreature b = o as BaseCreature;
-                                        b.Controlled = true;
-                                        b.ControlMaster = from;
-                                    }
-
-                                    ((Mobile)o).MoveToWorld(from.Location, from.Map);
-                                }
-                                else if (o is XmlAttachment)
-                                {
-                                    XmlAttachment a = o as XmlAttachment;
-
-                                    XmlAttach.AttachTo(from, a);
-                                }
-                                else
-                                {
-                                    from.SendMessage(
-                                        33,
-                                        "unable to create {0}.",
-                                        r.RewardType.Name
-                                    );
-                                    received = false;
-                                }
-
-                                // complete the transaction
-                                if (received)
-                                {
-                                    // charge them
-                                    XmlPoints.TakeCredits(from, r.Cost);
-                                    from.SendMessage(
-                                        "You have purchased {0} for {1} credits.",
-                                        r.Name,
-                                        r.Cost
-                                    );
-                                }
-                            }
-                            else
-                            {
-                                from.SendMessage("Insufficient Credits for {0}.", r.Name);
-                            }
-                            from.SendGump(new PointsRewardGump(from, viewpage));
-                        }
+                        XmlRewardOffer offer = (XmlRewardOffer)m_Offers[selection];
+                        offer.Redeem(from, XmlPointsRewards.RewardsList, selection, false);
+                        from.SendGump(new PointsRewardGump(from, viewpage));
                     }
                     break;
                 }

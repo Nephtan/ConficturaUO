@@ -21,6 +21,9 @@ namespace Server.Gumps
     public class QuestRewardGump : Gump
     {
         private ArrayList Rewards;
+        private ArrayList m_Offers = new ArrayList();
+        private Mobile m_From;
+        private bool m_Responded;
 
         private int y_inc = 35;
         private int x_creditoffset = 350;
@@ -34,7 +37,10 @@ namespace Server.Gumps
             from.CloseGump(typeof(QuestRewardGump));
 
             // determine the gump size based on the number of rewards
-            Rewards = XmlQuestPointsRewards.RewardsList;
+            Rewards = (ArrayList)XmlQuestPointsRewards.RewardsList.Clone();
+            m_From = from;
+            foreach (object reward in Rewards)
+                m_Offers.Add(new XmlRewardOffer(reward));
 
             viewpage = page;
 
@@ -139,10 +145,14 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState state, RelayInfo info)
         {
-            if (info == null || state == null || state.Mobile == null || Rewards == null)
+            if (m_Responded || info == null || state == null || state.Mobile == null
+                || state.Mobile != m_From || state.Mobile.Deleted || Rewards == null)
                 return;
 
+            m_Responded = true;
             Mobile from = state.Mobile;
+            if (info.ButtonID <= 0)
+                return;
 
             switch (info.ButtonID)
             {
@@ -170,82 +180,149 @@ namespace Server.Gumps
                     break;
                 default:
                 {
-                    if (info.ButtonID >= 1000)
+                    int selection = info.ButtonID - 1000;
+                    if (selection >= 0 && selection < m_Offers.Count
+                        && selection / maxItemsPerPage == viewpage)
                     {
-                        int selection = info.ButtonID - 1000;
-                        if (selection < Rewards.Count)
-                        {
-                            XmlQuestPointsRewards r = Rewards[selection] as XmlQuestPointsRewards;
-
-                            // check the price
-                            if (XmlQuestPoints.HasCredits(from, r.Cost))
-                            {
-                                // create an instance of the reward type
-                                object o = null;
-
-                                try
-                                {
-                                    o = Activator.CreateInstance(r.RewardType, r.RewardArgs);
-                                }
-                                catch { }
-
-                                bool received = true;
-
-                                if (o is Item)
-                                {
-                                    // and give them the item
-                                    from.AddToBackpack((Item)o);
-                                }
-                                else if (o is Mobile)
-                                {
-                                    // if it is controllable then set the buyer as master.  Note this does not check for control slot limits.
-                                    if (o is BaseCreature)
-                                    {
-                                        BaseCreature b = o as BaseCreature;
-                                        b.Controlled = true;
-                                        b.ControlMaster = from;
-                                    }
-
-                                    ((Mobile)o).MoveToWorld(from.Location, from.Map);
-                                }
-                                else if (o is XmlAttachment)
-                                {
-                                    XmlAttachment a = o as XmlAttachment;
-
-                                    XmlAttach.AttachTo(from, a);
-                                }
-                                else
-                                {
-                                    from.SendMessage(
-                                        33,
-                                        "unable to create {0}.",
-                                        r.RewardType.Name
-                                    );
-                                    received = false;
-                                }
-
-                                // complete the transaction
-                                if (received)
-                                {
-                                    // charge them
-                                    XmlQuestPoints.TakeCredits(from, r.Cost);
-                                    from.SendMessage(
-                                        "You have purchased {0} for {1} credits.",
-                                        r.Name,
-                                        r.Cost
-                                    );
-                                }
-                            }
-                            else
-                            {
-                                from.SendMessage("Insufficient Credits for {0}.", r.Name);
-                            }
-                            from.SendGump(new QuestRewardGump(from, viewpage));
-                        }
+                        XmlRewardOffer offer = (XmlRewardOffer)m_Offers[selection];
+                        offer.Redeem(from, XmlQuestPointsRewards.RewardsList, selection, true);
+                        from.SendGump(new QuestRewardGump(from, viewpage));
                     }
                     break;
                 }
             }
+        }
+    }
+}
+
+namespace Server.Gumps
+{
+    // A menu offer is a transient quote; mutable reward configuration must still match it at redemption.
+    internal sealed class XmlRewardOffer
+    {
+        private object m_Entry;
+        private Type m_Type;
+        private object[] m_Args;
+        private int m_Cost;
+        private int m_MinPoints;
+        private string m_Name;
+
+        internal XmlRewardOffer(object entry)
+        {
+            m_Entry = entry;
+            XmlQuestPointsRewards quest = entry as XmlQuestPointsRewards;
+            XmlPointsRewards points = entry as XmlPointsRewards;
+            if (quest != null)
+            {
+                m_Type = quest.RewardType; m_Cost = quest.Cost; m_MinPoints = quest.MinPoints;
+                m_Name = quest.Name; m_Args = quest.RewardArgs;
+            }
+            else if (points != null)
+            {
+                m_Type = points.RewardType; m_Cost = points.Cost; m_MinPoints = points.MinPoints;
+                m_Name = points.Name; m_Args = points.RewardArgs;
+            }
+            if (m_Args != null)
+                m_Args = (object[])m_Args.Clone();
+        }
+
+        private bool Eligible(Mobile from, ArrayList current, int selection, bool quest)
+        {
+            if (from == null || from.Deleted || from.Map == null || from.Map == Map.Internal
+                || current == null || selection < 0 || selection >= current.Count
+                || current[selection] != m_Entry || m_Type == null || m_Cost < 0 || m_MinPoints < 0)
+                return false;
+
+            XmlRewardOffer now = new XmlRewardOffer(current[selection]);
+            if (now.m_Type != m_Type || now.m_Cost != m_Cost || now.m_MinPoints != m_MinPoints || now.m_Name != m_Name)
+                return false;
+            if ((m_Args == null) != (now.m_Args == null))
+                return false;
+            if (m_Args != null)
+            {
+                if (m_Args.Length != now.m_Args.Length)
+                    return false;
+                for (int i = 0; i < m_Args.Length; ++i)
+                    if (!Object.Equals(m_Args[i], now.m_Args[i]))
+                        return false;
+            }
+            return quest
+                ? XmlQuestPoints.GetPoints(from) >= m_MinPoints && XmlQuestPoints.HasCredits(from, m_Cost)
+                : XmlPoints.GetPoints(from) >= m_MinPoints && XmlPoints.HasCredits(from, m_Cost);
+        }
+
+        private bool TakeCredits(Mobile from, int amount, bool quest)
+        {
+            return quest ? XmlQuestPoints.TakeCredits(from, amount) : XmlPoints.TakeCredits(from, amount);
+        }
+
+        internal void Redeem(Mobile from, ArrayList current, int selection, bool quest)
+        {
+            if (!Eligible(from, current, selection, quest))
+            {
+                from.SendMessage("You are not eligible for this reward offer, or its terms have changed.");
+                return;
+            }
+
+            object reward = null;
+            bool charged = false;
+            bool received = false;
+            try
+            {
+                reward = Activator.CreateInstance(m_Type, m_Args);
+                if (!(reward is Item || reward is Mobile || reward is XmlAttachment)
+                    || !Eligible(from, current, selection, quest))
+                    return;
+
+                charged = TakeCredits(from, m_Cost, quest);
+                if (!charged)
+                    return;
+
+                Item item = reward as Item;
+                Mobile mobile = reward as Mobile;
+                XmlAttachment attachment = reward as XmlAttachment;
+                if (item != null)
+                {
+                    // AddToBackpack intentionally falls back to the world; a successful merge deletes the new stack.
+                    received = from.AddToBackpack(item);
+                    if (!received)
+                        received = !item.Deleted && item.Parent == null && item.Map == from.Map && item.Location == from.Location;
+                }
+                else if (mobile != null)
+                {
+                    BaseCreature creature = mobile as BaseCreature;
+                    if (creature != null)
+                    {
+                        creature.Controlled = true;
+                        creature.ControlMaster = from;
+                    }
+                    mobile.MoveToWorld(from.Location, from.Map);
+                    received = !mobile.Deleted;
+                }
+                else
+                    received = XmlAttach.AttachTo(from, attachment);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine("XML reward {0} for {1} failed: {2}", m_Type, from.Serial, exception);
+            }
+            finally
+            {
+                if (!received)
+                {
+                    Item item = reward as Item;
+                    Mobile mobile = reward as Mobile;
+                    XmlAttachment attachment = reward as XmlAttachment;
+                    if (item != null && !item.Deleted) item.Delete();
+                    if (mobile != null && !mobile.Deleted) mobile.Delete();
+                    if (attachment != null && !attachment.Deleted) attachment.Delete();
+                    if (charged && !TakeCredits(from, -m_Cost, quest))
+                        Console.WriteLine("XML reward credit restoration failed for {0}: {1}", from.Serial, m_Cost);
+                    from.SendMessage(33, "Unable to deliver reward {0}.", m_Name);
+                }
+            }
+            if (received)
+                from.SendMessage("You have purchased {0} for {1} credits.", m_Name, m_Cost);
         }
     }
 }

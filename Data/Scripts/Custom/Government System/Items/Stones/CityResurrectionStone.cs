@@ -138,6 +138,16 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            PlayerMobile player = from as PlayerMobile;
+            if (Deleted || player == null || player.Deleted)
+                return;
+
+            if (m_Sign == null || m_Sign.Deleted || m_Sign.Stone == null || m_Sign.Stone.Deleted)
+            {
+                from.SendMessage(53, "WARNING! Stone not linked to building sign. Contact a game master.");
+                return;
+            }
+
             if (from.InRange(this.GetWorldLocation(), 2))
             {
                 PlayerMobile pm = (PlayerMobile)from;
@@ -147,7 +157,8 @@ namespace Server.Items
                     {
                         if (m_Sign.Stone.CorpseFee != 0)
                         {
-                            from.SendGump(new CityCorpseFeeGump(this));
+                            from.CloseGump(typeof(CityCorpseFeeGump));
+                            from.SendGump(new CityCorpseFeeGump(this, from));
                         }
                         else
                         {
@@ -234,8 +245,17 @@ namespace Server.Items
             ResStone.GetContextMenuEntries(from, this, list);
         }
 
+        public bool CanRegCorpse(Mobile from)
+        {
+            return from != null && !from.Deleted
+                && (m_ghosts == null || !m_ghosts.ContainsKey(from) || (int)m_ghosts[from] < 3);
+        }
+
         public bool RegCorpse(Mobile from)
         {
+            if (!CanRegCorpse(from))
+                return false;
+
             if (m_ghosts == null)
             {
                 m_ghosts = new Hashtable();

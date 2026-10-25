@@ -13,124 +13,108 @@ namespace Server.Engines.BulkOrders
         private object m_Object;
         private int m_Price;
         private int m_Page;
+        private bool m_Responded;
 
         public override void OnResponse(Server.Network.NetState sender, RelayInfo info)
         {
-            if (info.ButtonID == 2)
-            {
-                PlayerVendor pv = m_Book.RootParent as PlayerVendor;
+            if (m_Responded || sender == null || info == null || sender.Mobile != m_From
+                || m_From == null || m_From.Deleted || m_Book == null || m_Book.Deleted)
+                return;
 
-                if (m_Book.Entries.Contains(m_Object) && pv != null)
-                {
-                    int price = 0;
-
-                    VendorItem vi = pv.GetVendorItem(m_Book);
-
-                    if (vi != null && !vi.IsForSale)
-                    {
-                        if (m_Object is BOBLargeEntry)
-                            price = ((BOBLargeEntry)m_Object).Price;
-                        else if (m_Object is BOBSmallEntry)
-                            price = ((BOBSmallEntry)m_Object).Price;
-                    }
-
-                    if (price != m_Price)
-                    {
-                        pv.SayTo(
-                            m_From,
-                            "The price has been been changed. If you like, you may offer to purchase the item again."
-                        );
-                    }
-                    else if (price == 0)
-                    {
-                        pv.SayTo(m_From, 1062382); // The deed selected is not available.
-                    }
-                    else
-                    {
-                        Item item = null;
-
-                        if (m_Object is BOBLargeEntry)
-                            item = ((BOBLargeEntry)m_Object).Reconstruct();
-                        else if (m_Object is BOBSmallEntry)
-                            item = ((BOBSmallEntry)m_Object).Reconstruct();
-
-                        if (item == null)
-                        {
-                            m_From.SendMessage(
-                                "Internal error. The bulk order deed could not be reconstructed."
-                            );
-                        }
-                        else
-                        {
-                            pv.Say(m_From.Name);
-
-                            Container pack = m_From.Backpack;
-
-                            if (
-                                (pack == null)
-                                || (
-                                    (pack != null)
-                                    && (
-                                        !pack.CheckHold(
-                                            m_From,
-                                            item,
-                                            true,
-                                            true,
-                                            0,
-                                            item.PileWeight + item.TotalWeight
-                                        )
-                                    )
-                                )
-                            )
-                            {
-                                pv.SayTo(m_From, 503204); // You do not have room in your backpack for this
-                                m_From.SendGump(new BOBGump(m_From, m_Book, m_Page, null));
-                            }
-                            else
-                            {
-                                if (
-                                    (pack != null && pack.ConsumeTotal(typeof(Gold), price))
-                                    || Banker.Withdraw(m_From, price)
-                                )
-                                {
-                                    m_Book.Entries.Remove(m_Object);
-                                    m_Book.InvalidateProperties();
-                                    pv.HoldGold += price;
-                                    m_From.AddToBackpack(item);
-                                    m_From.SendLocalizedMessage(1045152); // The bulk order deed has been placed in your backpack.
-
-                                    if (m_Book.Entries.Count / 5 < m_Book.ItemCount)
-                                    {
-                                        m_Book.ItemCount--;
-                                        m_Book.InvalidateItems();
-                                    }
-
-                                    if (m_Book.Entries.Count > 0)
-                                        m_From.SendGump(new BOBGump(m_From, m_Book, m_Page, null));
-                                    else
-                                        m_From.SendLocalizedMessage(1062381); // The book is empty.
-                                }
-                                else
-                                {
-                                    pv.SayTo(m_From, 503205); // You cannot afford this item.
-                                    item.Delete();
-                                }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (pv == null)
-                        m_From.SendLocalizedMessage(1062382); // The deed selected is not available.
-                    else
-                        pv.SayTo(m_From, 1062382); // The deed selected is not available.
-                }
-            }
-            else
+            m_Responded = true;
+            if (info.ButtonID != 2)
             {
                 m_From.SendLocalizedMessage(503207); // Cancelled purchase.
+                return;
             }
+
+            PlayerVendor pv = m_Book.RootParent as PlayerVendor;
+            if (pv == null || pv.Deleted || !m_Book.Entries.Contains(m_Object))
+            {
+                m_From.SendLocalizedMessage(1062382);
+                return;
+            }
+
+            VendorItem vi = pv.GetVendorItem(m_Book);
+            int price = 0;
+            if (vi != null && !vi.IsForSale)
+            {
+                if (m_Object is BOBLargeEntry)
+                    price = ((BOBLargeEntry)m_Object).Price;
+                else if (m_Object is BOBSmallEntry)
+                    price = ((BOBSmallEntry)m_Object).Price;
+            }
+            if (price != m_Price)
+            {
+                pv.SayTo(m_From, "The price has been changed. You may offer to purchase the item again.");
+                return;
+            }
+            if (price <= 0 || (long)pv.HoldGold + price > Int32.MaxValue)
+            {
+                pv.SayTo(m_From, 1062382);
+                return;
+            }
+
+            Item item = null;
+            bool purchased = false;
+            try
+            {
+                if (m_Object is BOBLargeEntry)
+                    item = ((BOBLargeEntry)m_Object).Reconstruct();
+                else if (m_Object is BOBSmallEntry)
+                    item = ((BOBSmallEntry)m_Object).Reconstruct();
+
+                if (item == null)
+                {
+                    m_From.SendMessage("Internal error. The bulk order deed could not be reconstructed.");
+                    return;
+                }
+
+                Container pack = m_From.Backpack;
+                if (pack == null || !pack.CheckHold(m_From, item, true, true, 0, item.PileWeight + item.TotalWeight))
+                {
+                    pv.SayTo(m_From, 503204);
+                    return;
+                }
+                if (pack.GetAmount(typeof(Gold)) < price && Banker.GetBalance(m_From) < price)
+                {
+                    pv.SayTo(m_From, 503205);
+                    return;
+                }
+
+                // This newly reconstructed, nonstackable deed is owned here until both steps succeed.
+                if (!pack.TryDropItem(m_From, item, false) || item.Deleted || !item.IsChildOf(pack))
+                {
+                    pv.SayTo(m_From, 503204);
+                    return;
+                }
+                if (!pack.ConsumeTotal(typeof(Gold), price) && !Banker.Withdraw(m_From, price))
+                {
+                    pv.SayTo(m_From, 503205);
+                    return;
+                }
+
+                purchased = true;
+                m_Book.Entries.Remove(m_Object);
+                m_Book.InvalidateProperties();
+                pv.HoldGold += price;
+                m_From.SendLocalizedMessage(1045152);
+                if (m_Book.Entries.Count / 5 < m_Book.ItemCount)
+                {
+                    m_Book.ItemCount--;
+                    m_Book.InvalidateItems();
+                }
+            }
+            finally
+            {
+                if (!purchased && item != null && !item.Deleted)
+                    item.Delete();
+            }
+
+            if (m_Book.Entries.Count > 0)
+                m_From.SendGump(new BOBGump(m_From, m_Book, m_Page, null));
+            else
+                m_From.SendLocalizedMessage(1062381);
         }
 
         public BODBuyGump(PlayerMobile from, BulkOrderBook book, object obj, int page, int price)

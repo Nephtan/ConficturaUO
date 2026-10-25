@@ -371,6 +371,12 @@ namespace Server.Gumps
             AddLabel(70, 90, 1149, @"View Maintenance Report");
         }
 
+        public static bool CanManage(CityManagementStone stone, Mobile from)
+        {
+            return stone != null && !stone.Deleted && from != null && !from.Deleted
+                && (from == stone.Mayor || from.AccessLevel >= AccessLevel.GameMaster);
+        }
+
         public override void OnResponse(NetState state, RelayInfo info)
         {
             Mobile from = state.Mobile;
@@ -379,7 +385,7 @@ namespace Server.Gumps
                 return;
 
             // Ensure the responder still has the authority to manage the city.
-            if (from != m_Stone.Mayor && from.AccessLevel < AccessLevel.GameMaster)
+            if (!CanManage(m_Stone, from))
             {
                 from.SendMessage("You are not authorized to manage this city.");
                 return;

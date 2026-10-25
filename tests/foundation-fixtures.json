@@ -1,4 +1,6 @@
 {
+  "actions": {"classification": "current-regression", "sources": ["tests/FoundationActionRegression.cs"], "main": "FoundationActionRegression", "marker": "PASS current actions"},
+  "actions-historical": {"classification": "historical-characterization", "sources": ["tests/FoundationActionRegression.cs"], "main": "FoundationActionRegression", "args": ["historical"], "marker": "REPRODUCED historical actions"},
   "payments": {"classification": "current-regression", "sources": ["tests/FoundationPaymentRegression.cs"], "main": "FoundationPaymentRegression", "marker": "PASS current payments"},
   "payments-historical": {"classification": "historical-characterization", "sources": ["tests/FoundationPaymentRegression.cs"], "main": "FoundationPaymentRegression", "args": ["historical"], "marker": "REPRODUCED historical payments"},
   "champion": {"classification": "current-regression", "sources": ["tests/ChampionRewardRegression.cs"], "main": "ChampionRewardRegression", "marker": "assertions; no world saves loaded or listeners started."},

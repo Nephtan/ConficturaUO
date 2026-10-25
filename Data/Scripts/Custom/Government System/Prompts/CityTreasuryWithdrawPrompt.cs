@@ -10,6 +10,7 @@ namespace Server.Prompts
     {
         private CityManagementStone m_Stone;
         private Mobile m_From;
+        private bool m_Responded;
 
         public CityTreasuryWithdrawPrompt(CityManagementStone stone, Mobile from)
         {
@@ -17,79 +18,64 @@ namespace Server.Prompts
             m_From = from;
         }
 
+        private void Reopen(Mobile from)
+        {
+            if (from == m_From && CityManagementGump.CanManage(m_Stone, from))
+            {
+                from.CloseGump(typeof(CityManagementGump));
+                from.SendGump(new CityManagementGump(m_Stone, from));
+            }
+        }
+
         public override void OnCancel(Mobile from)
         {
-            m_From.CloseGump(typeof(CityManagementGump));
-            m_From.SendGump(new CityManagementGump(m_Stone, m_From));
+            if (m_Responded)
+                return;
+
+            m_Responded = true;
+            Reopen(from);
         }
 
         public override void OnResponse(Mobile from, string text)
         {
-            text = text.Trim();
+            if (m_Responded)
+                return;
 
+            m_Responded = true;
+            if (from != m_From || !CityManagementGump.CanManage(m_Stone, from))
+                return;
+
+            text = text == null ? String.Empty : text.Trim();
             if (text.Length > 40)
                 text = text.Substring(0, 40);
 
-            if (text.Length > 0)
+            int amount;
+            if (text.Length == 0)
             {
-                try
+                Reopen(from);
+                return;
+            }
+            if (!Int32.TryParse(text, out amount))
+                from.SendMessage("You must enter a number amount.");
+            else if (m_Stone.CityTreasury <= amount)
+                from.SendMessage("The treasury lacks the amount you requested.");
+            else if (amount <= 0)
+                from.SendMessage("You must withdraw a minimal of 1 gold.");
+            else if (amount > 1000000)
+                from.SendMessage("You can only withdraw a maxium of 1000000 gold.");
+            else
+            {
+                m_Stone.CityTreasury -= amount;
+                from.AddToBackpack(amount <= 4999 ? (Item)new Gold(amount) : new BankCheck(amount));
+                from.SendMessage("You have withdrawn {0} gold from the treasury.", amount);
+                if (m_Stone.Citizens != null)
                 {
-                    int amount = Convert.ToInt32(text);
-
-                    if (m_Stone.CityTreasury <= amount)
-                    {
-                        from.SendMessage("The treasury lacks the amount you requested.");
-                    }
-                    else if (amount <= 0)
-                    {
-                        from.SendMessage("You must withdraw a minimal of 1 gold.");
-                    }
-                    else if (amount <= 4999)
-                    {
-                        from.SendMessage("You have withdrawn {0} gold from the treasury.", amount);
-                        m_Stone.CityTreasury -= amount;
-                        from.AddToBackpack(new Gold(amount));
-
-                        if (m_Stone.Citizens != null)
-                        {
-                            foreach (Mobile m in m_Stone.Citizens)
-                            {
-                                m.SendMessage(
-                                    53,
-                                    "The mayor has withdrawn {0} gold from the cities treasury.",
-                                    amount
-                                );
-                            }
-                        }
-                    }
-                    else if (amount <= 1000000)
-                    {
-                        from.SendMessage("You have withdrawn {0} gold from the treasury.", amount);
-                        m_Stone.CityTreasury -= amount;
-                        from.AddToBackpack(new BankCheck(amount));
-
-                        foreach (Mobile m in m_Stone.Citizens)
-                        {
-                            m.SendMessage(
-                                53,
-                                "The mayor has withdrawn {0} gold from the cities treasury.",
-                                amount
-                            );
-                        }
-                    }
-                    else
-                    {
-                        from.SendMessage("You can only withdraw a maxium of 1000000 gold.");
-                    }
-                }
-                catch
-                {
-                    from.SendMessage("You must enter a number amount.");
+                    foreach (Mobile citizen in m_Stone.Citizens)
+                        if (citizen != null && !citizen.Deleted)
+                            citizen.SendMessage(53, "The mayor has withdrawn {0} gold from the cities treasury.", amount);
                 }
             }
-
-            m_From.CloseGump(typeof(CityManagementGump));
-            m_From.SendGump(new CityManagementGump(m_Stone, m_From));
+            Reopen(from);
         }
     }
 }
