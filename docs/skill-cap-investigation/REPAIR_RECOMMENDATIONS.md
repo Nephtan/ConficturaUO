@@ -18,3 +18,9 @@ The investigation/recommendations below describe the historical baseline. In par
 Suggested implementation order: FIX-01 first to stop irreversible loss; then the shared policy/accounting/cap work (FIX-02 through FIX-04); address output/transmission containment independently as FIX-05. Keep the current characterization fixtures as evidence of old behavior, and change expectations only in the corresponding repair batch. Integration testing of actual clients and full save/load must use disposable copies and a documented save-compatibility plan.
 
 The investigated methods already provide small reproductions; there is no need to reconstruct 20,000 objects on the live shard. The unresolved historical cause does not prevent repairing the confirmed destructive reset and conditional bypasses.
+
+## Foundation ID reconciliation, 2026-10-25
+
+FIX-06, FIX-07 and FIX-08 remain reserved historical P2 recommendations without dedicated active-overlay rows. The approved new foundation sequence uses FIX-09/10 (shared deductions/vendor quotes and fixture preflight), FIX-11/12/13/14 (XML rewards, BOD delivery, city prompt authority and corpse payment/quota), then FIX-15 (bandage ownership). FIX-07 only partially overlaps response-time authorization; its SkillStone/election scope is not closed by these repairs. Neighboring RB records retain their original dispositions.
+
+All three foundation batches are code/regression complete and locally committed, with independent review. Final in-game Qwen acceptance remains pending through the existing FIX-01-05 session; the seven new overlay rows remain Open. See the [sequence register](../codebase-audit/outputs/foundation-batches-20261025.md) and [in-game handoff](../codebase-audit/outputs/foundation-ingame-handoff.md).

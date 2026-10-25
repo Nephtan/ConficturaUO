@@ -1,0 +1,59 @@
+{
+  "utc": "2026-10-25T15:02:05.892911+00:00",
+  "records": 6831,
+  "statuses": {
+    "Fixed": 957,
+    "ReviewedNoChange": 2650,
+    "FalsePositive": 330,
+    "SafeNoChange": 678,
+    "IntentionalLegacy": 1395,
+    "AcceptedFence": 83,
+    "Documented": 352,
+    "BlocksOnlyThisDomain": 7,
+    "PolicyResolvedNoChange": 372,
+    "Open": 7
+  },
+  "changed_record_rows": [
+    6826,
+    6827,
+    6828,
+    6829,
+    6830,
+    6831,
+    6832
+  ],
+  "all_rows_match_csv": true,
+  "untouched_record_xml_byte_identical": true,
+  "changed_package_parts": [
+    "xl/worksheets/sheet1.xml",
+    "xl/worksheets/sheet2.xml",
+    "xl/worksheets/sheet3.xml",
+    "xl/charts/chart1.xml",
+    "xl/charts/chart2.xml",
+    "xl/charts/chart3.xml",
+    "xl/charts/chart4.xml",
+    "xl/tables/table1.xml"
+  ],
+  "all_other_package_parts_byte_identical": true,
+  "native_features_preserved": true,
+  "cached_summary_results_reconciled_from_csv": true,
+  "native_excel_recalculation_performed": false,
+  "artifact_tool_authored_and_recalculated": true,
+  "artifact_engine_reconciliation_numeric_checks_passed": 8,
+  "artifact_engine_date_check": "This run retained the previously demonstrated text-date wildcard limitation: B22=-6815, with imported C22 cached OK not credited. Eight other numeric checks passed; all saved native formula/date caches reconciled independently. Prior four-row probe is historical evidence, not rerun here.",
+  "normalized_duplicate_summary_addresses": {
+    "2": [],
+    "3": []
+  },
+  "artifact_export_unrelated_parts_changed": 39,
+  "native_preservation_serialization": "Original package retained; only reviewed data/formula/cache/table/chart XML updated",
+  "visual_verification": "Before/final dashboard and analysis inspected; totals6831/957/Open7 and structure retained. Renderer recalculates unsupported wildcard text dates, so its date preview is not acceptance; saved date caches independently verified and reimport readback sums6831.",
+  "csv_sha256": "a1d9d81888bd013cd5c2d58e0bc173d53dc5adeceb9e23fa6d3813630281c0fc",
+  "workbook_sha256": "dffc31f014c539955d365ec968205d29ebd28e314ce98434b561d9b8f29568f1",
+  "setup_limitation": {
+    "action": "Create temporary node_modules junction to bundled dependencies",
+    "target": "C:/Users/nepht/AppData/Local/Temp/confictura-foundation-20261025-workbook/node_modules",
+    "result": "Denied: Access is denied. No junction created; no retry or permissions change.",
+    "resolution": "Direct createRequire/module resolution against the same bundled dependency path succeeded; authoring, native preservation, readback and rendering completed."
+  }
+}

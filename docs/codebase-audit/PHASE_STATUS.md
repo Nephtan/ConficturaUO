@@ -1443,3 +1443,5 @@ Foundation sequence 2026-10-25: scoped post-audit FIX-09..15 logged in outputs/f
 Foundation Batch 1 FIX-09/10 code/regression complete; in-game acceptance pending: isolated build/runtime compile,74 payment assertions and accepted regressions; independent code review complete. Matching tested core packaged in d9b4703f. Batch2 code/regression complete; Batch3 NotStarted; all final in-game acceptance pending; historical phases unchanged.
 
 Foundation current checkpoint2026-10-25: all three batches code/regression complete and independently reviewed. FIX09..15 final in-game Qwen acceptance pending through the existing session; all seven active-overlay rows remain Open. Historical phase dispositions and FIX01..05 remain unchanged.
+
+Foundation handoff ready: code commits d9b4703f /7f146df6 /143e9fb3, exact tracked-core combined candidate verified; CSV/workbook6,831 rows/957 Fixed/7 foundation Open. All prior rows preserved. No owned test/preview process or repository runtime at15:07:25Z. Final in-game acceptance remains pending; parent activates the original session. See outputs/foundation-ingame-handoff.md.

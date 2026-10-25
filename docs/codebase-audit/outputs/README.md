@@ -2018,3 +2018,5 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 Canonical details: [FIX-01 report](../../skill-cap-investigation/FIX-01-REPORT.md), [independent review](subagent-findings/fix01-independent-review.md), and the active CSV/workbook (6,823 rows; original 6,819 preserved). External evidence and rollback: `D:\ConficturaUOTestTools\fix01-20261018`. Local commits are authorized; push and activation remain user-owned. New regression fixtures are intentionally excluded from Git and preserved with hashes under the external `regression-harness/` directory.
 
 - [Foundation batches 2026-10-25](foundation-batches-20261025.md): ordered FIX-09..15 scope, ID reconciliation, acceptance and closeout evidence.
+
+- [Foundation in-game handoff](foundation-ingame-handoff.md): all three code/regression batches ready; prior Qwen session required for final acceptance, exact candidate hashes and scenario matrix.

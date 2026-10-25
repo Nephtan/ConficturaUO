@@ -1,6 +1,6 @@
 # Approved foundation repairs, 2026-10-25
 
-All three batches were logged before implementation. Implement and independently review code/regressions in order. Final acceptance also requires the previous FIX-01–05 Qwen in-game session. This is a scoped post-audit repair sequence, not a restart of the completed audit runner or prior test controllers.
+All three batches were logged before implementation. Implement and independently review code/regressions in order. Final acceptance also requires the previous FIX-01â€“05 Qwen in-game session. This is a scoped post-audit repair sequence, not a restart of the completed audit runner or prior test controllers.
 
 ## Baseline and identity reconciliation
 
@@ -30,12 +30,16 @@ Related rows retain their meanings: RB-01609/01610, RB-01970/01971, RB-04875/048
 
 ## Execution and evidence policy
 
-Reuse accepted fixtures and tooling patterns under `D:/ConficturaUOTestTools` read-only; use a unique temporary snapshot for new component evidence, so old STOP/controller state remains intact. Freeze all candidate build inputs together, hash copied source and assemblies, and run production methods without saves/listeners. Retain every failed attempt and explicitly distinguish historical reproductions from current acceptance. No client, Resident or model is started by this component task. The user now requires in-game Qwen acceptance through the previous FIX-01–05 session after all code/regression batches; the parent coordinates that existing session. No new controller/session is substituted. No original saves/accounts, production runtime, push, deployment, permissions or Codex memories are changed.
+Reuse accepted fixtures and tooling patterns under `D:/ConficturaUOTestTools` read-only; use a unique temporary snapshot for new component evidence, so old STOP/controller state remains intact. Freeze all candidate build inputs together, hash copied source and assemblies, and run production methods without saves/listeners. Retain every failed attempt and explicitly distinguish historical reproductions from current acceptance. No client, Resident or model is started by this component task. The user now requires in-game Qwen acceptance through the previous FIX-01â€“05 session after all code/regression batches; the parent coordinates that existing session. No new controller/session is substituted. No original saves/accounts, production runtime, push, deployment, permissions or Codex memories are changed.
 
 Opening process observation: `Get-Process` found no Confictura/RunUO process. CIM process querying was unavailable (access error); this is not startup evidence. Recheck exact process paths before replacing the tracked executable. Build and runtime acceptance are pending.
 
 ## Batch results
 
-Batch 1 code/regression work complete after measured checks and independent review; see [results](foundation-batch-1-results.md). Delivered in the focused source/matching-core commit containing this update. Batch 1 commit: d9b4703f. Batch 2 code/regression work complete; see [results](foundation-batch-2-results.md). Batch 2 local code commit: `7f146df6`. Batch 3 code/regression complete; see [results](foundation-batch-3-results.md). All three require in-game acceptance before complete/accepted status. CSV has 6,831 unique rows / 957 Fixed; seven foundation rows remain Open pending final acceptance; workbook reconciliation remains pending until sequence closeout.
+Batch 1 code/regression work complete after measured checks and independent review; see [results](foundation-batch-1-results.md). Delivered in the focused source/matching-core commit containing this update. Batch 1 commit: d9b4703f. Batch 2 code/regression work complete; see [results](foundation-batch-2-results.md). Batch 2 local code commit: `7f146df6`. Batch 3 local code commit: `143e9fb3`. Batch 3 code/regression complete; see [results](foundation-batch-3-results.md). All three require in-game acceptance before complete/accepted status. CSV has 6,831 unique rows / 957 Fixed; seven foundation rows remain Open pending final acceptance; workbook reconciliation is complete: native features and all6,824 prior rows retained, seven foundation rows Open. See [tracker verification](foundation-workbook-verification.json).
 
 Acceptance update, 2026-10-25: prior Batch 1 accepted wording referred to its component scope and is superseded by the explicit in-game gate. Preserve commit d9b4703f and all evidence. Independent code review allows sequential implementation to continue, but does not close final acceptance.
+
+Combined candidate with the exact tracked core and final scripts passed forced runtime compilation and74/261/62 focused assertions. [In-game handoff](foundation-ingame-handoff.md) and [durable manifest](foundation-candidate-manifest.json) are ready for original session01a14f0a-6dfa-7133-a92a-f2f5bef78a02, dispatched by the parent through coordinator01a151f3-ef87-7102-8b24-e85667fb40d9. This coding task does not activate it.
+
+Coding-task cleanup verified at2026-10-25T15:07:25Z: no owned foundation processes and no repository server process. No world/client/model/controller was started; no copied fixture restoration was necessary. The user-required in-game stage remains pending with the original session.

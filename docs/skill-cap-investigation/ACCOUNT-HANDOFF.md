@@ -1,5 +1,7 @@
 # Ordered repair controller handoff
 
+**Foundation handoff, 2026-10-25:** FIX-09–15 code/regression work is committed and independently reviewed; final in-game acceptance is pending through the previous FIX-01–05 Qwen session in ConficturaUO-mainortest. Parent coordinates that existing session; no replacement session or concurrent controller. See [candidate hashes, scenarios and restoration gates](../codebase-audit/outputs/foundation-ingame-handoff.md). The historical accepted FIX-01–05 checkpoint below remains unchanged.
+
 **Current checkpoint, 2026-10-20 local / 2026-10-21 UTC:** the requested FIX-05 → FIX-02 → FIX-03 → FIX-04 sequence has completed scoped isolated acceptance and independent review. FIX-04's four source files and matching production executable are delivered together in the focused local commit containing this handoff. Its exact commit ID is recorded after Git completes in `D:\ConficturaUOTestTools\ordered-repairs-20261018\fix04\CONTROLLER-CLOSEOUT.md`. No push or deployment.
 
 ## Accepted batches

@@ -1,0 +1,48 @@
+{
+  "status": "CodeRegressionComplete-InGamePending",
+  "logged_commit": "9e786c53",
+  "code_commits": {
+    "batch1": "d9b4703f",
+    "batch2": "7f146df6",
+    "batch3": "143e9fb3"
+  },
+  "candidate_root": "C:\\Users\\nepht\\AppData\\Local\\Temp\\confictura-foundation-20261025-handoff-001",
+  "full_input_manifest_sha256": "1c9c71895ff56eb45625c5e499d0cd4e2f60bf51e382b174a70716dfed4878fc",
+  "input_count": 6729,
+  "assemblies": {
+    "ConficturaServer.exe": "42591637093a792a6e734eb31b5473c070f9f36fa1bf09e66685188632b353c7",
+    "Data.dll": "ed2ed6bce7b75ab30b38d5ebb4be14f039561919f7f882853053466bf5b3f23b",
+    "Data/Data.bin": "ed2ed6bce7b75ab30b38d5ebb4be14f039561919f7f882853053466bf5b3f23b"
+  },
+  "tracked_executable_matches_candidate": true,
+  "changed_production_sources": {
+    "Data/Scripts/Custom/Government System/Gumps/CityCorpseFeeGump.cs": "c90deea11e76ee918cad4fd72d7a8145453b9e71d2c16f76a6af14e21393580b",
+    "Data/Scripts/Custom/Government System/Gumps/CityManagementGump.cs": "4c79d98bd3daf30f58fd171528d8656d2430444ad7233c449190e53196c92a40",
+    "Data/Scripts/Custom/Government System/Items/Stones/CityResurrectionStone.cs": "f8c7ff38a8511bad8bd7d949811de73b5075cf09c93ba1727a4f91c030f2fe8b",
+    "Data/Scripts/Custom/Government System/Prompts/CityTaxesIncomePrompt.cs": "86cc83cd74a4d9db03878b83e88a42dfd8972289e69366c44873a2b4b724e71c",
+    "Data/Scripts/Custom/Government System/Prompts/CityTreasuryWithdrawPrompt.cs": "d740d3346a41a928b7fafcc1f53a37267f26809c41ca21c840168e0ee4e82cee",
+    "Data/Scripts/Custom/XMLSpawner/XmlPoints PvP/Gumps/PointsRewardGump.cs": "da466a4c6c16f7da159da52e44551dc73fd7d4d7de1575de680fa12b6de02580",
+    "Data/Scripts/Custom/XMLSpawner/XmlQuest/Gumps/QuestRewardGump.cs": "a2e7c99ecea6babd8d7e1d13decf1e8e7b00899a9d2cf2a3cc401b7f93ded56d",
+    "Data/Scripts/Items/Trades/Misc/Bandage.cs": "442bc92505a243bec5a0c998a4e3c2d2ad8504d96d1bad5c1f461db7d85a3215",
+    "Data/Scripts/Mobiles/Base/BaseVendor.cs": "526b1b1055555147cef316c82be6c5fc69651bbcef11a972b288786871ee45b0",
+    "Data/Scripts/Mobiles/Civilized/Vendors/Banker.cs": "de3d23dc14ea7cffe30b3e21d2638cdc9ec78b81031659ea7c79abc5c737cc0c",
+    "Data/Scripts/Trades/Bulk Orders/Books/Gumps/BODBuyGump.cs": "f093fcf42411bb6c80b2b9efbd8140ea822a8e7082ab19a0fb77d10d3dab0b5f",
+    "Data/System/Source/Item.cs": "cefe1e73db19d037f4479bc5b8003b432ca50f2b8494f68b666e8146c928e693",
+    "Data/System/Source/Items/Container.cs": "926d2d52e2c0a73de86f308de384cd614b40ddb7a99bbc34a1d06bfefae73bee"
+  },
+  "fixtures": {
+    "tests/FoundationPaymentRegression.cs": "52b45cf0e5c923486812acc144aac38bacd7315d72ec2d3586eb983ed15abc36",
+    "tests/FoundationActionRegression.cs": "85cd6a74c523e08668163e71f3a9a9e9c274771b00d1bed06f98096df1291d06",
+    "tests/FoundationBandageRegression.cs": "2e5c83626a3e81cc0a5402f7c5d23ae365c534dc2556539264882b9f43a8a24f",
+    "scripts/foundation_fixture_runner.py": "711826314c73565ddbfe31c9aab8aa059577f253d883f4913557a7ebbbda63b4",
+    "scripts/Test-Foundation.ps1": "928bf45bac571b8b8337bcaf37f3fa5898df655fdf9e2cfa13d6682950aa7f45",
+    "tests/foundation-fixtures.json": "5e890de3fce22d0aca0c041bd798330d2595a6c27f97d83cfa07a508a2d483d0"
+  },
+  "combined_candidate_assertions": {
+    "payments": 74,
+    "actions": 261,
+    "bandages": 62
+  },
+  "in_game_session": "Previous FIX-01-05 session in ConficturaUO-mainortest; coordinated by parent",
+  "no_game_runtime_started_by_this_task": true
+}

@@ -1,0 +1,26 @@
+{
+  "status": "CodeRegressionComplete-InGamePending",
+  "integrity": {
+    "current_input_hashes_match": 6729,
+    "tracked_core_matches": true,
+    "prior_csv_rows_byte_identical": 6824,
+    "records": 6831,
+    "fixed": 957,
+    "foundation_open_pending": 7,
+    "markdown_links_checked": 50,
+    "workbook_sha256": "dffc31f014c539955d365ec968205d29ebd28e314ce98434b561d9b8f29568f1",
+    "csv_sha256": "a1d9d81888bd013cd5c2d58e0bc173d53dc5adeceb9e23fa6d3813630281c0fc"
+  },
+  "process_cleanup": {
+    "utc": "2026-10-25T15:07:25.0214596Z",
+    "owned_foundation_processes": [],
+    "repository_server_processes": [],
+    "owned_processes_stopped": true,
+    "no_repository_runtime": true
+  },
+  "production_world_or_client_started": false,
+  "copied_fixture_restore_required": false,
+  "original_session_id": "01a14f0a-6dfa-7133-a92a-f2f5bef78a02",
+  "coordinator_id": "01a151f3-ef87-7102-8b24-e85667fb40d9",
+  "activation_owner": "Parent; this coding task does not activate"
+}
