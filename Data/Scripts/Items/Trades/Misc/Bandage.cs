@@ -320,6 +320,7 @@ namespace Server.Items
         private Timer m_Timer;
         private TimeSpan m_TurnBasedRemaining;
         private bool m_TurnBasedSuspended;
+        private bool m_Registered;
 
         public Mobile Healer
         {
@@ -352,13 +353,36 @@ namespace Server.Items
             m_Healer = healer;
             m_Patient = patient;
 
+            if (healer == null || patient == null || healer.Deleted || patient.Deleted)
+                return;
+
+            BandageContext previous;
+
+            if (m_Table.TryGetValue(healer, out previous))
+                previous.StopHeal();
+
+            // Direct OmniAI contexts own their callback but remain invisible to GetContext.
+            m_Table[healer] = this;
             m_Timer = new InternalTimer(this, delay);
             m_Timer.Start();
         }
 
+        private bool IsCurrent
+        {
+            get
+            {
+                BandageContext current;
+                return m_Healer != null && m_Timer != null
+                    && m_Table.TryGetValue(m_Healer, out current) && current == this;
+            }
+        }
+
         public void StopHeal()
         {
-            m_Table.Remove(m_Healer);
+            bool current = IsCurrent;
+
+            if (current)
+                m_Table.Remove(m_Healer);
 
             if (m_Timer != null)
                 m_Timer.Stop();
@@ -366,13 +390,23 @@ namespace Server.Items
             m_Timer = null;
             m_TurnBasedRemaining = TimeSpan.Zero;
             m_TurnBasedSuspended = false;
-            TurnBasedCombatBridge.EffectTimerChanged(m_Healer, TurnMutationKind.Healing, null);
+            if (current && m_Registered)
+                TurnBasedCombatBridge.EffectTimerChanged(m_Healer, TurnMutationKind.Healing, null);
         }
 
         public TimeSpan SuspendForTurnBased()
         {
-            if (m_Timer == null)
+            if (!IsCurrent)
                 return TimeSpan.Zero;
+
+            if (m_Healer.Deleted || m_Patient.Deleted)
+            {
+                StopHeal();
+                return TimeSpan.Zero;
+            }
+
+            if (m_TurnBasedSuspended)
+                return m_TurnBasedRemaining;
 
             TimeSpan remaining = m_Timer.Next - DateTime.Now;
 
@@ -390,7 +424,7 @@ namespace Server.Items
 
         public bool AdvanceTurnBased(TimeSpan elapsed)
         {
-            if (!m_TurnBasedSuspended || m_Timer == null)
+            if (!m_TurnBasedSuspended || !IsCurrent)
                 return false;
 
             m_TurnBasedRemaining = AdvanceTurnBasedRemaining(m_TurnBasedRemaining, elapsed);
@@ -411,8 +445,14 @@ namespace Server.Items
 
         public void ResumeFromTurnBased()
         {
-            if (!m_TurnBasedSuspended || GetContext(m_Healer) != this)
+            if (!m_TurnBasedSuspended || !IsCurrent)
                 return;
+
+            if (m_Healer.Deleted || m_Patient.Deleted)
+            {
+                StopHeal();
+                return;
+            }
 
             TimeSpan remaining = m_TurnBasedRemaining > TimeSpan.Zero
                 ? m_TurnBasedRemaining
@@ -428,8 +468,11 @@ namespace Server.Items
         public static BandageContext GetContext(Mobile healer)
         {
             BandageContext bc = null;
-            m_Table.TryGetValue(healer, out bc);
-            return bc;
+
+            if (healer != null)
+                m_Table.TryGetValue(healer, out bc);
+
+            return bc != null && bc.m_Registered ? bc : null;
         }
 
         public static SkillName GetPrimarySkill(Mobile m)
@@ -450,7 +493,13 @@ namespace Server.Items
 
         public void EndHeal()
         {
+            if (!IsCurrent || m_TurnBasedSuspended)
+                return;
+
             StopHeal();
+
+            if (m_Healer.Deleted || m_Patient.Deleted)
+                return;
 
             int healerNumber = -1,
                 patientNumber = -1;
@@ -705,12 +754,17 @@ namespace Server.Items
 
             protected override void OnTick()
             {
-                m_Context.EndHeal();
+                // A one-shot is already stopped when Timer.Slice dispatches it.
+                if (m_Context.m_Timer == this && !m_Context.m_TurnBasedSuspended)
+                    m_Context.EndHeal();
             }
         }
 
         public static BandageContext BeginHeal(Mobile healer, Mobile patient)
         {
+            if (healer == null || patient == null || healer.Deleted || patient.Deleted)
+                return null;
+
             bool isDeadPet = (patient is BaseCreature && ((BaseCreature)patient).IsDeadPet);
 
             if (patient.Hunger < 6 && patient is PlayerMobile && patient.Alive)
@@ -794,7 +848,7 @@ namespace Server.Items
 
                 context = new BandageContext(healer, patient, TimeSpan.FromMilliseconds(seconds));
 
-                m_Table[healer] = context;
+                context.m_Registered = true;
                 TurnBasedCombatBridge.EffectTimerChanged(
                     healer,
                     TurnMutationKind.Healing,

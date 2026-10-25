@@ -7,5 +7,7 @@
   "research": {"classification": "current-regression", "sources": ["tests/ResearchLogoutRegression.cs"], "main": "ResearchLogoutRegression", "marker": "assertions; no world saves loaded or listeners started."},
   "food": {"classification": "current-regression", "sources": ["D:/ConficturaUOTestTools/ordered-repairs-20261018/fixtures/reference/create-food/CreateFoodRegression.cs"], "main": "CreateFoodRegression", "args": ["repaired"], "marker": "actual production methods; no world saves loaded, listeners or timer thread started."},
   "accounting": {"classification": "current-regression", "sources": ["D:/ConficturaUOTestTools/ordered-repairs-20261018/fix04/SkillAccountingRegression.cs"], "main": "SkillAccountingRegression", "marker": "assertions; isolated production methods, no world or listener."},
-  "skill-investigation-historical": {"classification": "historical-characterization", "sources": ["tests/SkillCapInvestigation.cs", "tests/SkillCapMutationInventory.cs"], "main": "SkillCapInvestigation", "marker": "NOT A CURRENT ACCEPTANCE GATE"}
+  "skill-investigation-historical": {"classification": "historical-characterization", "sources": ["tests/SkillCapInvestigation.cs", "tests/SkillCapMutationInventory.cs"], "main": "SkillCapInvestigation", "marker": "NOT A CURRENT ACCEPTANCE GATE"},
+  "bandages": {"classification": "current-regression", "sources": ["tests/FoundationBandageRegression.cs"], "main": "FoundationBandageRegression", "marker": "PASS current bandages"},
+  "bandages-historical": {"classification": "historical-characterization", "sources": ["tests/FoundationBandageRegression.cs"], "main": "FoundationBandageRegression", "args": ["historical"], "marker": "REPRODUCED historical bandages"}
 }

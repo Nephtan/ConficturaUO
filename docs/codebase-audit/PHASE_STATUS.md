@@ -1441,3 +1441,5 @@ Canonical details: [FIX-01 report](../skill-cap-investigation/FIX-01-REPORT.md),
 Foundation sequence 2026-10-25: scoped post-audit FIX-09..15 logged in outputs/foundation-batches-20261025.md. Batch 1 InProgress, batches 2/3 NotStarted. Historical phase dispositions unchanged; no acceptance claimed.
 
 Foundation Batch 1 FIX-09/10 code/regression complete; in-game acceptance pending: isolated build/runtime compile,74 payment assertions and accepted regressions; independent code review complete. Matching tested core packaged in d9b4703f. Batch2 code/regression complete; Batch3 NotStarted; all final in-game acceptance pending; historical phases unchanged.
+
+Foundation current checkpoint2026-10-25: all three batches code/regression complete and independently reviewed. FIX09..15 final in-game Qwen acceptance pending through the existing session; all seven active-overlay rows remain Open. Historical phase dispositions and FIX01..05 remain unchanged.
