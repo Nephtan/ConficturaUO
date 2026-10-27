@@ -1,5 +1,9 @@
 # FIX-15: real manager actor-effect completion repair
 
+**Current closeout, 2026-10-26 local / 2026-10-27 UTC:** FIX-15 accepted within independently reviewed client005 scope, completing Foundation Batches1–3. Source commits `143e9fb3` and `b55c6f13`; all15 cases passed with two actual native End Turn replies, four use/target pairs and three supervised Qwen choices. Original/full-file restoration, all14 protected inputs, owned-runtime shutdown and disarm verified; Computer Use inactive. CSV/workbook6831 records/964 Fixed/0 Open. [Current results and limitations](foundation-batch-3-results.md). Exact acceptance commit ID is recorded after commit in `D:/ConficturaUOTestTools/foundation-ingame-20261025/batch-3/CLIENT005-CLOSEOUT.md`. No push/deployment. Earlier pending/paused statements below are historical checkpoints.
+
+## Historical checkpoint (superseded by the current closeout)
+
 2026-10-26 local / 2026-10-27 UTC. Batch 3 was explicitly resumed. This is an additive repair discovered by real-client acceptance, after the earlier BandageContext ownership commit `143e9fb33c4c56540ea9261f70b267441ab44284`.
 
 ## Failure and change

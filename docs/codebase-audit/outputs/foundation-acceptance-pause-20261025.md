@@ -1,5 +1,9 @@
 # Foundation acceptance and pause checkpoint
 
+**Current closeout, 2026-10-26 local / 2026-10-27 UTC:** FIX-15 accepted within independently reviewed client005 scope, completing Foundation Batches1–3. Source commits `143e9fb3` and `b55c6f13`; all15 cases passed with two actual native End Turn replies, four use/target pairs and three supervised Qwen choices. Original/full-file restoration, all14 protected inputs, owned-runtime shutdown and disarm verified; Computer Use inactive. CSV/workbook6831 records/964 Fixed/0 Open. [Current results and limitations](foundation-batch-3-results.md). Exact acceptance commit ID is recorded after commit in `D:/ConficturaUOTestTools/foundation-ingame-20261025/batch-3/CLIENT005-CLOSEOUT.md`. No push/deployment. Earlier pending/paused statements below are historical checkpoints.
+
+## Historical checkpoint (superseded by the current closeout)
+
 **Batch 1 FIX-09/10 and Batch 2 FIX-11/12/13/14 are accepted within the independently reviewed isolated in-game scope. Batch 3 FIX-15 remains code/regression complete, in-game acceptance pending and PAUSED. No automatic resume, heartbeat or schedule.**
 
 Authoritative stop/resume handoff: `D:/ConficturaUOTestTools/foundation-ingame-20261025/BATCH2-PAUSE-HANDOFF-20261025.md`. Resume only after explicit human instruction, using its current-controller, client004 lineage, protected-input, process/port and fresh copied-setup requirements. The original controller is `01a14f0a-6dfa-7133-a92a-f2f5bef78a02`, with coordinator `01a151f3-ef87-7102-8b24-e85667fb40d9`. All Batch 3 in-game cases are unrun.

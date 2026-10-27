@@ -1,5 +1,7 @@
 # Codebase Audit Outputs
 
+Current Foundation closeout: [Batch3 FIX-15 accepted results](foundation-batch-3-results.md), [independent client review](subagent-findings/foundation-batch-3-client-review.md), [acceptance identities](foundation-batch-3-acceptance-verification.json), and [workbook verification](foundation-batch-3-workbook-verification.json). Batches1–3 accepted in their declared isolated scopes; current overlay6831 records/964 Fixed/0 Open. Test runtimes/native control inactive; no deployment.
+
 This directory stores durable outputs produced by the codebase systems audit and reorganization phase runner.
 
 Raw command output may remain temporary when it is easy to regenerate. Curated tables, reviewed registers, blocker records, accepted risks, and verification notes belong here so future runs do not depend on chat history.

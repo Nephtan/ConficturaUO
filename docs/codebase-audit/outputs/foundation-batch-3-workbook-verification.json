@@ -1,0 +1,147 @@
+{
+  "utc": "2026-10-27T01:45:27.347609+00:00",
+  "records": 6831,
+  "statuses": {
+    "Fixed": 964,
+    "ReviewedNoChange": 2650,
+    "FalsePositive": 330,
+    "SafeNoChange": 678,
+    "IntentionalLegacy": 1395,
+    "AcceptedFence": 83,
+    "Documented": 352,
+    "BlocksOnlyThisDomain": 7,
+    "PolicyResolvedNoChange": 372
+  },
+  "changed_record_rows": [
+    6832
+  ],
+  "all_rows_match_csv": true,
+  "untouched_record_xml_byte_identical": true,
+  "changed_package_parts": [
+    "xl/worksheets/sheet1.xml",
+    "xl/worksheets/sheet2.xml",
+    "xl/worksheets/sheet3.xml",
+    "xl/charts/chart1.xml",
+    "xl/charts/chart4.xml"
+  ],
+  "all_other_package_parts_byte_identical": true,
+  "native_features_preserved": true,
+  "cached_summary_results_reconciled_from_csv": true,
+  "native_excel_recalculation_performed": false,
+  "artifact_tool_authored_and_recalculated": true,
+  "artifact_engine_reconciliation_numeric_checks_passed": 4,
+  "artifact_engine_date_check": "Artifact recalculation rerun; wildcard text-date COUNTIF still misses historical text dates. Native formulas preserved; CSV reconciles all saved counts. Native Excel not run.",
+  "normalized_duplicate_summary_addresses": {
+    "2": [],
+    "3": []
+  },
+  "artifact_export_unrelated_parts_changed": 47,
+  "native_preservation_serialization": "Original package retained; only reviewed data/formula/cache/table/chart XML updated",
+  "visual_verification": "Viewed all six baseline/final dashboard, status/category and date-range PNGs. Final preview uses explicit in-memory saved-cache values only for the known Artifact text-date issue; delivered formulas stay native. Layout and changed values verified.",
+  "csv_sha256": "dca07d93e39b5645cd9ea8f413ce3d5a3c513db4be49f3712b2e995cb0052159",
+  "workbook_sha256": "872abee8a4f79124498f436fe3a9a61e8f897986d75575ce29dd5b42f5ea3bdc",
+  "status": "Passed with documented Artifact-engine limitation",
+  "evidence_root": "D:\\ConficturaUOTestTools\\foundation-ingame-20261025\\batch-3\\bookkeeping-005",
+  "final_import": {
+    "records": 6831,
+    "fixed": 964,
+    "open": 0,
+    "dates": [
+      [
+        46179,
+        203
+      ],
+      [
+        46180,
+        92
+      ],
+      [
+        46181,
+        439
+      ],
+      [
+        46182,
+        274
+      ],
+      [
+        46186,
+        86
+      ],
+      [
+        46187,
+        5170
+      ],
+      [
+        46188,
+        549
+      ],
+      [
+        46312,
+        6
+      ],
+      [
+        46313,
+        1
+      ],
+      [
+        46314,
+        2
+      ],
+      [
+        46315,
+        2
+      ],
+      [
+        46320,
+        6
+      ],
+      [
+        46321,
+        1
+      ]
+    ],
+    "qualification": "Saved cache readback; no native Excel recalculation claim"
+  },
+  "preview_qualification": {
+    "scope": "In-memory rendering only; known Artifact text-date formula limitation. Source is independently reconciled native saved caches. Delivered formulas unchanged.",
+    "cells": [
+      "2:B13",
+      "3:U5",
+      "3:U6",
+      "3:U7",
+      "3:U8",
+      "3:U9",
+      "3:U10",
+      "3:U11",
+      "3:U12",
+      "3:U13",
+      "3:U14",
+      "3:U15",
+      "3:U16",
+      "3:U17"
+    ]
+  },
+  "unchanged_prior_csv_records": 6830,
+  "records_with_open_status": 0,
+  "initial_adapter_failure": "acceptance-005/adapter-failure.json; guard rejected partial B13 date-bound extension before writes; exact T/U bounds fixed in retry2",
+  "allowed_native_formula_changes": [
+    "Audit Dashboard!B13: paired T/U date ranges through row17",
+    "Audit Analysis!B22: date sum through row17",
+    "Audit Analysis!U17: new date bucket formula"
+  ],
+  "evidence_sha256": {
+    "workbook.mjs": "e384d4c82b3c3eac0eb42ced4f8abc62338ea8380c556acff1682128be593957",
+    "preserve_native.py": "1fbf057d819e2bc1d28732b53ba23e5f15ea63e380ae9fd8a1c78cc9eda919f1",
+    "artifact-authored.xlsx": "43a403fe197efc635c8ca6e9d629f561d42fbc400dc4a2d44824f32953997b80",
+    "artifact-recalculation.json": "c6e21941fd33a7fd874d954343c15ada5b8950658dcfd33705bff7c67f6b650d",
+    "final-import-checks.json": "4a7d092dbc92e3eeaa7120f0067ec60828a8cfea4984b7ce54203db5fb803f43",
+    "preview-qualification.json": "db8d14085e615cd84bb5e896211c3196cebc9591d90bbf59b7cc372c55b31aeb",
+    "saved-cache-preview.json": "ff2bad208e43ddb66f669ccbfed7fc1e9147a02633eb31ab1ae04659d4313aee",
+    "before-analysis.png": "388139e1bd7a3ce6804952cf68939e0265e57840cd8d4632e028b34f76eef466",
+    "before-dashboard.png": "d14ff32b4938d310044a1dd3bc50a0a4b0e42bfb808c35a89d6c21c731790f13",
+    "before-dates.png": "19a0bacf4034f6cd255256170e05c2f131b343bbdc0b106728628ada15fe4eb9",
+    "final-analysis.png": "bffb5bea5d8e67e85502d18518f19552712163646693c599f226029860a9adbe",
+    "final-dashboard.png": "1b6b3fa7786159974dcfece116eeba98b3103d4d52938f11827296d9d79993ed",
+    "final-dates.png": "fd4bc6d2b9c4492200b2b1067669b6f9a5cd22a8f0e18751418df62285767923"
+  }
+}

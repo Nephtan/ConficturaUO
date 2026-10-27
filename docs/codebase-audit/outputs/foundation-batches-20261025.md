@@ -14,7 +14,7 @@ Unrelated untracked paths: `.codex-remote-attachments/`, `Confictura-backlog-rev
 
 ## Current acceptance and stopping state
 
-Batch1 FIX-09/10 and Batch2 FIX-11 through FIX-14 accepted within reviewed isolated in-game scope. Batch3 FIX-15 is PAUSED with all in-game cases unrun. No automatic resume; explicit human instruction is required. See [acceptance/pause checkpoint](foundation-acceptance-pause-20261025.md).
+Batch1 FIX-09/10 and Batch2 FIX-11 through FIX-14 accepted within reviewed isolated in-game scope. Batch3 FIX-15 is now accepted after explicit human resume and the full independently reviewed client005 gate. All copies restored/stopped/disarmed; Computer Use inactive. See [current Batch3 results](foundation-batch-3-results.md) and the historical [acceptance/pause checkpoint](foundation-acceptance-pause-20261025.md).
 
 ## Ordered batches and acceptance
 
@@ -26,7 +26,7 @@ Batch1 FIX-09/10 and Batch2 FIX-11 through FIX-14 accepted within reviewed isola
 | 2 | FIX-12 / POST-FOUNDATION-FIX-12 | Accepted: scoped in-game review complete | `BODBuyGump.OnResponse`: full/missing pack, missing funds and construction/delivery failure preserve money/book entry and leave no newly abandoned deed. Preserve successful stacking/delivery semantics. |
 | 2 | FIX-13 / POST-FOUNDATION-FIX-13 | Accepted: scoped in-game review complete | `CityTreasuryWithdrawPrompt`, `CityTaxesIncomePrompt`: bind original actor/live stone and recheck current mayor-or-GameMaster at final action and safe reopen. Lost office, demotion, deleted stone, mismatched actor reject without mutation; valid mayor/staff and existing limits pass. |
 | 2 | FIX-14 / POST-FOUNDATION-FIX-14 | Accepted: scoped in-game review complete | `CityCorpseFeeGump`, `CityResurrectionStone`: pure eligibility before debit, agreed fee, valid corpse/actor/location/quota, commit quota/treasury once. Missing/deleted corpse, quota exhausted, insufficient funds, moved actor, changed fee and replay leave resources unchanged. Preserve free `RegCorpse` callers and serialization. Paid resurrection completion is explicitly deferred. |
-| 3 | FIX-15 / POST-FOUNDATION-FIX-15 | Code/regression complete; in-game PAUSED | `BandageContext`: context plus timer ownership, idempotent cancel/completion. Queued A after replacement B cannot heal, message, skill-check, remove B or clear B's effect registration. Suspend/resume and turn advancement complete once; deleted participants reject. Preserve global Timer, timing formulas, skills and serialization. No second timer defect selected. |
+| 3 | FIX-15 / POST-FOUNDATION-FIX-15 | Accepted: scoped in-game review complete | `BandageContext`: context plus timer ownership, idempotent cancel/completion. Queued A after replacement B cannot heal, message, skill-check, remove B or clear B's effect registration. Suspend/resume and turn advancement complete once; deleted participants reject. The additive real-manager repair scopes current actor-effect self/other mutations and preserves callback replacement. Preserve global Timer, timing formulas, skills and serialization. No second timer defect selected. |
 
 Each batch requires historical reproduction, current pass/fail regressions, forced runtime script compilation, relevant existing regression checks, independent review and a focused local commit before advancing. A core change also needs an operational Release/x86 build from a frozen complete core snapshot and the identical validated tracked executable. Runtime compile and IDE/project hygiene are distinct. No new production source files or project changes are planned.
 
@@ -40,9 +40,9 @@ Opening process observation: `Get-Process` found no Confictura/RunUO process. CI
 
 ## Batch results
 
-Batch1 `d9b4703f` (FIX09/10) and Batch2 `7f146df6` (FIX11-14) now satisfy their scoped in-game acceptance gates and final independent reviews. Batch3 `143e9fb3` remains code/regression complete only, in-game PAUSED. CSV/workbook:6,831 records/963 Fixed/one Open; earlier6,824 rows unchanged. Exact review, cleanup, limitation and resume references: [acceptance/pause checkpoint](foundation-acceptance-pause-20261025.md).
+Batch1 `d9b4703f` (FIX09/10) and Batch2 `7f146df6` (FIX11-14) now satisfy their scoped in-game acceptance gates and final independent reviews. Batch3 `143e9fb3` plus additive actor-effect repair `b55c6f13` now satisfies its scoped client005 acceptance and final independent review. CSV/workbook:6,831 records/964 Fixed/zero Open; this closeout changes only FIX15, preserving earlier6,830 rows. Exact review, cleanup, limitation and resume references: [acceptance/pause checkpoint](foundation-acceptance-pause-20261025.md).
 
-Acceptance update, 2026-10-25: prior Batch 1 accepted wording referred to its component scope and is superseded by the explicit in-game gate. Preserve commit d9b4703f and all evidence. Independent code review allows sequential implementation to continue, but does not close final acceptance.
+Historical coding-task handoff, 2026-10-25 (superseded for current acceptance): prior Batch 1 accepted wording referred to its component scope and is superseded by the explicit in-game gate. Preserve commit d9b4703f and all evidence. Independent code review allows sequential implementation to continue, but does not close final acceptance.
 
 Combined candidate with the exact tracked core and final scripts passed forced runtime compilation and74/261/62 focused assertions. [In-game handoff](foundation-ingame-handoff.md) and [durable manifest](foundation-candidate-manifest.json) are ready for original session01a14f0a-6dfa-7133-a92a-f2f5bef78a02, dispatched by the parent through coordinator01a151f3-ef87-7102-8b24-e85667fb40d9. This coding task does not activate it.
 

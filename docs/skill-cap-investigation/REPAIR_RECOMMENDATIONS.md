@@ -1,5 +1,7 @@
 # Prioritized repairs for separate approval and implementation
 
+**Foundation follow-up closeout, October26:** FIX-09 through FIX-15 now accepted in their separately reviewed isolated scopes. FIX15 includes additive actor-effect repair `b55c6f13` and full client005 acceptance. See [current results](../codebase-audit/outputs/foundation-batch-3-results.md). This does not close reserved FIX06–08, the separate buff/raw-stat concern, or wider audit/deployment gates.
+
 **Current ordered-repair closeout (2026-10-20 local):** FIX-05, FIX-02, FIX-03 and FIX-04 completed scoped isolated acceptance and independent review in order, with focused local source/artifact commits. See the [controller handoff](ACCOUNT-HANDOFF.md), [ordered sequence](REPAIR-SEQUENCE-GOAL.md) and [FIX-04 report](FIX-04-REPORT.md) for current behavior, commits, restored inputs and limitations. No deployment or live historical-incident attribution is claimed.
 
 The investigation/recommendations below describe the historical baseline. In particular, its public Total setter, automatic XML raw-write and deferred repair descriptions are superseded by the linked repair reports; characterization evidence is retained as historical evidence. The separate FIX-06/FIX-07/FIX-08 recommendations and wider audit blockers are not blanket-closed by this four-repair status.
