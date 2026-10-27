@@ -20,7 +20,8 @@ internal static class FoundationBandageRegression
     private sealed class Patient : Mobile
     {
         public int Heals;
-        public override void OnHeal(ref int amount, Mobile from) { ++Heals; }
+        public Action<Mobile> HealCallback;
+        public override void OnHeal(ref int amount, Mobile from) { ++Heals; if (HealCallback!=null) HealCallback(from); }
         public override bool CanBeBeneficial(Mobile target, bool message, bool allowDead) { return true; }
     }
     private sealed class Capture : NetState
@@ -159,6 +160,7 @@ internal static class FoundationBandageRegression
             a=Begin(h,h); Check(a.Timer.Delay==TimeSpan.FromMilliseconds((5.0+0.5*((120.0-h.Dex)/10))*1000), "self-heal timing unchanged"); a.StopHeal();
         }
         Integration();
+        RealManagerTurns();
     }
     private static void Integration()
     {
@@ -178,6 +180,82 @@ internal static class FoundationBandageRegression
         TimeSpan remaining=participant.Effects.BandageRemaining;
         Check(b.AdvanceTurnBased(remaining), "manager-captured context advances");
         Check(p.Heals==1 && participant.Effects.BandageContext==null && participant.Effects.BandageRemaining==TimeSpan.Zero, "owner completion clears real manager effect"); handler.Manager=null;
+    }
+    private static void RealManagerTurns()
+    {
+        foreach (bool self in new bool[]{false,true})
+        {
+            Patient h=Mobile(), p=self?h:Mobile(), opponent=self?Mobile():p, outsider=Mobile();
+            BandageContext bandage=Begin(h,p); Timer old=bandage.Timer; Queue(old);
+            TurnBasedCombatManager manager=(TurnBasedCombatManager)FormatterServices.GetUninitializedObject(typeof(TurnBasedCombatManager));
+            TurnBasedCombatConfiguration config=new TurnBasedCombatConfiguration(); config.LogEnabled=false; config.ActorSeconds=10;
+            Dictionary<TurnMutationKind,List<TurnEffectRule>> rules=(Dictionary<TurnMutationKind,List<TurnEffectRule>>)typeof(TurnBasedCombatConfiguration).GetField("m_EffectRules",Instance).GetValue(config);
+            rules.Add(TurnMutationKind.Healing,new List<TurnEffectRule>{new TurnEffectRule{RuntimeType="Server.Items.BandageContext+InternalTimer",Kind=TurnMutationKind.Healing,ClockPolicy="ActorClock",TickPhase="StartOfTurn"}});
+            TurnCombatGroup group=new TurnCombatGroup(); group.ID=1; group.Round=1;
+            group.Edges.Add(new TurnHostilityEdge{Source=h,Target=opponent});
+            TurnParticipant actor=new TurnParticipant{Mobile=h,Group=group,Effects=new TurnEffectState(),HasTakenFirstTurn=true};
+            TurnParticipant other=new TurnParticipant{Mobile=opponent,Group=group,Effects=new TurnEffectState(),HasTakenFirstTurn=true};
+            group.Participants.Add(actor); group.Participants.Add(other); group.Current=actor;
+            Dictionary<Server.Mobile,TurnParticipant> participants=new Dictionary<Server.Mobile,TurnParticipant>(); participants.Add(h,actor); participants.Add(opponent,other);
+            typeof(TurnBasedCombatManager).GetField("m_Configuration",Instance).SetValue(manager,config);
+            typeof(TurnBasedCombatManager).GetField("m_Participants",Instance).SetValue(manager,participants);
+            typeof(TurnBasedCombatManager).GetField("m_Groups",Instance).SetValue(manager,new List<TurnCombatGroup>{group});
+            typeof(TurnBasedCombatManager).GetField("m_RuntimeEnabled",Instance).SetValue(manager,true);
+            FieldInfo instance=typeof(TurnBasedCombatManager).GetField("m_Instance",Static);
+            object previousManager=instance.GetValue(null); instance.SetValue(null,manager);
+            TurnBasedCombatBridge.Unregister(handler);
+            try
+            {
+                Check(TurnBasedCombatBridge.Register(manager), "register real manager for actor-clock integration");
+                manager.EffectTimerChanged(h,TurnMutationKind.Healing,bandage.Timer);
+                Check(actor.Pending==null && actor.Effects.BandageContext==bandage && !old.Running, "captured bandage has no pending action");
+                Check(TurnBasedCombatBridge.BeginMutation(new TurnMutationRequest(h,h,TurnMutationKind.Effect,0,0))==null, "ordinary self effect cannot bypass pending-action guard");
+                Check(TurnBasedCombatBridge.BeginMutation(new TurnMutationRequest(h,p,TurnMutationKind.Healing,10,20))==null, "ordinary healing cannot bypass pending-action guard");
+                Check(TurnBasedCombatBridge.BeginMutation(new TurnMutationRequest(h,outsider,TurnMutationKind.Effect,0,0))==null, "ordinary outsider effect cannot bypass pending-action guard");
+                MethodInfo effects=typeof(TurnBasedCombatManager).GetMethod("ProcessActorEffects",Instance);
+                TimeSpan remaining=actor.Effects.BandageRemaining;
+                TurnParticipant stale=new TurnParticipant{Mobile=h,Group=group,Effects=actor.Effects};
+                effects.Invoke(manager,new object[]{stale,TimeSpan.FromSeconds(10),"StartOfTurn"});
+                Check(actor.Effects.BandageRemaining==remaining && p.Heals==0, "stale participant cannot process owned effects");
+                int skill=skills, heals=p.Heals;
+                Check(manager.EndTurn(h,true) && group.Current==other, "real EndTurn advances to opponent");
+                effects.Invoke(manager,new object[]{actor,TimeSpan.FromSeconds(10),"StartOfTurn"});
+                Check(actor.Effects.BandageRemaining==remaining && p.Heals==heals, "out-of-turn actor cannot process effects");
+                Check(p.Heals==heals, "bandage waits for healer StartOfTurn");
+                Check(manager.EndTurn(opponent,true) && group.Current==actor && group.Round==2, "real EndTurn returns to healer next round");
+                Check(p.Heals==heals+1 && p.Hits>10 && skills==skill+2, "real manager StartOfTurn completes self or other healing without pending action");
+                Check(actor.Effects.BandageContext==null && actor.Effects.BandageRemaining==TimeSpan.Zero && BandageContext.GetContext(h)==null, "real manager completion clears owned effect");
+                int count=Packets(h)+Packets(opponent); Timer.Slice(); bandage.EndHeal();
+                Check(p.Heals==heals+1 && skills==skill+2 && Packets(h)+Packets(opponent)==count, "queued old callback after real actor completion stays inert");
+                Check(TurnBasedCombatBridge.BeginMutation(new TurnMutationRequest(h,h,TurnMutationKind.Effect,0,0))==null, "actor effect authorization does not escape scope");
+                Check(TurnBasedCombatBridge.BeginMutation(new TurnMutationRequest(h,p,TurnMutationKind.Healing,p.Hits,p.Hits+1))==null, "patient authorization does not escape scope");
+
+                TurnBasedCombatBridge.Unregister(manager); p.Hits=10; h.Hits=10;
+                BandageContext completing=BandageContext.BeginHeal(h,p), replacement=null;
+                Check(TurnBasedCombatBridge.Register(manager), "restore real manager after independent callback fixture setup");
+                manager.EffectTimerChanged(h,TurnMutationKind.Healing,completing.Timer);
+                p.HealCallback=delegate(Server.Mobile from){p.HealCallback=null;replacement=BandageContext.BeginHeal(h,h);};
+                Check(manager.EndTurn(h,true) && manager.EndTurn(opponent,true), "advance real turns for completion callback replacement");
+                Check(replacement!=null && BandageContext.GetContext(h)==replacement && actor.Effects.BandageContext==replacement && actor.Effects.BandageRemaining>TimeSpan.Zero, "old completion preserves callback-installed replacement effect");
+                replacement.StopHeal();
+                Check(TurnBasedCombatBridge.BeginMutation(new TurnMutationRequest(h,outsider,TurnMutationKind.Healing,10,20))==null, "replacement callback cannot leak outsider authorization");
+
+                TurnBasedCombatBridge.Unregister(manager); p.Hits=10;
+                BandageContext throwing=BandageContext.BeginHeal(h,p);
+                Check(TurnBasedCombatBridge.Register(manager), "restore real manager after exception fixture setup");
+                manager.EffectTimerChanged(h,TurnMutationKind.Healing,throwing.Timer);
+                p.HealCallback=delegate(Server.Mobile from){p.HealCallback=null;throw new InvalidOperationException("owned heal callback probe");};
+                bool threw=false;
+                try{manager.EndTurn(h,true);manager.EndTurn(opponent,true);}catch(InvalidOperationException e){threw=e.Message=="owned heal callback probe";}
+                Check(threw, "completion exception propagated from owned callback");
+                Check(TurnBasedCombatBridge.BeginMutation(new TurnMutationRequest(h,h,TurnMutationKind.Effect,0,0))==null && TurnBasedCombatBridge.BeginMutation(new TurnMutationRequest(h,p,TurnMutationKind.Healing,10,20))==null, "self and patient scopes close on completion exception");
+                Check(!TurnBasedCombatBridge.IsFaulted, "real manager bridge remains healthy");
+            }
+            finally
+            {
+                TurnBasedCombatBridge.Unregister(manager); TurnBasedCombatBridge.Register(handler); bandage.StopHeal(); instance.SetValue(null,previousManager);
+            }
+        }
     }
     public static int Main(string[] args)
     {

@@ -138,6 +138,7 @@ namespace Server.Custom.Confictura
         private SchedulerTimer m_Scheduler;
         private bool m_RuntimeEnabled;
         private bool m_ProcessingAI;
+        private TurnMutationRequest m_ActorEffectRequest;
         private long m_NextGroupID;
         private long m_NextLeaseID;
         private DateTime m_NextHudRefresh;
@@ -875,6 +876,9 @@ namespace Server.Custom.Confictura
         public bool AuthorizeMutation(TurnMutationRequest request)
         {
             if (!m_RuntimeEnabled || request.Target == null)
+                return true;
+
+            if (m_ActorEffectRequest != null && Object.ReferenceEquals(request, m_ActorEffectRequest))
                 return true;
 
             TurnParticipant targetParticipant = GetParticipant(request.Target);
@@ -1898,6 +1902,34 @@ namespace Server.Custom.Confictura
             Log("poison_captured", participant.Group, participant.Mobile, null);
         }
 
+        private IDisposable BeginActorEffectMutation(TurnParticipant participant, Mobile target)
+        {
+            if (
+                participant == null || target == null
+                || GetParticipant(participant.Mobile) != participant
+                || participant.Group == null || !m_Groups.Contains(participant.Group)
+                || participant.Group.Current != participant
+            )
+                return null;
+
+            // Actor-clock effects run after the previous action lease has ended.
+            // Only this exact internal request may open a scope without a pending action.
+            TurnMutationRequest previous = m_ActorEffectRequest;
+            TurnMutationRequest request = new TurnMutationRequest(
+                participant.Mobile, target, TurnMutationKind.Effect, 0, 0
+            );
+            m_ActorEffectRequest = request;
+
+            try
+            {
+                return TurnBasedCombatBridge.BeginMutation(request);
+            }
+            finally
+            {
+                m_ActorEffectRequest = previous;
+            }
+        }
+
         private void ProcessActorEffects(
             TurnParticipant participant,
             TimeSpan elapsed,
@@ -1906,9 +1938,7 @@ namespace Server.Custom.Confictura
         {
             TurnEffectState effects = participant.Effects;
             Mobile mobile = participant.Mobile;
-            IDisposable scope = TurnBasedCombatBridge.BeginMutation(
-                new TurnMutationRequest(mobile, mobile, TurnMutationKind.Effect, 0, 0)
-            );
+            IDisposable scope = BeginActorEffectMutation(participant, mobile);
 
             if (scope == null)
                 return;
@@ -2020,16 +2050,35 @@ namespace Server.Custom.Confictura
                     )
                 )
                 {
-                    effects.BandageRemaining = BandageContext.AdvanceTurnBasedRemaining(
-                        effects.BandageRemaining,
-                        elapsed
-                    );
+                    BandageContext bandage = effects.BandageContext;
+                    // A self scope does not cover the captured bandage's other patient.
+                    IDisposable patientScope = BeginActorEffectMutation(participant, bandage.Patient);
 
-                    if (effects.BandageContext.AdvanceTurnBased(elapsed))
+                    if (patientScope != null)
                     {
-                        Log("bandage_completed", participant.Group, mobile, null);
-                        effects.BandageContext = null;
-                        effects.BandageRemaining = TimeSpan.Zero;
+                        try
+                        {
+                            effects.BandageRemaining = BandageContext.AdvanceTurnBasedRemaining(
+                                effects.BandageRemaining,
+                                elapsed
+                            );
+
+                            if (bandage.AdvanceTurnBased(elapsed))
+                            {
+                                Log("bandage_completed", participant.Group, mobile, null);
+
+                                // Completion callbacks may have installed a newer bandage.
+                                if (effects.BandageContext == bandage)
+                                {
+                                    effects.BandageContext = null;
+                                    effects.BandageRemaining = TimeSpan.Zero;
+                                }
+                            }
+                        }
+                        finally
+                        {
+                            patientScope.Dispose();
+                        }
                     }
                 }
 
