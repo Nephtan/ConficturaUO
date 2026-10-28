@@ -10,8 +10,8 @@ The encounter targets **20–35 minutes for a fixed, artifact-equipped veteran b
 
 ## Encounter and lifecycle
 
-- Create **six reviewed sites**, distributed across Sosaria. Each needs connected walkable combat space, safe approaches and exits, and clearance from houses, towns, services, portals, and other active events. Validate terrain and inspect each site in the isolated client.
-- Runtime placement selects from this catalog and checks current occupancy. Skip unsuitable sites; never fall back to an arbitrary coordinate.
+- Use **only permanently non-housing locations**, distributed across Sosaria; aim for six reviewed sites, accepting fewer if suitable land is limited. Each needs connected walkable combat space, safe approaches and exits, and clearance from houses, towns, services, portals, and other active events. Validate terrain and inspect each site in the isolated client.
+- Runtime placement selects from this catalog and checks current occupancy. Skip unsuitable sites; never fall back to an arbitrary coordinate. Require existing permanent non-housing status across the encounter area and clearance buffer, established by unconditional region rules or a verified immutable-terrain prohibition covering supported housing shapes and positions. Empty land, temporary restrictions, conditional housing permissions and a failed single house-placement attempt do not qualify. Retain dynamic exclusion of houses, city regions, services and portals. Do not create new housing bans to make a candidate fit.
 - Keep **one outbreak available**. An undiscovered outbreak remains in place. After engagement, thirty minutes without meaningful encounter activity ends the attempt. Completion or abandonment starts a random **30–60-minute cooldown** before choosing another site.
 - Preserve cleared broods and participation through death, retreat, and restart. Presence alone does not refresh the recovery window.
 - Each brood has a guardian and a finite reinforcement budget. Killing its guardian permanently stops further reinforcements and pays that stage. Clearing all three reveals Mephitis.

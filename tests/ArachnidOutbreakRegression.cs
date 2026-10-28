@@ -96,6 +96,65 @@ internal static class ArachnidOutbreakRegression
         Check(threw && state.Phase == ArachnidOutbreakPhase.Broods, "invalid cooldown cannot partially mutate state");
     }
 
+    private sealed class Terrain : IArachnidOutbreakTerrain
+    {
+        public int Mode;
+        public int Calls;
+        public bool HasPermanentHousingProhibition(Rectangle2D bounds) { return Mode != 7; }
+        public bool IsReserved(Rectangle2D bounds) { return Mode == 1; }
+        public bool TryGetPoint(int x, int y, out Point3D point)
+        {
+            ++Calls;
+            point = new Point3D(x, y, Mode == 4 && x > 1000 ? 20 : 0);
+            if (Mode == 2 && x == 1000 && y == 1000)
+                return false;
+            if (Mode == 3 && (Math.Abs(x - 1000) > 40 || Math.Abs(y - 1000) > 40))
+                return false;
+            if (Mode == 5 && x == 972 && y == 980)
+                return false;
+            if (Mode == 6 && x == 973 && y == 980)
+                return false;
+            return true;
+        }
+    }
+
+    private static void Sites()
+    {
+        foreach (ArachnidOutbreakSite candidate in ArachnidOutbreakSites.Candidates)
+        {
+            Check(!candidate.Reviewed, "candidate has no implied client acceptance");
+            Check(Object.ReferenceEquals(ArachnidOutbreakSites.Find(candidate.Id), candidate), "catalog lookup returns canonical site");
+        }
+        Check(ArachnidOutbreakSites.Find("unknown") == null, "unknown catalog site has no fallback");
+        ArachnidOutbreakPlacement placement;
+        string reason;
+        Terrain terrain = new Terrain();
+        ArachnidOutbreakSite site = new ArachnidOutbreakSite("test", 1000, 1000, false);
+        Check(!site.Reviewed, "terrain validation alone does not grant client review");
+        Check(site.Validate(terrain, out placement, out reason), "open, connected arena accepted");
+        Check(placement.WalkableCount == 113 * 113, "bounded footprint includes all open tiles");
+        Check(placement.Boss == new Point3D(1000, 1000, 0)
+            && placement.Brood(0) == new Point3D(972, 980, 0)
+            && placement.Brood(1) == new Point3D(1028, 980, 0)
+            && placement.Brood(2) == new Point3D(1000, 1030, 0), "four connected objective anchors");
+        for (int mode = 1; mode <= 7; ++mode)
+        {
+            terrain.Mode = mode;
+            Check(!site.Validate(terrain, out placement, out reason) && placement == null && reason.Length > 0,
+                "reject reserved, blocked center, sealed pocket, cliff, blocked brood, blocked staging tile or housing eligibility: " + mode);
+        }
+        int[] invalidX = new int[] { 0, 80, 5039, 6000 };
+        foreach (int x in invalidX)
+        {
+            terrain.Calls = 0;
+            Check(!new ArachnidOutbreakSite("invalid", x, 1000, false).Validate(terrain, out placement, out reason)
+                && terrain.Calls == 0, "out of bounds fails before terrain access");
+        }
+        foreach (int y in new int[] { 0, 80, 3047, 4000 })
+            Check(!new ArachnidOutbreakSite("invalid", 1000, y, false).Validate(terrain, out placement, out reason),
+                "out of mainland vertical bounds");
+    }
+
     public static int Main(string[] args)
     {
         try
@@ -106,6 +165,7 @@ internal static class ArachnidOutbreakRegression
                         if (first != second && first != third && second != third)
                             Permutation(first, second, third);
             Abandonment();
+            Sites();
             Console.WriteLine("PASS current outbreak: " + s_Checks + " lifecycle/serialization assertions; no world or listener.");
             return 0;
         }
