@@ -9,5 +9,6 @@
   "accounting": {"classification": "current-regression", "sources": ["D:/ConficturaUOTestTools/ordered-repairs-20261018/fix04/SkillAccountingRegression.cs"], "main": "SkillAccountingRegression", "marker": "assertions; isolated production methods, no world or listener."},
   "skill-investigation-historical": {"classification": "historical-characterization", "sources": ["tests/SkillCapInvestigation.cs", "tests/SkillCapMutationInventory.cs"], "main": "SkillCapInvestigation", "marker": "NOT A CURRENT ACCEPTANCE GATE"},
   "bandages": {"classification": "current-regression", "sources": ["tests/FoundationBandageRegression.cs"], "main": "FoundationBandageRegression", "marker": "PASS current bandages"},
-  "bandages-historical": {"classification": "historical-characterization", "sources": ["tests/FoundationBandageRegression.cs"], "main": "FoundationBandageRegression", "args": ["historical"], "marker": "REPRODUCED historical bandages"}
+  "bandages-historical": {"classification": "historical-characterization", "sources": ["tests/FoundationBandageRegression.cs"], "main": "FoundationBandageRegression", "args": ["historical"], "marker": "REPRODUCED historical bandages"},
+  "outbreak": {"classification": "current-regression", "sources": ["tests/ArachnidOutbreakRegression.cs"], "main": "ArachnidOutbreakRegression", "marker": "PASS current outbreak:"}
 }

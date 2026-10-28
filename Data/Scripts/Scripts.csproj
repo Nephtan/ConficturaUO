@@ -136,6 +136,7 @@
     <Compile Include="Custom\Champions\System\CannedEvil\ChampionSkullBrazier.cs" />
     <Compile Include="Custom\Champions\System\CannedEvil\ChampionSkullPlatform.cs" />
     <Compile Include="Custom\Champions\System\CannedEvil\ChampionSkullType.cs" />
+    <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakState.cs" />
     <Compile Include="Custom\Champions\System\CannedEvil\ChampionSpawn.cs" />
     <Compile Include="Custom\Champions\System\CannedEvil\ChampionSpawnInfo.cs" />
     <Compile Include="Custom\Champions\System\CannedEvil\ChampionSpawnRegion.cs" />
