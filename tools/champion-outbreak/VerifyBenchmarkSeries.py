@@ -12,7 +12,7 @@ def series(roots, output):
     roots=[p.resolve() for p in roots]
     assert len(roots)==3 and len(set(roots))==3,'Exactly three distinct completed runs are required'
     assert not output.exists(),'Never overwrite a prior series result'
-    rows=[];signatures=[];policies=[];fixtures=[];inputs=[];saves=[];stocks=[];cores=[];movement=[]
+    rows=[];signatures=[];policies=[];fixtures=[];inputs=[];saves=[];stocks=[];cores=[];movement=[];versions=[]
     for root in roots:
         verify(root,require_clear=True)
         evidence=root/'evidence'
@@ -21,7 +21,8 @@ def series(roots, output):
         assert state.get('controllerStatus')=='Completed; cooldown active.' and not state.get('failure')
         assert state.get('blessed')=='False' and state.get('navigationOnly')=='False'
         reference=ET.parse(evidence/'benchmark-reference.xml').getroot()
-        assert reference.get('version')=='3' and reference.get('playerPrepared')=='True'
+        assert reference.get('version') in ('3','4') and reference.get('playerPrepared')=='True'
+        versions.append(reference.get('version'))
         signatures.append(capability_signature(evidence/'benchmark-reference.xml'))
         frozen=json.loads((evidence/'reference-freeze.json').read_text())
         prepared=json.loads((evidence/'prepared.json').read_text(encoding='utf-8-sig'))
@@ -41,7 +42,7 @@ def series(roots, output):
         rows.append(dict(root=str(root),mode=mode,seconds=float(state.get('seconds')),
                          supplies_consumed=report['supplies_consumed'],
                          native_walk_rejections=report['native_walk_rejections']))
-    for values in (signatures,policies,fixtures,inputs,saves,stocks,cores,movement):
+    for values in (signatures,policies,fixtures,inputs,saves,stocks,cores,movement,versions):
         assert all(value==values[0] for value in values[1:]),'Runs are not the same frozen reference/policy/source/starting world/stock'
     assert any(row['mode']=='no-antivenom' for row in rows),'At least one complete run must exclude antivenom'
     median=statistics.median(row['seconds'] for row in rows)/60
@@ -49,6 +50,7 @@ def series(roots, output):
     result=dict(three_comparable_complete_runs=True,at_least_one_without_antivenom=True,
                 median_minutes=median,pacing_passed=passed,runs=rows,
                 policy_sha256=policies[0],fixture_sha256=fixtures[0],core_sha256=cores[0],
+                reference_version=versions[0],
                 scope='Veteran clear/pacing only; other native, site, economy and Zanthus gates remain separate',
                 production_activation=False)
     output.write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))

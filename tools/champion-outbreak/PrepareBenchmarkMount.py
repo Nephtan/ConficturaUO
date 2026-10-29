@@ -11,13 +11,16 @@ def prepare(root):
     assert root.is_relative_to(Path('D:/ConficturaUOTestTools').resolve())
     p=json.loads((e/'prepared.json').read_text());assert p['fixture']=='benchmark'
     assert not (e/'reference-freeze.json').exists() and not (e/'mount-preparation.json').exists()
-    alive=bind_server(root,e);deadline=time.monotonic()+120
+    alive=bind_server(root,e);deadline=time.monotonic()+120;state=None
     while time.monotonic()<deadline:
-        alive();state=read_status(e/'benchmark-state.xml')
+        alive()
+        try:state=read_status(e/'benchmark-state.xml')
+        except FileNotFoundError:
+            time.sleep(.2);continue
         assert state.get('state')!='failed',state.get('failure')
         if state.get('state')=='ready' and state.get('online')=='True':break
         time.sleep(.2)
-    assert state.get('state')=='ready' and state.get('online')=='True' and state.get('mounted')=='False'
+    assert state is not None and state.get('state')=='ready' and state.get('online')=='True' and state.get('mounted')=='False','Connected unmounted reference did not become ready'
     before=e/'mount-preparation-before-reference.xml';assert not before.exists()
     before.write_bytes(read_shared(e/'benchmark-reference.xml'))
     publish(e,'benchmark-command.txt','prepare-mount');deadline=time.monotonic()+50

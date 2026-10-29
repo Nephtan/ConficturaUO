@@ -21,9 +21,17 @@ Bandages use SBHealer's GenericBuyInfo at StoreSalesList.cs:16829. Potion entrie
 
 The table excludes petals, repairs, travel, obtaining equipment, time, taxes/actual checkout and potential empty-bottle resale. Crafting or player trade can change acquisition costs. Evidence and source hash/line extraction: D:/ConficturaUOTestTools/outbreak-economics-20261029-002/price-observation.json. This clarifies the first report's tithing label as net balance replacement. VerifyBenchmark.py now reports the observed finite tithing balance reduction alongside supplies. A source-price subtotal is neither an actual shopping receipt nor a net-profit result.
 
+## First complete mounted no-antivenom reference
+
+Mounted-v4 run001 finishes in 1452.7598366 seconds with no player death. It consumes 154 bandages, 21 greater cures, 8 greater heals, 9 greater strengths, 12 greater agilities, 8 total refreshes and 2 orange petals; net tithing reduction is 650. Applying the same source base prices gives 4198 gold in priced recurring replacement resources (308+1260+480+540+720+240+650). Petals, repairs, travel, equipment, actual vendor stock/tax/checkout and time remain excluded.
+
+The owned horse came from one declared fixture cage before freezing; its nominal base acquisition price is 550, separate from recurring resources. Native cage release/mounting passed, but no NPC purchase or actual gold expenditure is claimed. No replacement horse was used during combat. Evidence: D:/ConficturaUOTestTools/outbreak-mounted-benchmark-20261029-001/evidence/benchmark-verification.json and priced-cost-observation.json.
+
+This completes one resource-cost observation. The benchmark did not observe collection of the gold shower, ordinary corpse loot or pending personal rewards before cleanup, so subtracting 4198 from 15000 is not an observed profit. The separate archmage clear directly observed the 15,000 ground gold and pending 6 glands/1 skull; it does not substitute for collection in this reference case. Antivenom comparison and the three-run pacing series remain open.
+
 ## Reward value remains a separate question
 
-The specified 15,000 gold is a shared ground shower, not 15,000 per participant. RollVictory creates 25 stacks of 600 only after the boss victory path succeeds; pilot008 did not earn it. Four inherited UltraRich corpse packs and the skull/artifact opportunity are separate from that fixed sum. Gold actually collected, ordinary loot retained, travel/looting time, repairs and the completed-run resource spend remain unmeasured.
+The specified 15,000 gold is a shared ground shower, not 15,000 per participant. RollVictory creates 25 stacks of 600 only after the boss victory path succeeds; pilot008 did not earn it. Four inherited UltraRich corpse packs and the skull/artifact opportunity are separate from that fixed sum. Gold actually collected, ordinary loot retained, travel/looting time and repairs remain unmeasured; the first completed-reference resource spend is recorded above.
 
 Six personal glands from a fully qualified clear can make 12 treatments at guaranteed Alchemy 100 success, consuming 12 petals, 36 garlic and 12 bottles as well. Actual crafter prices, failure costs below 100, demand and support/pet use still need evidence. A skilled bandager's few potion cures do not show that protection has no value: prevention can preserve a healing action or protect another recipient. They also do not prove that hunters will buy the reward. Do not increase poison pressure merely to manufacture demand.
 

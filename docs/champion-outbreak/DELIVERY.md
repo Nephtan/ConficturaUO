@@ -21,6 +21,14 @@ Checked implementation rows below do not close the separate native, pacing or si
 
 Current stress/tool checkpoint: fa40b12a. Production remains disabled; no reservation is approved.
 
+[ACCEPTANCE_REQUIREMENTS.csv](ACCEPTANCE_REQUIREMENTS.csv) maps 44 specification/reported-design entries to implementation/test sources, recorded evidence scope and remaining verification. ComponentEvidence and NativePartial are scope labels, not completed delivery; Open, OperationalDraft and DesignReview remain unresolved. The final audit must inspect current source and retained results for every row before completion.
+
+## Mounted reference checkpoint - 2026-10-29
+
+Mounted-v4 no-antivenom run001 completes in 1452.7598366 seconds (24 minutes 13 seconds), all three broods and all 40 owned deaths including Mephitis. The character remains alive; actual loss/restoration is 7846 each, with 2094 native run requests, no walk requests/refusals and no client errors. No production ability, AI or tuning change was made. This is one complete candidate run, not the required three-run median.
+
+The unchanged terminal capture, frozen capabilities/policy and verification remain at D:/ConficturaUOTestTools/outbreak-mounted-benchmark-20261029-001/evidence/. VerifyBenchmark.py --require-clear passes 6742 production inputs, matching core, 20 private save files, protected originals and acknowledged forced no-save teardown. Resource deltas and source-price limits are recorded in ECONOMICS.md. The missing-initial-status preparation wait now tolerates startup without restarting the server; the series verifier accepts consistent prepared v3 or v4 series and still rejects mixed capabilities/versions. Its three-run integration remains pending. The second fresh copy is prepared from the same baseline and candidate for comparison.
+
 ## Baseline - 2026-10-28
 
 Work on the current branch. Preserve these unrelated, pre-existing untracked files:
@@ -30,6 +38,27 @@ Work on the current branch. Preserve these unrelated, pre-existing untracked fil
 - `tests/SkillVerificationProtection.cs`
 
 No production launch, save access, deployment, or automatic activation is authorized by this delivery.
+
+## Prototype operation and enable/disable gates
+
+These are source-verified operating notes for a later explicitly approved environment. This checkout retains DeliveryReady=false, an empty reviewed catalog and six inactive reservation proposals.
+
+| Client command (normal prefix [) | Access | Behavior |
+|---|---|---|
+| ArachnidOutbreak status | Administrator | Reports the unique controller's phase/site/cleared mask/status; missing or multiple controllers produce a count/error and no action |
+| ArachnidOutbreak create | Administrator | With zero controllers, creates one disabled controller; creation itself is permitted while DeliveryReady is false |
+| ArachnidOutbreak start | Administrator | Calls TryEnable; currently refuses because acceptance is incomplete; later also requires a unique controller and a reviewed site |
+| ArachnidOutbreak stop | Administrator | Disables the director, stops its timer and removes only entities matching its controller/attempt ownership |
+| OutbreakClaim | Player | Collects that caller's pending awards subject to normal alive/backpack checks; uncollected/full-pack entitlements remain queued |
+| BroodAntivenom | Player | Shows current protection/reuse status through the production status interface |
+
+Future enabling requires completed native/pacing/economics/requirement gates, current copied-world occupancy and maximum-city-growth/service/portal checks, reviewed ground visibility, approved permanent non-housing polygons and an explicit deployment decision. Populate only approved catalog entries and approve only their corresponding permanent reserves; validate matching source/core, forced runtime compilation and copied-world reload before changing the delivery gate in that approved candidate. Test start/status/stop and legacy coexistence there first. These instructions do not authorize a production flag edit, world launch or deployment.
+
+Stop is the operational disable path. Reservation protection is geography independent of the director, so stopping/deleting an encounter does not remove an approved housing ban. Pending awards are separate persistent claims; stopping is not a reward refund or replay. A missing/ambiguous controller must be inspected rather than silently creating/replacing active state. Do not use private fixture reflection as an operating procedure.
+
+For rollback, retain serialized outbreak/claim/treatment classes so existing saves can load; disarm the director before considering source removal or geography changes. Keep matching backups and verification evidence in the approved operational workflow. This delivery performs no production save operation or binary save edits.
+
+Source traces: [ArachnidOutbreakController.cs](../../Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakController.cs) Initialize/OnCommand/TryEnable/Stop/Restore/OnAfterDelete; [ArachnidOutbreakSites.cs](../../Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakSites.cs); [WildernessEncounterReserve.cs](../../Data/Scripts/Custom/Champions/Outbreak/WildernessEncounterReserve.cs); [ArachnidOutbreakClaim.cs](../../Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakClaim.cs). [RESERVATIONS.md](RESERVATIONS.md) and [NATIVE_ACCEPTANCE.md](NATIVE_ACCEPTANCE.md) retain the outstanding evidence boundaries.
 
 ## Batch 1 - Lifecycle, placement, persistence, staff controls
 
@@ -130,7 +159,7 @@ Placement-004 IDE/project hygiene build passed against the verified x86 server a
 
 Implemented the separate controller and owned spiders/champion/web signs. This is a gated intermediate implementation, not a playable or deployed outbreak. `ArachnidOutbreakController.DeliveryReady` remains false and the reviewed catalog remains empty. Startup registers a command but never creates a controller.
 
-- Entry point: `ArachnidOutbreakController.Initialize` registers `[ArachnidOutbreak <status|create|start|stop>]` at Administrator access and restores loaded controllers. The handler independently guards null/deleted/low-access mobiles. Creation is disabled by default; start rejects incomplete delivery, ambiguous controllers, and absent reviewed sites.
+- Entry point: `ArachnidOutbreakController.Initialize` registers `[ArachnidOutbreak <status|create|start|stop>]` at Administrator access and restores loaded controllers. The handler independently guards null/deleted/low-access mobiles. Creation makes one disabled controller; start rejects incomplete delivery, ambiguous controllers, and absent reviewed sites.
 - A five-second controller timer (enabled only after readiness) handles search, recovery, reconciliation and cooldown. Reviewed-site terrain validation and live nest occupancy checks precede placement. There is no random-coordinate fallback.
 - Three owned guardians/signs progress through real guarded death callbacks. Deletion is not victory. Owned-object cleanup requires both controller identity and attempt identity, including contaminated saved reference lists.
 - Reconciliation preserves cleared stages, detects removed guardians/bosses, and cancels invalid attempts without victory. A failed leash return cancels instead of stranding an internalized creature whose AI may stop thinking.
@@ -469,13 +498,13 @@ Corrected route002 completes the actual encounter in277.502 seconds with the ori
 
 Initial route001 remains a fixture failure, not a clear: the terminal XML writer attempted attributes after child elements and crashed the private server. The corrected writer and process-bound observer prevent that publication failure and stale-status monitoring; a real live/exit guard check passes. Failed-server teardown records no false native acknowledgement. Route002's initial client launch correction happens before login/preparation/combat freezing and remains retained separately.
 
-The completed route, stationary historical case and native preparation case pass their separate verification scopes. Captured forced runtime compile-only output,6,742 production inputs, accepted core,20 private saves, protected originals, personal source hashes and acknowledged forced no-save teardown pass. Source traces and reproduction are in [ARCHMAGE_STRESS.md](ARCHMAGE_STRESS.md).
+The completed route, stationary historical case and native preparation case pass their separate verification scopes. Captured forced runtime compile-only output,6,742 production inputs, accepted core, 20 private saves, protected originals, personal source hashes and acknowledged forced no-save teardown pass. Source traces and reproduction are in [ARCHMAGE_STRESS.md](ARCHMAGE_STRESS.md).
 
 Reference010 is stopped alive/incomplete at2261.441 seconds, with4,841 actual running requests. Its preservation passes; it contributes no complete pacing sample. Accepted veteran full clears remain0/3, tuning0. The AI design decision, three comparable reference clears, natural TBC/support acceptance, site visibility/current-world preflight/approval and final completion audit remain open. Production activation remains disabled.
 
 ### Step 3r - Natural turn-based warning/reaction/impact/self-escape
 
-Fresh live-turn003 passes the process-bound observer and post-teardown verifier. The real manager scheduler drives production Mephitis pulses after explicit test-arm scene enrollment. Actual copied Zanthus receives a legal reaction turn, waits at least3.5 real seconds, ends it through the normal client command and later escapes the restraint through a real UseObject packet at4 AP. No warning/restraint construction, turn advancement or attack weakening is supplied by the live fixture. All6,742 production inputs, accepted core,20 private saves and protected originals pass preservation; activation remains disabled.
+Fresh live-turn003 passes the process-bound observer and post-teardown verifier. The real manager scheduler drives production Mephitis pulses after explicit test-arm scene enrollment. Actual copied Zanthus receives a legal reaction turn, waits at least3.5 real seconds, ends it through the normal client command and later escapes the restraint through a real UseObject packet at4 AP. No warning/restraint construction, turn advancement or attack weakening is supplied by the live fixture. All6,742 production inputs, accepted core, 20 private saves and protected originals pass preservation; activation remains disabled.
 
 Starter001's death and002's polling-baseline false negative remain retained without full acceptance. Corrected read-only observation uses the warning's actual stored turn baseline. Computer Use confirms welcome-panel dismissal by right-click in003, but panels still obscure the field; no ground-warning pixel or Computer Use escape-input acceptance is claimed. [NATIVE_ACCEPTANCE.md](NATIVE_ACCEPTANCE.md) records exact scope and reproduction. Pacing, cooperative/live-dodge/ground/site gates and final release work remain open.
 
