@@ -65,6 +65,12 @@ def verify(root, require_clear=False, require_navigation=False, production_ref=N
     assert len(reference.findall('equipment')) == 10
     state = ET.parse(evidence/'run-001-final.xml').getroot()
     events = [json.loads(line) for line in (evidence/'benchmark-client.jsonl').read_text().splitlines()]
+    if reference.get('version')=='4':
+        assert reference.get('mounted')==reference.get('mountOwned')==reference.get('mountRider')=='True'
+        assert reference.get('mountType')=='Server.Mobiles.Horse'
+        assert state.get('mounted')==state.get('mountOwned')==state.get('mountRider')=='True'
+        assert any(e['event']=='mount_cage_use' for e in events) and any(e['event']=='mount_request' for e in events)
+        assert (evidence/'mount-preparation.json').is_file()
     errors = [event for event in events if event['event'] in ('error','walk_error')]
     finished = [event for event in events if event['event'] == 'finished']
     if state.get('state')=='driver-failed':
@@ -77,7 +83,7 @@ def verify(root, require_clear=False, require_navigation=False, production_ref=N
     clear = (state.get('state') == 'completed' and state.get('alive') == 'True'
              and state.get('bossKilled') == 'True' and not errors)
     starting = {'bandage':500,'cure':100,'heal':75,'petals':10,'antivenom':12}
-    if reference.get('version')=='3':
+    if reference.get('version') in ('3','4'):
         assert reference.get('playerPrepared')=='True' or navigation_only
         starting={n.get('key'):int(n.get('amount')) for n in reference.findall('supply')}
         if not navigation_only:
@@ -126,6 +132,8 @@ def verify(root, require_clear=False, require_navigation=False, production_ref=N
                                  if reference.get('tithing') is not None and state.get('tithing') is not None else None),
                   native_run_requests=(int(state.get('movementRunRequests')) if state.get('movementRunRequests') is not None else None),
                   native_walk_requests=(int(state.get('movementWalkRequests')) if state.get('movementWalkRequests') is not None else None),
+                  mounted_reference=reference.get('mounted','False')=='True',
+                  mount_type=reference.get('mountType',''),
                   client_errors=errors, production_inputs_checked=len(inputs), private_save_files=len(hashes(root/'shard/Saves')),
                   pacing_gate='Not evaluated: requires three complete frozen-reference runs',
                   tuning_passes=0, production_activation=False, site_approval=False,

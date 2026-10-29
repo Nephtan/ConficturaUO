@@ -232,6 +232,20 @@ try:
         if int(value(state, 'actor')) != int(Engine.Player.Serial):
             raise Exception('Connected actor differs from frozen reference')
         mode = state.GetAttribute('state')
+        if mode=='mounting':
+            now=time.time()
+            if now-last_item>=1:
+                candidate=int(value(state,'mountCandidate'))
+                if candidate:
+                    if Engine.Mobiles.GetMobile(candidate) is None:continue
+                    UseObject(candidate,True);log('mount_request',serial=candidate)
+                else:
+                    supplies=dict((n.GetAttribute('key'),n) for n in state.SelectNodes('supply'))
+                    cage=supplies.get('mount-cage')
+                    if cage is not None and int(value(cage,'remaining'))>0:
+                        UseObject(int(value(cage,'serial')),True);log('mount_cage_use',serial=int(value(cage,'serial')))
+                last_item=now
+            continue
         if mode == 'preparing-player':
             now=time.time()
             if now-last_item >= 2:

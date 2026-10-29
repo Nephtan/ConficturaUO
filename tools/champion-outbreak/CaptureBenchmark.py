@@ -34,11 +34,14 @@ def capture(root):
 
 
 def wait_for_outcome(root):
+    from RunArchmageCase import bind_server
     evidence=root.resolve()/'evidence';deadline=time.monotonic()+2700;last_report=0;stop_requested=False
+    require_alive=bind_server(root.resolve(),evidence)
     assert Path((evidence/'native-private-root.txt').read_text()).resolve()==root.resolve()/'shard'
     assert (evidence/'reference-freeze.json').exists()
     assert json.loads((evidence/'prepared.json').read_text())['fixture']=='benchmark'
     while True:
+        require_alive()
         state=read_status(evidence/'benchmark-state.xml')
         if state.get('state') in TERMINAL:
             capture(root)

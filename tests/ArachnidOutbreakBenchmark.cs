@@ -57,6 +57,7 @@ namespace Server.TestOnly
         private static RecallRune RetreatRune;
         private static bool PlayerPrepared;
         private static string RunMode = String.Empty;
+        private static bool MobilityPrepared;
 
         [CallPriority(Int32.MaxValue)]
         public static void Initialize()
@@ -464,6 +465,12 @@ namespace Server.TestOnly
                         State = "preparing-player"; ProbeDeadline = DateTime.UtcNow.AddSeconds(60);
                     }
                     else if (command.StartsWith("probe-")) BeginProbe(command.Substring(6));
+                    else if (command == "prepare-mount" && State == "ready" && Started == DateTime.MinValue && !PlayerPrepared
+                        && ProbeName == null && !MobilityPrepared && !File.Exists(Path.Combine(Evidence,"reference-freeze.json")))
+                    {
+                        Supply("mount-cage",new CagedHorse(),1);
+                        State="mounting";ProbeDeadline=DateTime.UtcNow.AddSeconds(45);
+                    }
                     else if (command == "stop") State = "stopped";
                     else throw new Exception("Unknown benchmark command.");
                 }
@@ -478,6 +485,14 @@ namespace Server.TestOnly
                     if (Actor.Str == 150 && Actor.Dex == 150 && Actor.Hits == Actor.HitsMax && Remaining("petals") < 10)
                     { PlayerPrepared = true; State = "ready"; WriteManifest(); }
                     else if (DateTime.UtcNow > ProbeDeadline) throw new Exception("Native player preparation timed out.");
+                }
+                if(State=="mounting")
+                {
+                    BaseMount mount=Actor.Mount as BaseMount;
+                    if(mount!=null && mount is Horse && mount.Controlled && mount.ControlMaster==Actor && mount.Rider==Actor
+                        && Remaining("mount-cage")==0)
+                    {MobilityPrepared=true;State="ready";WriteManifest();}
+                    else if(DateTime.UtcNow>ProbeDeadline)throw new Exception("Native cage release/mount deadline; no direct Rider assignment.");
                 }
                 if (State == "navigation")
                 {
@@ -532,12 +547,34 @@ namespace Server.TestOnly
         {
             writer.WriteAttributeString(name, Convert.ToString(value, CultureInfo.InvariantCulture));
         }
+        private static void WriteMobility(XmlWriter writer)
+        {
+            BaseMount mount=Actor==null?null:Actor.Mount as BaseMount;
+            Attr(writer,"mobilityPrepared",MobilityPrepared);Attr(writer,"mounted",Actor!=null && Actor.Mounted);
+            Attr(writer,"mountType",mount==null?String.Empty:mount.GetType().FullName);
+            Attr(writer,"mountOwned",mount!=null && mount.Controlled && mount.ControlMaster==Actor);
+            Attr(writer,"mountRider",mount!=null && mount.Rider==Actor);
+            Attr(writer,"mountSerial",mount==null?0:mount.Serial.Value);
+            int candidate=0;
+            if(State=="mounting")
+                foreach(Mobile mobile in World.Mobiles.Values)
+                {
+                    Horse horse=mobile as Horse;
+                    if(horse==null || horse.Deleted || !horse.Controlled || horse.ControlMaster!=Actor
+                        || horse.Map!=Actor.Map || !horse.InRange(Actor.Location,2))continue;
+                    if(candidate!=0)throw new Exception("Ambiguous native mount candidate.");
+                    candidate=horse.Serial.Value;
+                }
+            Attr(writer,"mountCandidate",candidate);
+            Attr(writer,"mountCageBasePrice",BaseCaged.Price("Horse"));
+        }
         private static void WriteManifest()
         {
             using (XmlWriter writer = Open("benchmark-reference.xml"))
             {
                 writer.WriteStartElement("reference"); Attr(writer, "utc", DateTime.UtcNow.ToString("o"));
-                Attr(writer, "version", 3); Attr(writer, "playerPrepared", PlayerPrepared);
+                Attr(writer, "version", MobilityPrepared?4:3); Attr(writer, "playerPrepared", PlayerPrepared);
+                WriteMobility(writer);
                 Attr(writer, "serial", Actor.Serial.Value); Attr(writer, "access", Actor.AccessLevel);
                 Attr(writer, "rawStr", Actor.RawStr); Attr(writer, "rawDex", Actor.RawDex); Attr(writer, "rawInt", Actor.RawInt);
                 Attr(writer, "str", Actor.Str); Attr(writer, "dex", Actor.Dex); Attr(writer, "int", Actor.Int);
@@ -618,7 +655,8 @@ namespace Server.TestOnly
             using (XmlWriter writer = Open("benchmark-state.xml"))
             {
                 writer.WriteStartElement("benchmark"); Attr(writer, "utc", DateTime.UtcNow.ToString("o")); Attr(writer, "state", State);
-                Attr(writer, "referenceVersion", 3); Attr(writer, "playerPrepared", PlayerPrepared);
+                Attr(writer, "referenceVersion", MobilityPrepared?4:3); Attr(writer, "playerPrepared", PlayerPrepared);
+                WriteMobility(writer);
                 Attr(writer, "runMode", RunMode);
                 Attr(writer, "refugeX", Refuge.X); Attr(writer, "refugeY", Refuge.Y); Attr(writer, "refugeZ", Refuge.Z);
                 Attr(writer, "stagingX", Staging.X); Attr(writer, "stagingY", Staging.Y); Attr(writer, "stagingZ", Staging.Z);

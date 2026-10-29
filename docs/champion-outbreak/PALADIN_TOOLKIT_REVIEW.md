@@ -93,6 +93,10 @@ The running-enabled v3f reference is still unmounted. Its prolonged chase is not
 
 Source traces and the revised territorial-survival proposal: [BOSS_BEHAVIOR_REVIEW.md](BOSS_BEHAVIOR_REVIEW.md). Mount/spell possession and effects remain unverified in the current reference; no production movement or AI changes follow from this review.
 
+Mounted-navigation001 now verifies ordinary cage release and mounting through actual client item-use packets. The declared preparation asset is one vendor-obtainable CagedHorse; the source base price is550, with no actual vendor checkout claimed. Ownership/rider and unchanged other capabilities pass. The same recovery route completes in21.179 seconds with86 running requests and no navigation damage/actions/resources; cage consumption occurs before freezing. Computer Use separately shows the armored rider on the horse. This establishes a mounted v4 candidate, not a full combat clear.
+
+For that mounted policy, Celerity is omitted because its actual OnCast rejects mounted casters; it is not an extra stackable speed boost. Its Player command also checks HasSpell before constructing/casting it. If an unmounted spell policy is pursued, verify the learned usable book and resources through that entry point. GetCrystals scans world-owned JediSpellbooks, so checking only carried inventory is insufficient. No Psychology or learned power is silently granted.
+
 ## Controlled native toolkit checks (2026-10-29)
 
 The copied client now executes all 20 controlled cases through its normal ClassicAssist player APIs: seven consumable actions, eight solo Chivalry actions and the five actual GiftKatana moves. Accepted copy: `D:/ConficturaUOTestTools/outbreak-toolkit-20261029-002`. `evidence/toolkit-verification.json` verifies 20/20 cases, frozen fixture/driver/reference identities, all 6,742 production inputs, all 20 private save files, protected original source/settings/profiles and acknowledged forced no-save teardown. No owned process or private listener remains. Production/reservation flags remain false; automatic tuning passes remain zero.

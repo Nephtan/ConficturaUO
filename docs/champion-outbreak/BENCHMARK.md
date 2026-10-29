@@ -13,7 +13,17 @@ This is an established sword-and-shield paladin with obtainable named artifacts,
 
 The authoritative instance is `evidence/benchmark-reference.xml`, including item serials, actual attributes and rolled durability. `reference-freeze.json` binds it to the fixture, driver, policy and production-input hashes before the first encounter starts. Preparation is blessed; combat explicitly removes blessing. Health/stamina/mana are filled only in preparation. No character ability, creature AI, damage or resource pool is overridden during combat.
 
-## Client policy v1
+## Current v4 mounted candidate (2026-10-29)
+
+The unmounted references below remain historical partials. Current mobility work keeps the same legal human, trained skills, ten named equipment pieces and finite supplies, adding one declared vendor-obtainable CagedHorse before freezing. The fixture does not set Rider. Ordinary client cage use creates an owned horse through production ProcessCage, then normal mount use passes BaseMount checks. The asset's nominal source price is550 gold; no actual NPC checkout or gold expenditure is claimed.
+
+Mounted-navigation001 verifies cage release, ownership/rider, consumed cage and unchanged other reference capabilities. Its new reference version4 freezes mounted/type/ownership/rider fields; the capability signature prevents mixing foot and mounted references. Legacy version3 manifests without these fields normalize to unmounted defaults rather than acquiring mount capabilities retroactively. All complete series still need the same prepared capabilities, policy, source, starting world/stocks and movement setting.
+
+The same far-edge recovery ends in21.178705 seconds with86 running requests,0 walking requests,0 refused paths and no combat, navigation supplies or tithes consumed. The cage was consumed during declared preparation before this navigation freeze. Earlier foot004 took26.454418 seconds for86 running requests. This is a route comparison, not a universal speed multiplier or a combat clear. Computer Use separately shows the armored rider on the horse after the route. Source/core,20 private saves, original inputs and acknowledged forced no-save teardown pass.
+
+The bounded [PrepareBenchmarkMount.py](../../tools/champion-outbreak/PrepareBenchmarkMount.py) binds the actual private server process and refuses preparation after a reference freeze. It records before/after evidence, then ordinary FreezeBenchmark/CaptureBenchmark/VerifyBenchmark handle the run. CaptureBenchmark now uses the same real process-handle guard to reject stale status after server exit. Production source, AI, rewards, character skills and automatic tuning remain unchanged. Full mounted combat and the three-run median are unproven.
+
+## Earlier client policy v1
 
 The copied installed ClassicAssist plugin sends ordinary client attacks, item uses, targets, spells and native pathfinding requests. It waits for an explicit private start command. Server instrumentation supplies ownership, stage/anchor information, health/status and actual bandage context; attacks are restricted to enemies present in the client's mobile collection. This is an instrumented scripted benchmark, not autonomous perception or evidence of AI learning.
 

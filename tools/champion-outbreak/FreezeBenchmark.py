@@ -63,14 +63,15 @@ def capability_signature(path):
     reference = ET.parse(path).getroot()
     fields = ('access','race','rawStr','rawDex','rawInt','str','dex','int','hitsMax','stamMax','manaMax',
               'skillCap','baseSkillTotal','physical','fire','cold','poison','energy','fame','karma',
-              'tithing','skillOrigin','skillBoost','skillEther')
+              'tithing','skillOrigin','skillBoost','skillEther','mounted','mountType','mountOwned','mountRider')
     equipment = []
     for item in reference.findall('equipment'):
         attributes = sorted(tuple(sorted(n.attrib.items())) for n in item.findall('attribute'))
         properties = sorted(tuple(sorted(n.attrib.items())) for n in item.findall('property')
                             if n.get('name') not in ('HitPoints','MaxHitPoints'))
         equipment.append((item.get('type'),item.get('layer'),attributes,properties))
-    return dict(character={k:reference.get(k) for k in fields},
+    defaults=dict(mounted='False',mountType='',mountOwned='False',mountRider='False')
+    return dict(character={k:reference.get(k,defaults.get(k)) for k in fields},
                 skills=sorted(tuple(sorted(n.attrib.items())) for n in reference.findall('skill')),
                 equipment=sorted(equipment))
 
@@ -97,7 +98,10 @@ def freeze(args):
             if state.get('state')=='ready' and state.get('playerPrepared')=='True':break
         assert state.get('playerPrepared')=='True','Native preparation did not finish'
     assert state.get('seconds') == '0' and state.get('blessed') == 'True' and state.get('alive') == 'True'
-    if args.start in ('no-antivenom','antivenom') and state.get('referenceVersion')=='3':
+    if state.get('referenceVersion')=='4':
+        assert state.get('mounted')==state.get('mountOwned')==state.get('mountRider')=='True'
+        assert state.get('mountType')=='Server.Mobiles.Horse'
+    if args.start in ('no-antivenom','antivenom') and state.get('referenceVersion') in ('3','4'):
         assert state.get('playerPrepared')=='True','Native preparation is incomplete'
     inputs = json.loads((Path(prepared['candidate'])/'inputs.json').read_text(encoding='utf-8-sig'))['files']
     assert all(sha(repo/p) == expected for p, expected in inputs.items()), 'Production source changed'

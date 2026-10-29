@@ -18,6 +18,8 @@ The unmounted reference010 stops alive/incomplete at2261.441 seconds with4,841 a
 
 First validate ordinary acquisition/ownership and native mounting in a disposable copy, then measure the same recovery route and actual chase. Freeze a new mobility policy before any complete reference series. Review Celerity's real learned-power/resource path and record why each option is used or omitted. Existing partial pilots remain retained; complete reference clears0/3 and tuning0. Faster character movement is a player capability, not NPC tuning.
 
+Follow-up mounted-navigation001 passes native cage release/mounting, ownership/rider and unchanged other reference capabilities. One declared vendor-obtainable cage is provided as a fixture asset rather than a claimed purchase. Recovery takes21.179 seconds with86 running requests; the earlier foot004 sample is26.454 seconds. Actual chase/full combat is still unproven. Celerity's mounted-caster rejection makes it an omitted alternative for mounted v4 rather than an additional boost. Its normal Player command also requires HasSpell; actual unmounted learning/resources remain a separate test.
+
 ## Outbreak-only territorial survival candidate
 
 Use the existing113x113 combat footprint as the territory; its surrounding permanent-reservation buffer is not extra combat space. A retreat should seek a useful destination within that footprint, preserve a valid hostile target and reevaluate its choice after a bounded actor-time interval. Prefer existing defenders or useful cover when available. If no useful retreat exists or the player catches Mephitis, ordinary attacks/webs remain available. Do not turn fleeing into an indefinite wait for half health.
