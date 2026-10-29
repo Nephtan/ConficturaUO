@@ -66,7 +66,9 @@ def prepare(args):
         shutil.copy2(repo/'Data/TurnBasedCombat'/name, destination)
     text = (shard/'Data/TurnBasedCombat/TurnBasedCombat.cfg').read_text(encoding='utf-8-sig')
     assert 'Enabled=false' in text and 'RequireCompatibilityGate=true' in text
-    fixture = 'ArachnidOutbreakSiteTraversal.cs' if args.fixture == 'site-traversal' else 'ArachnidOutbreakNativeAcceptance.cs'
+    fixture = {'site-traversal':'ArachnidOutbreakSiteTraversal.cs',
+               'benchmark':'ArachnidOutbreakBenchmark.cs',
+               'acceptance':'ArachnidOutbreakNativeAcceptance.cs'}[args.fixture]
     harness = shard/'Data/Scripts/TestOnly'/fixture
     harness.parent.mkdir(exist_ok=True)
     shutil.copy2(repo/'tests'/fixture, harness)
@@ -81,13 +83,34 @@ def prepare(args):
     assert settings['ip'] in ('127.0.0.1','localhost')
     settings.update(ip='127.0.0.1', port=port, autologin=True, reconnect=False, plugins=[],
                     profilespath=str(root/'client/Data/Profiles'), ultimaonlinedirectory=str(args.assets.resolve()))
+    if args.fixture == 'benchmark':
+        plugin = root/'client/ClassicAssist/ClassicAssist.dll'
+        assert plugin.is_file(), 'Benchmark requires the existing copied ClassicAssist plugin'
+        settings['plugins'] = [str(plugin)]
+        driver = root/'client/ClassicAssist/OutbreakBenchmarkClient.py'
+        shutil.copy2(repo/'tools/champion-outbreak/BenchmarkClient.py', driver)
+        profile = root/'client/ClassicAssist/Profiles/settings.json'
+        macros = json.loads(profile.read_text(encoding='utf-8-sig'))
+        # Only the disposable profile changes. No original macro can autostart here.
+        for macro in macros['Macros']['Macros']:
+            macro['IsAutostart'] = False
+        import uuid
+        name = 'Private outbreak benchmark'
+        macros['Macros']['Macros'].append(dict(Id=str(uuid.uuid4()), Name=name, Loop=False,
+            DoNotAutoInterrupt=False, PassToUO=False, IsBackground=False, IsAutostart=True,
+            Disableable=True, Group='', Global=False, Keys={},
+            Macro=f'OUTBREAK_ROOT = {str(root)!r}\nexecfile({str(driver)!r})\n'))
+        macros['Macros']['Selected'] = name
+        profile.write_text(json.dumps(macros, indent=2), encoding='utf-8')
     p.write_text(json.dumps(settings, indent=2), encoding='utf-8')
     (root/'evidence/account-name.private').write_text(settings['username'], encoding='utf-8')
     record = dict(port=port, candidate=str(candidate), core_sha256=sha(shard/'ConficturaServer.exe'),
                   source_saves_sha256=protected[str(old/'shard/Saves')],
                   overlays={rel:sha(shard/'Data/Scripts'/rel) for rel in provenance['overlays']},
                   harness_sha256=sha(harness), fixture=args.fixture, private_compatibility_gate=True,
-                  scope=('Planned copied-client site traversal; blessed travel-only Player; no encounter, site approval or pacing acceptance.'
+                  scope=('Legal reference preflight and ordinary client combat; normal creature AI; private reserve review only; production disabled.'
+                         if args.fixture == 'benchmark' else
+                         'Planned copied-client site traversal; blessed travel-only Player; no encounter, site approval or pacing acceptance.'
                          if args.fixture == 'site-traversal' else
                          'Scene construction and stopped scheduler; no global TBC activation, AI, warning reaction or pacing acceptance.'))
     (root/'evidence/prepared.json').write_text(json.dumps(record, indent=2), encoding='utf-8')
@@ -104,5 +127,5 @@ if __name__ == '__main__':
     parser.add_argument('--candidate', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--assets', type=Path, required=True)
-    parser.add_argument('--fixture', choices=['acceptance','site-traversal'], default='acceptance')
+    parser.add_argument('--fixture', choices=['acceptance','site-traversal','benchmark'], default='acceptance')
     prepare(parser.parse_args())
