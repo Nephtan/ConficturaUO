@@ -79,6 +79,20 @@ Curing must include all three available routes: a near-complete bandage when saf
 
 The user subsequently approved removing only the inherited outbreak breath and adapting crowd qualification. Those are separately verified scoped design changes; they do not replace this full-toolkit testing requirement or authorize general player/NPC ability repairs.
 
+## Mobility review correction (2026-10-29)
+
+The running-enabled v3f reference is still unmounted. Its prolonged chase is not sufficient evidence that the build has exhausted effective pursuit options. Review mounts and cross-system powers before changing NPC fleeing to compensate for that policy.
+
+| Option | Verified source finding | Next evidence / decision |
+|---|---|---|
+| Ordinary mount | PlayerMobile chooses0.1-second running mounted delay versus0.2 on foot; normal BaseMount ownership/body/region/range/health checks apply. CagedHorse has conditional vendor stock. | Verify ordinary acquisition/release/native mounting and actual recovery/pursuit throughput. Preserve existing equipment; freeze the new mobility state before a series. |
+| Celerity | JediSpell.GetJediSkillMax uses max(Swords,Psychology). The power284 entry requires50; this reference qualifies through Swords despite Psychology0 and has the required Karma sign. Base data20 mana/80 crystals still has normal resource/ability/region/footwear checks. | Inspect usable datacron/learned power and crystal acquisition, then exercise the normal cast/effect/cost/travel path. Do not grant Psychology or assume tithes substitute for crystals. |
+| Wind Runner | MysticSpell.CheckCast requires monk-compatible equipment; MonkNotIllegal rejects the reference's ordinary sword. | Do not label it a free ability of the unchanged sword build. Any gear change needs a documented tradeoff and fresh manifest. |
+| Syth Speed | CheckCast rejects positive Karma. | Excluded from the current positive-Karma reference unless the build itself is deliberately redesigned; no such change is made. |
+| Shinobi/Animal Form or speed footwear | Separate skills/learned abilities, footwear/region checks and item acquisition apply. | Review exact paths and tradeoffs; no availability or native effectiveness claim yet. |
+
+Source traces and the revised territorial-survival proposal: [BOSS_BEHAVIOR_REVIEW.md](BOSS_BEHAVIOR_REVIEW.md). Mount/spell possession and effects remain unverified in the current reference; no production movement or AI changes follow from this review.
+
 ## Controlled native toolkit checks (2026-10-29)
 
 The copied client now executes all 20 controlled cases through its normal ClassicAssist player APIs: seven consumable actions, eight solo Chivalry actions and the five actual GiftKatana moves. Accepted copy: `D:/ConficturaUOTestTools/outbreak-toolkit-20261029-002`. `evidence/toolkit-verification.json` verifies 20/20 cases, frozen fixture/driver/reference identities, all 6,742 production inputs, all 20 private save files, protected original source/settings/profiles and acknowledged forced no-save teardown. No owned process or private listener remains. Production/reservation flags remain false; automatic tuning passes remain zero.

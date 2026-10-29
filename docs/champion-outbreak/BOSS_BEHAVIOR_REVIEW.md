@@ -1,43 +1,45 @@
-# Decision pending: territorial champion or ordinary fleeing creature
+# Territorial survival and pursuit review
 
-No implementation approval or production behavior change is claimed here.
+Status: revised read-only proposal. No NPC AI change, mobility grant, production activation or general AI rollout is applied.
 
-## Observed conflict
+## Direction and correction
 
-The running-enabled reference010 reaches Mephitis's final fifth of health at about19 minutes. At a later observation near27 minutes the actor remains alive/full while the boss remains around its final fifth. It ultimately stops alive/incomplete at2261.441 seconds, with4,841 running requests. No supplied resource, ability, health or AI override was used. Client memory/search reacquires the boss, but repeated low-health escape and arena return consume time without equivalent combat progress. This is not accepted as a complete pacing sample.
+The monitor relayed guidance that Mephitis should try to survive while staying in her territory, and that pursuit must consider mounts and actual speed abilities. This is a design input, not approval to apply the earlier stand-and-fight snippet. That snippet is withdrawn from the current recommendation. The next sequence is to validate the existing mobility toolkit, then review a concrete outbreak-only territorial-retreat policy.
 
-Separately, the actual historical copied Zanthus completes route002 in277.502 seconds using the unchanged original macro/helper with explicit idle walking assistance. That earned-power stress result is not a veteran-reference sample, and it demonstrates that the current boss can be killed. Neither observation establishes that a melee player cannot overcome the existing fleeing behavior.
+The unmounted reference010 stops alive/incomplete at2261.441 seconds with4,841 actual running requests. This establishes prolonged pursuit for that policy. It does not establish adequate pursuit with the build's full available toolkit. Separately, actual copied Zanthus completes route002 in277.502 seconds; the current boss can be killed. Neither result justifies weakening earned player capabilities.
 
-Source explains a behavior worth deciding deliberately. Mephitis selects AI_Melee. MeleeAI.DoActionCombat can enter Flee below20% health for qualifying uncontrolled creatures; DoActionFlee continues until above50%. The outbreak footprint guard can return a creature that leaves its allowed area. Together these existing rules can produce a chase/return cycle. More efficient player interception remains possible; these observations do not prove that ordinary fleeing is impossible to overcome.
+## Mobility facts and next tests
 
-The specification allows automatic tuning of health, damage and web interval only. Changing the boss's behavior is a design revision requiring the user's decision, not an automatic tuning pass.
+- PlayerMobile.ComputeMovementSpeed selects mounted movement when Mount is present. Core defaults are0.2 seconds per running foot step and0.1 per running mounted step. This is a source-level allowance, not proof of measured path throughput or a successful mounted clear.
+- A normal mount must pass BaseMount.OnDoubleClick/CheckMountAllowed: ownership or summoning, appropriate body, range, healthy mount and applicable regional/building restrictions. Ordinary CagedHorse stock exists conditionally in StoreSalesList; acquisition and release must be verified. Do not set Rider directly to manufacture a native mounting result.
+- Celerity is a real candidate for this swords build. JediSpell.GetJediSkillMax returns the higher of Swords and Psychology, not the lower. Its data entry requires skill50; the trained reference's Swords clears that skill gate despite Psychology0. Positive Karma also clears the alignment gate. A learned/usable datacron, crystals, mana, footwear and regional restrictions still need actual inventory/entry-path checks. Base data lists20 mana and80 crystals; actual scaling/consumption is not yet measured. It is not accepted as currently available merely from the skill check.
+- Wind Runner is not a free interchangeable option. MysticSpell.CheckCast requires MonkNotIllegal, which rejects the reference's ordinary sword; its equipment/ability checks matter in addition to the listed skill70. Syth Speed rejects this reference's positive Karma. Shinobi/Animal Form and speed footwear require their own eligibility, acquisition and build-tradeoff review.
+- Speed powers send a client speed-control packet and have explicit server movement-throttle handling. Native effects and travel time must be measured; spell names and a buff icon alone are insufficient.
 
-## Concrete recommendation
+First validate ordinary acquisition/ownership and native mounting in a disposable copy, then measure the same recovery route and actual chase. Freeze a new mobility policy before any complete reference series. Review Celerity's real learned-power/resource path and record why each option is used or omitted. Existing partial pilots remain retained; complete reference clears0/3 and tuning0. Faster character movement is a player capability, not NPC tuning.
 
-Make **only outbreak Mephitis defend its territory**. Preserve ordinary Mephitis, guardians, defenders, attacks, damage, poison, webs, player capabilities and rewards. Use the existing normal combat action dispatch rather than a new free attack.
+## Outbreak-only territorial survival candidate
 
-Proposed source change, still unapplied: in ArachnidOutbreakChampion.OnThink, after the existing controller/bounds guards and before base.OnThink, normalize the ordinary flee action:
+Use the existing113x113 combat footprint as the territory; its surrounding permanent-reservation buffer is not extra combat space. A retreat should seek a useful destination within that footprint, preserve a valid hostile target and reevaluate its choice after a bounded actor-time interval. Prefer existing defenders or useful cover when available. If no useful retreat exists or the player catches Mephitis, ordinary attacks/webs remain available. Do not turn fleeing into an indefinite wait for half health.
 
-    if (AIObject != null && AIObject.Action == ActionType.Flee)
-        AIObject.Action = ActionType.Combat;
+Preserve normal movement legality/AP, web warnings/costs, damage, finite reinforcement budgets, rewards and player power. Do not add healing, health resets, invulnerability, new reinforcement waves, forced dismounts or a minimum clear duration. The existing out-of-bounds correction remains a safety guard rather than the normal retreat route. Ordinary world Mephitis stays unchanged.
 
-This is a planning-state change, not an attack call. It needs actual runtime/AP verification; the snippet alone does not establish correct scheduling. MeleeAI can select Flee again at the end of DoActionCombat; verify that subsequent normal dispatch restores combat before flee movement without starving ordinary attacks. BaseCreature.CheckFlee is a separate timed flee path, so overriding it alone would not establish this behavior. No serialization field/type or global AI change is proposed.
+The concrete policy still needs implementation-seam, path, cornering, target-legality, TBC/AP and restart review before source changes. AI behavior remains outside the automatic HP/damage/interval tuning allowance. No further design answer is necessary to investigate mobility; a bounded retreat specification will be made reviewable after those findings.
 
-After approval: add a targeted low-health comparison, verify ordinary Mephitis remains unchanged, rerun outbreak/legacy regressions and forced runtime compilation, verify no off-turn attack/AP bypass, and collect three complete comparable reference runs before judging the20–35 minute median. Keep the same finite legal player capabilities. Preserve all failed/partial pilots and leave production disabled.
+## General NPC AI exploration
 
-## Alternatives
+There is already an AI-overhaul project, not a blank slate. Its handoff records phase4 complete and role-specialist mage/healer/squad work next. Current AITacticalTargeting source whitelists exact HeadlessOne/Ratman/Lizardman melee types and RatmanArcher/LizardmanArcher skirmishers. Its default-deny resolver excludes controlled/summoned actors and nonmatching AI/fight modes. Mephitis and the outbreak subclass are absent. Preserve legality-first targeting and the documented ForcedAI/civilian/service/encounter exceptions.
 
-1. Keep ordinary fleeing and improve pursuit/interception or evaluate legitimate counter-tools before reconsidering the reference. This preserves existing AI but can retain a prolonged chase.
-2. Design a deliberate retreat phase with readable counterplay. This could fit the world's identity, but adds mechanics and needs a new specification rather than a concealed behavior patch.
-
-The larger question is what a champion is defending. A nest guardian standing its ground fits this event's brood/discovery structure. Other future champion types may deserve explicit retreat behavior. Neither choice should be achieved by weakening earned character power or by treating a raw movement loop as challenge.
+A broader investigation should distinguish fleeing to a useful refuge from merely running away; assess when creatures regroup, use existing control/healing, protect allies or resume fighting; and preserve differences between animals, mindless creatures and trained combatants. Existing abilities, perception, resources, telegraphs and player counterplay should drive those policies. Broad changes or a whitelist expansion are not authorized by this review. Do not silently route every creature through the outbreak experiment.
 
 ## Source and evidence
 
-- [Mephitis.cs](../../Data/Scripts/Custom/Champions/Mobiles/Champs-UO/Mephitis.cs): constructor selects AI_Melee.
-- [Behavior.cs](../../Data/Scripts/Mobiles/Base/Behavior.cs): MeleeAI.DoActionCombat/DoActionFlee; BaseAI.Think dispatch and ProcessTurnBasedPulse.
-- [ArachnidOutbreakCreatures.cs](../../Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakCreatures.cs): guarded owned champion OnThink.
+- [PlayerMobile.cs](../../Data/Scripts/Mobiles/Base/PlayerMobile.cs): ComputeMovementSpeed and MovementThrottle_Callback.
+- [Mobile.cs](../../Data/System/Source/Mobile.cs): mounted/foot movement defaults.
+- [BaseMount.cs](../../Data/Scripts/Mobiles/Base/BaseMount.cs), [AnimalCages.cs](../../Data/Scripts/Items/Containers/AnimalCages.cs), [StoreSalesList.cs](../../Data/Scripts/Mobiles/Base/StoreSalesList.cs): mounting, caged horses and conditional stock.
+- [Celerity.cs](../../Data/Scripts/Magic/Jedi/Spells/Celerity.cs), [JediSpell.cs](../../Data/Scripts/Magic/Jedi/JediSpell.cs): power284, maximum-of-two skill gate, alignment/resources/region checks.
+- [WindRunner.cs](../../Data/Scripts/Magic/Mystic/Spells/WindRunner.cs), [MysticSpell.cs](../../Data/Scripts/Magic/Mystic/MysticSpell.cs), [SythSpell.cs](../../Data/Scripts/Magic/Syth/SythSpell.cs): distinct speed-power eligibility.
+- [Behavior.cs](../../Data/Scripts/Mobiles/Base/Behavior.cs): MeleeAI below20% flee selection and above50% recovery; ordinary action/TBC dispatch.
 - [ArachnidOutbreakController.cs](../../Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakController.cs): KeepCreatureInBounds.
-- [SPECIFICATION.md](SPECIFICATION.md): approved behavior,20–35 minute reference, earned-power preservation and automatic tuning limits.
-- [BENCHMARK.md](BENCHMARK.md): prior retained failures, ordinary running request proof, frozen policy and separate pacing gate. Reference010's terminal partial and preservation are retained under D:/ConficturaUOTestTools/outbreak-benchmark-20261029-010/evidence.
-- [ARCHMAGE_STRESS.md](ARCHMAGE_STRESS.md): separate original-macro route002 full clear and preservation, without veteran pacing credit.
+- [AITacticalTargeting.cs](../../Data/Scripts/Custom/Combat/AIOverhaul/AITacticalTargeting.cs), [AI_HANDOFF.md](../../Data/Scripts/Custom/Combat/AIOverhaul/AI_HANDOFF.md): current rollout and existing roadmap; no project phase is executed here.
+- [BENCHMARK.md](BENCHMARK.md), [PALADIN_TOOLKIT_REVIEW.md](PALADIN_TOOLKIT_REVIEW.md), [ARCHMAGE_STRESS.md](ARCHMAGE_STRESS.md): retained separate evidence classes and incomplete reference series.
