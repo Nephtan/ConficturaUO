@@ -37,6 +37,23 @@ internal static class ArachnidOutbreakControllerRegression
     {
         return typeof(ArachnidOutbreakController).GetMethod(method, Private).Invoke(controller, args);
     }
+    private static void SpiderProfile()
+    {
+        ArachnidOutbreakController controller=new ArachnidOutbreakController();
+        DreadSpider normal=new DreadSpider();
+        ArachnidOutbreakSpider guardian=new ArachnidOutbreakSpider(controller,0,true);
+        ArachnidOutbreakSpider defender=new ArachnidOutbreakSpider(controller,0,false);
+        try
+        {
+            Check(normal.HasBreath && !guardian.HasBreath && !defender.HasBreath,"only outbreak guardian/defender breath is removed");
+            Check(guardian.AIObject.GetType()==normal.AIObject.GetType() && defender.AIObject.GetType()==normal.AIObject.GetType(),"ordinary mage AI remains inherited");
+            Check(guardian.HitPoison==normal.HitPoison && defender.HitPoison==normal.HitPoison
+                && guardian.DamageMin==normal.DamageMin && guardian.DamageMax==normal.DamageMax,
+                "poison and ordinary melee damage remain unchanged");
+            Check(guardian.HitsMax==ArachnidOutbreakSpider.GuardianHealth,"guardian health is not tuned by the profile decision");
+        }
+        finally {guardian.Delete();defender.Delete();normal.Delete();controller.Delete();}
+    }
     private static ArachnidOutbreakController Begin()
     {
         ArachnidOutbreakController controller = new ArachnidOutbreakController();
@@ -344,6 +361,7 @@ internal static class ArachnidOutbreakControllerRegression
             MapDefinitions.Configure();
             Corpse.Initialize();
             CommandAccess();
+            SpiderProfile();
             PortalClearance();
             TownAndServiceClearance();
             FailedReturnAborts();

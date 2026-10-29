@@ -8,6 +8,8 @@ namespace Server.Custom.Confictura.Champions
     // resolved effects before crediting support; this class does not observe spells.
     public sealed class ArachnidOutbreakLedger
     {
+        public const double MinimumMeaningfulPoints = 2.0;
+        public const double SmallGroupQualification = 10.0;
         private string m_AttemptId;
         private readonly int[] m_Budgets = new int[4];
         private readonly bool[] m_Sealed = new bool[4];
@@ -71,12 +73,34 @@ namespace Server.Custom.Confictura.Champions
         public List<Mobile> Qualified(int stage)
         {
             List<Mobile> result = new List<Mobile>();
+            double required = QualificationThreshold(stage);
             if (stage >= 0 && stage < 4)
                 foreach (KeyValuePair<Mobile, double> entry in m_Points[stage])
-                    if (!entry.Key.Deleted && entry.Key.Player && entry.Value >= 10.0 - 1e-9)
+                    if (!entry.Key.Deleted && entry.Key.Player && entry.Value >= required - 1e-9)
                         result.Add(entry.Key);
             result.Sort(delegate(Mobile a, Mobile b) { return a.Serial.CompareTo(b.Serial); });
             return result;
+        }
+
+        public int ActiveContributors(int stage)
+        {
+            int count = 0;
+            if (stage >= 0 && stage < 4)
+                foreach (KeyValuePair<Mobile, double> entry in m_Points[stage])
+                    if (!entry.Key.Deleted && entry.Key.Player && entry.Value >= MinimumMeaningfulPoints - 1e-9)
+                        ++count;
+            return count;
+        }
+
+        public double QualificationThreshold(int stage)
+        {
+            int count = ActiveContributors(stage);
+            if (count == 0) return SmallGroupQualification;
+            // A stage's damage budget represents 100 points. Require half an
+            // equal share, capped at the small-group target and an absolute floor.
+            // Only meaningful stage effort counts: party/proximity and tiny tags
+            // cannot lower the target. Earned dead/offline contribution remains.
+            return Math.Max(MinimumMeaningfulPoints, Math.Min(SmallGroupQualification, 50.0 / count));
         }
 
         // Queue all qualified entitlements before sealing and advancing lifecycle.

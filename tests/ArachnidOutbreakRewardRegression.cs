@@ -53,6 +53,44 @@ internal static class ArachnidOutbreakRewardRegression
         }
         return result;
     }
+    private static void CrowdQualification()
+    {
+        List<Mobile> players = new List<Mobile>();
+        try
+        {
+            for (int i=0;i<100;++i) players.Add(Player());
+            ArachnidOutbreakLedger crowd = new ArachnidOutbreakLedger("crowd",10000,10000);
+            for (int i=0;i<20;++i) crowd.CreditDamage(0,players[i],500);
+            Check(crowd.ActiveContributors(0)==20 && crowd.QualificationThreshold(0)==2.5
+                && crowd.Qualified(0).Count==20,"twenty equal damage contributors qualify instead of all missing ten points");
+            Check(crowd.Qualified(1).Count==0 && crowd.ActiveContributors(-1)==0,"crowd effort stays stage-local and bounds guarded");
+            players[0].Body=0x192;
+            Check(crowd.Qualified(0).Contains(players[0]) && players[0].NetState==null,"earned dead/offline effort counts toward the active stage group");
+            Check(crowd.Seal(0) && !crowd.CreditDamage(0,players[20],500),"sealed crowd stage cannot be diluted by later arrivals");
+            MemoryStream bytes=new MemoryStream();BinaryFileWriter writer=new BinaryFileWriter(bytes,true);
+            crowd.Serialize(writer);writer.Write(78413);writer.Close();
+            BinaryFileReader reader=new BinaryFileReader(new BinaryReader(new MemoryStream(bytes.ToArray())));
+            ArachnidOutbreakLedger restored=new ArachnidOutbreakLedger();restored.Deserialize(reader);
+            Check(reader.ReadInt()==78413 && restored.IsSealed(0) && restored.Qualified(0).Count==20
+                && restored.QualificationThreshold(0)==2.5,"unchanged version-zero ledger format preserves sealed crowd qualification and read boundary");reader.Close();
+
+            ArachnidOutbreakLedger floor=new ArachnidOutbreakLedger("floor",10000,10000);
+            for(int i=0;i<50;++i) floor.CreditDamage(0,players[i],200);
+            Check(floor.QualificationThreshold(0)==2.0 && floor.Qualified(0).Count==50,"large group reaches the meaningful-effort floor");
+            ArachnidOutbreakLedger tiny=new ArachnidOutbreakLedger("tiny",10000,10000);
+            for(int i=0;i<100;++i) tiny.CreditDamage(0,players[i],100);
+            Check(tiny.ActiveContributors(0)==0 && tiny.Qualified(0).Count==0,"sub-floor tags cannot manufacture an active group or qualify");
+            ArachnidOutbreakLedger tags=new ArachnidOutbreakLedger("tags",10000,10000);
+            for(int i=0;i<5;++i) tags.CreditDamage(0,players[i],500);
+            for(int i=5;i<100;++i) tags.CreditDamage(0,players[i],100);
+            Check(tags.ActiveContributors(0)==5 && tags.QualificationThreshold(0)==10.0 && tags.Qualified(0).Count==0,
+                "nearby low-effort contributors cannot lower the small-group target");
+            ArachnidOutbreakLedger support=new ArachnidOutbreakLedger("support",10000,10000);
+            for(int i=0;i<25;++i) support.CreditValidatedSupport(0,players[i],2);
+            Check(support.ActiveContributors(0)==25 && support.Qualified(0).Count==25,"validated meaningful support uses the same crowd policy without damage");
+        }
+        finally { foreach(Mobile player in players) player.Delete(); }
+    }
     private static void Scoring()
     {
         Mobile damage = Player();
@@ -321,7 +359,7 @@ internal static class ArachnidOutbreakRewardRegression
             typeof(World).GetField("m_Items",BindingFlags.Static|BindingFlags.NonPublic).SetValue(null,new Dictionary<Serial,Item>());
             typeof(World).GetField("m_Mobiles",BindingFlags.Static|BindingFlags.NonPublic).SetValue(null,new Dictionary<Serial,Mobile>());
             MapDefinitions.Configure();RaceDefinitions.Configure();Corpse.Initialize();ArachnidOutbreakController.Initialize();
-            Scoring(); Delivery(); Attribution(); HealingProvenance();BossRewards(true,true);BossRewards(false,true);BossRewards(false,false);UnsafeBossLoot();
+            Scoring(); CrowdQualification(); Delivery(); Attribution(); HealingProvenance();BossRewards(true,true);BossRewards(false,true);BossRewards(false,false);UnsafeBossLoot();
             Console.WriteLine("PASS outbreak rewards: "+s_Checks+" component assertions; no world saves or listeners.");return 0;
         }
         catch(Exception exception){Console.Error.WriteLine(exception);return 1;}

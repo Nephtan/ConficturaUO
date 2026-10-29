@@ -1,12 +1,12 @@
 # Inherited spider ability decision
 
-Status: Proposed design revision; no production source change or tuning applied.
+Status: User decision1A approved on2026-10-29; scoped source override implemented. Verification is recorded in DELIVERY.md. This is an explicit design revision, not an automatic tuning pass; activation remains disabled.
 
 The normal-AI reference-v1 run died after 130.215 seconds, after killing one guardian and leaving its ten defenders alive. This demonstrates a failed run and a poor add-management policy. It does not isolate the cause of death or establish that the encounter is overtuned. Preserve that distinction when interpreting the following source finding.
 
 ## Source finding
 
-`ArachnidOutbreakSpider` inherits `DreadSpider` without overriding its breath. The parent is a mage with a separate spider breath attack. That attack deals damage, then calls ordinary `Mobile.Paralyze`; it does not create the new warning/restraint items.
+Before the approved revision, `ArachnidOutbreakSpider` inherited `DreadSpider` without overriding its breath. The parent is a mage with a separate spider breath attack. That attack deals damage, then calls ordinary `Mobile.Paralyze`; it does not create the new warning/restraint items. The new outbreak-only override disables that breath.
 
 - `Data/Scripts/Mobiles/Insects/Spiders/DreadSpider.cs`: `HasBreath` returns true; `BreathDealDamage` selects base form 6; 118–132 ordinary health; Fame 5,000.
 - `Data/Scripts/Mobiles/Base/BaseCreature.cs:847`: default breath scalar is 0.20 of current health. `BreathComputeDamage` at line 2222 caps the initial result at 100, then enforces at least `DamageMax`.
@@ -16,7 +16,7 @@ The normal-AI reference-v1 run died after 130.215 seconds, after killing one gua
 
 The new boss's three-second warning/four-second movement restraint is not the only web/control mechanic present. The inherited breath can obscure that intended counterplay. Treating a health adjustment as an independent pacing change would also overlook this dependency. These are source facts; attribution of the failed run needs further observation.
 
-## Recommended revision for review
+## Approved scoped revision
 
 Disable only the inherited breath on `ArachnidOutbreakSpider`:
 
@@ -29,6 +29,6 @@ public override bool HasBreath
 
 Keep its ordinary mage AI, melee, poison, skills, drops and finite reinforcement budgets. Keep the boss's explicit telegraphed web. Ordinary mage spells can still apply their usual control effects; this proposal does not promise immunity to all paralysis. Normal world `DreadSpider` remains unchanged.
 
-This narrows the event's special web behavior and removes the guardian health/breath coupling. It is a real enemy-profile change, beyond the agreed automatic tuning limits, so it needs a design decision before implementation. It would require forced runtime compilation, targeted inherited/owned behavior checks, native combat observation and new complete reference runs. No serialized type/field/order change is proposed.
+This narrows the event's special web behavior and removes the guardian health/breath coupling. It is a real enemy-profile change beyond the automatic tuning limits; user decision1A authorizes this exact scope. Forced runtime compilation and targeted inherited/owned behavior checks are required, with native combat observation and new complete reference runs still separate gates. No serialized type/field/order changes occur.
 
-The alternative is to retain the inherited breath deliberately and test/design around its mage, poison and paralysis pressure. In either case, strengthen the scripted policy to prioritize nearby low-health defenders and freeze that policy before further tuning. Do not count the reference-v1 death as an unsuccessful tuning pass: no encounter values were changed.
+The option to retain inherited breath was not selected. Strengthen and validate the full scripted toolkit and freeze its policy before further tuning. Do not count the reference-v1 death as an unsuccessful tuning pass: no encounter values were changed in that run.

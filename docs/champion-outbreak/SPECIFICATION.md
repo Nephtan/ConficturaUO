@@ -17,6 +17,7 @@ The encounter targets **20–35 minutes for a fixed, artifact-equipped veteran b
 - Each brood has a guardian and a finite reinforcement budget. Killing its guardian permanently stops further reinforcements and pays that stage. Clearing all three reveals Mephitis.
 - Initial combat defaults: **3,000 health per guardian, 9,000 for Mephitis**, using existing arachnid combat behavior as the base. Each brood permits four initial defenders and two reinforcements at each of the guardian’s 75%, 50%, and 25% health thresholds. Mephitis permits two reinforcements at each threshold. Thresholds trigger once.
 - Reinforcements retain appropriate ordinary loot, but cannot respawn indefinitely. Event creatures remain within the reviewed footprint.
+- Approved revision1A (2026-10-29): outbreak-owned guardians and defenders disable the inherited Dread Spider breath, including its health-scaled damage and ordinary paralysis. Their normal mage AI, melee and poison remain. Ordinary world Dread Spiders are unchanged; normal mage control spells are still possible. Mephitis retains the explicit telegraphed web below.
 
 **Mephitis’s distinctive mechanic:** a visible web warning marks the targeted ground three seconds before impact. Moving out avoids it. A hit restrains movement for at most four seconds; attacking, healing, and casting remain available. Players can spend an action freeing themselves or another participant. Repeated webs cannot extend an existing restraint indefinitely.
 
@@ -36,12 +37,14 @@ The initial web attack selects the current hostile player or participating pet a
 
 The new encounter awards **no power scrolls**. Existing champions retain their current behavior and rewards.
 
-**Participation is assessed separately for each stage.** Credit player damage, attributed pet/provocation damage, effective healing, relevant cures, poison prevention, rescues, and effective bard support. Initial qualification is ten contribution points:
+**Participation is assessed separately for each stage.** Credit player damage, attributed pet/provocation damage, effective healing, relevant cures, poison prevention, rescues, and effective bard support. Approved revision2A (2026-10-29) adapts qualification to meaningful stage contributors while retaining the ten-point small-group target:
 
 - Damage earns one point per 1% of the stage’s defined enemy-health budget.
 - Healing earns one point per 10% of the patient’s maximum health actually restored from encounter damage.
 - A relevant cure, consumed antivenom protection, or web rescue earns two points.
 - Effective bard control or debuffing earns one point per ten seconds of useful effect against engaged event enemies; refreshing an existing effect adds no extra credit.
+
+A meaningful stage contributor has at least **two validated points**. Count only these contributors, not party membership, nearby players or sub-floor tags. With N meaningful contributors, require **max(2, min(10, 50/N))** points; with none, retain ten. This is half an equal share of the100-point damage budget, bounded by the original small-group target and an absolute effort floor. Groups of up to five still need ten; ten meaningful contributors need five; twenty need2.5; twenty-five or more reach the two-point floor. Damage/healing/support rates stay unchanged, as does the stored ten-point cap per character. Dead/offline participants retain earned effort. Qualification is used when the stage is paid and sealed; later arrivals cannot dilute it. Existing ledger version0/write-read layout remains unchanged because the target derives from persisted points.
 
 Self-inflicted damage, overhealing, idle proximity, unrelated combat, and repeated treatment of an already-resolved condition earn nothing. Support credit applies to helping other participants or participating pets. A substantial single attack can qualify; token tagging cannot.
 

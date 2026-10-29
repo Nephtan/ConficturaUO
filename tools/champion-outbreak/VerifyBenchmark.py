@@ -3,6 +3,7 @@ from pathlib import Path
 import argparse
 import hashlib
 import json
+import subprocess
 import xml.etree.ElementTree as ET
 
 
@@ -15,7 +16,7 @@ def hashes(path):
             for p in path.rglob('*') if p.is_file()}
 
 
-def verify(root, require_clear=False, require_navigation=False):
+def verify(root, require_clear=False, require_navigation=False, production_ref=None):
     repo = Path(__file__).resolve().parents[2]
     evidence = root/'evidence'
     prepared = json.loads((evidence/'prepared.json').read_text(encoding='utf-8-sig'))
@@ -30,7 +31,17 @@ def verify(root, require_clear=False, require_navigation=False):
     assert sha(evidence/'benchmark-reference.xml') == frozen['files']['reference_xml']['sha256']
     assert sha(root/'shard/ConficturaServer.exe') == prepared['core_sha256']
     inputs = json.loads((Path(prepared['candidate'])/'inputs.json').read_text(encoding='utf-8-sig'))['files']
-    assert all(sha(repo/p) == expected for p, expected in inputs.items()), 'Production input changed'
+    mismatches = [p for p,expected in inputs.items() if sha(repo/p) != expected]
+    historical = None
+    if mismatches:
+        assert production_ref, 'Production input changed; historical evidence requires an explicit production Git ref'
+        historical = subprocess.check_output(['git','rev-parse',production_ref+'^{commit}'],cwd=repo,text=True).strip()
+        for path in mismatches:
+            blob = subprocess.check_output(['git','show',historical+':'+path],cwd=repo)
+            versions = [blob]
+            if b'\0' not in blob:
+                versions.append(blob.replace(b'\r\n',b'\n').replace(b'\n',b'\r\n'))
+            assert inputs[path] in [hashlib.sha256(value).hexdigest() for value in versions], 'Historical source mismatch: '+path
     assert hashes(root/'shard/Saves') == prepared['source_saves_sha256'], 'Private saves changed'
     protected = json.loads((evidence/'protected-source-inputs.json').read_text())
     for path, expected in protected.items():
@@ -90,6 +101,7 @@ def verify(root, require_clear=False, require_navigation=False):
                   pacing_gate='Not evaluated: requires three complete frozen-reference runs',
                   tuning_passes=0, production_activation=False, site_approval=False,
                   navigation_only=navigation_only, navigation_route_passed=navigation_passed,
+                  historical_production_ref=historical,
                   native_walk_rejections=sum(e['event']=='walk' and not e['accepted'] for e in events))
     if (evidence/'navigation-failure.json').exists():
         report['retained_navigation_failure'] = json.loads((evidence/'navigation-failure.json').read_text())
@@ -106,5 +118,6 @@ if __name__ == '__main__':
     parser.add_argument('root', type=Path)
     parser.add_argument('--require-clear', action='store_true')
     parser.add_argument('--require-navigation', action='store_true')
+    parser.add_argument('--production-ref', help='Exact historical production snapshot when current source has moved')
     args = parser.parse_args()
-    verify(args.root.resolve(), args.require_clear, args.require_navigation)
+    verify(args.root.resolve(), args.require_clear, args.require_navigation, args.production_ref)

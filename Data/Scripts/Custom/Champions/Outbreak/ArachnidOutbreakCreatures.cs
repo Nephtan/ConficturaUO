@@ -23,6 +23,9 @@ namespace Server.Custom.Confictura.Champions
         public string AttemptId { get { return m_AttemptId; } }
         public int Stage { get { return m_Stage; } }
         public bool Guardian { get { return m_Guardian; } }
+        // Outbreak webs use the explicit warning/restraint system. Keep ordinary
+        // mage AI and poison, but do not inherit HP-scaled breath/paralysis.
+        public override bool HasBreath { get { return false; } }
 
         public ArachnidOutbreakSpider(ArachnidOutbreakController controller, int stage, bool guardian)
         {
