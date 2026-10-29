@@ -4,6 +4,23 @@ Status: InProgress. Production activation is disabled. Specification: [SPECIFICA
 
 Targeted native results and remaining acceptance gates: [NATIVE_ACCEPTANCE.md](NATIVE_ACCEPTANCE.md).
 
+## Current acceptance checkpoint - 2026-10-29
+
+Checked implementation rows below do not close the separate native, pacing or site-approval gates. The dated sections retain earlier states and failed observations; this checkpoint describes the current result.
+
+| Gate | Current evidence | Remaining work |
+|---|---|---|
+| Production implementation and regressions | approved-20261029-002:6,742 matching inputs, forced runtime compile,1,167 assertions across five suites; copied-world startup separately passes | Keep activation disabled; preserve the narrower evidence classes in the dated records |
+| Placement and permanent reservations | Six inactive proposals, terrain validation and all six native walking routes/1,356 steps | Ground-warning visibility, current-world safety preflight and explicit site approval; the occupancy survey's source save is dated2026-10-17 |
+| Participation, claims and crafting | Component/fresh-process persistence records; native claims/treatment checks; original archmage full clear earns6 glands/1 skull and15,000 shared ground gold | Another connected player's effective support/cooperative feedback; ordinary corpse loot remains unassessed in the full clear |
+| Web/TBC integration | Production-method/AP tests and targeted stopped-scheduler native scenes | Natural live-scheduler telegraph/reaction sequence and remaining ground presentation |
+| Veteran reference | Legal prepared v3f manifest and actual ordinary running;010 stops alive/incomplete at2261.441 seconds |0/3 complete comparable clears; one must omit antivenom; median not evaluated; tuning0 |
+| Original Zanthus stress | Original stationary partial and route-assisted full clear at277.502 seconds; character/source/save preservation passes | No repeatable-farm, current live-character or veteran pacing inference |
+| Boss behavior | Ordinary Mephitis fleeing retained; concrete outbreak-only territorial proposal in [BOSS_BEHAVIOR_REVIEW.md](BOSS_BEHAVIOR_REVIEW.md) | Human design decision; AI behavior is outside automatic tuning |
+| Economics and release | Source prices, partial reference costs and private archmage net resource deltas retained; focused local commits | Completed-reference costs/ordinary preparations, final requirement audit and operational instructions; no deployment |
+
+Current stress/tool checkpoint: fa40b12a. Production remains disabled; no reservation is approved.
+
 ## Baseline - 2026-10-28
 
 Work on the current branch. Preserve these unrelated, pre-existing untracked files:
@@ -16,27 +33,27 @@ No production launch, save access, deployment, or automatic activation is author
 
 ## Batch 1 - Lifecycle, placement, persistence, staff controls
 
-- [ ] Separate versioned controller and state; default disabled.
+- [x] Separate versioned controller and state; default disabled.
 - [ ] Six terrain-validated, client-reviewed mainland Sosaria sites.
-- [ ] Availability, engagement, three brood stages, boss, recovery, cooldown.
-- [ ] Restart persistence, ownership cleanup, legacy coexistence.
-- [ ] Staff access/guards and status/start/stop controls.
-- [ ] Component tests, runtime script compile, and focused commit.
+- [x] Availability, engagement, three brood stages, boss, recovery, cooldown.
+- [x] Restart persistence, ownership cleanup, legacy coexistence (component/fresh-process evidence).
+- [x] Staff access/guards and status/start/stop controls.
+- [x] Component tests, runtime script compile, and focused commit.
 
 ## Batch 2 - Participation, rewards, crafting
 
-- [ ] Stage ledger, combat/pet/support credit and abuse exclusions.
-- [ ] Persistent idempotent pending awards and claim command.
-- [ ] Glands, two-treatment Alchemy recipe, prevention and cooldown.
-- [ ] Fixed shared gold shower, skull, artifact opportunity; no power scrolls.
-- [ ] Save/reload and old champion regressions; core build/artifact if needed.
-- [ ] Focused verified commit.
+- [x] Stage ledger, combat/pet/support credit and abuse exclusions (native cooperative-role acceptance remains below).
+- [x] Persistent idempotent pending awards and claim command.
+- [x] Glands, two-treatment Alchemy recipe, prevention and cooldown.
+- [x] Fixed shared gold shower, skull, artifact opportunity; no power scrolls.
+- [x] Save/reload and old champion regressions; core build/artifact if needed (see dated evidence scopes).
+- [x] Focused verified commit.
 
 ## Batch 3 - Combat and client acceptance
 
-- [ ] Finite defenders/reinforcements and guarded death transitions.
+- [x] Finite defenders/reinforcements and guarded death transitions.
 - [ ] Web warning, avoidance, restraint, escape/rescue; turn-based integration.
-- [ ] Freeze legal veteran fixture and private Zanthus stress fixture.
+- [x] Freeze legal veteran fixture and private Zanthus stress fixture.
 - [ ] Three full reference runs (20-35 minute median), one without antivenom.
 - [ ] Zanthus macro/farming measurements and targeted native acceptance.
 - [ ] Economic/supply observations, failure evidence, bounded tuning record.
