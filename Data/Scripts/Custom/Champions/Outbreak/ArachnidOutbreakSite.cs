@@ -151,6 +151,25 @@ namespace Server.Custom.Confictura.Champions
             return false;
         }
 
+        public bool TryFindLoot(Point3D anchor, int range, out Point3D point)
+        {
+            int offset = Utility.Random(m_Walkable.Length);
+            for (int i = 0; i < m_Walkable.Length; ++i)
+            {
+                Point3D candidate = m_Walkable[(i + offset) % m_Walkable.Length];
+                // Loot can share ground with players/corpses, but not houses or
+                // portals. Every candidate still belongs to validated terrain.
+                if (Math.Abs(candidate.X - anchor.X) <= range && Math.Abs(candidate.Y - anchor.Y) <= range
+                    && Map.Sosaria.CanFit(candidate.X, candidate.Y, candidate.Z, 1, false, false) && ClearForSpawn(candidate))
+                {
+                    point = candidate;
+                    return true;
+                }
+            }
+            point = Point3D.Zero;
+            return false;
+        }
+
         private static bool ClearForSpawn(Point3D point)
         {
             if (BaseHouse.FindHouseAt(point, Map.Sosaria, 16) != null)

@@ -107,6 +107,7 @@ namespace Server.Custom.Confictura.Champions
         public ArachnidOutbreakController Controller { get { return m_Controller; } }
         public string AttemptId { get { return m_AttemptId; } }
         public override bool AwardLegacyChampionRewards { get { return false; } }
+        public virtual Item RollVictoryArtifact() { return GetArtifact(); }
 
         public ArachnidOutbreakChampion(ArachnidOutbreakController controller)
         {

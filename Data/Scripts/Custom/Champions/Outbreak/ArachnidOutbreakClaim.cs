@@ -31,6 +31,13 @@ namespace Server.Custom.Confictura.Champions
         }
     }
 
+    public enum ArachnidOutbreakClaimKind
+    {
+        Glands,
+        Skull,
+        Artifact
+    }
+
     // Independent world objects preserve earned items when an encounter is
     // stopped/deleted. Claim transfers the existing item; it never rolls or
     // recreates a reward. Lifecycle + sealed stage prevent paid-stage replay.
@@ -40,9 +47,11 @@ namespace Server.Custom.Confictura.Champions
         private Mobile m_Owner;
         private string m_AttemptId;
         private int m_Stage;
+        private ArachnidOutbreakClaimKind m_Kind;
         public Mobile Owner { get { return m_Owner; } }
         public string AttemptId { get { return m_AttemptId; } }
         public int Stage { get { return m_Stage; } }
+        public ArachnidOutbreakClaimKind Kind { get { return m_Kind; } }
 
         public static void Initialize()
         {
@@ -66,31 +75,42 @@ namespace Server.Custom.Confictura.Champions
                     else
                         ++pending;
                 }
-            from.SendMessage("Outbreak rewards: {0} stage claims collected; {1} pending.", collected, pending);
+            from.SendMessage("Outbreak rewards: {0} claims collected; {1} pending.", collected, pending);
         }
 
         public static ArachnidOutbreakClaim QueueGlands(Mobile owner, string attemptId, int stage)
         {
+            return QueueReward(owner, attemptId, stage, ArachnidOutbreakClaimKind.Glands,
+                delegate { return new BroodVenomGland(stage == 3 ? 3 : 1); });
+        }
+
+        internal static ArachnidOutbreakClaim QueueReward(Mobile owner, string attemptId, int stage,
+            ArachnidOutbreakClaimKind kind, Func<Item> create)
+        {
             if (owner == null || owner.Deleted || !owner.Player || String.IsNullOrEmpty(attemptId) || stage < 0 || stage > 3)
                 throw new ArgumentException("Invalid outbreak reward entitlement.");
             foreach (ArachnidOutbreakClaim claim in m_Claims)
-                if (!claim.Deleted && claim.Owner == owner && claim.AttemptId == attemptId && claim.Stage == stage)
+                if (!claim.Deleted && claim.Owner == owner && claim.AttemptId == attemptId && claim.Stage == stage && claim.Kind == kind)
                     return claim;
-            ArachnidOutbreakClaim created = new ArachnidOutbreakClaim(owner, attemptId, stage);
+            Item reward = create();
+            if (reward == null)
+                return null;
+            ArachnidOutbreakClaim created = new ArachnidOutbreakClaim(owner, attemptId, stage, kind, reward);
             if (owner.NetState != null)
                 owner.SendMessage("You earned an outbreak stage reward. Use [OutbreakClaim to collect it when ready.");
             return created;
         }
 
-        private ArachnidOutbreakClaim(Mobile owner, string attemptId, int stage)
+        private ArachnidOutbreakClaim(Mobile owner, string attemptId, int stage, ArachnidOutbreakClaimKind kind, Item reward)
         {
             m_Owner = owner;
             m_AttemptId = attemptId;
             m_Stage = stage;
+            m_Kind = kind;
             Name = "pending outbreak reward";
             Visible = false;
             Movable = false;
-            AddItem(new BroodVenomGland(stage == 3 ? 3 : 1));
+            AddItem(reward);
             m_Claims.Add(this);
         }
 
@@ -126,10 +146,11 @@ namespace Server.Custom.Confictura.Champions
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)0);
+            writer.Write((int)1);
             writer.Write(m_Owner);
             writer.Write(m_AttemptId);
             writer.Write(m_Stage);
+            writer.Write((int)m_Kind);
         }
         public override void Deserialize(GenericReader reader)
         {
@@ -138,6 +159,8 @@ namespace Server.Custom.Confictura.Champions
             m_Owner = reader.ReadMobile();
             m_AttemptId = reader.ReadString();
             m_Stage = reader.ReadInt();
+            if (version >= 1)
+                m_Kind = (ArachnidOutbreakClaimKind)reader.ReadInt();
         }
     }
 }

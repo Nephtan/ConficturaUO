@@ -95,8 +95,14 @@ internal static class ArachnidOutbreakWorldReload
                 typeof(ArachnidOutbreakController).GetField("m_Ledger",Private).SetValue(controller,ledger);
                 ArachnidOutbreakClaim brood = ArachnidOutbreakClaim.QueueGlands(participant,"saved-awards",0);
                 ArachnidOutbreakClaim boss = ArachnidOutbreakClaim.QueueGlands(participant,"saved-awards",3);
+                MethodInfo queue=typeof(ArachnidOutbreakClaim).GetMethod("QueueReward",BindingFlags.Static|BindingFlags.NonPublic);
+                ArachnidOutbreakClaim skull=(ArachnidOutbreakClaim)queue.Invoke(null,new object[]{participant,"saved-awards",3,ArachnidOutbreakClaimKind.Skull,
+                    new Func<Item>(delegate{return new ChampionSkull(Server.Engines.CannedEvil.ChampionSkullType.Venom);})});
+                ArachnidOutbreakClaim artifact=(ArachnidOutbreakClaim)queue.Invoke(null,new object[]{participant,"saved-awards",3,ArachnidOutbreakClaimKind.Artifact,
+                    new Func<Item>(delegate{return new Calm();})});
                 File.WriteAllText("claims.tsv",String.Join("\t",new string[] { participant.Serial.Value.ToString(),brood.Serial.Value.ToString(),
-                    boss.Serial.Value.ToString(),brood.Items[0].Serial.Value.ToString(),boss.Items[0].Serial.Value.ToString() }));
+                    boss.Serial.Value.ToString(),brood.Items[0].Serial.Value.ToString(),boss.Items[0].Serial.Value.ToString(),
+                    skull.Serial.Value.ToString(),artifact.Serial.Value.ToString(),skull.Items[0].Serial.Value.ToString(),artifact.Items[0].Serial.Value.ToString() }));
             }
             File.WriteAllText("participant.txt",participant.Serial.Value.ToString());
             if (name == "engaged")
@@ -185,6 +191,7 @@ internal static class ArachnidOutbreakWorldReload
             ArachnidOutbreakClaim brood=World.FindItem((Serial)Int32.Parse(claims[1])) as ArachnidOutbreakClaim;
             ArachnidOutbreakClaim boss=World.FindItem((Serial)Int32.Parse(claims[2])) as ArachnidOutbreakClaim;
             Check(brood!=null && boss!=null && brood.Owner==participant && boss.Owner==participant, "pending owners restored independently of controller disarm");
+            Check(brood.Kind==ArachnidOutbreakClaimKind.Glands && boss.Kind==ArachnidOutbreakClaimKind.Glands,"gland claim kind preserved including version-zero default");
             Check(brood.Items[0].Serial.Value==Int32.Parse(claims[3]) && boss.Items[0].Serial.Value==Int32.Parse(claims[4]), "exact saved reward identities restored");
             Check(brood.Map==Map.Internal && !brood.Movable && !brood.Visible && !brood.TryClaim(participant), "internal dead/offline claim remains protected");
             participant.Body=0x190;
@@ -194,6 +201,14 @@ internal static class ArachnidOutbreakWorldReload
             Check(brood.TryClaim(participant) && !brood.TryClaim(participant), "loaded reward transfers once");
             participant.Backpack.MaxItems=125;
             Check(boss.TryClaim(participant) && participant.Backpack.GetAmount(typeof(BroodVenomGland))==4, "loaded boss reward merges without duplication");
+            if(claims.Length>5)
+            {
+                ArachnidOutbreakClaim skull=World.FindItem((Serial)Int32.Parse(claims[5])) as ArachnidOutbreakClaim;
+                ArachnidOutbreakClaim artifact=World.FindItem((Serial)Int32.Parse(claims[6])) as ArachnidOutbreakClaim;
+                Check(skull.Kind==ArachnidOutbreakClaimKind.Skull && artifact.Kind==ArachnidOutbreakClaimKind.Artifact,"collectible claim kinds restored");
+                Check(skull.Items[0].Serial.Value==Int32.Parse(claims[7]) && artifact.Items[0].Serial.Value==Int32.Parse(claims[8]),"exact saved collectible identities restored");
+                Check(skull.TryClaim(participant) && artifact.TryClaim(participant),"saved named collectibles delivered once");
+            }
             World.Save(false,false);World.WaitForWriteCompletion();
         }
         Console.WriteLine("RELOADED " + name);
@@ -205,6 +220,8 @@ internal static class ArachnidOutbreakWorldReload
         foreach(Item item in World.Items.Values)
             Check(!(item is ArachnidOutbreakClaim), "paid claims do not reappear after another fresh reload");
         Check(participant.Backpack.GetAmount(typeof(BroodVenomGland))==4, "paid gland quantity survives a second fresh reload");
+        if(File.ReadAllText("claims.tsv").Split('\t').Length>5)
+            Check(participant.Backpack.GetAmount(typeof(ChampionSkull))==1 && participant.Backpack.GetAmount(typeof(Calm))==1,"paid named collectibles survive a second fresh reload");
         Console.WriteLine("RELOADED rewards");
     }
     private static void Worker(string exe, string assets, string mode, string name, string directory)

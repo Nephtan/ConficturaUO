@@ -36,11 +36,11 @@ internal static class ArachnidOutbreakRewardRegression
         ArachnidOutbreakController controller = new ArachnidOutbreakController();
         ArachnidOutbreakState state = (ArachnidOutbreakState)typeof(ArachnidOutbreakController).GetField("m_State", Private).GetValue(controller);
         state.SetEnabled(true);
-        Point3D boss = new Point3D(1000,1000,0);
+        Point3D boss = new Point3D(2514,2088,0);
         ArachnidOutbreakPlacement placement = new ArachnidOutbreakPlacement(boss,
-            new Point3D[] { new Point3D(972,980,0), new Point3D(1028,980,0), new Point3D(1000,1030,0) }, new Point3D[] { boss });
+            new Point3D[] { new Point3D(2486,2068,0), new Point3D(2542,2068,0), new Point3D(2514,2118,0) }, new Point3D[] { boss });
         typeof(ArachnidOutbreakController).GetMethod("BeginAt", Private).Invoke(controller,
-            new object[] { new ArachnidOutbreakSite("rewards-fixture",1000,1000,false), placement });
+            new object[] { new ArachnidOutbreakSite("rewards-fixture",2514,2088,false), placement });
         return controller;
     }
     private static List<ArachnidOutbreakClaim> Claims(Mobile player)
@@ -234,6 +234,85 @@ internal static class ArachnidOutbreakRewardRegression
         }
         finally {controller.Delete();pet.Delete();healer.Delete();patient.Delete();outsider.Delete();}
     }
+    private sealed class CollectibleBoss : ArachnidOutbreakChampion
+    {
+        public int Rolls;
+        public bool Empty;
+        public CollectibleBoss(ArachnidOutbreakController controller):base(controller){}
+        public override Item RollVictoryArtifact(){++Rolls;return Empty?null:new Calm();}
+    }
+    private static int GroundGold()
+    {
+        int total=0;
+        foreach(Item item in World.Items.Values)
+            if(item is Gold && item.Parent==null && item.Map==Map.Sosaria)total+=item.Amount;
+        return total;
+    }
+    private static int Scrolls()
+    {
+        int total=0;foreach(Item item in World.Items.Values)if(item is PowerScroll)++total;return total;
+    }
+    private static void BossRewards(bool damageParticipant,bool artifact)
+    {
+        ArachnidOutbreakController controller=Begin();
+        Mobile support=Player();Mobile damage=Player();Mobile patient=Player();
+        CollectibleBoss boss=new CollectibleBoss(controller);boss.Empty=!artifact;
+        try
+        {
+            List<Mobile> foes=(List<Mobile>)typeof(ArachnidOutbreakController).GetField("m_Creatures",Private).GetValue(controller);
+            foreach(Mobile guardian in foes.ToArray())guardian.Kill();
+            Check(controller.Phase==ArachnidOutbreakPhase.Boss,"three actual guardian deaths unlock boss rewards");
+            foes.Add(boss);boss.Home=new Point3D(2514,2088,0);boss.MoveToWorld(boss.Home,Map.Sosaria);
+            typeof(ArachnidOutbreakController).GetField("m_BossCreated",Private).SetValue(controller,true);
+            if(damageParticipant)boss.Damage(1000,damage);
+            for(int i=0;i<2;++i){patient.Damage(60,boss);patient.Heal(60,support,false);}
+            Check(Ledger(controller).Qualified(3).Contains(support),"actual boss-stage support qualifies independently");
+            support.Body=0x192;
+            int gold=GroundGold();int scrolls=Scrolls();boss.Kill();
+            Check(controller.Phase==ArachnidOutbreakPhase.Cooldown && Ledger(controller).IsSealed(3),"real boss death settles and seals stage");
+            Check(GroundGold()-gold==15000,"boss shower contains exactly 15000 shared ground gold");
+            Check(boss.Rolls==1,"one existing artifact opportunity per clear");
+            List<ArachnidOutbreakClaim> all=Claims(support);all.AddRange(Claims(damage));
+            int glands=0,skulls=0,artifacts=0;
+            foreach(ArachnidOutbreakClaim claim in all)
+            {
+                if(claim.Kind==ArachnidOutbreakClaimKind.Glands)
+                {
+                    ++glands;Check(claim.Items[0] is BroodVenomGland && claim.Items[0].Amount==3,"each qualified boss participant earns three glands");
+                }
+                else if(claim.Kind==ArachnidOutbreakClaimKind.Skull){++skulls;Check(claim.Items[0] is ChampionSkull,"skull item retained in claim");}
+                else if(claim.Kind==ArachnidOutbreakClaimKind.Artifact){++artifacts;Check(claim.Items[0] is Calm,"selected named artifact retained in claim");}
+            }
+            Check(glands==(damageParticipant?2:1) && skulls==1 && artifacts==(artifact?1:0),"one skull, optional artifact, no duplicate individual rewards");
+            Check(Scrolls()==scrolls,"complete new encounter creates no power scrolls");
+            typeof(ArachnidOutbreakController).GetMethod("CreatureDied",Private).Invoke(controller,new object[]{boss,null});
+            Check(GroundGold()-gold==15000 && boss.Rolls==1 && Claims(support).Count+Claims(damage).Count==all.Count,"replayed boss callback cannot repeat gold, collectible roll or claims");
+            if(!damageParticipant)
+                Check(Claims(damage).Count==0 && Claims(support).Find(c=>c.Kind==ArachnidOutbreakClaimKind.Skull)!=null,"dead offline support-only player receives collectible rights");
+        }
+        finally
+        {
+            foreach(ArachnidOutbreakClaim c in Claims(support))c.Delete();foreach(ArachnidOutbreakClaim c in Claims(damage))c.Delete();
+            controller.Delete();boss.Delete();support.Delete();damage.Delete();patient.Delete();
+            List<Item> cleanup=new List<Item>();foreach(Item item in World.Items.Values)if(item is Gold && item.Parent==null && item.Map==Map.Sosaria)cleanup.Add(item);
+            foreach(Item item in cleanup)item.Delete();
+        }
+    }
+    private static void UnsafeBossLoot()
+    {
+        ArachnidOutbreakController controller=Begin();Mobile player=Player();CollectibleBoss boss=new CollectibleBoss(controller);
+        Moongate portal=new Moongate();
+        try
+        {
+            List<Mobile> foes=(List<Mobile>)typeof(ArachnidOutbreakController).GetField("m_Creatures",Private).GetValue(controller);
+            foreach(Mobile guardian in foes.ToArray())guardian.Kill();
+            foes.Add(boss);boss.MoveToWorld(new Point3D(2514,2088,0),Map.Sosaria);portal.MoveToWorld(boss.Location,Map.Sosaria);
+            boss.Damage(1000,player);int gold=GroundGold();boss.Kill();
+            Check(controller.Phase==ArachnidOutbreakPhase.Cooldown && controller.Status.Contains("cancelled"),"no safe cached loot ground cancels outcome without coordinate fallback");
+            Check(Claims(player).Count==0 && GroundGold()==gold && boss.Rolls==0,"unsafe outcome creates no new boss rewards or collectible roll");
+        }
+        finally {portal.Delete();controller.Delete();boss.Delete();player.Delete();}
+    }
     public static int Main(string[] args)
     {
         try
@@ -242,7 +321,7 @@ internal static class ArachnidOutbreakRewardRegression
             typeof(World).GetField("m_Items",BindingFlags.Static|BindingFlags.NonPublic).SetValue(null,new Dictionary<Serial,Item>());
             typeof(World).GetField("m_Mobiles",BindingFlags.Static|BindingFlags.NonPublic).SetValue(null,new Dictionary<Serial,Mobile>());
             MapDefinitions.Configure();RaceDefinitions.Configure();Corpse.Initialize();ArachnidOutbreakController.Initialize();
-            Scoring(); Delivery(); Attribution(); HealingProvenance();
+            Scoring(); Delivery(); Attribution(); HealingProvenance();BossRewards(true,true);BossRewards(false,true);BossRewards(false,false);UnsafeBossLoot();
             Console.WriteLine("PASS outbreak rewards: "+s_Checks+" component assertions; no world saves or listeners.");return 0;
         }
         catch(Exception exception){Console.Error.WriteLine(exception);return 1;}

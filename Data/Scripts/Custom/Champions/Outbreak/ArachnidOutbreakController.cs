@@ -462,14 +462,44 @@ namespace Server.Custom.Confictura.Champions
                 QueueStage(spider.Stage);
                 m_State.CompleteBrood(spider.Stage, DateTime.UtcNow);
             }
-            if (mobile is ArachnidOutbreakChampion && m_State.Phase == ArachnidOutbreakPhase.Boss)
+            ArachnidOutbreakChampion champion = mobile as ArachnidOutbreakChampion;
+            if (champion != null && m_State.Phase == ArachnidOutbreakPhase.Boss)
+            {
+                if (!TryBossRewards(champion))
+                {
+                    Abort(DateTime.UtcNow, "Boss outcome cancelled: no safe shared loot ground.");
+                    return;
+                }
                 QueueStage(3);
+            }
             if (mobile is ArachnidOutbreakChampion && m_State.CompleteBoss(DateTime.UtcNow, Utility.RandomMinMax(30, 60)))
             {
                 Cleanup(AttemptId);
                 m_Placement = null;
                 m_Status = "Completed; cooldown active.";
             }
+        }
+
+        private bool TryBossRewards(ArachnidOutbreakChampion champion)
+        {
+            if (m_Placement == null || m_Ledger == null || m_Ledger.AttemptId != AttemptId || m_Ledger.IsSealed(3))
+                return false;
+            Point3D[] points = new Point3D[25];
+            for (int i = 0; i < points.Length; ++i)
+                if (!m_Placement.TryFindLoot(m_Placement.Boss, 12, out points[i])
+                    && !m_Placement.TryFindLoot(m_Placement.Boss, 56, out points[i]))
+                    return false;
+            List<Mobile> qualified = m_Ledger.Qualified(3);
+            if (qualified.Count > 0)
+            {
+                ArachnidOutbreakClaim.QueueReward(qualified[Utility.Random(qualified.Count)], AttemptId, 3,
+                    ArachnidOutbreakClaimKind.Skull, delegate { return new ChampionSkull(champion.SkullType); });
+                ArachnidOutbreakClaim.QueueReward(qualified[Utility.Random(qualified.Count)], AttemptId, 3,
+                    ArachnidOutbreakClaimKind.Artifact, delegate { return champion.RollVictoryArtifact(); });
+            }
+            for (int i = 0; i < points.Length; ++i)
+                new Gold(600).MoveToWorld(points[i], Map.Sosaria);
+            return true;
         }
 
         internal bool KeepCreatureInBounds(BaseCreature creature)
