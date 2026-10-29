@@ -2,6 +2,8 @@
 
 Status: InProgress. Production activation is disabled. Specification: [SPECIFICATION.md](SPECIFICATION.md).
 
+Targeted native results and remaining acceptance gates: [NATIVE_ACCEPTANCE.md](NATIVE_ACCEPTANCE.md).
+
 ## Baseline - 2026-10-28
 
 Work on the current branch. Preserve these unrelated, pre-existing untracked files:
@@ -305,3 +307,13 @@ Retained repair evidence: initial web001 used an unsupported one-argument Timer.
 Separate casting finding, outside this feature: a synthetic PlayerMobile with Int100, Magery.Base0 and Elementalism.Base0 has effective values15/15 from `Data/System/Source/Skills.cs:Skill.TotalSkillValue`; `Data/Scripts/Magic/Base/Spell.cs:Spell.CantMixSpell` rejects Magery for that profile using effective values. That caused the original Heal cast check to fail with neither freeze nor paralysis set. Close Wounds with ordinary mana/tithing requirements verifies casting independently of that mixing gate. No global spell-mixing fix or claim about every live character is made; a real caster profile still needs validation when freezing the veteran benchmark.
 
 Production and reservation activation remain disabled. Server web/rescue behavior now has component, real-manager-path and fresh-world evidence. Targeted native warning/escape/treatment acceptance, reviewed traversal/sites, fixed legal veteran and private Zanthus fixtures, three pacing runs, bounded tuning, economic observations and the full requirement audit remain open.
+
+### Step 3b - Bounded native warning and treatment checkpoint (2026-10-29)
+
+[NATIVE_ACCEPTANCE.md](NATIVE_ACCEPTANCE.md) records the exact private copies, accepted cases, retained failures and evidence boundaries. Native keyboard input now demonstrates actual movement, warning avoidance, blocked movement while restrained and resumed movement after natural release. Native item use demonstrates an antivenom target cursor, self-application, one consumed treatment/returned bottle and active-treatment rejection. The rig suppresses boss AI and constructs the scene; no full combat, traversal or pacing acceptance is claimed.
+
+Native double-click escape/rescue and status display remain open. Capture/action latency exceeded one real four-second restraint window; no stale-object click was counted. Command-entry focus was not established for the status command, and no chat message was sent. The initial private dose setup used AddItem without container placement; the accepted fresh copy uses DropItem. Fixture preparation errors and uncertain coordinate attempts remain recorded rather than being presented as production failures.
+
+The abstract web base's Serial constructor is now public to satisfy the runtime verifier's public reflection lookup. Version0 and all serialized field order/type remain unchanged. Accepted follow-up snapshot `D:/ConficturaUOTestTools/outbreak-20261029-native-checkpoint-001`: operational Release/x86 build, forced runtime compile without the web serialization warning, web92, antivenom53 and world16/34 pass. Native observations used the prior web008 candidate; this constructor access correction changes neither web timing nor treatment behavior. Core source and tracked executable are unchanged.
+
+Both owned client/server pairs were forcibly stopped after process identity checks; no graceful shutdown is claimed. Original saves/settings/profiles and private saves remain byte-identical; private loopback listeners and processes are gone. All remaining native, site, fixture, pacing/economic and completion-audit gates stay open. Production and reservation reviews remain disabled.

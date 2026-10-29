@@ -47,7 +47,7 @@ namespace Server.Custom.Confictura.Champions
             return actor == null && boss == null;
         }
 
-        protected ArachnidOutbreakWebItem(Serial serial) : base(serial)
+        public ArachnidOutbreakWebItem(Serial serial) : base(serial)
         {
         }
         public override void Serialize(GenericWriter writer)
