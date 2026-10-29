@@ -1,0 +1,66 @@
+{
+  "three_comparable_complete_runs": true,
+  "at_least_one_without_antivenom": true,
+  "median_minutes": 24.42673618166667,
+  "pacing_passed": true,
+  "runs": [
+    {
+      "root": "D:\\ConficturaUOTestTools\\outbreak-mounted-benchmark-20261029-001",
+      "mode": "no-antivenom",
+      "seconds": 1452.7598366,
+      "supplies_consumed": {
+        "bandage": 154,
+        "cure": 21,
+        "heal": 8,
+        "petals": 2,
+        "strength": 9,
+        "agility": 12,
+        "refresh": 8,
+        "rune": 0,
+        "mount-cage": 0
+      },
+      "native_walk_rejections": 0
+    },
+    {
+      "root": "D:\\ConficturaUOTestTools\\outbreak-mounted-benchmark-20261029-002",
+      "mode": "antivenom",
+      "seconds": 1526.8203048,
+      "supplies_consumed": {
+        "bandage": 171,
+        "cure": 16,
+        "heal": 4,
+        "petals": 2,
+        "strength": 11,
+        "agility": 13,
+        "refresh": 2,
+        "rune": 0,
+        "mount-cage": 0,
+        "antivenom": 12
+      },
+      "native_walk_rejections": 0
+    },
+    {
+      "root": "D:\\ConficturaUOTestTools\\outbreak-mounted-benchmark-20261029-003",
+      "mode": "no-antivenom",
+      "seconds": 1465.6041709,
+      "supplies_consumed": {
+        "bandage": 199,
+        "cure": 23,
+        "heal": 8,
+        "petals": 2,
+        "strength": 10,
+        "agility": 12,
+        "refresh": 2,
+        "rune": 0,
+        "mount-cage": 0
+      },
+      "native_walk_rejections": 1
+    }
+  ],
+  "policy_sha256": "2c3ce20d163c8ddba33597a1641837516f22666f928f3b1dee08631aebc6cef6",
+  "fixture_sha256": "188d37338680c3614b2d203e9ddb7639c7c0f7798e42ec8586d96d0808a9fa72",
+  "core_sha256": "dbb7b2360c435834b32e0f1f4b0854a859cd9086971a4c270981b58d8f2f3ddb",
+  "reference_version": "4",
+  "scope": "Veteran clear/pacing only; other native, site, economy and Zanthus gates remain separate",
+  "production_activation": false
+}

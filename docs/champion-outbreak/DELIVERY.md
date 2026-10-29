@@ -14,14 +14,14 @@ Checked implementation rows below do not close the separate native, pacing or si
 | Placement and permanent reservations | Six inactive proposals, terrain validation and all six native walking routes/1,356 steps | Ground-warning visibility, current-world safety preflight and explicit site approval; the occupancy survey's source save is dated2026-10-17 |
 | Participation, claims and crafting | Component/fresh-process persistence records; native claims/treatment checks; original archmage full clear earns6 glands/1 skull and15,000 shared ground gold | Another connected player's effective support/cooperative feedback; ordinary corpse loot remains unassessed in the full clear |
 | Web/TBC integration | Production-method/AP tests, stopped-scheduler native scenes and live003 natural warning/reaction/impact/native self-escape | Native live dodge, cooperative roles and remaining ground presentation |
-| Veteran reference | Mounted-v4 run001 completes without antivenom in 1452.760 seconds; frozen capabilities and preservation pass |2/3 complete comparable clears; run002 also completes in 1526.820 seconds; median not evaluated; tuning0 |
+| Veteran reference | Mounted-v4 run001 completes without antivenom in 1452.760 seconds; frozen capabilities and preservation pass |3/3 complete comparable clears; median 24.426736 minutes passes 20-35; tuning0; native/cooperative/site gates remain separate |
 | Original Zanthus stress | Original stationary partial and route-assisted full clear at277.502 seconds; character/source/save preservation passes | No repeatable-farm, current live-character or veteran pacing inference |
 | Boss behavior | Ordinary fleeing retained; native horse mounting/recovery and first full pursuit clear pass | Review any further territorial-survival change separately; broader AI remains read-only and no stand-and-fight patch is applied |
 | Economics and release | First complete reference costs and 4198 source-price subtotal; operating notes and 44-row evidence register | Further antivenom/cooperative economics, ordinary corpse/reward collection, final requirement audit and operational review; no deployment |
 
 Recorded native/evidence checkpoints: 7c94464e and 90f465ae. Production remains disabled; no reservation is approved.
 
-[ACCEPTANCE_REQUIREMENTS.csv](ACCEPTANCE_REQUIREMENTS.csv) maps 44 specification/reported-design entries to implementation/test sources, recorded evidence scope and remaining verification. ComponentEvidence and NativePartial are scope labels, not completed delivery; Open, OperationalDraft and DesignReview remain unresolved. The final audit must inspect current source and retained results for every row before completion.
+[ACCEPTANCE_REQUIREMENTS.csv](ACCEPTANCE_REQUIREMENTS.csv) maps 44 specification/reported-design entries to implementation/test sources, recorded evidence scope and remaining verification. NativeVerified accepts only the named requirement; ComponentEvidence and NativePartial are scope labels, not completed delivery; Open, OperationalDraft and DesignReview remain unresolved. The final audit must inspect current source and retained results for every row before completion.
 
 ## Mounted reference checkpoint - 2026-10-29
 
@@ -34,6 +34,14 @@ The unchanged terminal capture, frozen capabilities/policy and verification rema
 The original mounted-v4 antivenom run002 continues through the model-capacity interruption without a duplicate or restart. The same actual server/client identities, live process-bound observer, frozen fixture and driver are verified on recovery. It completes in 1526.8203048 seconds (25 minutes 27 seconds), all 40 enemies defeated, no player death, 1746 run requests, no walk/refusal/client errors. VerifyBenchmark --require-clear passes 6742 source inputs, matching core, 20 private saves, protected originals and acknowledged no-save teardown. Native health loss/restoration is 8131/8100. The third comparable run remains required; no median is accepted yet. Mounted-v4 run003 is now running without antivenom after the same native preparation and a successful capability comparison with run001; its fixture and driver remain unchanged.
 
 Evidence remains in D:/ConficturaUOTestTools/outbreak-mounted-benchmark-20261029-002/evidence/. ECONOMICS records actual finite consumption and exclusions. The capacity interruption did not change source, character capabilities, policy or production flags. The first-clear/helper/register batch is committed as 90f465ae. The untouched three original untracked files remain outside this work.
+
+## Accepted three-run veteran pacing series
+
+The existing third run is recovered after completion, with no duplicate or combat rerun. Its unchanged terminal capture reports 1465.6041709 seconds (24 minutes 26 seconds), all 40 enemies defeated, alive and mounted. The original owned processes are identified, acknowledged no-save cleanup removes both processes/listener, and VerifyBenchmark --require-clear passes. The single refused native path request is retained; the driver recovers and completes with no client errors.
+
+VerifyBenchmarkSeries rechecks all three complete outcomes, prepared v4 capabilities, fixture/client policy, production inputs, starting saves/stocks, core and ordinary running policy. Times are 1452.7598366 without antivenom, 1526.8203048 with antivenom and 1465.6041709 without antivenom. Median 24.42673618166667 minutes passes the 20-35 minute gate, with zero player deaths and tuning0. Individual run reports do not assess a median; the separate series report now accepts it.
+
+Portable aggregate: [VETERAN_SERIES.json](VETERAN_SERIES.json). Private originals: D:/ConficturaUOTestTools/outbreak-mounted-benchmark-20261029-003/evidence/mounted-series-verification.json and the three run evidence folders. This closes veteran pacing only. Native dodge/cooperation/ground presentation, current offline-save/site approval, ordinary loot/economic assessment and the final requirement audit remain open. Production and all proposed reservations remain disabled; broader NPC AI remains read-only.
 
 ## Baseline - 2026-10-28
 
@@ -89,7 +97,7 @@ Source traces: [ArachnidOutbreakController.cs](../../Data/Scripts/Custom/Champio
 - [x] Finite defenders/reinforcements and guarded death transitions.
 - [ ] Web warning, avoidance, restraint, escape/rescue; turn-based integration.
 - [x] Freeze legal veteran fixture and private Zanthus stress fixture.
-- [ ] Three full reference runs (20-35 minute median), one without antivenom.
+- [x] Three full reference runs (20-35 minute median), one without antivenom.
 - [ ] Zanthus macro/farming measurements and targeted native acceptance.
 - [ ] Economic/supply observations, failure evidence, bounded tuning record.
 - [ ] Test-input restoration, enable/disable instructions, focused commit.

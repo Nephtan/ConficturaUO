@@ -35,6 +35,10 @@ Mounted-v4 run002 completes in 1526.8203048 seconds without a player death. Actu
 
 These two independent randomized encounters do not isolate antivenom's causal effect or establish a cheaper loadout, player demand or net profit. Both retain unobserved reward collection and corpse loot. Keep the actual doses and their unpriced ingredient/trade cost visible when comparing the subtotals; no reward change follows from them.
 
+## Third complete reference and accepted pacing
+
+Run003 finishes without antivenom in 1465.6041709 seconds. Actual use: 199 bandages, 23 greater cures, 8 greater heals, 10 greater strengths, 12 greater agilities, 2 total refreshes and 2 petals; net tithing reduction 680. The same priced categories total 4318 (398+1380+480+600+720+60+680), with the earlier exclusions and no collected-loot/profit claim. All three now pass the pacing series median 24.426736 minutes. Resource costs and reward collection retain their separate evidence limits; the one antivenom case does not establish causal savings or market demand.
+
 ## Reward value remains a separate question
 
 The specified 15,000 gold is a shared ground shower, not 15,000 per participant. RollVictory creates 25 stacks of 600 only after the boss victory path succeeds; pilot008 did not earn it. Four inherited UltraRich corpse packs and the skull/artifact opportunity are separate from that fixed sum. Gold actually collected, ordinary loot retained, travel/looting time and repairs remain unmeasured; the first completed-reference resource spend is recorded above.
