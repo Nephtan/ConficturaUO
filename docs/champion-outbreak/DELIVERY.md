@@ -149,3 +149,16 @@ Failed observations are retained: controller-001 initially failed runtime compil
 See [SITE_SURVEY.md](SITE_SURVEY.md) for the measured protected-landmark atlas and search limits. The broader eight-tile scan examined 250,240 sample positions and 1,094 candidate centers; all candidates failed the rigid current layout. This does not prove there are no sites at unsampled centers or with different geometry.
 
 Central Orc Fort provides 4,041 connected tiles within an existing 74x64 permanent housing ban, plus no copied houses/portals within 24 tiles in the October 17 save. It is a concrete lead, not an approved deployment site: the current footprint/buffer does not fit. Smaller protected landmarks have differing terrain, portal and adjacent-house constraints. The user is reviewing whether to fit encounter layouts to existing protected geography or reconsider larger reserved wilderness areas. No new ban, footprint relaxation, activation or production catalog entry was applied.
+
+
+### Step 1c - Actual fresh-process saved worlds (2026-10-28)
+
+`tests/ArachnidOutbreakWorldReload.cs`, registered as `outbreak-world`, uses the real `World.Save(false,false)` and `World.Load` in separate bounded workers. Each case starts in a new GUID-named directory beneath the fixture snapshot. No existing save is copied or loaded. All output, synthetic saves and expected metadata remain in that private directory; no listener, script-wide initialization or main timer thread starts.
+
+Accepted run: `outbreak-20261028-controller-007/outbreak-world-run-attempt-2.log`: **13 worlds / 26 fresh workers passed**. Cases cover disabled, searching, undiscovered brood activity, engaged activity before a clear, all six partial cleared masks, boss pending creation, boss created, and cooldown. Assertions check typed reconstruction, strong reference lists, controller back-references, stage/role and reinforcement masks, attempt/site identity and exact activity/cooldown timestamps. Calling the actual controller Initialize then verifies the disabled delivery gate cleans only owned objects, preserving a foreign item and unrelated creature.
+
+This proves saved-world reconstruction and gated startup cleanup. It does not prove active encounter recovery at a real approved site, client behavior or turn-based behavior; those remain delivery gates. The original eleven-case run is retained; the accepted expansion also covers engagement and the interval before boss creation. The fixture preserves worker output on failure/timeout and stops only its own child process.
+
+### Reservation direction selected by user (2026-10-28)
+
+The user selected **Consider new permanent wilderness reservations for larger encounter layouts**. Develop a mapped, source-validated proposal for the larger layout rather than silently compacting it into the fort. Permanent housing protection must outlive individual encounter starts/stops. No new reservation or housing restriction has been activated by this decision record. Candidate evaluation must include full terrain/staging, towns and protected services, copied houses/cities/portals/vendors, approaches and native client review; today's loaded world still needs a preflight before production activation.

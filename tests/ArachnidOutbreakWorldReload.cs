@@ -1,0 +1,181 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Threading.Tasks;
+using Server;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Custom.Confictura.Champions;
+
+// Separate processes exercise actual World.Save/Load. No existing save is copied
+// or loaded, and no listener, script-wide Initialize or main timer loop starts.
+internal static class ArachnidOutbreakWorldReload
+{
+    private static readonly BindingFlags Private = BindingFlags.Instance | BindingFlags.NonPublic;
+    private static void Check(bool condition, string message)
+    {
+        if (!condition) throw new Exception("FAILED: " + message);
+    }
+    private static ArachnidOutbreakState State(ArachnidOutbreakController controller)
+    {
+        return (ArachnidOutbreakState)typeof(ArachnidOutbreakController).GetField("m_State", Private).GetValue(controller);
+    }
+    private static List<Mobile> Creatures(ArachnidOutbreakController controller)
+    {
+        return (List<Mobile>)typeof(ArachnidOutbreakController).GetField("m_Creatures", Private).GetValue(controller);
+    }
+    private static List<Item> Signs(ArachnidOutbreakController controller)
+    {
+        return (List<Item>)typeof(ArachnidOutbreakController).GetField("m_Signs", Private).GetValue(controller);
+    }
+    private static void Bootstrap(string assets)
+    {
+        Core.Assembly = typeof(Core).Assembly;
+        Core.Expansion = Expansion.SA;
+        Core.DataDirectories.Add(assets);
+        ScriptCompiler.Assemblies = new Assembly[] { typeof(ArachnidOutbreakController).Assembly };
+        MapDefinitions.Configure();
+        Corpse.Initialize();
+        World.Load();
+    }
+    private static void SaveCase(string assets, string name)
+    {
+        Check(!Directory.Exists("Saves"), "worker must start with a new empty world");
+        Bootstrap(assets);
+        ArachnidOutbreakController controller = new ArachnidOutbreakController();
+        ArachnidOutbreakState state = State(controller);
+        if (name != "disabled") state.SetEnabled(true);
+        if (name.StartsWith("broods-") || name.StartsWith("boss") || name == "engaged" || name == "cooldown")
+        {
+            Point3D bossPoint = new Point3D(1000, 1000, 0);
+            Point3D[] nests = new Point3D[] { new Point3D(972,980,0), new Point3D(1028,980,0), new Point3D(1000,1030,0) };
+            ArachnidOutbreakPlacement placement = new ArachnidOutbreakPlacement(bossPoint, nests, new Point3D[] { bossPoint });
+            typeof(ArachnidOutbreakController).GetMethod("BeginAt", Private).Invoke(controller,
+                new object[] { new ArachnidOutbreakSite("reload-fixture",1000,1000,false), placement });
+            int mask = name.StartsWith("broods-") ? Int32.Parse(name.Substring(7)) : name == "engaged" ? 0 : 7;
+            foreach (Mobile mobile in Creatures(controller).ToArray())
+            {
+                ArachnidOutbreakSpider spider = (ArachnidOutbreakSpider)mobile;
+                typeof(ArachnidOutbreakSpider).GetField("m_Reinforcements", Private).SetValue(spider, 15);
+                if ((mask & (1 << spider.Stage)) != 0) spider.Kill();
+            }
+            if (mask != 0 || name == "engaged") state.RecordActivity(DateTime.UtcNow);
+            if (name == "boss" || name == "cooldown")
+            {
+                ArachnidOutbreakChampion boss = new ArachnidOutbreakChampion(controller);
+                typeof(ArachnidOutbreakChampion).GetField("m_Reinforcements", Private).SetValue(boss, 7);
+                Creatures(controller).Add(boss);
+                typeof(ArachnidOutbreakController).GetField("m_BossCreated", Private).SetValue(controller, true);
+                boss.MoveToWorld(bossPoint, Map.Sosaria);
+                if (name == "cooldown") boss.Kill();
+            }
+        }
+        Item sentinel = new Item(0x1);
+        sentinel.Name = "outbreak persistence sentinel";
+        Signs(controller).Add(sentinel); // Deliberately foreign saved reference.
+        DreadSpider unrelated = new DreadSpider();
+        unrelated.MoveToWorld(new Point3D(1200,1200,0), Map.Sosaria);
+        string expected = String.Join("\t", new string[] { controller.Serial.Value.ToString(),
+            ((int)controller.Phase).ToString(), controller.ClearedBroods.ToString(), controller.AttemptId,
+            controller.SiteId, sentinel.Serial.Value.ToString(), unrelated.Serial.Value.ToString(),
+            state.LastActivity.Ticks.ToString(), state.NextStart.Ticks.ToString(),
+            Creatures(controller).FindAll(delegate(Mobile m) { return !m.Deleted; }).Count.ToString(),
+            Signs(controller).FindAll(delegate(Item i) { return !i.Deleted; }).Count.ToString() });
+        File.WriteAllText("expected.tsv", expected);
+        World.Save(false, false);
+        World.WaitForWriteCompletion();
+        Check(File.Exists(World.ItemDataPath) && File.Exists(World.MobileDataPath), "actual world data files written");
+        Console.WriteLine("SAVED " + name);
+    }
+    private static void LoadCase(string assets, string name)
+    {
+        string[] expected = File.ReadAllText("expected.tsv").Split('\t');
+        Bootstrap(assets);
+        ArachnidOutbreakController controller = World.FindItem((Serial)Int32.Parse(expected[0])) as ArachnidOutbreakController;
+        Check(controller != null, "typed controller reconstructed");
+        Check((int)controller.Phase == Int32.Parse(expected[1]) && controller.ClearedBroods == Int32.Parse(expected[2]), "phase and cleared mask preserved");
+        Check(controller.AttemptId == expected[3] && controller.SiteId == expected[4], "attempt identity and site preserved");
+        Check(State(controller).LastActivity.Ticks == Int64.Parse(expected[7]) && State(controller).NextStart.Ticks == Int64.Parse(expected[8]), "activity and cooldown preserved");
+        Check(Creatures(controller).Count == Int32.Parse(expected[9]) && Signs(controller).Count == Int32.Parse(expected[10]), "strong reference lists restored");
+        foreach (Mobile mobile in Creatures(controller))
+        {
+            IArachnidOutbreakOwned owned = mobile as IArachnidOutbreakOwned;
+            Check(owned != null && owned.Controller == controller && owned.AttemptId == controller.AttemptId, "mobile back-reference resolves to loaded controller");
+            ArachnidOutbreakSpider spider = mobile as ArachnidOutbreakSpider;
+            if (spider != null)
+            {
+                Check(spider.Guardian && spider.Stage >= 0 && spider.Stage < 3, "guardian role and stage preserved");
+                Check((int)typeof(ArachnidOutbreakSpider).GetField("m_Reinforcements", Private).GetValue(spider) == 15, "brood budget mask preserved");
+            }
+            else
+                Check((int)typeof(ArachnidOutbreakChampion).GetField("m_Reinforcements", Private).GetValue(mobile) == 7, "boss budget mask preserved");
+        }
+        foreach (Item item in Signs(controller))
+        {
+            ArachnidBroodSign sign = item as ArachnidBroodSign;
+            if (sign != null) Check(sign.Controller == controller && sign.AttemptId == controller.AttemptId, "sign back-reference restored");
+        }
+        if (name == "boss") Check((bool)typeof(ArachnidOutbreakController).GetField("m_BossCreated", Private).GetValue(controller), "boss-created guard preserved");
+        if (name == "boss-pending") Check(!(bool)typeof(ArachnidOutbreakController).GetField("m_BossCreated", Private).GetValue(controller), "boss not yet created guard preserved");
+        ArachnidOutbreakController.Initialize();
+        Check(controller.Phase == ArachnidOutbreakPhase.Disabled, "delivery gate disarms loaded controller");
+        Check(Creatures(controller).Count == 0 && Signs(controller).Count == 0, "startup removed owned encounter objects");
+        Check(World.FindItem((Serial)Int32.Parse(expected[5])) != null, "foreign item survives startup cleanup");
+        Check(World.FindMobile((Serial)Int32.Parse(expected[6])) != null, "unrelated creature survives startup cleanup");
+        Console.WriteLine("RELOADED " + name);
+    }
+    private static void Worker(string exe, string assets, string mode, string name, string directory)
+    {
+        ProcessStartInfo start = new ProcessStartInfo(exe, "\"" + assets + "\" " + mode + " " + name);
+        start.WorkingDirectory = directory;
+        start.UseShellExecute = false;
+        start.CreateNoWindow = true;
+        start.RedirectStandardOutput = true;
+        start.RedirectStandardError = true;
+        using (Process process = Process.Start(start))
+        {
+            Task<string> output = process.StandardOutput.ReadToEndAsync();
+            Task<string> error = process.StandardError.ReadToEndAsync();
+            bool completed = process.WaitForExit(30000);
+            if (!completed)
+            {
+                process.Kill();
+                process.WaitForExit();
+            }
+            File.WriteAllText(Path.Combine(directory, mode + ".log"), output.Result + error.Result);
+            Check(completed, "owned reload worker timed out: " + mode + " " + name + "; output retained");
+            Check(process.ExitCode == 0 && output.Result.Contains(mode == "save" ? "SAVED " + name : "RELOADED " + name), "worker succeeded: " + mode + " " + name + "; see retained worker log");
+        }
+    }
+    public static int Main(string[] args)
+    {
+        try
+        {
+            if (args.Length == 3)
+            {
+                Check(Path.GetFullPath(Environment.CurrentDirectory).StartsWith(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase), "save worker confined beneath fixture snapshot");
+                if (args[1] == "save") SaveCase(args[0], args[2]);
+                else if (args[1] == "load") LoadCase(args[0], args[2]);
+                else throw new Exception("Unknown worker mode");
+                return 0;
+            }
+            string exe = Assembly.GetExecutingAssembly().Location;
+            string root = Path.Combine(Path.GetDirectoryName(exe), "outbreak-world-reload-" + Guid.NewGuid().ToString("N"));
+            string[] cases = new string[] { "disabled", "searching", "broods-0", "engaged", "broods-1", "broods-2", "broods-3", "broods-4", "broods-5", "broods-6", "boss-pending", "boss", "cooldown" };
+            foreach (string name in cases)
+            {
+                string directory = Path.Combine(root, name);
+                Directory.CreateDirectory(directory);
+                Worker(exe, args[0], "save", name, directory);
+                Worker(exe, args[0], "load", name, directory);
+                Console.WriteLine("PASS fresh-process world reload: " + name);
+            }
+            Console.WriteLine("PASS outbreak world reload: 13 worlds, 26 bounded workers; no existing saves or listeners.");
+            return 0;
+        }
+        catch (Exception exception) { Console.Error.WriteLine(exception); return 1; }
+    }
+}
