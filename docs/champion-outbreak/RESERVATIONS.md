@@ -4,7 +4,17 @@ Status: **proposed, inactive**. The user selected consideration of new permanent
 
 ## Selected final-preflight evidence basis
 
-On 2026-10-29 the user explicitly selected the available October 17 offline test-world save. D:/ConficturaUOTestTools/shard/Saves contains 20 files dated 2026-10-17 and matches the native baseline byte-for-byte. The matching-source final preflight will use a separate copy of that chosen snapshot. This supersedes the pending request for a fresher folder; it does not claim current live occupancy or approve any reservation. Existing proposals/review flags remain inactive. A future deployment must consider changes after the chosen snapshot.
+On 2026-10-29 the user explicitly selected the available October 17 offline test-world save. D:/ConficturaUOTestTools/shard/Saves contains 20 files dated 2026-10-17 and matches the native baseline byte-for-byte. The matching-source final preflight now passes in a separate copy of that chosen snapshot. This supersedes the pending request for a fresher folder; it does not claim current live occupancy or approve any reservation. Existing proposals/review flags remain inactive. A future deployment must consider changes after the chosen snapshot.
+
+## Final selected-snapshot preflight - 2026-10-29
+
+The matching-source repeat passes all six hypothetical reservations in a separate copy of the user-selected October 17 world. The probe matches core startup order Configure -> Region.Load -> World.Load, with no script-wide Initialize, listener startup, timer-thread startup or world save. All 186 declared static Sosaria regions load. Each proposed layout passes production terrain/service-region/portal clearance, with zero house-area intersections at any elevation, zero maximum-city-growth intersections, zero valid legacy-area intersections and zero portal-item intersections. Connected tile counts match the table below.
+
+[SELECTED_WORLD_PREFLIGHT.json](SELECTED_WORLD_PREFLIGHT.json) retains the non-player aggregate. Private provenance/build/log/XML/preservation records remain at D:/ConficturaUOTestTools/outbreak-reserve-preflight-20261029-002/. Current 6742 production inputs, accepted core/script assemblies, Regions.xml and the 20 source/private save files remain unchanged. Source commit at preparation is f07b5e77; exact probe source and executable hashes are retained separately. The first private attempt fails compilation on the Rectangle2D.Contains overload before any world load; it is preserved with snapshot preservation evidence, then corrected in a fresh 002 root.
+
+One inactive malformed legacy controller remains reported, unchanged and without guessed repair. This repeat establishes selected-snapshot clearance only. It does not approve land restrictions or establish occupancy after October 17. Native ground/sign presentation and explicit geography approval remain open; all flags stay false. Future deployment must handle any changes since that snapshot before promoting reservations.
+
+Reproduction: [RunReservationPreflight.py](../../tools/champion-outbreak/RunReservationPreflight.py) prepares a fresh root, verifies current candidate source hashes, copies the chosen saves/config, compiles [LoadedReservationPreflight.cs](../../tools/champion-outbreak/LoadedReservationPreflight.cs) against matching core/scripts, bounds the read-only worker and verifies input preservation. The probe's housing-ban predicate is explicitly hypothetical; it never marks a reserve reviewed or bypasses occupancy/terrain/region checks.
 
 ## Proposed geography
 
