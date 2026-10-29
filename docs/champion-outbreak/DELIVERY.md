@@ -162,3 +162,16 @@ This proves saved-world reconstruction and gated startup cleanup. It does not pr
 ### Reservation direction selected by user (2026-10-28)
 
 The user selected **Consider new permanent wilderness reservations for larger encounter layouts**. Develop a mapped, source-validated proposal for the larger layout rather than silently compacting it into the fort. Permanent housing protection must outlive individual encounter starts/stops. No new reservation or housing restriction has been activated by this decision record. Candidate evaluation must include full terrain/staging, towns and protected services, copied houses/cities/portals/vendors, approaches and native client review; today's loaded world still needs a preflight before production activation.
+
+
+### Step 1d - Gated permanent reservation policy and native map reconnaissance (2026-10-28)
+
+Canonical proposal, source traces, accepted tests, existing-save finding and native limits: [RESERVATIONS.md](RESERVATIONS.md). Six full-size alternate reservations are defined but all review flags remain false; no new housing ban or approved runtime site is active.
+
+Implemented center/full-multi housing exclusion, unchanged staff bypass, future-maximum city territory exclusion at founding, and bounded post-property XML legacy champion placement exclusion. Fixed legacy champion rectangle translation without changing version-5 serialization. The relocation test exposed the previous negative-dimension defect; a read-only matching-serializer copy also found one already malformed inactive legacy controller, retained unchanged for staff review.
+
+Accepted snapshot `D:/ConficturaUOTestTools/outbreak-20261028-reservations-004`: server build, forced runtime compile, IDE/project hygiene and source/project truth passed. Fixtures: lifecycle234, controller59, reservations73, existing champion679 and existing actions261. Production core/runtime input hashes match exactly. The initial reservation-003 run exposed the real rectangle bug; reservation-004 then exposed an incorrect test property name, corrected from SpawnRange to actual SpawnRadius. All logs remain private and retained.
+
+Computer Use inspected all six boss-point viewports in an independent copied native shard/client; scripted relocation and a blessed ordinary Player were used. This is visual reconnaissance only: no native translation or brood-anchor traversal is credited. All owned processes are stopped; forced exits are explicitly recorded. All captured source-save/settings/profile hashes are unchanged. A separate matching-serializer full copied-world preflight found all six hypothetical layouts clear of house areas (all elevations), existing cities' maximum future extent and valid legacy areas; save bytes remained unchanged. Details and limitations are in RESERVATIONS.md.
+
+Batch1 stays InProgress for native traversal/anchors, western spawn visibility, approved catalog promotion and active-site restart acceptance. Batch2 contribution/rewards/crafting and Batch3 mechanics/benchmark remain pending. Continue independent reward work while the remaining placement acceptance is resolved; do not turn the reservation proposal into a new stopping point.

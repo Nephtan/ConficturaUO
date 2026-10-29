@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Xml;
 using Server;
 using Server.Items;
 using Server.Misc;
@@ -140,6 +141,24 @@ internal static class ArachnidOutbreakControllerRegression
                 "failed return cancels rather than leaving an internalized guardian that never thinks again");
         }
         finally { controller.Delete(); }
+    }
+    private static void TownAndServiceClearance()
+    {
+        Type[] types = new Type[] { typeof(Server.Regions.VillageRegion),
+            typeof(Server.Regions.PublicRegion), typeof(Server.Regions.ProtectedRegion) };
+        foreach (Type type in types)
+        {
+            XmlDocument document = new XmlDocument();
+            document.LoadXml("<region name='fixture-service' priority='100'><rect x='1400' y='1400' width='1' height='1'/></region>");
+            Region region = (Region)Activator.CreateInstance(type, new object[] { document.DocumentElement, Map.Sosaria, null });
+            region.Register();
+            try
+            {
+                Check(new SosariaOutbreakTerrain().HasStructuralConflict(new Rectangle2D(1400,1400,1,1)),
+                    type.Name + " excludes outbreaks even when it is not a guarded town");
+            }
+            finally { region.Unregister(); }
+        }
     }
     private static void OwnershipAndPersistence()
     {
@@ -326,6 +345,7 @@ internal static class ArachnidOutbreakControllerRegression
             Corpse.Initialize();
             CommandAccess();
             PortalClearance();
+            TownAndServiceClearance();
             FailedReturnAborts();
             Disabled();
             OwnershipAndPersistence();

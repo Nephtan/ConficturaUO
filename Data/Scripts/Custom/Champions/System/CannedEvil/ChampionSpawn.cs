@@ -951,8 +951,14 @@ namespace Server.Engines.CannedEvil
                     m_WhiteSkulls[i].Location = GetWhiteSkullLocation(i);
             }
 
-            m_SpawnArea.X += Location.X - oldLoc.X;
-            m_SpawnArea.Y += Location.Y - oldLoc.Y;
+            // Rectangle2D.X/Y move only Start, leaving End unchanged. Translate
+            // the whole rectangle to preserve its configured dimensions.
+            m_SpawnArea = new Rectangle2D(
+                m_SpawnArea.X + Location.X - oldLoc.X,
+                m_SpawnArea.Y + Location.Y - oldLoc.Y,
+                m_SpawnArea.Width,
+                m_SpawnArea.Height
+            );
 
             UpdateRegion();
         }

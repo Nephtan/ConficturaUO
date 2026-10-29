@@ -124,6 +124,16 @@ namespace Server
 
         public static void PlaceCityHall(Mobile from, Point3D p, CityDeed deed)
         {
+            if (from == null || from.Deleted || deed == null || deed.Deleted)
+                return;
+
+            Point2D center = new Point2D(p.X - deed.Offset.X, p.Y - deed.Offset.Y);
+            if (Server.Custom.Confictura.Champions.WildernessEncounterReserves.Intersects(from.Map, GetMaximumCityBounds(center)))
+            {
+                from.SendMessage("A city's territory cannot extend into a wilderness encounter reserve.");
+                return;
+            }
+
             if (CheckPlacement(from, p, deed.MultiID, deed.Offset))
             {
                 if (!CheckCitiesInRange(from, p))
@@ -143,6 +153,14 @@ namespace Server
                     );
                 }
             }
+        }
+
+        public static Rectangle2D GetMaximumCityBounds(Point2D center)
+        {
+            // Reserve all supported growth tiers at founding, so later promotion
+            // cannot push an otherwise valid new city into encounter geography.
+            int radius = Math.Max(Math.Max(L1CLOffset, L2CLOffset), Math.Max(Math.Max(L3CLOffset, L4CLOffset), Math.Max(L5CLOffset, L6CLOffset)));
+            return new Rectangle2D(center.X - radius, center.Y - radius, radius * 2 + 1, radius * 2 + 1);
         }
 
         public static void PlaceCivic(Mobile from, Point3D p, CityDeed deed)

@@ -55,3 +55,8 @@ If the current larger wilderness layout is retained, newly reserving unclaimed l
 Private evidence root: `D:/ConficturaUOTestTools/outbreak-map-survey-20261028/`. Atlas: `protected-landmarks.png`. Logs under `occupancy-001/`: `protected-landmark-survey.log`, `adaptive-housing-survey.log`, `adaptive-housing-survey-attempt-2.log`. Matching server/runtime assemblies are from `outbreak-20261028-controller-005`; no saves or listeners are loaded by these terrain probes.
 
 Occupancy comes from a separate hash-verified copy of the test world's **2026-10-17** save, not today's live world. Original/copied save hashes were preserved during the earlier read-only export; raw exports and player identities remain private. Filtered geometry has no owner names. No production process, save, installed editor setting or housing rule was changed.
+
+
+## Subsequent user direction and larger proposals
+
+The user subsequently selected consideration of new permanent wilderness reservations for larger layouts. The protected-landmark measurements above are retained evidence; the current direction and six larger proposals are documented in [RESERVATIONS.md](RESERVATIONS.md). They remain inactive and unapproved, with native traversal and current-world deployment preflight still required.

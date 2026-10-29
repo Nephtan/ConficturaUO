@@ -181,6 +181,8 @@ namespace Server.Custom.Confictura.Champions
                 for (int y = bounds.Y; y < bounds.Y + bounds.Height; ++y)
                 {
                     Point3D point = new Point3D(x, y, Map.Sosaria.GetAverageZ(x, y));
+                    if (WildernessEncounterReserves.ContainsHousingTile(Map.Sosaria, x, y))
+                        continue;
                     Region region = Region.Find(point, Map.Sosaria);
                     Region noHousing = region.GetRegion(typeof(NoHousingRegion));
                     // HousePlacement rejects a center inside NoHousingRegion outright.
@@ -235,6 +237,8 @@ namespace Server.Custom.Confictura.Champions
                     Region region = Region.Find(point, map);
                     if (!region.AllowSpawn() || region.IsPartOf(typeof(GuardedRegion))
                         || region.IsPartOf(typeof(DungeonRegion)) || region.IsPartOf(typeof(HouseRegion))
+                        || region.IsPartOf(typeof(VillageRegion)) || region.IsPartOf(typeof(PublicRegion))
+                        || region.IsPartOf(typeof(ProtectedRegion))
                         || region.IsPartOf(typeof(SafeRegion)) || region.IsPartOf(typeof(ChampionSpawnRegion))
                         || BaseHouse.FindHouseAt(point, map, 16) != null)
                         return true;

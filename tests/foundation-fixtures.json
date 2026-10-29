@@ -13,5 +13,6 @@
   "outbreak": {"classification": "current-regression", "sources": ["tests/ArachnidOutbreakRegression.cs"], "main": "ArachnidOutbreakRegression", "marker": "PASS current outbreak:"},
   "outbreak-sites": {"classification": "current-regression", "sources": ["tests/ArachnidOutbreakSiteSurvey.cs"], "main": "ArachnidOutbreakSiteSurvey", "args": ["D:/ConficturaUO-main/Data/System/XML/Regions.xml", "retired"], "marker": "PASS retired-site housing exclusion:", "timeout": 300},
   "outbreak-controller": {"classification": "current-regression", "sources": ["tests/ArachnidOutbreakControllerRegression.cs"], "main": "ArachnidOutbreakControllerRegression", "marker": "PASS outbreak controller:"},
-  "outbreak-world": {"classification": "current-regression", "sources": ["tests/ArachnidOutbreakWorldReload.cs"], "main": "ArachnidOutbreakWorldReload", "marker": "PASS outbreak world reload:", "timeout": 300}
+  "outbreak-world": {"classification": "current-regression", "sources": ["tests/ArachnidOutbreakWorldReload.cs"], "main": "ArachnidOutbreakWorldReload", "marker": "PASS outbreak world reload:", "timeout": 300},
+  "outbreak-reservations": {"classification": "current-regression", "sources": ["tests/ArachnidOutbreakReservationRegression.cs"], "main": "ArachnidOutbreakReservationRegression", "marker": "PASS outbreak reservations:", "args": ["D:/ConficturaUO-main/Data/System/XML/Regions.xml"]}
 }
