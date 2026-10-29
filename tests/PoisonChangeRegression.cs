@@ -19,14 +19,15 @@ internal static class PoisonChangeRegression
         public override bool CheckPoisonImmunity(Mobile from,Poison poison){return Immune || base.CheckPoisonImmunity(from,poison);}
         public override bool CheckCure(Mobile from){return PermitCure;}
     }
-    private sealed class Denier:ITurnBasedCombatHandler
+    internal sealed class Denier:ITurnBasedCombatHandler
     {
+        public TurnMutationKind Denied=TurnMutationKind.Poison;
         public bool Enabled{get{return true;}}
         public bool IsParticipant(Mobile mobile){return false;}
         public TurnActionDecision BeginAction(TurnActionRequest request){return TurnActionDecision.Allow();}
         public TurnActionLease GetPendingActionLease(Mobile mobile){return null;}
         public void CompleteAction(TurnActionLease lease,TurnActionResult result){}
-        public bool AuthorizeMutation(TurnMutationRequest request){return request.Kind!=TurnMutationKind.Poison;}
+        public bool AuthorizeMutation(TurnMutationRequest request){return request.Kind!=Denied;}
         public TurnCombatantChangeMode DecideCombatantChange(TurnCombatantChangeRequest request){return TurnCombatantChangeMode.Native;}
         public DateTime GetActorTime(Mobile mobile,DateTime time){return time;}
         public TimeSpan GetActorInterval(Mobile mobile){return TimeSpan.FromSeconds(1);}

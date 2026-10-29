@@ -38,6 +38,8 @@ internal static class ArachnidOutbreakWorldReload
         Core.DataDirectories.Add(assets);
         ScriptCompiler.Assemblies = new Assembly[] { typeof(ArachnidOutbreakController).Assembly };
         MapDefinitions.Configure();
+        RaceDefinitions.Configure();
+        PoisonImpl.Configure();
         Corpse.Initialize();
         World.Load();
     }
@@ -72,6 +74,18 @@ internal static class ArachnidOutbreakWorldReload
                 boss.MoveToWorld(bossPoint, Map.Sosaria);
                 if (name == "cooldown") boss.Kill();
             }
+        }
+        if (name == "antivenom")
+        {
+            BroodAntivenomEffect.Initialize();Mobile owner=new Mobile();owner.Player=true;owner.RawStr=100;owner.Body=0x190;
+            owner.AddItem(new Backpack());owner.MoveToWorld(new Point3D(2514,2088,0),Map.Sosaria);
+            BroodAntivenom treatment=new BroodAntivenom();treatment.Amount=2;owner.Backpack.AddItem(treatment);string reason;
+            Check(treatment.TryApply(owner,owner,out reason),"actual treatment creates saved effect");
+            DreadSpider wild=new DreadSpider();owner.ApplyPoison(wild,Poison.Deadly);
+            int count;BroodAntivenomEffect effect=BroodAntivenomEffect.Find(owner,out count);
+            Check(effect.Charges==2 && !owner.Poisoned,"one protection consumed before save");
+            File.WriteAllText("antivenom.tsv",String.Join("\t",new string[]{owner.Serial.Value.ToString(),effect.Serial.Value.ToString(),
+                effect.Expires.Ticks.ToString(),effect.NextUse.Ticks.ToString(),wild.Serial.Value.ToString()}));
         }
         Item sentinel = new Item(0x1);
         sentinel.Name = "outbreak persistence sentinel";
@@ -184,6 +198,16 @@ internal static class ArachnidOutbreakWorldReload
         Check(Creatures(controller).Count == 0 && Signs(controller).Count == 0, "startup removed owned encounter objects");
         Check(World.FindItem((Serial)Int32.Parse(expected[5])) != null, "foreign item survives startup cleanup");
         Check(World.FindMobile((Serial)Int32.Parse(expected[6])) != null, "unrelated creature survives startup cleanup");
+        if(name=="antivenom")
+        {
+            string[] data=File.ReadAllText("antivenom.tsv").Split('\t');Mobile owner=World.FindMobile((Serial)Int32.Parse(data[0]));
+            BroodAntivenomEffect effect=World.FindItem((Serial)Int32.Parse(data[1])) as BroodAntivenomEffect;
+            Check(effect!=null && effect.Owner==owner && effect.AppliedBy==owner && effect.Charges==2,"effect owner, applicator and consumed charges restored");
+            Check(effect.Expires.Ticks==Int64.Parse(data[2]) && effect.NextUse.Ticks==Int64.Parse(data[3]),"effect expiry and reuse dates do not refresh on reload");
+            BroodAntivenomEffect.Initialize();owner.ApplyPoison(World.FindMobile((Serial)Int32.Parse(data[4])),Poison.Lethal);
+            Check(effect.Charges==1 && !owner.Poisoned && owner.NetState==null,"loaded effect protects offline owner without encounter activation");
+            World.Save(false,false);World.WaitForWriteCompletion();
+        }
         if (name == "rewards")
         {
             string[] claims=File.ReadAllText("claims.tsv").Split('\t');
@@ -224,6 +248,13 @@ internal static class ArachnidOutbreakWorldReload
             Check(participant.Backpack.GetAmount(typeof(ChampionSkull))==1 && participant.Backpack.GetAmount(typeof(Calm))==1,"paid named collectibles survive a second fresh reload");
         Console.WriteLine("RELOADED rewards");
     }
+    private static void LoadEffectAgain(string assets)
+    {
+        Bootstrap(assets);string[] data=File.ReadAllText("antivenom.tsv").Split('\t');
+        Mobile owner=World.FindMobile((Serial)Int32.Parse(data[0]));BroodAntivenomEffect effect=World.FindItem((Serial)Int32.Parse(data[1])) as BroodAntivenomEffect;
+        Check(effect!=null && effect.Owner==owner && effect.Charges==1 && effect.Expires.Ticks==Int64.Parse(data[2]) && effect.NextUse.Ticks==Int64.Parse(data[3]),"post-consumption charges and original clocks persist through another fresh reload");
+        Console.WriteLine("RELOADED antivenom");
+    }
     private static void Worker(string exe, string assets, string mode, string name, string directory)
     {
         ProcessStartInfo start = new ProcessStartInfo(exe, "\"" + assets + "\" " + mode + " " + name);
@@ -257,12 +288,13 @@ internal static class ArachnidOutbreakWorldReload
                 if (args[1] == "save") SaveCase(args[0], args[2]);
                 else if (args[1] == "load") LoadCase(args[0], args[2]);
                 else if (args[1] == "paid") LoadPaid(args[0]);
+                else if (args[1] == "effect") LoadEffectAgain(args[0]);
                 else throw new Exception("Unknown worker mode");
                 return 0;
             }
             string exe = Assembly.GetExecutingAssembly().Location;
             string root = Path.Combine(Path.GetDirectoryName(exe), "outbreak-world-reload-" + Guid.NewGuid().ToString("N"));
-            string[] cases = new string[] { "disabled", "searching", "broods-0", "engaged", "broods-1", "broods-2", "broods-3", "broods-4", "broods-5", "broods-6", "boss-pending", "boss", "cooldown", "rewards" };
+            string[] cases = new string[] { "disabled", "searching", "broods-0", "engaged", "broods-1", "broods-2", "broods-3", "broods-4", "broods-5", "broods-6", "boss-pending", "boss", "cooldown", "rewards", "antivenom" };
             foreach (string name in cases)
             {
                 string directory = Path.Combine(root, name);
@@ -270,9 +302,10 @@ internal static class ArachnidOutbreakWorldReload
                 Worker(exe, args[0], "save", name, directory);
                 Worker(exe, args[0], "load", name, directory);
                 if (name == "rewards") Worker(exe,args[0],"paid",name,directory);
+                if (name == "antivenom") Worker(exe,args[0],"effect",name,directory);
                 Console.WriteLine("PASS fresh-process world reload: " + name);
             }
-            Console.WriteLine("PASS outbreak world reload: 14 worlds, 29 bounded workers; no existing saves or listeners.");
+            Console.WriteLine("PASS outbreak world reload: 15 worlds, 32 bounded workers; no existing saves or listeners.");
             return 0;
         }
         catch (Exception exception) { Console.Error.WriteLine(exception); return 1; }

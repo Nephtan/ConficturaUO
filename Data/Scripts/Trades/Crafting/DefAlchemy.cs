@@ -33,6 +33,14 @@ namespace Server.Engines.Craft
             return 0.0; // 0%
         }
 
+        public override bool ConsumeOnFailure(Mobile from, Type resourceType, CraftItem craftItem)
+        {
+            if (craftItem.ItemType == typeof(Server.Custom.Confictura.Champions.BroodAntivenom)
+                && resourceType == typeof(Server.Custom.Confictura.Champions.BroodVenomGland))
+                return false;
+            return base.ConsumeOnFailure(from, resourceType, craftItem);
+        }
+
         private DefAlchemy()
             : base(1, 1, 1.25) // base( 1, 1, 3.1 )
         { }
@@ -131,6 +139,12 @@ namespace Server.Engines.Craft
 
         public override void InitCraftList()
         {
+            int antivenom = AddCraft(typeof(Server.Custom.Confictura.Champions.BroodAntivenom), "Preparations", "brood antivenom (two treatments)",
+                80.0, 100.0, typeof(Server.Custom.Confictura.Champions.BroodVenomGland), "brood venom gland", 1, "You need a brood venom gland.");
+            AddRes(antivenom, typeof(OrangePetals), "orange petals", 2, "You need two orange petals.");
+            AddRes(antivenom, typeof(Garlic), "garlic", 6, "You need six garlic.");
+            AddRes(antivenom, typeof(Bottle), "empty bottles", 2, "You need two empty bottles.");
+            ForceNonExceptional(antivenom);
             int index = -1;
 
             // Agility Potion

@@ -14,6 +14,7 @@ namespace Server.Custom.Confictura.Champions
         private ArachnidOutbreakState m_State = new ArachnidOutbreakState();
         private ArachnidOutbreakLedger m_Ledger;
         private ArachnidOutbreakWounds m_Wounds = new ArachnidOutbreakWounds();
+        private ArachnidOutbreakPoisons m_Poisons = new ArachnidOutbreakPoisons();
         private List<Mobile> m_Creatures = new List<Mobile>();
         private List<Item> m_Signs = new List<Item>();
         private ArachnidOutbreakPlacement m_Placement;
@@ -37,6 +38,8 @@ namespace Server.Custom.Confictura.Champions
             EventSink.HealthChanged += OnHealthChanged;
             EventSink.MobileDeath -= OnMobileDeath;
             EventSink.MobileDeath += OnMobileDeath;
+            EventSink.PoisonChanged -= OnPoisonChanged;
+            EventSink.PoisonChanged += OnPoisonChanged;
             // Initialize runs after World.Load. Never create or enable a controller here.
             foreach (ArachnidOutbreakController controller in m_Controllers.ToArray())
                 controller.Restore();
@@ -294,6 +297,7 @@ namespace Server.Custom.Confictura.Champions
         private void Cleanup(string attempt)
         {
             m_Wounds.Clear();
+            m_Poisons.Clear();
             foreach (Mobile mobile in m_Creatures.ToArray())
                 if (mobile != null && !mobile.Deleted && Owns(mobile, attempt))
                     mobile.Delete();
@@ -408,7 +412,47 @@ namespace Server.Custom.Confictura.Champions
             if (mobile == null)
                 return;
             foreach (ArachnidOutbreakController controller in m_Controllers)
+            {
                 controller.m_Wounds.Forget(mobile);
+                controller.m_Poisons.Forget(mobile);
+            }
+        }
+
+        private static void OnPoisonChanged(PoisonChangedEventArgs e)
+        {
+            int count;
+            ArachnidOutbreakController controller = FindUnique(out count);
+            if (controller == null || !controller.m_State.Active || controller.m_Ledger == null
+                || controller.m_Ledger.AttemptId != controller.AttemptId || e.Mobile == null || e.Mobile.Deleted)
+                return;
+            if (!IsHealingPatient(e.Mobile))
+            {
+                controller.m_Poisons.Forget(e.Mobile);
+                return;
+            }
+            int stage, incomingStage = -1;
+            BaseCreature source = e.Source as BaseCreature;
+            if (e.Kind == PoisonChangeKind.Application && source != null && !source.Player && !source.Controlled && !source.Summoned
+                && !source.BardProvoked && controller.OwnedStage(source, out stage))
+                incomingStage = stage;
+            Mobile healer = e.Source == null ? null : e.Source.Player ? e.Source : e.Source.GetDamageMaster(e.Mobile);
+            if (controller.m_Poisons.Observe(e, incomingStage, healer, controller.m_Ledger))
+                controller.m_State.RecordActivity(DateTime.UtcNow);
+        }
+
+        internal static void RecordPoisonPrevention(Mobile patient, Mobile source, Mobile helper)
+        {
+            int count, stage;
+            ArachnidOutbreakController controller = FindUnique(out count);
+            if (controller == null || !controller.m_State.Active || controller.m_Ledger == null || controller.m_Ledger.AttemptId != controller.AttemptId
+                || patient == null || patient.Deleted || !IsHealingPatient(patient) || helper == null || helper.Deleted)
+                return;
+            Mobile principal = helper.Player ? helper : helper.GetDamageMaster(patient);
+            if (principal != null && principal.Player && !principal.Deleted && principal != patient && controller.OwnedStage(source, out stage))
+            {
+                controller.m_Ledger.CreditValidatedSupport(stage, principal, 2.0);
+                controller.m_State.RecordActivity(DateTime.UtcNow);
+            }
         }
 
         private static void OnHealthChanged(HealthChangedEventArgs e)

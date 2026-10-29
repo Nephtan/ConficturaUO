@@ -101,21 +101,10 @@ namespace Server.Mobiles
     {
         public override bool CurePoison(Mobile from)
         {
-            if (CheckCure(from))
-            {
-                Poison oldPoison = this.Poison;
-                this.Poison = null;
-
-                OnCured(from, oldPoison);
-
+            bool cured = base.CurePoison(from);
+            if (cured)
                 BuffInfo.RemoveBuff(this, BuffIcon.Poisoned);
-
-                return true;
-            }
-
-            OnFailedCure(from);
-
-            return false;
+            return cured;
         }
 
         private DateTime m_LastDecoConfirmTime;
