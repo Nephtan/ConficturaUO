@@ -43,6 +43,8 @@ The new encounter awards **no power scrolls**. Existing champions retain their c
 
 Self-inflicted damage, overhealing, idle proximity, unrelated combat, and repeated treatment of an already-resolved condition earn nothing. Support credit applies to helping other participants or participating pets. A substantial single attack can qualify; token tagging cannot.
 
+Bard time is shared across effects and enemies within each character's stage: overlapping songs and refreshes cannot multiply it. Useful time requires another participant's recent actual combat involvement in that stage (damage dealt, encounter harm received, or encounter poison applied/prevented, including participating pets). The observation window is fifteen enemy actor seconds; an idle or unrelated fight cannot sustain it. Turn-based support requires the caster and affected enemy to share a battle; switching combat modes cannot substitute another clock's elapsed time.
+
 Each character receives each stage award once. Earned rewards survive death, disconnect, and a full backpack through a persistent claim queue. Boss collectible recipients come from qualifying boss participants, including support players. Administrative deletion and cleanup never count as victory.
 
 **Brood Antivenom:**

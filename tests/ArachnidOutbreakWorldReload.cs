@@ -102,7 +102,7 @@ internal static class ArachnidOutbreakWorldReload
             ArachnidOutbreakLedger ledger = name == "rewards" ? new ArachnidOutbreakLedger("saved-awards",4320,9792)
                 : (ArachnidOutbreakLedger)typeof(ArachnidOutbreakController).GetField("m_Ledger",Private).GetValue(controller);
             ledger.CreditDamage(1,participant,200);
-            ledger.CreditValidatedSupport(2,participant,4);
+            ledger.CreditValidatedSupport(2,participant,4.25);
             if (name == "rewards")
             {
                 ledger.CreditDamage(0,participant,432); ledger.Seal(0);
@@ -175,7 +175,7 @@ internal static class ArachnidOutbreakWorldReload
         {
             Mobile participant = World.FindMobile((Serial)Int32.Parse(File.ReadAllText("participant.txt")));
             ArachnidOutbreakLedger ledger = (ArachnidOutbreakLedger)typeof(ArachnidOutbreakController).GetField("m_Ledger",Private).GetValue(controller);
-            Check(ledger.Points(1,participant)>4.6 && ledger.Points(2,participant)==4, "partial damage and support survive item-before-mobile deserialization");
+            Check(ledger.Points(1,participant)>4.6 && ledger.Points(2,participant)==4.25, "partial damage and fractional support survive item-before-mobile deserialization");
             Check(participant.Alive==(name=="engaged") && participant.NetState==null, "saved contributor life and offline state preserved");
             if(name=="engaged")
             {

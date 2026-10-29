@@ -15,6 +15,7 @@
   "health-changes": {"classification": "current-regression", "sources": ["tests/HealthChangeRegression.cs"], "main": "HealthChangeRegression", "marker": "PASS health changes:"},
   "poison-changes": {"classification": "current-regression", "sources": ["tests/PoisonChangeRegression.cs"], "main": "PoisonChangeRegression", "marker": "PASS poison changes:"},
   "antivenom": {"classification": "current-regression", "sources": ["tests/BroodAntivenomRegression.cs", "tests/PoisonChangeRegression.cs"], "main": "BroodAntivenomRegression", "marker": "PASS brood antivenom:"},
+  "outbreak-bards": {"classification": "current-regression", "sources": ["tests/ArachnidOutbreakBardRegression.cs"], "main": "ArachnidOutbreakBardRegression", "marker": "PASS outbreak bards:"},
   "outbreak-sites": {"classification": "current-regression", "sources": ["tests/ArachnidOutbreakSiteSurvey.cs"], "main": "ArachnidOutbreakSiteSurvey", "args": ["D:/ConficturaUO-main/Data/System/XML/Regions.xml", "retired"], "marker": "PASS retired-site housing exclusion:", "timeout": 300},
   "outbreak-controller": {"classification": "current-regression", "sources": ["tests/ArachnidOutbreakControllerRegression.cs"], "main": "ArachnidOutbreakControllerRegression", "marker": "PASS outbreak controller:"},
   "outbreak-world": {"classification": "current-regression", "sources": ["tests/ArachnidOutbreakWorldReload.cs"], "main": "ArachnidOutbreakWorldReload", "marker": "PASS outbreak world reload:", "timeout": 300},

@@ -87,6 +87,14 @@ namespace Server.SkillHandlers
 
         private static Hashtable m_Table = new Hashtable();
 
+        public static Mobile GetBard(Mobile target)
+        {
+            if (target == null || target.Deleted)
+                return null;
+            DiscordanceInfo info = m_Table[target] as DiscordanceInfo;
+            return info != null && info.m_Effect > 0 ? info.m_From : null;
+        }
+
         public static bool GetEffect(Mobile targ, ref int effect)
         {
             DiscordanceInfo info = m_Table[targ] as DiscordanceInfo;
@@ -122,8 +130,10 @@ namespace Server.SkillHandlers
                 if (info.m_Timer != null)
                     info.m_Timer.Stop();
 
+                Server.Custom.Confictura.Champions.ArachnidOutbreakController.BardEffectsChanging(targ);
                 info.Clear();
                 m_Table.Remove(targ);
+                Server.Custom.Confictura.Champions.ArachnidOutbreakController.BardEffectsChanged(targ);
             }
             else
             {
@@ -276,6 +286,7 @@ namespace Server.SkillHandlers
                                         );
                                 }
 
+                                Server.Custom.Confictura.Champions.ArachnidOutbreakController.BardEffectsChanging(targ);
                                 DiscordanceInfo info = new DiscordanceInfo(
                                     from,
                                     targ,
@@ -290,6 +301,7 @@ namespace Server.SkillHandlers
                                 );
 
                                 m_Table[targ] = info;
+                                Server.Custom.Confictura.Champions.ArachnidOutbreakController.BardEffectsChanged(targ);
 
                                 BuffInfo.RemoveBuff(targ, BuffIcon.Discordance);
                                 string args = String.Format(

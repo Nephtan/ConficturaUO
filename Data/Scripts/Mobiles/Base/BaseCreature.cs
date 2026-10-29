@@ -6,6 +6,7 @@ using System.Text;
 using Server;
 using Server.ContextMenus;
 using Server.Custom.Confictura;
+using Server.Custom.Confictura.Champions;
 using Server.Engines.PartySystem;
 using Server.Engines.Quests;
 using Server.Factions;
@@ -252,6 +253,9 @@ namespace Server.Mobiles
 
         private bool m_bBardProvoked = false;
         private bool m_bBardPacified = false;
+        // Like the pacification itself, attribution is transient across world loads.
+        private Mobile m_PacifyingBard;
+        public Mobile PacifyingBard { get { return m_PacifyingBard; } }
         private Mobile m_bBardMaster = null;
         private Mobile m_bBardTarget = null;
         private DateTime m_timeBardEnd;
@@ -7750,35 +7754,62 @@ namespace Server.Mobiles
         public bool BardProvoked
         {
             get { return m_bBardProvoked; }
-            set { m_bBardProvoked = value; }
+            set
+            {
+                ArachnidOutbreakController.BardEffectsChanging(this);
+                m_bBardProvoked = value;
+                ArachnidOutbreakController.BardEffectsChanged(this);
+            }
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public bool BardPacified
         {
             get { return m_bBardPacified; }
-            set { m_bBardPacified = value; }
+            set
+            {
+                ArachnidOutbreakController.BardEffectsChanging(this);
+                m_bBardPacified = value;
+                if (!value)
+                    m_PacifyingBard = null;
+                ArachnidOutbreakController.BardEffectsChanged(this);
+            }
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public Mobile BardMaster
         {
             get { return m_bBardMaster; }
-            set { m_bBardMaster = value; }
+            set
+            {
+                ArachnidOutbreakController.BardEffectsChanging(this);
+                m_bBardMaster = value;
+                ArachnidOutbreakController.BardEffectsChanged(this);
+            }
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public Mobile BardTarget
         {
             get { return m_bBardTarget; }
-            set { m_bBardTarget = value; }
+            set
+            {
+                ArachnidOutbreakController.BardEffectsChanging(this);
+                m_bBardTarget = value;
+                ArachnidOutbreakController.BardEffectsChanged(this);
+            }
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public DateTime BardEndTime
         {
             get { return m_timeBardEnd; }
-            set { m_timeBardEnd = value; }
+            set
+            {
+                ArachnidOutbreakController.BardEffectsChanging(this);
+                m_timeBardEnd = value;
+                ArachnidOutbreakController.BardEffectsChanged(this);
+            }
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -11972,8 +12003,11 @@ namespace Server.Mobiles
 
         public void Pacify(Mobile master, DateTime endtime)
         {
+            ArachnidOutbreakController.BardEffectsChanging(this);
+            m_PacifyingBard = master;
             BardPacified = true;
             BardEndTime = endtime;
+            ArachnidOutbreakController.BardEffectsChanged(this);
         }
 
         public override Mobile GetDamageMaster(Mobile damagee)

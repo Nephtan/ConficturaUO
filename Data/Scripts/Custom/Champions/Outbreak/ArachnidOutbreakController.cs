@@ -15,6 +15,7 @@ namespace Server.Custom.Confictura.Champions
         private ArachnidOutbreakLedger m_Ledger;
         private ArachnidOutbreakWounds m_Wounds = new ArachnidOutbreakWounds();
         private ArachnidOutbreakPoisons m_Poisons = new ArachnidOutbreakPoisons();
+        private ArachnidOutbreakBards m_Bards = new ArachnidOutbreakBards();
         private List<Mobile> m_Creatures = new List<Mobile>();
         private List<Item> m_Signs = new List<Item>();
         private ArachnidOutbreakPlacement m_Placement;
@@ -229,7 +230,10 @@ namespace Server.Custom.Confictura.Champions
                     m_Status = "Waiting for a reviewed site; no placement fallback.";
             }
             if (m_State.Active)
+            {
                 Reconcile(utcNow);
+                ObserveBards(utcNow, true);
+            }
         }
 
         private bool TryStart(ArachnidOutbreakSite site, DateTime utcNow, out string reason)
@@ -296,6 +300,7 @@ namespace Server.Custom.Confictura.Champions
 
         private void Cleanup(string attempt)
         {
+            m_Bards.Clear();
             m_Wounds.Clear();
             m_Poisons.Clear();
             foreach (Mobile mobile in m_Creatures.ToArray())
@@ -391,7 +396,7 @@ namespace Server.Custom.Confictura.Champions
         private bool OwnedStage(Mobile mobile, out int stage)
         {
             stage = -1;
-            if (mobile == null || mobile.Deleted || !m_Creatures.Contains(mobile) || !Owns(mobile, AttemptId))
+            if (m_Ledger == null || mobile == null || mobile.Deleted || !m_Creatures.Contains(mobile) || !Owns(mobile, AttemptId))
                 return false;
             ArachnidOutbreakSpider spider = mobile as ArachnidOutbreakSpider;
             stage = spider == null ? 3 : spider.Stage;
@@ -405,6 +410,49 @@ namespace Server.Custom.Confictura.Champions
             BaseCreature creature = mobile as BaseCreature;
             return creature != null && ((creature.Controlled && creature.ControlMaster != null && creature.ControlMaster.Player)
                 || (creature.Summoned && creature.SummonMaster != null && creature.SummonMaster.Player));
+        }
+
+        private int BardStage(Mobile enemy)
+        {
+            int stage;
+            return OwnedStage(enemy, out stage) ? stage : -1;
+        }
+
+        private void ObserveBards(DateTime utcNow, bool credit)
+        {
+            if (!Deleted && m_State.Active && m_Ledger != null && m_Ledger.AttemptId == AttemptId
+                && m_Bards.Observe(m_Creatures, BardStage, m_Ledger, utcNow.ToLocalTime(), credit))
+                m_State.RecordActivity(utcNow);
+        }
+
+        // Skill effects flush their useful interval before changing, then reset
+        // observation afterwards. Refreshing/replacing an effect cannot add time.
+        internal static void BardEffectsChanging(Mobile enemy)
+        {
+            BardEffectBoundary(enemy, true);
+        }
+
+        internal static void BardEffectsChanged(Mobile enemy)
+        {
+            BardEffectBoundary(enemy, false);
+        }
+
+        private static void BardEffectBoundary(Mobile enemy, bool credit)
+        {
+            if (World.Loading)
+                return;
+            int count, stage;
+            ArachnidOutbreakController controller = FindUnique(out count);
+            if (controller != null && controller.m_State.Active && controller.OwnedStage(enemy, out stage))
+                controller.ObserveBards(DateTime.UtcNow, credit);
+        }
+
+        private void RecordBardCombat(Mobile enemy, Mobile participant)
+        {
+            DateTime now = DateTime.UtcNow;
+            ObserveBards(now, true);
+            m_Bards.RecordCombat(enemy, participant);
+            ObserveBards(now, false);
         }
 
         private static void OnMobileDeath(Mobile mobile)
@@ -434,7 +482,10 @@ namespace Server.Custom.Confictura.Champions
             BaseCreature source = e.Source as BaseCreature;
             if (e.Kind == PoisonChangeKind.Application && source != null && !source.Player && !source.Controlled && !source.Summoned
                 && !source.BardProvoked && controller.OwnedStage(source, out stage))
+            {
                 incomingStage = stage;
+                controller.RecordBardCombat(source, e.Mobile.Player ? e.Mobile : e.Mobile.GetDamageMaster(source));
+            }
             Mobile healer = e.Source == null ? null : e.Source.Player ? e.Source : e.Source.GetDamageMaster(e.Mobile);
             if (controller.m_Poisons.Observe(e, incomingStage, healer, controller.m_Ledger))
                 controller.m_State.RecordActivity(DateTime.UtcNow);
@@ -448,7 +499,10 @@ namespace Server.Custom.Confictura.Champions
                 || patient == null || patient.Deleted || !IsHealingPatient(patient) || helper == null || helper.Deleted)
                 return;
             Mobile principal = helper.Player ? helper : helper.GetDamageMaster(patient);
-            if (principal != null && principal.Player && !principal.Deleted && principal != patient && controller.OwnedStage(source, out stage))
+            if (!controller.OwnedStage(source, out stage))
+                return;
+            controller.RecordBardCombat(source, patient.Player ? patient : patient.GetDamageMaster(source));
+            if (principal != null && principal.Player && !principal.Deleted && principal != patient)
             {
                 controller.m_Ledger.CreditValidatedSupport(stage, principal, 2.0);
                 controller.m_State.RecordActivity(DateTime.UtcNow);
@@ -468,8 +522,17 @@ namespace Server.Custom.Confictura.Champions
                 Mobile principal = e.Source == null ? null : e.Source.Player ? e.Source : e.Source.GetDamageMaster(e.Mobile);
                 if (principal != null && principal.Player && !principal.Deleted)
                 {
+                    controller.RecordBardCombat(e.Mobile, principal);
                     controller.m_Ledger.CreditDamage(stage, principal, e.OldHits - e.NewHits);
                     controller.m_State.RecordActivity(DateTime.UtcNow);
+                }
+                else
+                {
+                    BaseCreature provoked = e.Mobile as BaseCreature;
+                    BaseCreature opponent = e.Source as BaseCreature;
+                    if (provoked != null && provoked.BardProvoked && provoked.BardTarget == opponent && provoked.BardMaster != null
+                        && provoked.BardMaster.Player && opponent != null && !opponent.Player && !opponent.Controlled && !opponent.Summoned)
+                        controller.RecordBardCombat(e.Mobile, provoked.BardMaster);
                 }
             }
             if (!IsHealingPatient(e.Mobile))
@@ -479,9 +542,12 @@ namespace Server.Custom.Confictura.Champions
             }
             int incomingStage = -1;
             BaseCreature source = e.Source as BaseCreature;
-            if (e.Kind == HealthChangeKind.Damage && source != null && !source.Controlled && !source.Summoned
+            if (e.Kind == HealthChangeKind.Damage && e.NewHits < e.OldHits && source != null && !source.Controlled && !source.Summoned
                 && !source.BardProvoked && controller.OwnedStage(source, out stage))
+            {
                 incomingStage = stage;
+                controller.RecordBardCombat(source, e.Mobile.Player ? e.Mobile : e.Mobile.GetDamageMaster(source));
+            }
             Mobile healer = e.Source == null ? null : e.Source.Player ? e.Source : e.Source.GetDamageMaster(e.Mobile);
             if (controller.m_Wounds.Observe(e, incomingStage, healer, controller.m_Ledger))
                 controller.m_State.RecordActivity(DateTime.UtcNow);
