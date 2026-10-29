@@ -70,7 +70,7 @@ namespace Server.Custom.Confictura.Champions
 
         public bool CompleteBrood(int stage, DateTime utcNow)
         {
-            if (m_Phase != ArachnidOutbreakPhase.Broods || stage < 0 || stage > 2)
+            if (m_Phase != ArachnidOutbreakPhase.Broods || stage < 0 || stage > 2 || utcNow == DateTime.MinValue)
                 return false;
 
             int bit = 1 << stage;
@@ -86,9 +86,17 @@ namespace Server.Custom.Confictura.Champions
 
         public bool CompleteBoss(DateTime utcNow, int cooldownMinutes)
         {
-            if (m_Phase != ArachnidOutbreakPhase.Boss)
+            if (m_Phase != ArachnidOutbreakPhase.Boss || utcNow == DateTime.MinValue)
                 return false;
 
+            EnterCooldown(utcNow, cooldownMinutes);
+            return true;
+        }
+
+        public bool AbortAttempt(DateTime utcNow, int cooldownMinutes)
+        {
+            if (!Active || utcNow == DateTime.MinValue)
+                return false;
             EnterCooldown(utcNow, cooldownMinutes);
             return true;
         }

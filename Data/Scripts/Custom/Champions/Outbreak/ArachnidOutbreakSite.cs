@@ -28,6 +28,10 @@ namespace Server.Custom.Confictura.Champions
         {
             get { return new Rectangle2D(m_Center.X - Radius, m_Center.Y - Radius, Radius * 2 + 1, Radius * 2 + 1); }
         }
+        public Rectangle2D ClearanceBounds
+        {
+            get { return new Rectangle2D(m_Center.X - 80, m_Center.Y - 80, 161, 161); }
+        }
 
         public ArachnidOutbreakSite(string id, int x, int y, bool reviewed)
         {
@@ -43,7 +47,7 @@ namespace Server.Custom.Confictura.Champions
             if (m_Center.X < 81 || m_Center.Y < 81 || m_Center.X > 5038 || m_Center.Y > 3046)
                 return false;
 
-            Rectangle2D clearance = new Rectangle2D(m_Center.X - 80, m_Center.Y - 80, 161, 161);
+            Rectangle2D clearance = ClearanceBounds;
             reason = "No permanent housing prohibition across the footprint and buffer.";
             if (!terrain.HasPermanentHousingProhibition(clearance))
                 return false;
@@ -137,7 +141,7 @@ namespace Server.Custom.Confictura.Champions
             {
                 Point3D candidate = m_Walkable[(i + offset) % m_Walkable.Length];
                 if (Math.Abs(candidate.X - anchor.X) <= range && Math.Abs(candidate.Y - anchor.Y) <= range
-                    && Map.Sosaria.CanSpawnMobile(candidate))
+                    && Map.Sosaria.CanSpawnMobile(candidate) && ClearForSpawn(candidate))
                 {
                     point = candidate;
                     return true;
@@ -146,10 +150,31 @@ namespace Server.Custom.Confictura.Champions
             point = Point3D.Zero;
             return false;
         }
+
+        private static bool ClearForSpawn(Point3D point)
+        {
+            if (BaseHouse.FindHouseAt(point, Map.Sosaria, 16) != null)
+                return false;
+            IPooledEnumerable items = Map.Sosaria.GetItemsInRange(point, 2);
+            try
+            {
+                foreach (Item item in items)
+                    if (SosariaOutbreakTerrain.IsPortal(item))
+                        return false;
+            }
+            finally { items.Free(); }
+            return true;
+        }
     }
 
     public sealed class SosariaOutbreakTerrain : IArachnidOutbreakTerrain
     {
+        public static bool IsPortal(Item item)
+        {
+            return item is Teleporter || item is Moongate || item is PublicMoongate
+                || item is DoorTeleporter || item is HouseTeleporter
+                || item is PlayersHouseTeleporter || item is PlayersZTeleporter;
+        }
         public bool HasPermanentHousingProhibition(Rectangle2D bounds)
         {
             for (int x = bounds.X; x < bounds.X + bounds.Width; ++x)
@@ -183,6 +208,25 @@ namespace Server.Custom.Confictura.Champions
 
         public bool IsReserved(Rectangle2D bounds)
         {
+            return IsReserved(bounds, true);
+        }
+
+        public bool HasStructuralConflict(Rectangle2D bounds)
+        {
+            return IsReserved(bounds, false);
+        }
+
+        private static bool IsTravelSpellGate(Item item)
+        {
+            Type spell = item.GetType().DeclaringType;
+            return item is Moongate && (spell == typeof(Server.Spells.Seventh.GateTravelSpell)
+                || spell == typeof(Server.Spells.Elementalism.Elemental_Gate_Spell)
+                || spell == typeof(Server.Spells.Herbalist.MushroomGatewaySpell)
+                || spell == typeof(Server.Spells.Undead.UndeadGraveyardGatewaySpell));
+        }
+
+        private bool IsReserved(Rectangle2D bounds, bool includeTravelSpellGates)
+        {
             Map map = Map.Sosaria;
             for (int x = bounds.X; x < bounds.X + bounds.Width; ++x)
                 for (int y = bounds.Y; y < bounds.Y + bounds.Height; ++y)
@@ -200,7 +244,9 @@ namespace Server.Custom.Confictura.Champions
             try
             {
                 foreach (Item item in items)
-                    if (item is Teleporter || item is Moongate || item is PublicMoongate)
+                    // Player travel must not cancel a running encounter. These
+                    // spell-owned gates expire and delete themselves on reload.
+                    if (IsPortal(item) && (includeTravelSpellGates || !IsTravelSpellGate(item)))
                         return true;
             }
             finally { items.Free(); }

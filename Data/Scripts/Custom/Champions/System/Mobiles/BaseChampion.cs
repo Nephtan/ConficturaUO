@@ -30,6 +30,13 @@ namespace Server.Mobiles
             get { return false; }
         }
 
+        // Encounter controllers can own their complete reward transaction while
+        // existing champions retain the original scroll, skull and gold paths.
+        public virtual bool AwardLegacyChampionRewards
+        {
+            get { return true; }
+        }
+
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
@@ -94,7 +101,7 @@ namespace Server.Mobiles
         public void GivePowerScrolls()
         {
             // Champion rewards use the same rules on every playable map.
-            if (Map == null || Map == Map.Internal)
+            if (!AwardLegacyChampionRewards || Map == null || Map == Map.Internal)
                 return;
 
             List<Mobile> toGive = new List<Mobile>();
@@ -225,7 +232,7 @@ namespace Server.Mobiles
 
         public override bool OnBeforeDeath()
         {
-            if (!NoKillAwards)
+            if (!NoKillAwards && AwardLegacyChampionRewards)
             {
                 GivePowerScrolls();
 
@@ -254,7 +261,7 @@ namespace Server.Mobiles
 
         public override void OnDeath(Container c)
         {
-            if (Map != null && Map != Map.Internal)
+            if (AwardLegacyChampionRewards && Map != null && Map != Map.Internal)
             {
                 //TODO: Confirm SE change or AoS one too?
                 List<DamageStore> rights = BaseCreature.GetLootingRights(

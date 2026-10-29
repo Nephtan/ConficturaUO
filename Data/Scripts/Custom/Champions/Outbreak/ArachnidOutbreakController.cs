@@ -1,0 +1,468 @@
+using System;
+using System.Collections.Generic;
+using Server.Commands;
+using Server.Mobiles;
+using Server.Items;
+
+namespace Server.Custom.Confictura.Champions
+{
+    public class ArachnidOutbreakController : Item
+    {
+        // Open only after reward, site, combat and native-client acceptance gates.
+        public static bool DeliveryReady { get { return false; } }
+        private static readonly List<ArachnidOutbreakController> m_Controllers = new List<ArachnidOutbreakController>();
+        private ArachnidOutbreakState m_State = new ArachnidOutbreakState();
+        private List<Mobile> m_Creatures = new List<Mobile>();
+        private List<Item> m_Signs = new List<Item>();
+        private ArachnidOutbreakPlacement m_Placement;
+        private bool m_BossCreated;
+        private Timer m_Timer;
+        private DateTime m_NextSearch;
+        private DateTime m_NextSafetyCheck;
+        private string m_LastSite = String.Empty;
+        private string m_Status = "Disabled.";
+
+        public string AttemptId { get { return m_State.AttemptId; } }
+        public ArachnidOutbreakPhase Phase { get { return m_State.Phase; } }
+        public string SiteId { get { return m_State.SiteId; } }
+        public string Status { get { return m_Status; } }
+        public int ClearedBroods { get { return m_State.ClearedBroods; } }
+
+        public static void Initialize()
+        {
+            CommandSystem.Register("ArachnidOutbreak", AccessLevel.Administrator, OnCommand);
+            // Initialize runs after World.Load. Never create or enable a controller here.
+            foreach (ArachnidOutbreakController controller in m_Controllers.ToArray())
+                controller.Restore();
+        }
+
+        [Usage("ArachnidOutbreak <status|create|start|stop>")]
+        [Description("Inspect or control the separate arachnid outbreak director.")]
+        private static void OnCommand(CommandEventArgs e)
+        {
+            Mobile from = e.Mobile;
+            if (from == null || from.Deleted || from.AccessLevel < AccessLevel.Administrator)
+                return;
+            string action = e.Length == 1 ? e.GetString(0).ToLowerInvariant() : "status";
+            int count;
+            ArachnidOutbreakController controller = FindUnique(out count);
+            if (action == "create" && count == 0)
+            {
+                controller = new ArachnidOutbreakController();
+                from.SendMessage("Created a disabled outbreak controller ({0}).", controller.Serial);
+                return;
+            }
+            if (controller == null)
+            {
+                from.SendMessage("Expected one controller; found {0}. No outbreak action taken.", count);
+                return;
+            }
+            if (action == "start")
+            {
+                string reason;
+                controller.TryEnable(out reason);
+                from.SendMessage(reason);
+            }
+            else if (action == "stop")
+            {
+                controller.Stop();
+                from.SendMessage("Outbreak stopped; only this controller's owned entities were removed.");
+            }
+            else if (action != "status")
+                from.SendMessage("Usage: ArachnidOutbreak <status|create|start|stop>");
+            else
+                from.SendMessage("{0}: {1}; site={2}; cleared={3}; {4}", controller.Serial,
+                    controller.Phase, controller.SiteId, controller.ClearedBroods, controller.Status);
+        }
+
+        private static ArachnidOutbreakController FindUnique(out int count)
+        {
+            count = 0;
+            ArachnidOutbreakController result = null;
+            foreach (ArachnidOutbreakController controller in m_Controllers)
+                if (!controller.Deleted)
+                {
+                    ++count;
+                    result = controller;
+                }
+            return count == 1 ? result : null;
+        }
+
+        [Constructable]
+        public ArachnidOutbreakController() : base(0x1F14)
+        {
+            Name = "arachnid outbreak controller";
+            Movable = false;
+            Visible = false;
+            m_Controllers.Add(this);
+        }
+
+        public ArachnidOutbreakController(Serial serial) : base(serial)
+        {
+            m_Controllers.Add(this);
+        }
+
+        public bool TryEnable(out string reason)
+        {
+            int count;
+            if (Deleted || FindUnique(out count) != this)
+            {
+                reason = "Controller missing or ambiguous.";
+                return false;
+            }
+            if (!DeliveryReady)
+            {
+                reason = "Delivery acceptance remains incomplete; activation is disabled.";
+                return false;
+            }
+            bool reviewed = false;
+            foreach (ArachnidOutbreakSite site in ArachnidOutbreakSites.Candidates)
+                reviewed |= site.Reviewed;
+            if (!reviewed)
+            {
+                reason = "No reviewed permanently non-housing site is available.";
+                return false;
+            }
+            m_State.SetEnabled(true);
+            StartTimer();
+            reason = "Director enabled; it will select a currently safe reviewed site.";
+            return true;
+        }
+
+        public void Stop()
+        {
+            string attempt = AttemptId;
+            m_State.SetEnabled(false);
+            if (m_Timer != null)
+            {
+                m_Timer.Stop();
+                m_Timer = null;
+            }
+            Cleanup(attempt);
+            m_Placement = null;
+            m_BossCreated = false;
+            m_Status = "Disabled.";
+        }
+
+        private void Restore()
+        {
+            if (Deleted)
+                return;
+            int count;
+            if (!DeliveryReady || FindUnique(out count) != this)
+            {
+                Stop();
+                return;
+            }
+            if (m_State.Phase != ArachnidOutbreakPhase.Disabled)
+                StartTimer();
+        }
+
+        private void StartTimer()
+        {
+            if (m_Timer == null)
+                m_Timer = Timer.DelayCall(TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(5), OnTick);
+        }
+
+        private void OnTick()
+        {
+            Tick(DateTime.UtcNow);
+        }
+
+        internal void Tick(DateTime utcNow)
+        {
+            if (Deleted || m_State.Phase == ArachnidOutbreakPhase.Disabled)
+                return;
+            int count;
+            if (FindUnique(out count) != this)
+            {
+                Stop();
+                return;
+            }
+            string attempt = AttemptId;
+            if (m_State.Advance(utcNow, Utility.RandomMinMax(30, 60)))
+            {
+                Cleanup(attempt);
+                m_Placement = null;
+            }
+            if (m_State.Phase == ArachnidOutbreakPhase.Searching && utcNow >= m_NextSearch)
+            {
+                m_NextSearch = utcNow.AddMinutes(5);
+                List<ArachnidOutbreakSite> sites = new List<ArachnidOutbreakSite>();
+                foreach (ArachnidOutbreakSite site in ArachnidOutbreakSites.Candidates)
+                    if (site.Reviewed)
+                        sites.Add(site);
+                int offset = Utility.Random(sites.Count);
+                bool started = false;
+                for (int pass = 0; pass < 2 && !started; ++pass)
+                {
+                    for (int i = 0; i < sites.Count; ++i)
+                    {
+                        ArachnidOutbreakSite site = sites[(offset + i) % sites.Count];
+                        if ((pass == 0 && site.Id == m_LastSite) || (pass == 1 && site.Id != m_LastSite))
+                            continue;
+                        string reason;
+                        if (TryStart(site, utcNow, out reason))
+                        {
+                            started = true;
+                            break;
+                        }
+                        m_Status = reason;
+                    }
+                }
+                if (sites.Count == 0)
+                    m_Status = "Waiting for a reviewed site; no placement fallback.";
+            }
+            if (m_State.Active)
+                Reconcile(utcNow);
+        }
+
+        private bool TryStart(ArachnidOutbreakSite site, DateTime utcNow, out string reason)
+        {
+            if (!site.Reviewed || m_State.Phase != ArachnidOutbreakPhase.Searching)
+            {
+                reason = "Site unreviewed or an attempt is already in progress.";
+                return false;
+            }
+            ArachnidOutbreakPlacement placement;
+            if (!site.Validate(new SosariaOutbreakTerrain(), out placement, out reason))
+                return false;
+            for (int stage = 0; stage < 3; ++stage)
+                if (!Map.Sosaria.CanSpawnMobile(placement.Brood(stage)))
+                {
+                    reason = "A brood anchor is currently occupied.";
+                    return false;
+                }
+            BeginAt(site, placement);
+            reason = m_Status;
+            return true;
+        }
+
+        private void BeginAt(ArachnidOutbreakSite site, ArachnidOutbreakPlacement placement)
+        {
+            if (!m_State.TryStart(site.Id))
+                throw new InvalidOperationException("Outbreak lifecycle refused start.");
+            m_Placement = placement;
+            m_BossCreated = false;
+            m_NextSafetyCheck = DateTime.MinValue;
+            m_LastSite = site.Id;
+            try
+            {
+                for (int stage = 0; stage < 3; ++stage)
+                {
+                    ArachnidOutbreakSpider guardian = new ArachnidOutbreakSpider(this, stage, true);
+                    m_Creatures.Add(guardian);
+                    guardian.Home = placement.Brood(stage);
+                    guardian.RangeHome = 6;
+                    guardian.MoveToWorld(guardian.Home, Map.Sosaria);
+                    ArachnidBroodSign sign = new ArachnidBroodSign(this);
+                    m_Signs.Add(sign);
+                    sign.MoveToWorld(guardian.Home, Map.Sosaria);
+                }
+                m_Status = "Three broods active.";
+            }
+            catch
+            {
+                Stop();
+                throw;
+            }
+        }
+
+        private bool Owns(object entity, string attempt)
+        {
+            IArachnidOutbreakOwned owned = entity as IArachnidOutbreakOwned;
+            return owned != null && owned.Controller == this && owned.AttemptId == attempt;
+        }
+
+        private void Cleanup(string attempt)
+        {
+            foreach (Mobile mobile in m_Creatures.ToArray())
+                if (mobile != null && !mobile.Deleted && Owns(mobile, attempt))
+                    mobile.Delete();
+            foreach (Item item in m_Signs.ToArray())
+                if (item != null && !item.Deleted && Owns(item, attempt))
+                    item.Delete();
+            m_Creatures.Clear();
+            m_Signs.Clear();
+        }
+
+        private void Abort(DateTime utcNow, string reason)
+        {
+            string attempt = AttemptId;
+            if (m_State.AbortAttempt(utcNow, Utility.RandomMinMax(30, 60)))
+            {
+                Cleanup(attempt);
+                m_Placement = null;
+                m_Status = reason;
+            }
+        }
+
+        private void Reconcile(DateTime utcNow)
+        {
+            ArachnidOutbreakSite site = ArachnidOutbreakSites.Find(SiteId);
+            if (site == null || !site.Reviewed)
+            {
+                Abort(utcNow, "Site no longer approved; attempt cancelled without victory.");
+                return;
+            }
+            if (m_Placement == null)
+            {
+                string reason;
+                if (!site.Validate(new SosariaOutbreakTerrain(), out m_Placement, out reason))
+                {
+                    Abort(utcNow, reason);
+                    return;
+                }
+            }
+            if (utcNow >= m_NextSafetyCheck)
+            {
+                m_NextSafetyCheck = utcNow.AddSeconds(30);
+                SosariaOutbreakTerrain terrain = new SosariaOutbreakTerrain();
+                if (!terrain.HasPermanentHousingProhibition(site.ClearanceBounds)
+                    || terrain.HasStructuralConflict(site.ClearanceBounds))
+                {
+                    Abort(utcNow, "Site protection or clearance changed; attempt cancelled without victory.");
+                    return;
+                }
+            }
+            for (int stage = 0; stage < 3; ++stage)
+                if ((m_State.ClearedBroods & (1 << stage)) == 0 && FindGuardian(stage) == null)
+                {
+                    Abort(utcNow, "A guardian was removed without a death outcome.");
+                    return;
+                }
+            if (m_State.Phase == ArachnidOutbreakPhase.Boss)
+            {
+                foreach (Mobile mobile in m_Creatures)
+                    if (mobile is ArachnidOutbreakChampion && !mobile.Deleted)
+                        return;
+                if (m_BossCreated)
+                {
+                    Abort(utcNow, "Mephitis was removed without a death outcome.");
+                    return;
+                }
+                Point3D point;
+                if (m_Placement.TryFindSpawn(m_Placement.Boss, 3, out point))
+                {
+                    ArachnidOutbreakChampion boss = new ArachnidOutbreakChampion(this);
+                    m_Creatures.Add(boss);
+                    boss.Home = m_Placement.Boss;
+                    boss.RangeHome = 12;
+                    boss.MoveToWorld(point, Map.Sosaria);
+                    m_BossCreated = true;
+                    m_Status = "Mephitis has emerged.";
+                }
+            }
+        }
+
+        private ArachnidOutbreakSpider FindGuardian(int stage)
+        {
+            foreach (Mobile mobile in m_Creatures)
+            {
+                ArachnidOutbreakSpider spider = mobile as ArachnidOutbreakSpider;
+                if (spider != null && !spider.Deleted && spider.Guardian && spider.Stage == stage && Owns(spider, AttemptId))
+                    return spider;
+            }
+            return null;
+        }
+
+        internal void RecordCombat(Mobile target, Mobile attacker, int amount)
+        {
+            if (Deleted || !m_State.Active || amount <= 0 || !m_Creatures.Contains(target)
+                || !Owns(target, AttemptId) || attacker == null)
+                return;
+            Mobile principal = attacker.Player ? attacker : attacker.GetDamageMaster(target);
+            if (principal != null && principal.Player)
+                m_State.RecordActivity(DateTime.UtcNow);
+        }
+
+        internal void CreatureDied(Mobile mobile, Container corpse)
+        {
+            if (Deleted || !m_State.Active || !m_Creatures.Contains(mobile) || !Owns(mobile, AttemptId))
+                return;
+            ArachnidOutbreakSpider spider = mobile as ArachnidOutbreakSpider;
+            if (spider != null && spider.Guardian)
+                m_State.CompleteBrood(spider.Stage, DateTime.UtcNow);
+            if (mobile is ArachnidOutbreakChampion && m_State.CompleteBoss(DateTime.UtcNow, Utility.RandomMinMax(30, 60)))
+            {
+                Cleanup(AttemptId);
+                m_Placement = null;
+                m_Status = "Completed; cooldown active.";
+            }
+        }
+
+        internal bool KeepCreatureInBounds(BaseCreature creature)
+        {
+            if (Deleted || !m_State.Active || !m_Creatures.Contains(creature) || !Owns(creature, AttemptId))
+            {
+                creature.Delete();
+                return false;
+            }
+            ArachnidOutbreakSite site = ArachnidOutbreakSites.Find(SiteId);
+            if (site != null && creature.Map == Map.Sosaria && site.Bounds.Contains(creature.Location))
+                return true;
+            creature.Combatant = null;
+            creature.FocusMob = null;
+            Point3D point;
+            if (m_Placement != null && m_Placement.TryFindSpawn(creature.Home, 5, out point))
+                creature.MoveToWorld(point, Map.Sosaria);
+            else
+                Abort(DateTime.UtcNow, "No safe return point; attempt cancelled without victory.");
+            return false;
+        }
+
+        internal void SpawnDefenders(Mobile source, int stage, int count)
+        {
+            if (Deleted || !m_State.Active || m_Placement == null || !m_Creatures.Contains(source)
+                || !Owns(source, AttemptId) || source.Deleted || !source.Alive || count < 1 || count > 4)
+                return;
+            if (stage < 0 || stage > 3 || (stage < 3 && (m_State.ClearedBroods & (1 << stage)) != 0))
+                return;
+            ArachnidOutbreakSite site = ArachnidOutbreakSites.Find(SiteId);
+            if (site == null || new SosariaOutbreakTerrain().HasStructuralConflict(site.ClearanceBounds))
+                return;
+            Point3D anchor = stage == 3 ? m_Placement.Boss : m_Placement.Brood(stage);
+            for (int i = 0; i < count; ++i)
+            {
+                Point3D point;
+                if (!m_Placement.TryFindSpawn(anchor, 6, out point))
+                    break;
+                ArachnidOutbreakSpider defender = new ArachnidOutbreakSpider(this, stage, false);
+                m_Creatures.Add(defender);
+                defender.Home = anchor;
+                defender.RangeHome = 6;
+                defender.MoveToWorld(point, Map.Sosaria);
+            }
+        }
+
+        public override void OnAfterDelete()
+        {
+            Stop();
+            m_Controllers.Remove(this);
+            base.OnAfterDelete();
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((int)0);
+            m_State.Serialize(writer);
+            writer.Write(m_Creatures, true);
+            writer.Write(m_Signs, true);
+            writer.Write(m_NextSearch);
+            writer.Write(m_LastSite);
+            writer.Write(m_BossCreated);
+        }
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            int version = reader.ReadInt();
+            m_State.Deserialize(reader);
+            m_Creatures = reader.ReadStrongMobileList();
+            m_Signs = reader.ReadStrongItemList();
+            m_NextSearch = reader.ReadDateTime();
+            m_LastSite = reader.ReadString();
+            m_BossCreated = reader.ReadBool();
+        }
+    }
+}
