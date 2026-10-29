@@ -12,6 +12,7 @@ namespace Server.Custom.Confictura.Champions
         public static bool DeliveryReady { get { return false; } }
         private static readonly List<ArachnidOutbreakController> m_Controllers = new List<ArachnidOutbreakController>();
         private ArachnidOutbreakState m_State = new ArachnidOutbreakState();
+        private ArachnidOutbreakLedger m_Ledger;
         private List<Mobile> m_Creatures = new List<Mobile>();
         private List<Item> m_Signs = new List<Item>();
         private ArachnidOutbreakPlacement m_Placement;
@@ -243,6 +244,11 @@ namespace Server.Custom.Confictura.Champions
             if (!m_State.TryStart(site.Id))
                 throw new InvalidOperationException("Outbreak lifecycle refused start.");
             m_Placement = placement;
+            // Defined maximum stage budgets include every finite reinforcement,
+            // even when a fast clear prevents some from appearing.
+            m_Ledger = new ArachnidOutbreakLedger(AttemptId,
+                ArachnidOutbreakSpider.GuardianHealth + 10 * ArachnidOutbreakSpider.DefenderMaximumHealth,
+                ArachnidOutbreakChampion.ChampionHealth + 6 * ArachnidOutbreakSpider.DefenderMaximumHealth);
             m_BossCreated = false;
             m_NextSafetyCheck = DateTime.MinValue;
             m_LastSite = site.Id;
@@ -373,7 +379,21 @@ namespace Server.Custom.Confictura.Champions
                 return;
             Mobile principal = attacker.Player ? attacker : attacker.GetDamageMaster(target);
             if (principal != null && principal.Player)
+            {
                 m_State.RecordActivity(DateTime.UtcNow);
+                ArachnidOutbreakSpider spider = target as ArachnidOutbreakSpider;
+                if (m_Ledger != null && m_Ledger.AttemptId == AttemptId)
+                    m_Ledger.CreditDamage(spider == null ? 3 : spider.Stage, principal, amount);
+            }
+        }
+
+        private void QueueStage(int stage)
+        {
+            if (m_Ledger == null || m_Ledger.AttemptId != AttemptId || m_Ledger.IsSealed(stage))
+                return;
+            foreach (Mobile participant in m_Ledger.Qualified(stage))
+                ArachnidOutbreakClaim.QueueGlands(participant, AttemptId, stage);
+            m_Ledger.Seal(stage);
         }
 
         internal void CreatureDied(Mobile mobile, Container corpse)
@@ -382,7 +402,12 @@ namespace Server.Custom.Confictura.Champions
                 return;
             ArachnidOutbreakSpider spider = mobile as ArachnidOutbreakSpider;
             if (spider != null && spider.Guardian)
+            {
+                QueueStage(spider.Stage);
                 m_State.CompleteBrood(spider.Stage, DateTime.UtcNow);
+            }
+            if (mobile is ArachnidOutbreakChampion && m_State.Phase == ArachnidOutbreakPhase.Boss)
+                QueueStage(3);
             if (mobile is ArachnidOutbreakChampion && m_State.CompleteBoss(DateTime.UtcNow, Utility.RandomMinMax(30, 60)))
             {
                 Cleanup(AttemptId);
@@ -445,13 +470,16 @@ namespace Server.Custom.Confictura.Champions
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)0);
+            writer.Write((int)1);
             m_State.Serialize(writer);
             writer.Write(m_Creatures, true);
             writer.Write(m_Signs, true);
             writer.Write(m_NextSearch);
             writer.Write(m_LastSite);
             writer.Write(m_BossCreated);
+            writer.Write(m_Ledger != null);
+            if (m_Ledger != null)
+                m_Ledger.Serialize(writer);
         }
         public override void Deserialize(GenericReader reader)
         {
@@ -463,6 +491,11 @@ namespace Server.Custom.Confictura.Champions
             m_NextSearch = reader.ReadDateTime();
             m_LastSite = reader.ReadString();
             m_BossCreated = reader.ReadBool();
+            if (version >= 1 && reader.ReadBool())
+            {
+                m_Ledger = new ArachnidOutbreakLedger();
+                m_Ledger.Deserialize(reader);
+            }
         }
     }
 }

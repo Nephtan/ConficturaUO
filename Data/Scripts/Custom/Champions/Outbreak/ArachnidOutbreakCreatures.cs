@@ -12,6 +12,8 @@ namespace Server.Custom.Confictura.Champions
 
     public class ArachnidOutbreakSpider : DreadSpider, IArachnidOutbreakOwned
     {
+        public const int GuardianHealth = 3000;
+        public const int DefenderMaximumHealth = 132;
         private ArachnidOutbreakController m_Controller;
         private string m_AttemptId;
         private int m_Stage;
@@ -32,7 +34,7 @@ namespace Server.Custom.Confictura.Champions
             if (guardian)
             {
                 Name = "an arachnid brood guardian";
-                SetHits(3000);
+                SetHits(GuardianHealth);
             }
         }
 
@@ -104,6 +106,7 @@ namespace Server.Custom.Confictura.Champions
 
     public class ArachnidOutbreakChampion : Mephitis, IArachnidOutbreakOwned
     {
+        public const int ChampionHealth = 9000;
         private ArachnidOutbreakController m_Controller;
         private string m_AttemptId;
         private int m_Reinforcements;
@@ -115,7 +118,7 @@ namespace Server.Custom.Confictura.Champions
         {
             m_Controller = controller;
             m_AttemptId = controller.AttemptId;
-            SetHits(9000);
+            SetHits(ChampionHealth);
             Tamable = false;
         }
         public override void OnDamage(int amount, Mobile from, bool willKill)

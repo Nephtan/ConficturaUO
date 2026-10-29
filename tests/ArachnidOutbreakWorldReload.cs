@@ -78,6 +78,28 @@ internal static class ArachnidOutbreakWorldReload
         Signs(controller).Add(sentinel); // Deliberately foreign saved reference.
         DreadSpider unrelated = new DreadSpider();
         unrelated.MoveToWorld(new Point3D(1200,1200,0), Map.Sosaria);
+        if (name == "rewards" || name == "engaged")
+        {
+            Mobile participant = new Mobile();
+            participant.Player = true;
+            participant.RawStr = 100;
+            participant.Body = 0x192;
+            participant.AddItem(new Backpack());
+            ArachnidOutbreakLedger ledger = name == "rewards" ? new ArachnidOutbreakLedger("saved-awards",4320,9792)
+                : (ArachnidOutbreakLedger)typeof(ArachnidOutbreakController).GetField("m_Ledger",Private).GetValue(controller);
+            ledger.CreditDamage(1,participant,200);
+            ledger.CreditValidatedSupport(2,participant,4);
+            if (name == "rewards")
+            {
+                ledger.CreditDamage(0,participant,432); ledger.Seal(0);
+                typeof(ArachnidOutbreakController).GetField("m_Ledger",Private).SetValue(controller,ledger);
+                ArachnidOutbreakClaim brood = ArachnidOutbreakClaim.QueueGlands(participant,"saved-awards",0);
+                ArachnidOutbreakClaim boss = ArachnidOutbreakClaim.QueueGlands(participant,"saved-awards",3);
+                File.WriteAllText("claims.tsv",String.Join("\t",new string[] { participant.Serial.Value.ToString(),brood.Serial.Value.ToString(),
+                    boss.Serial.Value.ToString(),brood.Items[0].Serial.Value.ToString(),boss.Items[0].Serial.Value.ToString() }));
+            }
+            File.WriteAllText("participant.txt",participant.Serial.Value.ToString());
+        }
         string expected = String.Join("\t", new string[] { controller.Serial.Value.ToString(),
             ((int)controller.Phase).ToString(), controller.ClearedBroods.ToString(), controller.AttemptId,
             controller.SiteId, sentinel.Serial.Value.ToString(), unrelated.Serial.Value.ToString(),
@@ -120,12 +142,46 @@ internal static class ArachnidOutbreakWorldReload
         }
         if (name == "boss") Check((bool)typeof(ArachnidOutbreakController).GetField("m_BossCreated", Private).GetValue(controller), "boss-created guard preserved");
         if (name == "boss-pending") Check(!(bool)typeof(ArachnidOutbreakController).GetField("m_BossCreated", Private).GetValue(controller), "boss not yet created guard preserved");
+        if (name == "engaged" || name == "rewards")
+        {
+            Mobile participant = World.FindMobile((Serial)Int32.Parse(File.ReadAllText("participant.txt")));
+            ArachnidOutbreakLedger ledger = (ArachnidOutbreakLedger)typeof(ArachnidOutbreakController).GetField("m_Ledger",Private).GetValue(controller);
+            Check(ledger.Points(1,participant)>4.6 && ledger.Points(2,participant)==4, "partial damage and support survive item-before-mobile deserialization");
+            Check(!participant.Alive && participant.NetState==null, "saved contributor remains dead and offline");
+        }
         ArachnidOutbreakController.Initialize();
         Check(controller.Phase == ArachnidOutbreakPhase.Disabled, "delivery gate disarms loaded controller");
         Check(Creatures(controller).Count == 0 && Signs(controller).Count == 0, "startup removed owned encounter objects");
         Check(World.FindItem((Serial)Int32.Parse(expected[5])) != null, "foreign item survives startup cleanup");
         Check(World.FindMobile((Serial)Int32.Parse(expected[6])) != null, "unrelated creature survives startup cleanup");
+        if (name == "rewards")
+        {
+            string[] claims=File.ReadAllText("claims.tsv").Split('\t');
+            Mobile participant=World.FindMobile((Serial)Int32.Parse(claims[0]));
+            ArachnidOutbreakClaim brood=World.FindItem((Serial)Int32.Parse(claims[1])) as ArachnidOutbreakClaim;
+            ArachnidOutbreakClaim boss=World.FindItem((Serial)Int32.Parse(claims[2])) as ArachnidOutbreakClaim;
+            Check(brood!=null && boss!=null && brood.Owner==participant && boss.Owner==participant, "pending owners restored independently of controller disarm");
+            Check(brood.Items[0].Serial.Value==Int32.Parse(claims[3]) && boss.Items[0].Serial.Value==Int32.Parse(claims[4]), "exact saved reward identities restored");
+            Check(brood.Map==Map.Internal && !brood.Movable && !brood.Visible && !brood.TryClaim(participant), "internal dead/offline claim remains protected");
+            participant.Body=0x190;
+            participant.Backpack.MaxItems=1;
+            Item filler=new Item(1);participant.Backpack.AddItem(filler);
+            Check(!brood.TryClaim(participant), "loaded reward retained when backpack is full");filler.Delete();
+            Check(brood.TryClaim(participant) && !brood.TryClaim(participant), "loaded reward transfers once");
+            participant.Backpack.MaxItems=125;
+            Check(boss.TryClaim(participant) && participant.Backpack.GetAmount(typeof(BroodVenomGland))==4, "loaded boss reward merges without duplication");
+            World.Save(false,false);World.WaitForWriteCompletion();
+        }
         Console.WriteLine("RELOADED " + name);
+    }
+    private static void LoadPaid(string assets)
+    {
+        Bootstrap(assets);
+        Mobile participant=World.FindMobile((Serial)Int32.Parse(File.ReadAllText("participant.txt")));
+        foreach(Item item in World.Items.Values)
+            Check(!(item is ArachnidOutbreakClaim), "paid claims do not reappear after another fresh reload");
+        Check(participant.Backpack.GetAmount(typeof(BroodVenomGland))==4, "paid gland quantity survives a second fresh reload");
+        Console.WriteLine("RELOADED rewards");
     }
     private static void Worker(string exe, string assets, string mode, string name, string directory)
     {
@@ -159,21 +215,23 @@ internal static class ArachnidOutbreakWorldReload
                 Check(Path.GetFullPath(Environment.CurrentDirectory).StartsWith(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase), "save worker confined beneath fixture snapshot");
                 if (args[1] == "save") SaveCase(args[0], args[2]);
                 else if (args[1] == "load") LoadCase(args[0], args[2]);
+                else if (args[1] == "paid") LoadPaid(args[0]);
                 else throw new Exception("Unknown worker mode");
                 return 0;
             }
             string exe = Assembly.GetExecutingAssembly().Location;
             string root = Path.Combine(Path.GetDirectoryName(exe), "outbreak-world-reload-" + Guid.NewGuid().ToString("N"));
-            string[] cases = new string[] { "disabled", "searching", "broods-0", "engaged", "broods-1", "broods-2", "broods-3", "broods-4", "broods-5", "broods-6", "boss-pending", "boss", "cooldown" };
+            string[] cases = new string[] { "disabled", "searching", "broods-0", "engaged", "broods-1", "broods-2", "broods-3", "broods-4", "broods-5", "broods-6", "boss-pending", "boss", "cooldown", "rewards" };
             foreach (string name in cases)
             {
                 string directory = Path.Combine(root, name);
                 Directory.CreateDirectory(directory);
                 Worker(exe, args[0], "save", name, directory);
                 Worker(exe, args[0], "load", name, directory);
+                if (name == "rewards") Worker(exe,args[0],"paid",name,directory);
                 Console.WriteLine("PASS fresh-process world reload: " + name);
             }
-            Console.WriteLine("PASS outbreak world reload: 13 worlds, 26 bounded workers; no existing saves or listeners.");
+            Console.WriteLine("PASS outbreak world reload: 14 worlds, 29 bounded workers; no existing saves or listeners.");
             return 0;
         }
         catch (Exception exception) { Console.Error.WriteLine(exception); return 1; }

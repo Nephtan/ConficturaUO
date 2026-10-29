@@ -137,6 +137,8 @@
     <Compile Include="Custom\Champions\System\CannedEvil\ChampionSkullPlatform.cs" />
     <Compile Include="Custom\Champions\System\CannedEvil\ChampionSkullType.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakController.cs" />
+    <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakClaim.cs" />
+    <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakLedger.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakCreatures.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakSite.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakSites.cs" />
