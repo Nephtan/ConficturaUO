@@ -5,11 +5,11 @@ import csv
 from datetime import datetime
 import json
 import xml.etree.ElementTree as ET
-from RunToolkitProbes import CASES
+from RunToolkitProbes import CASES, EXTRA_CASES
 from VerifyBenchmark import hashes, sha
 
 
-def verify(root, require_complete):
+def verify(root, require_complete, required_cases=()):
     repo=Path(__file__).resolve().parents[2];evidence=root/'evidence'
     prepared=json.loads((evidence/'prepared.json').read_text(encoding='utf-8-sig'))
     assert prepared['fixture']=='benchmark'
@@ -62,6 +62,16 @@ def verify(root, require_complete):
                     hits=[r for r in damage if r[2]==target]
                     assert any(abs((datetime.fromisoformat(a[0])-datetime.fromisoformat(b[0])).total_seconds())<.1
                                for i,a in enumerate(hits) for b in hits[i+1:]), 'No paired immediate hits'
+            elif name=='regeneration':
+                assert int(state.get('probeManaBefore'))==0 and int(state.get('mana'))>=10
+                assert not any(e['event'] in ('toolkit_cast','use','toolkit_arm_requested') for e in observations)
+            elif name=='return':
+                steps=state.findall('returnStep')
+                visits={int(e['index']):e for e in observations if e['event']=='toolkit_return_step'}
+                for index,step in enumerate(steps[:-1]):
+                    assert index in visits and max(abs(visits[index]['x']-int(step.get('x'))),abs(visits[index]['y']-int(step.get('y'))))<=1
+                assert max(abs(int(state.get('x'))-int(state.get('stagingX'))),abs(int(state.get('y'))-int(state.get('stagingY'))))<=1
+                assert any(e['event']=='walk' and e['accepted'] for e in events)
             elif name in ('strength','agility','refresh','petals','cure','bandage','heal'):
                 supply=state.find("supply[@key='"+name+"']")
                 assert int(supply.get('remaining'))<int(state.get('probeAmountBefore'))
@@ -76,9 +86,16 @@ def verify(root, require_complete):
                 if name=='cleanse': assert state.get('poisoned')=='False'
                 if name=='holy-light': assert any(r[2]==target for r in damage)
                 if name=='close-wounds': assert any(r[2]==actor and r[4]=='Healing' for r in rows)
+                if name=='journey': assert all(state.get(k)==state.get('refuge'+k.upper()) for k in ('x','y','z'))
+                if name=='noble':
+                    assert int(state.get('hits'))<=5 and int(state.get('mana'))<=5 and int(state.get('stam'))<=5
+                    assert any(r[2]==target and r[4]=='Healing' for r in rows)
+                    assert any(r[2]==actor and int(r[6])==1 for r in rows)
+        started=next(e['utc_epoch'] for e in observations if e['event']=='toolkit_case')
         results.append(dict(name=name,sequence=sequence,passed=success,mana_net_spent=mana_spent,
+                            seconds_from_client_observation=datetime.fromisoformat(state.get('utc')).timestamp()-started,
                             actor_health_events=[r for r in rows if r[2]==actor],damaged_target_count=len({r[2] for r in damage})))
-    complete={r['name'] for r in results if r['passed']}==set(CASES)
+    complete=set(CASES).issubset({r['name'] for r in results if r['passed']})
     report=dict(preservation_and_teardown_passed=True,production_inputs_checked=len(inputs),private_save_files=len(hashes(root/'shard/Saves')),
                 complete_controlled_toolkit=complete,results=results,
                 scope='Controlled native Player actions; stopped zero-melee targets; synthetic between-case setup; no encounter or pacing acceptance',
@@ -86,9 +103,12 @@ def verify(root, require_complete):
     (evidence/'toolkit-verification.json').write_text(json.dumps(report,indent=2))
     print('Preservation/teardown passed; controlled cases passed '+str(sum(r['passed'] for r in results))+'/'+str(len(results))+'; all 20 covered: '+str(complete))
     if require_complete: assert complete and all(r['passed'] for r in results)
+    assert set(required_cases).issubset({r['name'] for r in results if r['passed']})
 
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('root',type=Path)
-    parser.add_argument('--require-complete',action='store_true');args=parser.parse_args()
-    verify(args.root.resolve(),args.require_complete)
+    parser.add_argument('--require-complete',action='store_true')
+    parser.add_argument('--require-cases',nargs='+',choices=CASES+EXTRA_CASES,default=[])
+    args=parser.parse_args()
+    verify(args.root.resolve(),args.require_complete,args.require_cases)

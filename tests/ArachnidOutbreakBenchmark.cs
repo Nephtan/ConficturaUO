@@ -11,6 +11,7 @@ using Server.Items;
 using Server.Mobiles;
 using Server.Misc;
 using Server.Spells.Chivalry;
+using Server.Spells;
 using Server.Custom.Confictura.Champions;
 
 namespace Server.TestOnly
@@ -47,6 +48,11 @@ namespace Server.TestOnly
         private static int ProbeMana, ProbeHits, ProbeStam, ProbeTithing, ProbeAmount, ProbeTargetHits;
         private static DateTime ProbeDeadline;
         private static bool ProbeResultWritten;
+        private static Point3D Staging, Refuge;
+        private static Point3D[] RefugeReturn;
+        private static RecallRune RetreatRune;
+        private static bool PlayerPrepared;
+        private static string RunMode = String.Empty;
 
         [CallPriority(Int32.MaxValue)]
         public static void Initialize()
@@ -123,6 +129,9 @@ namespace Server.TestOnly
                 Supply("cure", new GreaterCurePotion(), 100);
                 Supply("heal", new GreaterHealPotion(), 75);
                 Supply("petals", new OrangePetals(), 10);
+                Supply("strength", new GreaterStrengthPotion(), 20);
+                Supply("agility", new GreaterAgilityPotion(), 20);
+                Supply("refresh", new TotalRefreshPotion(), 20);
                 Actor.Hits = Actor.HitsMax; Actor.Stam = Actor.StamMax; Actor.Mana = Actor.ManaMax;
 
                 // Only this disposable process reviews a reserve. Repository review flags stay false.
@@ -137,11 +146,12 @@ namespace Server.TestOnly
                 string reason;
                 if (!Site.Validate(new SosariaOutbreakTerrain(), out Placement, out reason))
                     throw new Exception("Copied-world site rejected: " + reason);
-                Point3D staging = Placement.Brood(0);
-                staging.Y -= 2;
-                staging.Z = Map.Sosaria.GetAverageZ(staging.X, staging.Y);
-                Actor.MoveToWorld(staging, Map.Sosaria);
+                Staging = Placement.Brood(0);
+                Staging.Y -= 2;
+                Staging.Z = Map.Sosaria.GetAverageZ(Staging.X, Staging.Y);
+                Actor.MoveToWorld(Staging, Map.Sosaria);
                 BuildTravel();
+                PrepareRefuge();
                 State = "ready";
                 WriteManifest();
             }
@@ -188,6 +198,64 @@ namespace Server.TestOnly
                 Travel[leg] = waypoints.ToArray();
             }
         }
+        private static Point3D[] Route(Point3D from, Point3D to, Dictionary<Point2D, Point3D> ground)
+        {
+            Point2D start = new Point2D(from.X, from.Y), end = new Point2D(to.X, to.Y);
+            if (!ground.ContainsKey(start) || !ground.ContainsKey(end)) return null;
+            Queue<Point2D> queue = new Queue<Point2D>();
+            Dictionary<Point2D, Point2D> previous = new Dictionary<Point2D, Point2D>();
+            previous[start] = start; queue.Enqueue(start);
+            int[] dx = new int[] { -1, 1, 0, 0 }, dy = new int[] { 0, 0, -1, 1 };
+            while (queue.Count > 0 && !previous.ContainsKey(end))
+            {
+                Point2D current = queue.Dequeue();
+                for (int direction = 0; direction < 4; ++direction)
+                {
+                    Point2D next = new Point2D(current.X + dx[direction], current.Y + dy[direction]);
+                    if (!ground.ContainsKey(next) || previous.ContainsKey(next) || Math.Abs(ground[next].Z - ground[current].Z) > 2) continue;
+                    previous[next] = current; queue.Enqueue(next);
+                }
+            }
+            if (!previous.ContainsKey(end)) return null;
+            List<Point3D> path = new List<Point3D>();
+            Point2D cursor = end;
+            while (cursor != start) { path.Add(ground[cursor]); cursor = previous[cursor]; }
+            path.Add(ground[start]); path.Reverse();
+            List<Point3D> points = new List<Point3D>();
+            for (int i = 0; i < path.Count; i += 6) points.Add(path[i]);
+            if (points[points.Count - 1] != to) points.Add(to);
+            return points.ToArray();
+        }
+        private static void PrepareRefuge()
+        {
+            SosariaOutbreakTerrain terrain = new SosariaOutbreakTerrain();
+            Dictionary<Point2D, Point3D> ground = new Dictionary<Point2D, Point3D>();
+            Rectangle2D bounds = Site.ClearanceBounds;
+            for (int x = bounds.X; x < bounds.X + bounds.Width; ++x)
+                for (int y = bounds.Y; y < bounds.Y + bounds.Height; ++y)
+                {
+                    Point3D point;
+                    if (terrain.TryGetPoint(x, y, out point)) ground[new Point2D(x, y)] = point;
+                }
+            for (int dy = -8; dy <= 8 && RefugeReturn == null; ++dy)
+            {
+                Point3D point;
+                if (!ground.TryGetValue(new Point2D(Site.Center.X - 74, Site.Center.Y + dy), out point)
+                    || !SpellHelper.CheckTravel(Actor, Map.Sosaria, point, TravelCheckType.RecallTo)
+                    || SpellHelper.CheckMulti(point, Map.Sosaria)
+                    || !Worlds.RegionAllowedTeleport(Map.Sosaria, point, point.X, point.Y)) continue;
+                Point3D[] route = Route(point, Staging, ground);
+                if (route == null) continue;
+                Refuge = point; RefugeReturn = route;
+            }
+            if (RefugeReturn == null) throw new Exception("No legal refuge with a connected return path.");
+            Actor.MoveToWorld(Refuge, Map.Sosaria);
+            RetreatRune = new RecallRune(); RetreatRune.Mark(Actor);
+            if (RetreatRune.House != null) throw new Exception("Refuge rune must not use a house.");
+            RetreatRune.Description = "private benchmark wilderness refuge";
+            Supply("rune", RetreatRune, 1);
+            Actor.MoveToWorld(Staging, Map.Sosaria);
+        }
         private static void Equip(Item item)
         {
             if (Array.IndexOf(Loot.ArtyTypes, item.GetType()) < 0)
@@ -203,8 +271,9 @@ namespace Server.TestOnly
         }
         private static void Begin(bool antivenom)
         {
-            if (State != "ready" || Actor.NetState == null) throw new Exception("Begin requires the ready connected copied Player.");
-            if (antivenom) Supply("antivenom", new BroodAntivenom(), 12);
+            if (State != "ready" || Actor.NetState == null || !PlayerPrepared) throw new Exception("Begin requires the natively prepared connected copied Player.");
+            if (antivenom != Supplies.ContainsKey("antivenom")) throw new Exception("Run mode differs from the frozen finite loadout.");
+            RunMode = antivenom ? "antivenom" : "no-antivenom";
             Controller = new ArachnidOutbreakController();
             ArachnidOutbreakState state = (ArachnidOutbreakState)typeof(ArachnidOutbreakController).GetField("m_State", Private).GetValue(Controller);
             state.SetEnabled(true);
@@ -266,7 +335,7 @@ namespace Server.TestOnly
         {
             if (Started != DateTime.MinValue || Controller != null || Actor.NetState == null || !Actor.Alive)
                 throw new Exception("Toolkit probes require the connected idle preparation scene, never a measured run.");
-            string[] allowed = new string[] { "strength", "agility", "refresh", "petals", "cure", "cleanse", "bandage", "heal", "close-wounds", "consecrate", "fury", "enemy-one", "holy-light", "dispel", "remove-curse", "ability-1", "ability-2", "ability-3", "ability-4", "ability-5" };
+            string[] allowed = new string[] { "strength", "agility", "refresh", "petals", "cure", "cleanse", "bandage", "heal", "close-wounds", "consecrate", "fury", "enemy-one", "holy-light", "dispel", "remove-curse", "ability-1", "ability-2", "ability-3", "ability-4", "ability-5", "journey", "return", "noble", "regeneration" };
             if (Array.IndexOf(allowed, name) < 0) throw new Exception("Unknown toolkit probe.");
             State = "preparing-probe";
             Failure = null;
@@ -288,6 +357,7 @@ namespace Server.TestOnly
                 Actor.AddStatMod(new StatMod(StatType.Str, "[Magic] Str Offset", -20, TimeSpan.FromMinutes(1)));
             }
             Actor.Hits = Actor.HitsMax; Actor.Stam = Actor.StamMax; Actor.Mana = Actor.ManaMax;
+            if (name == "regeneration") Actor.Mana = 0;
             if (name == "heal" || name == "close-wounds") Actor.Hits -= 100;
             if (name == "refresh" || name == "fury") Actor.Stam = 20;
             if (name == "cure" || name == "cleanse" || name == "bandage" || name.StartsWith("ability-") || name == "holy-light" || name == "dispel")
@@ -295,6 +365,16 @@ namespace Server.TestOnly
             if (name == "ability-1")
             {
                 ProbeExtras.Add(ProbeSpider(-1, 0)); ProbeExtras.Add(ProbeSpider(1, 0));
+            }
+            if (name == "noble")
+            {
+                ProbeTarget = new Dog(); ProbeTarget.SetControlMaster(Actor); ProbeTarget.SetHits(1000);
+                ProbeTarget.MoveToWorld(new Point3D(Actor.X, Actor.Y + 1, Actor.Z), Actor.Map);
+                ProbeTarget.CantWalk = true; ProbeTarget.FightMode = FightMode.None;
+                if (ProbeTarget.AIObject != null && ProbeTarget.AIObject.m_Timer != null) ProbeTarget.AIObject.m_Timer.Stop();
+                ProbeTarget.Hits -= 100;
+                ProbeExtras.Add(ProbeSpider(-1, 0)); ProbeTarget.ApplyPoison(ProbeExtras[0], Poison.Deadly);
+                if (!ProbeTarget.Poisoned) throw new Exception("Ally poison setup failed.");
             }
             if (name == "cure" || name == "cleanse" || name == "bandage")
             {
@@ -304,13 +384,17 @@ namespace Server.TestOnly
             ++ProbeSequence; ProbeName = name; ProbeItem = Array.IndexOf(new string[] { "strength", "agility", "refresh", "petals", "cure", "bandage", "heal" }, name) >= 0 ? name : null;
             ProbeMana = Actor.Mana; ProbeHits = Actor.Hits; ProbeStam = Actor.Stam; ProbeTithing = Actor.TithingPoints;
             ProbeAmount = ProbeItem == null ? 0 : Remaining(ProbeItem); ProbeTargetHits = ProbeTarget == null ? 0 : ProbeTarget.Hits;
-            ProbeDeadline = DateTime.UtcNow.AddSeconds(25); ProbeResultWritten = false;
+            ProbeDeadline = DateTime.UtcNow.AddSeconds(name == "return" || name == "regeneration" ? 60 : 25); ProbeResultWritten = false;
             State = "toolkit-" + name;
         }
         private static bool ProbeSucceeded()
         {
             bool item = ProbeItem != null && Remaining(ProbeItem) < ProbeAmount;
             bool spell = Actor.TithingPoints < ProbeTithing && Actor.Mana < ProbeMana;
+            if (ProbeName == "regeneration") return Actor.Mana >= 10;
+            if (ProbeName == "journey") return spell && Actor.Location == Refuge;
+            if (ProbeName == "return") return Actor.InRange(Staging, 1);
+            if (ProbeName == "noble") return spell && !ProbeTarget.Poisoned && Actor.Hits <= 5 && Actor.Stam <= 5 && Actor.Mana <= 5;
             if (ProbeName == "strength") return item && Actor.Str == 150;
             if (ProbeName == "agility") return item && Actor.Dex == 150;
             if (ProbeName == "refresh") return item && Actor.Stam == Actor.StamMax;
@@ -344,6 +428,11 @@ namespace Server.TestOnly
                     else if (command == "start-antivenom") Begin(true);
                     else if (command == "start-navigation" && State == "ready" && Actor.NetState != null)
                     { NavigationOnly = true; State = "navigation"; Started = DateTime.UtcNow; }
+                    else if ((command == "prepare-player" || command == "prepare-antivenom") && State == "ready" && Started == DateTime.MinValue && ProbeName == null && !PlayerPrepared)
+                    {
+                        if (command == "prepare-antivenom") Supply("antivenom", new BroodAntivenom(), 12);
+                        State = "preparing-player"; ProbeDeadline = DateTime.UtcNow.AddSeconds(60);
+                    }
                     else if (command.StartsWith("probe-")) BeginProbe(command.Substring(6));
                     else if (command == "stop") State = "stopped";
                     else throw new Exception("Unknown benchmark command.");
@@ -353,6 +442,12 @@ namespace Server.TestOnly
                     if (!Actor.Alive) State = "dead";
                     else if (Controller.Phase == ArachnidOutbreakPhase.Cooldown) State = BossKilled && Controller.Status == "Completed; cooldown active." ? "completed" : "aborted";
                     else if (Controller.Phase == ArachnidOutbreakPhase.Disabled) State = "aborted";
+                }
+                if (State == "preparing-player")
+                {
+                    if (Actor.Str == 150 && Actor.Dex == 150 && Actor.Hits == Actor.HitsMax && Remaining("petals") < 10)
+                    { PlayerPrepared = true; State = "ready"; WriteManifest(); }
+                    else if (DateTime.UtcNow > ProbeDeadline) throw new Exception("Native player preparation timed out.");
                 }
                 if (State == "navigation")
                 {
@@ -407,6 +502,7 @@ namespace Server.TestOnly
             using (XmlWriter writer = Open("benchmark-reference.xml"))
             {
                 writer.WriteStartElement("reference"); Attr(writer, "utc", DateTime.UtcNow.ToString("o"));
+                Attr(writer, "version", 3); Attr(writer, "playerPrepared", PlayerPrepared);
                 Attr(writer, "serial", Actor.Serial.Value); Attr(writer, "access", Actor.AccessLevel);
                 Attr(writer, "rawStr", Actor.RawStr); Attr(writer, "rawDex", Actor.RawDex); Attr(writer, "rawInt", Actor.RawInt);
                 Attr(writer, "str", Actor.Str); Attr(writer, "dex", Actor.Dex); Attr(writer, "int", Actor.Int);
@@ -420,6 +516,18 @@ namespace Server.TestOnly
                 Attr(writer, "abilityBaseSkill", MyServerSettings.SpecialWeaponAbilSkill());
                 Attr(writer, "enhancePotions", BasePotion.EnhancePotions(Actor));
                 Attr(writer, "skillOrigin", Actor.SkillStart); Attr(writer, "skillBoost", Actor.SkillBoost); Attr(writer, "skillEther", Actor.SkillEther);
+                writer.WriteStartElement("retreat"); Attr(writer, "rune", RetreatRune.Serial.Value);
+                Attr(writer, "marked", RetreatRune.Marked); Attr(writer, "map", RetreatRune.TargetMap.Name);
+                Attr(writer, "x", Refuge.X); Attr(writer, "y", Refuge.Y); Attr(writer, "z", Refuge.Z);
+                Attr(writer, "preparation", "Finite obtainable potions and a traded pre-marked rune; no Mark skill granted.");
+                foreach (Point3D point in RefugeReturn)
+                { writer.WriteStartElement("step"); Attr(writer, "x", point.X); Attr(writer, "y", point.Y); Attr(writer, "z", point.Z); writer.WriteEndElement(); }
+                writer.WriteEndElement();
+                foreach (KeyValuePair<string, Item> supply in Supplies)
+                {
+                    writer.WriteStartElement("supply"); Attr(writer, "key", supply.Key); Attr(writer, "type", supply.Value.GetType().FullName);
+                    Attr(writer, "amount", supply.Value.Deleted ? 0 : supply.Value.Amount); writer.WriteEndElement();
+                }
                 BaseWeapon weapon = Actor.Weapon as BaseWeapon;
                 if (weapon != null)
                     foreach (WeaponAbility ability in new WeaponAbility[] { weapon.PrimaryAbility, weapon.SecondaryAbility, weapon.ThirdAbility, weapon.FourthAbility, weapon.FifthAbility })
@@ -475,6 +583,10 @@ namespace Server.TestOnly
             using (XmlWriter writer = Open("benchmark-state.xml"))
             {
                 writer.WriteStartElement("benchmark"); Attr(writer, "utc", DateTime.UtcNow.ToString("o")); Attr(writer, "state", State);
+                Attr(writer, "referenceVersion", 3); Attr(writer, "playerPrepared", PlayerPrepared);
+                Attr(writer, "runMode", RunMode);
+                Attr(writer, "refugeX", Refuge.X); Attr(writer, "refugeY", Refuge.Y); Attr(writer, "refugeZ", Refuge.Z);
+                Attr(writer, "stagingX", Staging.X); Attr(writer, "stagingY", Staging.Y); Attr(writer, "stagingZ", Staging.Z);
                 Attr(writer, "seconds", Started == DateTime.MinValue ? 0 : ((Ended == DateTime.MinValue ? DateTime.UtcNow : Ended) - Started).TotalSeconds);
                 Attr(writer, "failure", Failure); Attr(writer, "incomingDamage", IncomingDamage); Attr(writer, "outgoingDamage", OutgoingDamage); Attr(writer, "restoredHits", RestoredHits);
                 Attr(writer, "enemyDeaths", EnemyDeaths); Attr(writer, "bossKilled", BossKilled);
@@ -503,6 +615,16 @@ namespace Server.TestOnly
                     Attr(writer, "spellCooldownSeconds", Math.Max(0.0, (Actor.NextSpellTime - TurnBasedCombatBridge.GetTime(Actor)).TotalSeconds));
                     Attr(writer, "currentSpell", Actor.Spell == null ? String.Empty : Actor.Spell.GetType().Name);
                     Attr(writer, "targetPending", Actor.Target != null);
+                    Attr(writer, "consecrated", ((BaseWeapon)Actor.Weapon).Consecrated);
+                    Attr(writer, "divineFury", DivineFurySpell.UnderEffect(Actor));
+                    Attr(writer, "waitingForEnemy", Actor.WaitingForEnemy);
+                    Attr(writer, "enemyOfOneType", Actor.EnemyOfOneType == null ? String.Empty : Actor.EnemyOfOneType.FullName);
+                    Attr(writer, "poisonLevel", Actor.Poison == null ? -1 : Actor.Poison.Level);
+                    Attr(writer, "mortalWound", MortalStrike.IsWounded(Actor));
+                    bool curse = false;
+                    foreach (string stat in new string[] { "Str", "Dex", "Int" })
+                    { StatMod mod = Actor.GetStatMod("[Magic] " + stat + " Offset"); if (mod != null && mod.Offset < 0) curse = true; }
+                    Attr(writer, "statCurse", curse);
                     int effects;
                     BroodAntivenomEffect protection = BroodAntivenomEffect.Find(Actor, out effects);
                     Attr(writer, "antivenomCharges", protection != null && protection.Active(DateTime.UtcNow) ? protection.Charges : 0);
@@ -531,6 +653,9 @@ namespace Server.TestOnly
                         Point3D point = stage == 3 ? Placement.Boss : Placement.Brood(stage);
                         writer.WriteStartElement("anchor"); Attr(writer, "stage", stage); Attr(writer, "x", point.X); Attr(writer, "y", point.Y); Attr(writer, "z", point.Z); writer.WriteEndElement();
                     }
+                    if (RefugeReturn != null)
+                        foreach (Point3D point in RefugeReturn)
+                        { writer.WriteStartElement("returnStep"); Attr(writer, "x", point.X); Attr(writer, "y", point.Y); Attr(writer, "z", point.Z); writer.WriteEndElement(); }
                     for (int leg = 0; leg < Travel.Length; ++leg)
                     {
                         writer.WriteStartElement("route"); Attr(writer, "to", leg + 1);

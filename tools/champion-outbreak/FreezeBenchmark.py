@@ -10,6 +10,29 @@ import uuid
 import xml.etree.ElementTree as ET
 
 
+def open_shared_delete(path):
+    # Ordinary Windows readers can deny File.Replace in the server's status writer.
+    if os.name!='nt': return path.open('rb')
+    import ctypes
+    from ctypes import wintypes
+    import msvcrt
+    kernel=ctypes.WinDLL('kernel32',use_last_error=True)
+    create=kernel.CreateFileW
+    create.argtypes=[wintypes.LPCWSTR,wintypes.DWORD,wintypes.DWORD,wintypes.LPVOID,wintypes.DWORD,wintypes.DWORD,wintypes.HANDLE]
+    create.restype=wintypes.HANDLE
+    handle=create(str(path.resolve()),0x80000000,0x7,None,3,0x80,None)
+    if handle==ctypes.c_void_p(-1).value: raise ctypes.WinError(ctypes.get_last_error())
+    # The CRT descriptor owns the handle after this transfer.
+    try: descriptor=msvcrt.open_osfhandle(handle,os.O_RDONLY|os.O_BINARY)
+    except BaseException:
+        kernel.CloseHandle.argtypes=[wintypes.HANDLE];kernel.CloseHandle(handle);raise
+    return os.fdopen(descriptor,'rb')
+
+
+def read_shared(path):
+    with open_shared_delete(path) as source:return source.read()
+
+
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -18,8 +41,8 @@ def read_status(path):
     # A Windows reader can collide with the observer's atomic replacement.
     for attempt in range(10):
         try:
-            return ET.fromstring(path.read_bytes())
-        except PermissionError:
+            return ET.fromstring(read_shared(path))
+        except (PermissionError, FileNotFoundError):
             if attempt == 9:
                 raise
             time.sleep(.1)
@@ -50,7 +73,21 @@ def freeze(args):
     assert Path((evidence/'native-private-root.txt').read_text()).resolve() == root/'shard'
     state = read_status(evidence/'benchmark-state.xml')
     assert state.get('state') == 'ready' and state.get('online') == 'True'
+    if args.prepare:
+        assert args.start in ('no-antivenom','antivenom') and state.get('playerPrepared')=='False'
+        command=evidence/'benchmark-command.txt';assert not command.exists()
+        temporary=evidence/(str(uuid.uuid4())+'.tmp')
+        temporary.write_text('prepare-antivenom' if args.start=='antivenom' else 'prepare-player')
+        os.replace(temporary,command)
+        deadline=time.monotonic()+65
+        while time.monotonic()<deadline:
+            time.sleep(.2);state=read_status(evidence/'benchmark-state.xml')
+            assert state.get('state')!='failed',state.get('failure')
+            if state.get('state')=='ready' and state.get('playerPrepared')=='True':break
+        assert state.get('playerPrepared')=='True','Native preparation did not finish'
     assert state.get('seconds') == '0' and state.get('blessed') == 'True' and state.get('alive') == 'True'
+    if args.start and args.start!='navigation' and state.get('referenceVersion')=='3':
+        assert state.get('playerPrepared')=='True','Native preparation is incomplete'
     inputs = json.loads((Path(prepared['candidate'])/'inputs.json').read_text(encoding='utf-8-sig'))['files']
     assert all(sha(repo/p) == expected for p, expected in inputs.items()), 'Production source changed'
     files = dict(reference_xml=evidence/'benchmark-reference.xml',
@@ -80,7 +117,8 @@ def freeze(args):
     frozen = dict(utc=state.get('utc'),state='ready; no combat yet',policy=args.policy,
                   production_input_count=len(inputs),
                   compared_reference=None if comparison is None else str(comparison),
-                  capability_comparison='Same capabilities; ordinary durability rolls and NPC randomness retained',
+                  capability_comparison=('Same capabilities; ordinary durability rolls and NPC randomness retained' if comparison is not None
+                                         else 'Actual reference frozen; no cross-run capability comparison requested'),
                   files={key:dict(path=str(path),sha256=sha(path)) for key,path in files.items()})
     destination.write_text(json.dumps(frozen,indent=2),encoding='utf-8')
     if args.start:
@@ -98,4 +136,5 @@ if __name__ == '__main__':
     parser.add_argument('--policy',required=True)
     parser.add_argument('--compare-reference',type=Path)
     parser.add_argument('--start',choices=['no-antivenom','antivenom','navigation'])
+    parser.add_argument('--prepare',action='store_true',help='Use normal native preparation before freezing and starting a fresh v3 run')
     freeze(parser.parse_args())

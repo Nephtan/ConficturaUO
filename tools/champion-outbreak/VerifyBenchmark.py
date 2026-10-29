@@ -70,7 +70,13 @@ def verify(root, require_clear=False, require_navigation=False, production_ref=N
     clear = (state.get('state') == 'completed' and state.get('alive') == 'True'
              and state.get('bossKilled') == 'True' and not errors)
     starting = {'bandage':500,'cure':100,'heal':75,'petals':10,'antivenom':12}
+    if reference.get('version')=='3':
+        assert reference.get('playerPrepared')=='True' or navigation_only
+        starting={n.get('key'):int(n.get('amount')) for n in reference.findall('supply')}
+        if not navigation_only:
+            assert (starting.get('antivenom',0)>0)==(state.get('runMode')=='antivenom')
     used = {n.get('key'):starting[n.get('key')]-int(n.get('remaining')) for n in state.findall('supply')}
+    assert all(amount>=0 for amount in used.values()),'Supply refilled or wrong frozen loadout'
     navigation_passed = False
     if navigation_only:
         plan = ET.parse(evidence/'benchmark-routes.xml').getroot()

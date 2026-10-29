@@ -9,6 +9,7 @@ from FreezeBenchmark import read_status
 
 CASES = ['strength','agility','refresh','petals','cleanse','cure','bandage','heal','close-wounds',
          'consecrate','fury','enemy-one','holy-light','dispel']+['ability-'+str(i) for i in range(1,6)]+['remove-curse']
+EXTRA_CASES = ['journey','return','noble','regeneration']
 
 
 def run(args):
@@ -47,5 +48,5 @@ def run(args):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('root',type=Path)
-    parser.add_argument('--cases',nargs='+',choices=CASES,default=CASES)
+    parser.add_argument('--cases',nargs='+',choices=CASES+EXTRA_CASES,default=CASES)
     run(parser.parse_args())

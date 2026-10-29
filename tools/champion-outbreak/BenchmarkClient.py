@@ -51,6 +51,11 @@ navigation_rejections = 0
 probe_sequence = -1
 probe_attempt = 0
 probe_attack = False
+probe_route_index = 0
+pending_cast = None
+last_bandage = last_strength = last_agility = last_special = last_dispel = 0
+previous_ability = ''
+retreat_requested = 0
 
 def log(kind, **values):
     values.update(event=kind, utc_epoch=time.time())
@@ -123,17 +128,30 @@ def use(supplies, key, target=False):
     return True
 
 def toolkit(state):
-    global probe_sequence, probe_attempt, probe_attack
+    global probe_sequence, probe_attempt, probe_attack, probe_route_index
     sequence = int(value(state,'probeSequence'))
     name = state.GetAttribute('probe')
     now = time.time()
     if probe_sequence != sequence:
         probe_sequence, probe_attempt, probe_attack = sequence, 0, False
+        probe_route_index = 0
         log('toolkit_case',sequence=sequence,name=name)
     if now-probe_attempt < 2.5:
         return
     probe_attempt = now
     supplies = dict((n.GetAttribute('key'),n) for n in state.SelectNodes('supply'))
+    if name == 'regeneration':
+        return
+    if name == 'return':
+        steps=list(state.SelectNodes('returnStep'))
+        while probe_route_index < len(steps):
+            step=steps[probe_route_index]
+            if max(abs(int(Engine.Player.X)-value(step,'x')),abs(int(Engine.Player.Y)-value(step,'y'))) > 1:
+                navigate(value(step,'x'),value(step,'y'),value(step,'z'),1,now)
+                return
+            log('toolkit_return_step',sequence=sequence,index=probe_route_index,x=int(Engine.Player.X),y=int(Engine.Player.Y))
+            probe_route_index+=1
+        return
     if name in ('strength','agility','refresh','petals','cure','bandage','heal'):
         if name == 'bandage' and state.GetAttribute('bandaging') == 'True':
             return
@@ -154,14 +172,24 @@ def toolkit(state):
     spells = {'cleanse':('Cleanse By Fire',True),'close-wounds':('Close Wounds',True),
         'consecrate':('Consecrate Weapon',False),'fury':('Divine Fury',False),
         'enemy-one':('Enemy of One',False),'holy-light':('Holy Light',False),
-        'dispel':('Dispel Evil',False),'remove-curse':('Remove Curse',True)}
+        'dispel':('Dispel Evil',False),'remove-curse':('Remove Curse',True),
+        'journey':('Sacred Journey',True),'noble':('Noble Sacrifice',False)}
     spell,target = spells[name]
     Cast(spell)
     if target and WaitForTarget(4000):
-        Target(Engine.Player.Serial)
+        Target(int(value(supplies['rune'],'serial')) if name=='journey' else Engine.Player.Serial)
     log('toolkit_cast',sequence=sequence,spell=spell)
 
-log('started', policy='defender-first; connected short navigation legs; toolkit qualification pending')
+def player_cast(spell, target=None):
+    global pending_cast,last_spell
+    if target is not None: target=int(target)
+    Cast(spell)
+    last_spell=time.time()
+    if target is not None:
+        pending_cast=(target,last_spell+4)
+    log('cast',spell=spell,target=target)
+
+log('started', policy='v3 finite preparation; state-based buffs; survival reserve; defender priority; native retreat')
 try:
     while not os.path.exists(os.path.join(EVIDENCE, 'native-stop.txt')):
         time.sleep(.25)
@@ -174,6 +202,20 @@ try:
         if int(value(state, 'actor')) != int(Engine.Player.Serial):
             raise Exception('Connected actor differs from frozen reference')
         mode = state.GetAttribute('state')
+        if mode == 'preparing-player':
+            now=time.time()
+            if now-last_item >= 2:
+                supplies=dict((n.GetAttribute('key'),n) for n in state.SelectNodes('supply'))
+                if value(state,'str')<150:
+                    use(supplies,'strength')
+                elif value(state,'dex')<150:
+                    use(supplies,'agility')
+                elif value(supplies.get('petals'),'remaining',10)==10:
+                    use(supplies,'petals');last_petals=now
+                elif value(state,'hits')<value(state,'hitsMax') and state.GetAttribute('bandaging')!='True':
+                    use(supplies,'bandage',True)
+                last_item=now
+            continue
         if mode.startswith('toolkit-'):
             if mode not in ('toolkit-complete','toolkit-failed'):
                 toolkit(state)
@@ -190,6 +232,20 @@ try:
                 break
             continue
         now = time.time()
+        if pending_cast is not None:
+            if WaitForTarget(10):
+                Target(pending_cast[0]);log('spell_target',target=pending_cast[0]);pending_cast=None
+                last_spell=now
+            elif now>pending_cast[1]:
+                log('spell_target_timeout');pending_cast=None
+        if retreat_requested and max(abs(value(state,'x')-value(state,'refugeX')),abs(value(state,'y')-value(state,'refugeY')))<=1:
+            log('retreat_arrived',x=value(state,'x'),y=value(state,'y'))
+            # Keep this outcome distinct from a completed encounter; recovery/re-entry is a separate policy gate.
+            temporary=os.path.join(EVIDENCE,'retreat-stop.tmp')
+            with open(temporary,'w') as output: output.write('stop')
+            os.rename(temporary,os.path.join(EVIDENCE,'benchmark-command.txt'))
+            retreat_requested=0
+            continue
         if navigation_rejections >= 10 and state.GetAttribute('paralyzed') != 'True' and state.GetAttribute('frozen') != 'True':
             raise Exception('Ten native navigation requests rejected without control effect')
         player = Engine.Player
@@ -203,6 +259,7 @@ try:
         # Server observation supplies ownership, not actions. Only client-visible enemies can be attacked.
         enemies = []
         enemy_names = {}
+        enemy_types = {}
         defenders = set()
         for node in state.SelectNodes('enemy'):
             mobile = Engine.Mobiles.GetMobile(int(value(node, 'serial')))
@@ -210,6 +267,7 @@ try:
                 distance = max(abs(int(mobile.X) - int(player.X)), abs(int(mobile.Y) - int(player.Y)))
                 enemies.append((distance, int(mobile.Serial), mobile))
                 enemy_names[int(mobile.Serial)] = node.GetAttribute('name')
+                enemy_types[int(mobile.Serial)] = node.GetAttribute('type')
                 if node.GetAttribute('name') == 'a dread spider':
                     defenders.add(int(mobile.Serial))
         enemies.sort(key=lambda item: (item[0], item[1]))
@@ -241,38 +299,71 @@ try:
 
         fraction = value(state, 'hits') / max(1, value(state, 'hitsMax'))
         poisoned = state.GetAttribute('poisoned') == 'True'
+        bandaging = state.GetAttribute('bandaging') == 'True'
+        controlled = state.GetAttribute('paralyzed')=='True' or state.GetAttribute('frozen')=='True'
+        mortal = state.GetAttribute('mortalWound')=='True'
+        mana=value(state,'mana')
+        can_cast=(not controlled and pending_cast is None and not state.GetAttribute('currentSpell')
+                  and state.GetAttribute('targetPending')!='True' and value(state,'spellCooldownSeconds')<=0 and now-last_spell>.5)
+        ability=state.GetAttribute('currentAbility')
+        if previous_ability and not ability: last_special=now
+        previous_ability=ability
         if now - last_item >= 1:
             held = int(value(state, 'restraint'))
             if held:
                 UseObject(held, True)
                 log('escape', serial=held)
                 last_item = now
-            elif poisoned and use(supplies, 'cure'):
+            elif poisoned and (fraction<.5 or (value(state,'poisonLevel')==4 and fraction<.65)) and use(supplies, 'cure'):
                 last_item = now
-            elif fraction < .55 and now - last_heal >= 10 and use(supplies, 'heal'):
+            elif not poisoned and not mortal and fraction < .55 and now - last_heal >= 10 and use(supplies, 'heal'):
                 last_item = last_heal = now
-            elif fraction < .9 and state.GetAttribute('bandaging') != 'True' and use(supplies, 'bandage', True):
-                last_item = now
+            elif (poisoned or (fraction < .92 and not mortal)) and not bandaging and pending_cast is None and use(supplies, 'bandage', True):
+                last_item = last_bandage = now
+            elif poisoned and bandaging and now-last_bandage>5 and use(supplies,'cure'):
+                last_item=now
+            elif value(state,'stam')<.6*value(state,'stamMax') and use(supplies,'refresh'):
+                last_item=now
+            elif state.GetAttribute('statCurse')!='True' and value(state,'str')<150 and now-last_strength>=120 and use(supplies,'strength'):
+                last_item=last_strength=now
+            elif state.GetAttribute('statCurse')!='True' and value(state,'dex')<150 and now-last_agility>=120 and use(supplies,'agility'):
+                last_item=last_agility=now
             elif mode == 'running-antivenom' and value(state, 'antivenomCharges') == 0 and now - last_antivenom >= 120 and use(supplies, 'antivenom', True):
                 last_item = last_antivenom = now
             elif now - last_petals >= 300 and use(supplies, 'petals'):
                 last_item = last_petals = now
 
-        if enemies and enemies[0][0] <= 1 and not bool(walking.GetValue(None)) and now - last_spell >= 2:
-            mana = value(state, 'mana')
-            if fraction < .35 and not poisoned and mana >= 10:
-                Cast('Close Wounds')
-                if WaitForTarget(1000): Target(player.Serial)
-                last_spell = now
-                log('cast', spell='Close Wounds')
-            elif mana >= 15 and now - last_enemy >= 120:
-                Cast('Enemy of One')
-                last_spell = last_enemy = now
-                log('cast', spell='Enemy of One')
-            elif mana >= 10 and now - last_consecrate >= 9:
-                Cast('Consecrate Weapon')
-                last_spell = last_consecrate = now
-                log('cast', spell='Consecrate Weapon')
+        if can_cast:
+            if fraction<.25 and now-last_heal<10 and mana>=6 and not retreat_requested:
+                player_cast('Sacred Journey',int(value(supplies['rune'],'serial')));retreat_requested=now
+            elif (mortal or state.GetAttribute('statCurse')=='True') and mana>=12:
+                player_cast('Remove Curse',player.Serial)
+            elif poisoned and fraction>.45 and mana>=24 and value(supplies['cure'],'remaining')<25 and (not bandaging or now-last_bandage<2):
+                player_cast('Cleanse By Fire',player.Serial)
+            elif fraction<.4 and not poisoned and not mortal and mana>=6:
+                player_cast('Close Wounds',player.Serial)
+            elif len([e for e in enemies if e[0]<=3])>=4 and fraction<.55 and mana>=24 and now-last_dispel>=15:
+                player_cast('Dispel Evil');last_dispel=now
+            elif enemies and enemies[0][0]<=1 and not bool(walking.GetValue(None)):
+                desired=enemy_types[enemies[0][1]]
+                boss_stage=int(value(state,'clearedBroods'))==7
+                active_type=state.GetAttribute('enemyOfOneType').rsplit('.',1)[-1]
+                type_change=(active_type!=desired and state.GetAttribute('waitingForEnemy')!='True')
+                if mana>=30 and type_change and (not boss_stage or desired.endswith('ArachnidOutbreakChampion')):
+                    player_cast('Enemy of One')
+                elif mana>=24 and state.GetAttribute('consecrated')!='True':
+                    player_cast('Consecrate Weapon')
+                elif mana>=27 and state.GetAttribute('divineFury')!='True':
+                    player_cast('Divine Fury')
+                elif mana>=30 and len([e for e in enemies if e[0]<=3])>=3:
+                    player_cast('Holy Light')
+        if enemies and enemies[0][0]<=1 and not controlled and not ability and now-last_special>=5 and not state.GetAttribute('currentSpell') and pending_cast is None:
+            adjacent=len([e for e in enemies if e[0]<=1])
+            number=1 if adjacent>=2 and value(state,'stam')>=150 else 4
+            cost=12 if number==1 else 9
+            if mana>=cost+18 and now-last_spell>1:
+                Msg('[SAD',0);time.sleep(.3);Msg('[Set'+str(number),0);last_special=now
+                log('ability_requested',number=number,adjacent=adjacent,mana=mana)
 except Exception as error:
     log('error', error=str(error))
     with open(os.path.join(EVIDENCE,'benchmark-driver-failed.txt'),'w') as output:
