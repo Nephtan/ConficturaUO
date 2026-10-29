@@ -44,6 +44,9 @@ last_petals = 0
 last_heartbeat = 0
 warning_serial = 0
 warning_seen = 0
+route_stage = -1
+route_index = 0
+navigation_rejections = 0
 
 def log(kind, **values):
     values.update(event=kind, utc_epoch=time.time())
@@ -72,13 +75,37 @@ def navigate(x, y, z, distance, now):
         return
     last_goal, last_walk = goal, now
     def issue():
+        global navigation_rejections
         if Engine.Connected and not os.path.exists(os.path.join(EVIDENCE, 'native-stop.txt')):
             try:
                 accepted = bool(walk.Invoke(None, Array[Object]([Int32(n) for n in goal])))
+                navigation_rejections = 0 if accepted else navigation_rejections + 1
                 log('walk', goal=goal, accepted=accepted)
             except Exception as error:
                 log('walk_error', error=str(error))
     Engine.TickWorkQueue.Enqueue(Action(issue))
+
+def navigate_stage(state, stage, player, now):
+    global route_stage, route_index
+    if stage == 0:
+        anchor = state.SelectSingleNode("anchor[@stage='0']")
+        navigate(value(anchor,'x'),value(anchor,'y'),value(anchor,'z'),1,now)
+        return
+    if route_stage != stage:
+        route_stage, route_index = stage, 0
+        log('route_stage', stage=stage, x=int(player.X), y=int(player.Y))
+    route = state.SelectSingleNode("route[@to='%d']" % stage)
+    if route is None:
+        raise Exception('Missing connected short-leg route')
+    steps = list(route.SelectNodes('step'))
+    while route_index < len(steps):
+        step = steps[route_index]
+        if max(abs(int(player.X)-value(step,'x')),abs(int(player.Y)-value(step,'y'))) > 1:
+            navigate(value(step,'x'),value(step,'y'),value(step,'z'),1,now)
+            return
+        log('route_waypoint',stage=stage,index=route_index,x=int(player.X),y=int(player.Y),
+            planned_x=value(step,'x'),planned_y=value(step,'y'))
+        route_index += 1
 
 def use(supplies, key, target=False):
     node = supplies.get(key)
@@ -91,7 +118,7 @@ def use(supplies, key, target=False):
     log('use', key=key, serial=serial)
     return True
 
-log('started', policy='reference-v1; waiting for explicit server start')
+log('started', policy='defender-first; connected short navigation legs; toolkit qualification pending')
 try:
     while not os.path.exists(os.path.join(EVIDENCE, 'native-stop.txt')):
         time.sleep(.25)
@@ -104,30 +131,48 @@ try:
         if int(value(state, 'actor')) != int(Engine.Player.Serial):
             raise Exception('Connected actor differs from frozen reference')
         mode = state.GetAttribute('state')
+        if mode == 'navigation':
+            now = time.time()
+            if navigation_rejections >= 10 and state.GetAttribute('paralyzed') != 'True' and state.GetAttribute('frozen') != 'True':
+                raise Exception('Ten native navigation requests rejected without control effect')
+            navigate_stage(state,int(value(state,'navigationStage')),Engine.Player,now)
+            continue
         if not mode.startswith('running'):
-            if mode in ('completed', 'dead', 'failed', 'aborted', 'stopped'):
+            if mode in ('completed', 'dead', 'failed', 'aborted', 'stopped', 'driver-failed', 'navigation-completed'):
                 log('finished', state=mode)
                 break
             continue
         now = time.time()
+        if navigation_rejections >= 10 and state.GetAttribute('paralyzed') != 'True' and state.GetAttribute('frozen') != 'True':
+            raise Exception('Ten native navigation requests rejected without control effect')
         player = Engine.Player
         supplies = dict((n.GetAttribute('key'), n) for n in state.SelectNodes('supply'))
         if now - last_heartbeat > 2:
             last_heartbeat = now
-            log('heartbeat', x=int(player.X), y=int(player.Y), hits=value(state, 'hits'), mana=value(state, 'mana'))
+            log('heartbeat', x=int(player.X), y=int(player.Y), hits=value(state, 'hits'), mana=value(state, 'mana'),
+                paralyzed=state.GetAttribute('paralyzed'), frozen=state.GetAttribute('frozen'),
+                str=value(state, 'str'), dex=value(state, 'dex'), intelligence=value(state, 'int'))
 
         # Server observation supplies ownership, not actions. Only client-visible enemies can be attacked.
         enemies = []
+        enemy_names = {}
+        defenders = set()
         for node in state.SelectNodes('enemy'):
             mobile = Engine.Mobiles.GetMobile(int(value(node, 'serial')))
             if mobile is not None and not mobile.IsDead:
                 distance = max(abs(int(mobile.X) - int(player.X)), abs(int(mobile.Y) - int(player.Y)))
                 enemies.append((distance, int(mobile.Serial), mobile))
+                enemy_names[int(mobile.Serial)] = node.GetAttribute('name')
+                if node.GetAttribute('name') == 'a dread spider':
+                    defenders.add(int(mobile.Serial))
         enemies.sort(key=lambda item: (item[0], item[1]))
-        current = next((entry for entry in enemies if entry[1] == last_target), None)
-        if current is not None and (current[0] <= 1 or not enemies or enemies[0][0] > 1):
-            enemies.remove(current)
-            enemies.insert(0, current)
+        nearby_defenders = [entry for entry in enemies if entry[1] in defenders and entry[0] <= 8]
+        candidates = nearby_defenders if nearby_defenders else enemies
+        current = next((entry for entry in candidates if entry[1] == last_target), None)
+        chosen = current if current is not None and current[0] <= 1 else (candidates[0] if candidates else None)
+        if chosen is not None:
+            enemies.remove(chosen)
+            enemies.insert(0, chosen)
         warning = int(value(state, 'warning'))
         if warning != warning_serial:
             warning_serial, warning_seen = warning, now
@@ -139,15 +184,13 @@ try:
             if serial != last_target or now - last_attack > 2:
                 Attack(serial)
                 last_target, last_attack = serial, now
-                log('attack', target=serial)
+                log('attack', target=serial, name=enemy_names.get(serial,''))
             if distance > 1 and not warning:
                 navigate(enemy.X, enemy.Y, enemy.Z, 1, now)
         else:
             mask = int(value(state, 'clearedBroods'))
             stage = next((n for n in range(3) if not mask & (1 << n)), 3)
-            anchor = state.SelectSingleNode("anchor[@stage='%d']" % stage)
-            if anchor is not None:
-                navigate(value(anchor, 'x'), value(anchor, 'y'), value(anchor, 'z'), 1, now)
+            navigate_stage(state,stage,player,now)
 
         fraction = value(state, 'hits') / max(1, value(state, 'hitsMax'))
         poisoned = state.GetAttribute('poisoned') == 'True'
@@ -185,4 +228,6 @@ try:
                 log('cast', spell='Consecrate Weapon')
 except Exception as error:
     log('error', error=str(error))
+    with open(os.path.join(EVIDENCE,'benchmark-driver-failed.txt'),'w') as output:
+        output.write(str(error))
     raise

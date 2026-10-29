@@ -15,7 +15,7 @@ def hashes(path):
             for p in path.rglob('*') if p.is_file()}
 
 
-def verify(root, require_clear=False):
+def verify(root, require_clear=False, require_navigation=False):
     repo = Path(__file__).resolve().parents[2]
     evidence = root/'evidence'
     prepared = json.loads((evidence/'prepared.json').read_text(encoding='utf-8-sig'))
@@ -54,24 +54,50 @@ def verify(root, require_clear=False):
     errors = [event for event in events if event['event'] in ('error','walk_error')]
     finished = [event for event in events if event['event'] == 'finished']
     assert finished and finished[-1]['state'] == state.get('state')
-    assert state.get('blessed') == 'False' and float(state.get('seconds')) > 0
+    navigation_only = state.get('navigationOnly') == 'True'
+    assert state.get('blessed') == ('True' if navigation_only else 'False') and float(state.get('seconds')) > 0
     clear = (state.get('state') == 'completed' and state.get('alive') == 'True'
              and state.get('bossKilled') == 'True' and not errors)
     starting = {'bandage':500,'cure':100,'heal':75,'petals':10,'antivenom':12}
     used = {n.get('key'):starting[n.get('key')]-int(n.get('remaining')) for n in state.findall('supply')}
+    navigation_passed = False
+    if navigation_only:
+        plan = ET.parse(evidence/'benchmark-routes.xml').getroot()
+        visits = {(int(e['stage']),int(e['index'])):e for e in events if e['event'] == 'route_waypoint'}
+        waypoints_passed = True
+        for route in plan.findall('route'):
+            stage = int(route.get('to'))
+            steps = route.findall('step')
+            for index,step in enumerate(steps[:-1]):
+                event = visits.get((stage,index))
+                if event is None or max(abs(event['x']-int(step.get('x'))),abs(event['y']-int(step.get('y')))) > 1:
+                    waypoints_passed = False
+        end = plan.findall('route')[-1].findall('step')[-1]
+        navigation_passed = (state.get('state') == 'navigation-completed' and state.get('navigationStage') == '4'
+            and {e['stage'] for e in events if e['event'] == 'route_stage'} == {1,2,3}
+            and waypoints_passed and not errors and not any(used.values())
+            and not any(e['event'] in ('attack','cast','use','escape') for e in events)
+            and max(abs(int(state.get('x'))-int(end.get('x'))),abs(int(state.get('y'))-int(end.get('y')))) <= 1
+            and int(state.get('incomingDamage')) == int(state.get('outgoingDamage')) == int(state.get('enemyDeaths')) == 0)
     report = dict(provenance_preservation_and_teardown_passed=True, reference_clear_passed=clear,
                   outcome=state.get('state'), seconds=float(state.get('seconds')),
-                  boss_killed=state.get('bossKilled') == 'True', cleared_brood_mask=int(state.get('clearedBroods')),
+                  boss_killed=state.get('bossKilled') == 'True', cleared_brood_mask=int(state.get('clearedBroods','0')),
                   owned_enemy_deaths=int(state.get('enemyDeaths')), player_dead=state.get('alive') == 'False',
                   incoming_health_loss=int(state.get('incomingDamage')),
                   owned_enemy_health_loss=int(state.get('outgoingDamage')),
                   actual_restored_hits=int(state.get('restoredHits')), supplies_consumed=used,
                   client_errors=errors, production_inputs_checked=len(inputs), private_save_files=len(hashes(root/'shard/Saves')),
                   pacing_gate='Not evaluated: requires three complete frozen-reference runs',
-                  tuning_passes=0, production_activation=False, site_approval=False)
+                  tuning_passes=0, production_activation=False, site_approval=False,
+                  navigation_only=navigation_only, navigation_route_passed=navigation_passed,
+                  native_walk_rejections=sum(e['event']=='walk' and not e['accepted'] for e in events))
+    if (evidence/'navigation-failure.json').exists():
+        report['retained_navigation_failure'] = json.loads((evidence/'navigation-failure.json').read_text())
     (evidence/'benchmark-verification.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
     print(json.dumps(report, indent=2))
     if require_clear and not clear:
+        raise SystemExit(1)
+    if require_navigation and not navigation_passed:
         raise SystemExit(1)
 
 
@@ -79,5 +105,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('root', type=Path)
     parser.add_argument('--require-clear', action='store_true')
+    parser.add_argument('--require-navigation', action='store_true')
     args = parser.parse_args()
-    verify(args.root.resolve(), args.require_clear)
+    verify(args.root.resolve(), args.require_clear, args.require_navigation)

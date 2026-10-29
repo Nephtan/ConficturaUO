@@ -10,6 +10,7 @@ using Server.Accounting;
 using Server.Items;
 using Server.Mobiles;
 using Server.Misc;
+using Server.Spells.Chivalry;
 using Server.Custom.Confictura.Champions;
 
 namespace Server.TestOnly
@@ -27,6 +28,10 @@ namespace Server.TestOnly
         private static DateTime Started;
         private static DateTime Ended;
         private static bool BossKilled;
+        private static bool ManifestConnected;
+        private static bool NavigationOnly;
+        private static int NavigationStage = 1;
+        private static readonly Point3D[][] Travel = new Point3D[3][];
         private static int EnemyDeaths;
         private static DateTime Deadline = DateTime.UtcNow.AddHours(2);
         private static string State = "preparing";
@@ -128,6 +133,7 @@ namespace Server.TestOnly
                 staging.Y -= 2;
                 staging.Z = Map.Sosaria.GetAverageZ(staging.X, staging.Y);
                 Actor.MoveToWorld(staging, Map.Sosaria);
+                BuildTravel();
                 State = "ready";
                 WriteManifest();
             }
@@ -139,6 +145,40 @@ namespace Server.TestOnly
         {
             Actor.Skills[name].Cap = cap;
             Actor.Skills[name].Base = value;
+        }
+        private static void BuildTravel()
+        {
+            Point3D[] mesh = (Point3D[])typeof(ArachnidOutbreakPlacement).GetField("m_Walkable", Private).GetValue(Placement);
+            Dictionary<Point2D, Point3D> ground = new Dictionary<Point2D, Point3D>();
+            foreach (Point3D point in mesh) ground[new Point2D(point.X, point.Y)] = point;
+            int[] dx = new int[] { -1, 1, 0, 0 }, dy = new int[] { 0, 0, -1, 1 };
+            for (int leg = 0; leg < 3; ++leg)
+            {
+                Point3D from = Placement.Brood(leg), to = leg == 2 ? Placement.Boss : Placement.Brood(leg + 1);
+                Point2D start = new Point2D(from.X, from.Y), end = new Point2D(to.X, to.Y);
+                Queue<Point2D> queue = new Queue<Point2D>();
+                Dictionary<Point2D, Point2D> previous = new Dictionary<Point2D, Point2D>();
+                previous[start] = start; queue.Enqueue(start);
+                while (queue.Count > 0 && !previous.ContainsKey(end))
+                {
+                    Point2D current = queue.Dequeue();
+                    for (int direction = 0; direction < 4; ++direction)
+                    {
+                        Point2D next = new Point2D(current.X + dx[direction], current.Y + dy[direction]);
+                        if (!ground.ContainsKey(next) || previous.ContainsKey(next) || Math.Abs(ground[next].Z - ground[current].Z) > 2) continue;
+                        previous[next] = current; queue.Enqueue(next);
+                    }
+                }
+                if (!previous.ContainsKey(end)) throw new Exception("Disconnected benchmark travel leg.");
+                List<Point3D> path = new List<Point3D>();
+                Point2D cursor = end;
+                while (cursor != start) { path.Add(ground[cursor]); cursor = previous[cursor]; }
+                path.Add(ground[start]); path.Reverse();
+                List<Point3D> waypoints = new List<Point3D>();
+                for (int i = 0; i < path.Count; i += 6) waypoints.Add(path[i]);
+                if (waypoints[waypoints.Count - 1] != to) waypoints.Add(to);
+                Travel[leg] = waypoints.ToArray();
+            }
         }
         private static void Equip(Item item)
         {
@@ -198,16 +238,27 @@ namespace Server.TestOnly
                     string command = File.ReadAllText(request).Trim(); File.Delete(request);
                     if (command == "start-no-antivenom") Begin(false);
                     else if (command == "start-antivenom") Begin(true);
+                    else if (command == "start-navigation" && State == "ready" && Actor.NetState != null)
+                    { NavigationOnly = true; State = "navigation"; Started = DateTime.UtcNow; }
                     else if (command == "stop") State = "stopped";
                     else throw new Exception("Unknown benchmark command.");
                 }
                 if (State.StartsWith("running"))
                 {
                     if (!Actor.Alive) State = "dead";
-                    else if (Controller.Phase == ArachnidOutbreakPhase.Cooldown) State = BossKilled ? "completed" : "aborted";
+                    else if (Controller.Phase == ArachnidOutbreakPhase.Cooldown) State = BossKilled && Controller.Status == "Completed; cooldown active." ? "completed" : "aborted";
                     else if (Controller.Phase == ArachnidOutbreakPhase.Disabled) State = "aborted";
                 }
-                if (Started != DateTime.MinValue && !State.StartsWith("running") && Ended == DateTime.MinValue) Ended = DateTime.UtcNow;
+                if (State == "navigation")
+                {
+                    Point3D destination = NavigationStage == 3 ? Placement.Boss : Placement.Brood(NavigationStage);
+                    if (Actor.InRange(destination, 1) && ++NavigationStage > 3) State = "navigation-completed";
+                }
+                if (Actor != null && Actor.NetState != null && State == "ready" && !ManifestConnected)
+                { WriteManifest(); ManifestConnected = true; }
+                if (File.Exists(Path.Combine(Evidence, "benchmark-driver-failed.txt")) && (State.StartsWith("running") || State == "navigation"))
+                    State = "driver-failed";
+                if (Started != DateTime.MinValue && !State.StartsWith("running") && State != "navigation" && Ended == DateTime.MinValue) Ended = DateTime.UtcNow;
                 WriteStatus();
                 if (DateTime.UtcNow > Deadline || File.Exists(Path.Combine(Evidence, "native-stop.txt")))
                 {
@@ -247,7 +298,26 @@ namespace Server.TestOnly
                 Attr(writer, "cold", Actor.ColdResistance); Attr(writer, "poison", Actor.PoisonResistance); Attr(writer, "energy", Actor.EnergyResistance);
                 Attr(writer, "fame", Actor.Fame); Attr(writer, "karma", Actor.Karma); Attr(writer, "tithing", Actor.TithingPoints);
                 Attr(writer, "totalWeight", Actor.TotalWeight); Attr(writer, "race", Actor.RaceID);
+                Attr(writer, "coreAOS", Core.AOS); Attr(writer, "coreML", Core.ML);
+                Attr(writer, "abilityBaseSkill", MyServerSettings.SpecialWeaponAbilSkill());
+                Attr(writer, "enhancePotions", BasePotion.EnhancePotions(Actor));
                 Attr(writer, "skillOrigin", Actor.SkillStart); Attr(writer, "skillBoost", Actor.SkillBoost); Attr(writer, "skillEther", Actor.SkillEther);
+                BaseWeapon weapon = Actor.Weapon as BaseWeapon;
+                if (weapon != null)
+                    foreach (WeaponAbility ability in new WeaponAbility[] { weapon.PrimaryAbility, weapon.SecondaryAbility, weapon.ThirdAbility, weapon.FourthAbility, weapon.FifthAbility })
+                    {
+                        if (ability == null) continue;
+                        writer.WriteStartElement("weaponAbility"); Attr(writer, "name", ability.GetType().Name);
+                        Attr(writer, "baseMana", ability.BaseMana); Attr(writer, "currentManaCost", ability.CalculateMana(Actor));
+                        Attr(writer, "requiredSkill", ability.GetRequiredSkill(Actor)); Attr(writer, "skillGate", ability.CheckSkills(Actor));
+                        writer.WriteEndElement();
+                    }
+                foreach (PaladinSpell spell in new PaladinSpell[] { new CleanseByFireSpell(Actor, null), new CloseWoundsSpell(Actor, null), new ConsecrateWeaponSpell(Actor, null), new DispelEvilSpell(Actor, null), new DivineFurySpell(Actor, null), new EnemyOfOneSpell(Actor, null), new HolyLightSpell(Actor, null), new NobleSacrificeSpell(Actor, null), new RemoveCurseSpell(Actor, null), new SacredJourneySpell(Actor, null) })
+                {
+                    writer.WriteStartElement("spell"); Attr(writer, "name", spell.GetType().Name);
+                    Attr(writer, "baseMana", spell.RequiredMana); Attr(writer, "currentManaCost", spell.ScaleMana(spell.RequiredMana));
+                    Attr(writer, "requiredSkill", spell.RequiredSkill); Attr(writer, "tithing", spell.RequiredTithing); writer.WriteEndElement();
+                }
                 for (int i = 0; i < Actor.Skills.Length; ++i)
                     if (Actor.Skills[i].Base > 0)
                     {
@@ -290,11 +360,14 @@ namespace Server.TestOnly
                 Attr(writer, "seconds", Started == DateTime.MinValue ? 0 : ((Ended == DateTime.MinValue ? DateTime.UtcNow : Ended) - Started).TotalSeconds);
                 Attr(writer, "failure", Failure); Attr(writer, "incomingDamage", IncomingDamage); Attr(writer, "outgoingDamage", OutgoingDamage); Attr(writer, "restoredHits", RestoredHits);
                 Attr(writer, "enemyDeaths", EnemyDeaths); Attr(writer, "bossKilled", BossKilled);
+                Attr(writer, "navigationOnly", NavigationOnly); Attr(writer, "navigationStage", NavigationStage);
                 if (Actor != null)
                 {
                     Attr(writer, "actor", Actor.Serial.Value); Attr(writer, "online", Actor.NetState != null); Attr(writer, "alive", Actor.Alive);
                     Attr(writer, "x", Actor.X); Attr(writer, "y", Actor.Y); Attr(writer, "z", Actor.Z);
                     Attr(writer, "hits", Actor.Hits); Attr(writer, "hitsMax", Actor.HitsMax); Attr(writer, "mana", Actor.Mana); Attr(writer, "poisoned", Actor.Poisoned);
+                    Attr(writer, "str", Actor.Str); Attr(writer, "dex", Actor.Dex); Attr(writer, "int", Actor.Int);
+                    Attr(writer, "paralyzed", Actor.Paralyzed); Attr(writer, "frozen", Actor.Frozen);
                     Attr(writer, "blessed", Actor.Blessed); Attr(writer, "tithing", Actor.TithingPoints);
                     Attr(writer, "bandaging", BandageContext.GetContext(Actor) != null);
                     int effects;
@@ -319,15 +392,25 @@ namespace Server.TestOnly
                     Attr(writer, "remaining", supply.Value.Deleted ? 0 : supply.Value.Amount); writer.WriteEndElement();
                 }
                 if (Placement != null)
+                {
                     for (int stage = 0; stage < 4; ++stage)
                     {
                         Point3D point = stage == 3 ? Placement.Boss : Placement.Brood(stage);
                         writer.WriteStartElement("anchor"); Attr(writer, "stage", stage); Attr(writer, "x", point.X); Attr(writer, "y", point.Y); Attr(writer, "z", point.Z); writer.WriteEndElement();
                     }
+                    for (int leg = 0; leg < Travel.Length; ++leg)
+                    {
+                        writer.WriteStartElement("route"); Attr(writer, "to", leg + 1);
+                        if (Travel[leg] != null) foreach (Point3D point in Travel[leg])
+                        { writer.WriteStartElement("step"); Attr(writer, "x", point.X); Attr(writer, "y", point.Y); Attr(writer, "z", point.Z); writer.WriteEndElement(); }
+                        writer.WriteEndElement();
+                    }
+                }
                 foreach (Mobile creature in Creatures())
                     if (!creature.Deleted && creature.Alive)
                     {
                         writer.WriteStartElement("enemy"); Attr(writer, "serial", creature.Serial.Value); Attr(writer, "type", creature.GetType().Name);
+                        Attr(writer, "name", creature.Name);
                         Attr(writer, "x", creature.X); Attr(writer, "y", creature.Y); Attr(writer, "z", creature.Z);
                         Attr(writer, "hits", creature.Hits); Attr(writer, "hitsMax", creature.HitsMax); writer.WriteEndElement();
                     }
