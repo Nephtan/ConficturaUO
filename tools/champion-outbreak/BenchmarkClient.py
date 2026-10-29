@@ -56,6 +56,7 @@ pending_cast = None
 last_bandage = last_strength = last_agility = last_special = last_dispel = 0
 previous_ability = ''
 retreat_requested = 0
+dodge_requested = 0
 
 def log(kind, **values):
     values.update(event=kind, utc_epoch=time.time())
@@ -77,6 +78,17 @@ def value(node, key, default=0):
     text = node.GetAttribute(key)
     return float(text) if text else default
 
+def local_goals(start, goal):
+    x,y,z=start
+    if max(abs(goal[0]-x),abs(goal[1]-y))<=24:
+        return [goal]
+    candidates=[(x+dx*6,y+dy*6,z,1) for dx in (-1,0,1) for dy in (-1,0,1) if dx or dy]
+    return sorted(candidates,key=lambda p:(p[0]-goal[0])**2+(p[1]-goal[1])**2)
+
+def dodge_goals(x,y,z,center_x,center_y):
+    candidates=[(x-2,y,z,0),(x+2,y,z,0),(x,y-2,z,0),(x,y+2,z,0)]
+    return sorted(candidates,key=lambda p:(p[0]-center_x)**2+(p[1]-center_y)**2)
+
 def navigate(x, y, z, distance, now):
     global last_goal, last_walk
     goal = (int(x), int(y), int(z), int(distance))
@@ -87,9 +99,13 @@ def navigate(x, y, z, distance, now):
         global navigation_rejections
         if Engine.Connected and not os.path.exists(os.path.join(EVIDENCE, 'native-stop.txt')):
             try:
-                accepted = bool(walk.Invoke(None, Array[Object]([Int32(n) for n in goal])))
+                origin=(int(Engine.Player.X),int(Engine.Player.Y),int(Engine.Player.Z))
+                accepted=False
+                for actual in local_goals(origin,goal):
+                    accepted = bool(walk.Invoke(None, Array[Object]([Int32(n) for n in actual])))
+                    log('walk',goal=actual,requested=goal,origin=origin,accepted=accepted)
+                    if accepted:break
                 navigation_rejections = 0 if accepted else navigation_rejections + 1
-                log('walk', goal=goal, accepted=accepted)
             except Exception as error:
                 log('walk_error', error=str(error))
     Engine.TickWorkQueue.Enqueue(Action(issue))
@@ -283,7 +299,19 @@ try:
             warning_serial, warning_seen = warning, now
             if warning: log('warning_observed', serial=warning)
         if warning and now - warning_seen >= .75:
-            navigate(value(state, 'warningX') + 2, value(state, 'warningY'), player.Z, 0, now)
+            if warning!=dodge_requested:
+                dodge_requested=warning
+                anchor=state.SelectSingleNode("anchor[@stage='3']")
+                warning_tile=(int(value(state,'warningX')),int(value(state,'warningY')))
+                goals=dodge_goals(warning_tile[0],warning_tile[1],int(player.Z),value(anchor,'x'),value(anchor,'y'))
+                def dodge(goals=tuple(goals),warning_tile=warning_tile):
+                    if not Engine.Connected or os.path.exists(os.path.join(EVIDENCE,'native-stop.txt')):return
+                    if (int(Engine.Player.X),int(Engine.Player.Y))!=warning_tile:return
+                    for goal in goals:
+                        accepted=bool(walk.Invoke(None,Array[Object]([Int32(n) for n in goal])))
+                        log('dodge_walk',goal=goal,accepted=accepted)
+                        if accepted:break
+                Engine.TickWorkQueue.Enqueue(Action(dodge))
         if enemies:
             distance, serial, enemy = enemies[0]
             if serial != last_target or now - last_attack > 2:

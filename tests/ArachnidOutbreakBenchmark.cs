@@ -31,6 +31,7 @@ namespace Server.TestOnly
         private static bool BossKilled;
         private static bool ManifestConnected;
         private static bool NavigationOnly;
+        private static bool NavigationRecovery;
         private static int NavigationStage = 1;
         private static readonly Point3D[][] Travel = new Point3D[3][];
         private static int EnemyDeaths;
@@ -428,6 +429,15 @@ namespace Server.TestOnly
                     else if (command == "start-antivenom") Begin(true);
                     else if (command == "start-navigation" && State == "ready" && Actor.NetState != null)
                     { NavigationOnly = true; State = "navigation"; Started = DateTime.UtcNow; }
+                    else if (command == "start-recovery-navigation" && State == "ready" && Actor.NetState != null)
+                    {
+                        Point3D origin = new Point3D(Site.Center.X + 58, Site.Center.Y + 10, 0);
+                        origin.Z = Actor.Map.GetAverageZ(origin.X, origin.Y);
+                        if (!Actor.Map.CanSpawnMobile(origin)) throw new Exception("Recovery navigation origin is blocked.");
+                        Actor.MoveToWorld(origin, Actor.Map);
+                        NavigationOnly = NavigationRecovery = true; NavigationStage = 3;
+                        State = "navigation"; Started = DateTime.UtcNow;
+                    }
                     else if ((command == "prepare-player" || command == "prepare-antivenom") && State == "ready" && Started == DateTime.MinValue && ProbeName == null && !PlayerPrepared)
                     {
                         if (command == "prepare-antivenom") Supply("antivenom", new BroodAntivenom(), 12);
@@ -591,6 +601,7 @@ namespace Server.TestOnly
                 Attr(writer, "failure", Failure); Attr(writer, "incomingDamage", IncomingDamage); Attr(writer, "outgoingDamage", OutgoingDamage); Attr(writer, "restoredHits", RestoredHits);
                 Attr(writer, "enemyDeaths", EnemyDeaths); Attr(writer, "bossKilled", BossKilled);
                 Attr(writer, "navigationOnly", NavigationOnly); Attr(writer, "navigationStage", NavigationStage);
+                Attr(writer, "navigationRecovery", NavigationRecovery);
                 if (ProbeName != null)
                 {
                     Attr(writer, "probe", ProbeName); Attr(writer, "probeSequence", ProbeSequence);

@@ -16,7 +16,7 @@ def hashes(path):
             for p in path.rglob('*') if p.is_file()}
 
 
-def verify(root, require_clear=False, require_navigation=False, production_ref=None):
+def verify(root, require_clear=False, require_navigation=False, production_ref=None, require_recovery=False):
     repo = Path(__file__).resolve().parents[2]
     evidence = root/'evidence'
     prepared = json.loads((evidence/'prepared.json').read_text(encoding='utf-8-sig'))
@@ -64,7 +64,11 @@ def verify(root, require_clear=False, require_navigation=False, production_ref=N
     events = [json.loads(line) for line in (evidence/'benchmark-client.jsonl').read_text().splitlines()]
     errors = [event for event in events if event['event'] in ('error','walk_error')]
     finished = [event for event in events if event['event'] == 'finished']
-    assert finished and finished[-1]['state'] == state.get('state')
+    if state.get('state')=='driver-failed':
+        assert errors and (evidence/'benchmark-driver-failed.txt').is_file()
+        assert any(e.get('error')==(evidence/'benchmark-driver-failed.txt').read_text() for e in errors)
+    else:
+        assert finished and finished[-1]['state'] == state.get('state')
     navigation_only = state.get('navigationOnly') == 'True'
     assert state.get('blessed') == ('True' if navigation_only else 'False') and float(state.get('seconds')) > 0
     clear = (state.get('state') == 'completed' and state.get('alive') == 'True'
@@ -78,6 +82,7 @@ def verify(root, require_clear=False, require_navigation=False, production_ref=N
     used = {n.get('key'):starting[n.get('key')]-int(n.get('remaining')) for n in state.findall('supply')}
     assert all(amount>=0 for amount in used.values()),'Supply refilled or wrong frozen loadout'
     navigation_passed = False
+    recovery_passed = False
     if navigation_only:
         plan = ET.parse(evidence/'benchmark-routes.xml').getroot()
         visits = {(int(e['stage']),int(e['index'])):e for e in events if e['event'] == 'route_waypoint'}
@@ -96,6 +101,16 @@ def verify(root, require_clear=False, require_navigation=False, production_ref=N
             and not any(e['event'] in ('attack','cast','use','escape') for e in events)
             and max(abs(int(state.get('x'))-int(end.get('x'))),abs(int(state.get('y'))-int(end.get('y')))) <= 1
             and int(state.get('incomingDamage')) == int(state.get('outgoingDamage')) == int(state.get('enemyDeaths')) == 0)
+        if state.get('navigationRecovery')=='True':
+            long_requests=[e for e in events if e['event']=='walk' and 'origin' in e
+                           and max(abs(e['origin'][0]-e['requested'][0]),abs(e['origin'][1]-e['requested'][1]))>24]
+            recovery_passed=(state.get('state')=='navigation-completed' and state.get('navigationStage')=='4'
+                and not errors and not any(used.values()) and long_requests
+                and all(max(abs(e['origin'][0]-e['goal'][0]),abs(e['origin'][1]-e['goal'][1]))<=6 for e in long_requests)
+                and any(e['accepted'] for e in long_requests)
+                and not any(e['event'] in ('attack','cast','use','escape') for e in events)
+                and max(abs(int(state.get('x'))-int(end.get('x'))),abs(int(state.get('y'))-int(end.get('y'))))<=1
+                and int(state.get('incomingDamage'))==int(state.get('outgoingDamage'))==int(state.get('enemyDeaths'))==0)
     report = dict(provenance_preservation_and_teardown_passed=True, reference_clear_passed=clear,
                   outcome=state.get('state'), seconds=float(state.get('seconds')),
                   boss_killed=state.get('bossKilled') == 'True', cleared_brood_mask=int(state.get('clearedBroods','0')),
@@ -107,6 +122,7 @@ def verify(root, require_clear=False, require_navigation=False, production_ref=N
                   pacing_gate='Not evaluated: requires three complete frozen-reference runs',
                   tuning_passes=0, production_activation=False, site_approval=False,
                   navigation_only=navigation_only, navigation_route_passed=navigation_passed,
+                  navigation_recovery_passed=bool(recovery_passed),
                   historical_production_ref=historical,
                   native_walk_rejections=sum(e['event']=='walk' and not e['accepted'] for e in events))
     if (evidence/'navigation-failure.json').exists():
@@ -117,6 +133,8 @@ def verify(root, require_clear=False, require_navigation=False, production_ref=N
         raise SystemExit(1)
     if require_navigation and not navigation_passed:
         raise SystemExit(1)
+    if require_recovery and not recovery_passed:
+        raise SystemExit(1)
 
 
 if __name__ == '__main__':
@@ -125,5 +143,6 @@ if __name__ == '__main__':
     parser.add_argument('--require-clear', action='store_true')
     parser.add_argument('--require-navigation', action='store_true')
     parser.add_argument('--production-ref', help='Exact historical production snapshot when current source has moved')
+    parser.add_argument('--require-recovery-navigation',action='store_true')
     args = parser.parse_args()
-    verify(args.root.resolve(), args.require_clear, args.require_navigation, args.production_ref)
+    verify(args.root.resolve(), args.require_clear, args.require_navigation, args.production_ref,args.require_recovery_navigation)

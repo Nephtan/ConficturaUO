@@ -9,7 +9,7 @@ import uuid
 import xml.etree.ElementTree as ET
 from FreezeBenchmark import read_status, read_shared
 
-TERMINAL=('completed','dead','failed','aborted','stopped','driver-failed')
+TERMINAL=('completed','dead','failed','aborted','stopped','driver-failed','navigation-completed')
 
 
 def capture(root):
@@ -42,6 +42,14 @@ def wait_for_outcome(root):
         state=read_status(evidence/'benchmark-state.xml')
         if state.get('state') in TERMINAL:
             capture(root)
+            acknowledgement=time.monotonic()+2
+            while state.get('state')!='driver-failed' and time.monotonic()<acknowledgement:
+                events=[]
+                for line in (evidence/'benchmark-client.jsonl').read_text().splitlines():
+                    try:events.append(json.loads(line))
+                    except json.JSONDecodeError:pass
+                if any(e.get('event')=='finished' and e.get('state')==state.get('state') for e in events):break
+                time.sleep(.05)
             (evidence/'native-stop.txt').write_text('Terminal outcome captured; cleanup without saving.')
             return
         if time.monotonic()-last_report>=45:

@@ -86,7 +86,7 @@ def freeze(args):
             if state.get('state')=='ready' and state.get('playerPrepared')=='True':break
         assert state.get('playerPrepared')=='True','Native preparation did not finish'
     assert state.get('seconds') == '0' and state.get('blessed') == 'True' and state.get('alive') == 'True'
-    if args.start and args.start!='navigation' and state.get('referenceVersion')=='3':
+    if args.start in ('no-antivenom','antivenom') and state.get('referenceVersion')=='3':
         assert state.get('playerPrepared')=='True','Native preparation is incomplete'
     inputs = json.loads((Path(prepared['candidate'])/'inputs.json').read_text(encoding='utf-8-sig'))['files']
     assert all(sha(repo/p) == expected for p, expected in inputs.items()), 'Production source changed'
@@ -135,6 +135,6 @@ if __name__ == '__main__':
     parser.add_argument('root',type=Path)
     parser.add_argument('--policy',required=True)
     parser.add_argument('--compare-reference',type=Path)
-    parser.add_argument('--start',choices=['no-antivenom','antivenom','navigation'])
+    parser.add_argument('--start',choices=['no-antivenom','antivenom','navigation','recovery-navigation'])
     parser.add_argument('--prepare',action='store_true',help='Use normal native preparation before freezing and starting a fresh v3 run')
     freeze(parser.parse_args())
