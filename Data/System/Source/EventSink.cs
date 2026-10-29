@@ -63,6 +63,46 @@ namespace Server
     }
 
     public delegate void HealthChangedEventHandler(HealthChangedEventArgs e);
+    public enum PoisonChangeKind
+    {
+        Unattributed,
+        Application,
+        Cure
+    }
+
+    public sealed class PoisonChangedEventArgs : EventArgs
+    {
+        private readonly Mobile m_Mobile, m_Source;
+        private readonly Poison m_OldPoison, m_NewPoison;
+        private readonly PoisonChangeKind m_Kind;
+        public Mobile Mobile { get { return m_Mobile; } }
+        public Mobile Source { get { return m_Source; } }
+        public Poison OldPoison { get { return m_OldPoison; } }
+        public Poison NewPoison { get { return m_NewPoison; } }
+        public PoisonChangeKind Kind { get { return m_Kind; } }
+        public PoisonChangedEventArgs(Mobile mobile, Mobile source, Poison oldPoison, Poison newPoison, PoisonChangeKind kind)
+        {
+            m_Mobile = mobile; m_Source = source; m_OldPoison = oldPoison; m_NewPoison = newPoison; m_Kind = kind;
+        }
+    }
+
+    public sealed class PoisonPreventionEventArgs : EventArgs
+    {
+        private readonly Mobile m_Mobile, m_Source;
+        private readonly Poison m_Poison;
+        private bool m_Prevented;
+        public Mobile Mobile { get { return m_Mobile; } }
+        public Mobile Source { get { return m_Source; } }
+        public Poison Poison { get { return m_Poison; } }
+        public bool Prevented { get { return m_Prevented; } }
+        public void Prevent() { m_Prevented = true; }
+        public PoisonPreventionEventArgs(Mobile mobile, Mobile source, Poison poison)
+        {
+            m_Mobile = mobile; m_Source = source; m_Poison = poison;
+        }
+    }
+    public delegate void PoisonChangedEventHandler(PoisonChangedEventArgs e);
+    public delegate void PoisonPreventionEventHandler(PoisonPreventionEventArgs e);
     public delegate void MobileDeathEventHandler(Mobile mobile);
     public delegate void CharacterCreatedEventHandler(CharacterCreatedEventArgs e);
     public delegate void OpenDoorMacroEventHandler(OpenDoorMacroEventArgs e);
@@ -1181,6 +1221,8 @@ namespace Server
         public static event MovementEventHandler Movement;
         public static event HungerChangedEventHandler HungerChanged;
         public static event HealthChangedEventHandler HealthChanged;
+        public static event PoisonChangedEventHandler PoisonChanged;
+        public static event PoisonPreventionEventHandler PoisonPrevention;
         public static event MobileDeathEventHandler MobileDeath;
         public static event CrashedEventHandler Crashed;
         public static event ShutdownEventHandler Shutdown;
@@ -1451,6 +1493,34 @@ namespace Server
             }
         }
 
+        public static void InvokePoisonChanged(PoisonChangedEventArgs args)
+        {
+            PoisonChangedEventHandler handlers = PoisonChanged;
+            if (handlers == null)
+                return;
+            foreach (PoisonChangedEventHandler handler in handlers.GetInvocationList())
+            {
+                try { handler(args); }
+                catch (Exception error) { Console.WriteLine("PoisonChanged observer failed: {0}", error); }
+            }
+        }
+
+        public static bool InvokePoisonPrevention(Mobile mobile, Mobile source, Poison poison)
+        {
+            PoisonPreventionEventHandler handlers = PoisonPrevention;
+            if (handlers == null)
+                return false;
+            PoisonPreventionEventArgs args = new PoisonPreventionEventArgs(mobile, source, poison);
+            foreach (PoisonPreventionEventHandler handler in handlers.GetInvocationList())
+            {
+                try { handler(args); }
+                catch (Exception error) { Console.WriteLine("PoisonPrevention observer failed: {0}", error); }
+                if (args.Prevented)
+                    return true;
+            }
+            return false;
+        }
+
         public static void InvokeMovement(MovementEventArgs e)
         {
             if (Movement != null)
@@ -1509,6 +1579,8 @@ namespace Server
             Movement = null;
             HungerChanged = null;
             HealthChanged = null;
+            PoisonChanged = null;
+            PoisonPrevention = null;
             MobileDeath = null;
             Crashed = null;
             Shutdown = null;

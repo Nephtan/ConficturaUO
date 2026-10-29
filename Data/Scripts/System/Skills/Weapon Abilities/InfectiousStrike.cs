@@ -86,7 +86,8 @@ namespace Server.Items
             defender.PlaySound(0xDD);
             defender.FixedParticles(0x3728, 244, 25, 9941, 1266, 0, EffectLayer.Waist);
 
-            if (defender.ApplyPoison(attacker, p) != ApplyPoisonResult.Immune)
+            ApplyPoisonResult poisonResult = defender.ApplyPoison(attacker, p);
+            if (poisonResult != ApplyPoisonResult.Immune && poisonResult != ApplyPoisonResult.Blocked)
             {
                 Misc.Titles.AwardKarma(attacker, -20, true);
                 attacker.SendLocalizedMessage(1008096, true, defender.Name); // You have poisoned your target :

@@ -481,7 +481,8 @@ namespace Server
         Poisoned,
         Immune,
         HigherPoisonActive,
-        Cured
+        Cured,
+        Blocked
     }
     #endregion
 
@@ -576,6 +577,34 @@ namespace Server
         {
             HealthChangeContext context = new HealthChangeContext(this, source, kind);
             try { Hits = value; }
+            finally { context.Dispose(); }
+        }
+
+        [ThreadStatic]
+        private static Mobile s_PoisonTarget;
+        [ThreadStatic]
+        private static Mobile s_PoisonSource;
+        [ThreadStatic]
+        private static PoisonChangeKind s_PoisonKind;
+
+        private struct PoisonChangeContext
+        {
+            private readonly Mobile m_Target, m_Source;
+            private readonly PoisonChangeKind m_Kind;
+            public PoisonChangeContext(Mobile target, Mobile source, PoisonChangeKind kind)
+            {
+                m_Target = s_PoisonTarget; m_Source = s_PoisonSource; m_Kind = s_PoisonKind;
+                s_PoisonTarget = target; s_PoisonSource = source; s_PoisonKind = kind;
+            }
+            public void Dispose()
+            {
+                s_PoisonTarget = m_Target; s_PoisonSource = m_Source; s_PoisonKind = m_Kind;
+            }
+        }
+        private void SetAttributedPoison(Poison poison, Mobile source, PoisonChangeKind kind)
+        {
+            PoisonChangeContext context = new PoisonChangeContext(this, source, kind);
+            try { Poison = poison; }
             finally { context.Dispose(); }
         }
 
@@ -10276,6 +10305,7 @@ namespace Server
 
                 /*if ( m_Poison != value && (m_Poison == null || value == null || m_Poison.Level < value.Level) )
                 {*/
+                Poison oldPoison = m_Poison;
                 m_Poison = value;
                 Delta(MobileDelta.HealthbarPoison);
 
@@ -10301,6 +10331,11 @@ namespace Server
 
                 CheckStatTimers();
                 /*}*/
+                Mobile poisonSource = s_PoisonTarget == this ? s_PoisonSource : null;
+                PoisonChangeKind poisonKind = s_PoisonTarget == this ? s_PoisonKind : PoisonChangeKind.Unattributed;
+                PoisonChangeContext callbackContext = new PoisonChangeContext(null, null, PoisonChangeKind.Unattributed);
+                try { EventSink.InvokePoisonChanged(new PoisonChangedEventArgs(this, poisonSource, oldPoison, m_Poison, poisonKind)); }
+                finally { callbackContext.Dispose(); }
             }
         }
 
@@ -10398,8 +10433,7 @@ namespace Server
         {
             if (poison == null)
             {
-                CurePoison(from);
-                return ApplyPoisonResult.Cured;
+                return CurePoison(from) ? ApplyPoisonResult.Cured : ApplyPoisonResult.Blocked;
             }
 
             if (CheckHigherPoison(from, poison))
@@ -10414,12 +10448,25 @@ namespace Server
                 return ApplyPoisonResult.Immune;
             }
 
-            Poison oldPoison = m_Poison;
-            this.Poison = poison;
-
-            OnPoisoned(from, poison, oldPoison);
-
-            return ApplyPoisonResult.Poisoned;
+            IDisposable turnScope = TurnBasedCombatBridge.BeginMutation(new TurnMutationRequest(from, this,
+                TurnMutationKind.Poison, m_Poison == null ? -1 : m_Poison.Level, poison.Level));
+            if (turnScope == null)
+                return ApplyPoisonResult.Blocked;
+            try
+            {
+                if (EventSink.InvokePoisonPrevention(this, from, poison))
+                {
+                    OnPoisonImmunity(from, poison);
+                    return ApplyPoisonResult.Immune;
+                }
+                Poison oldPoison = m_Poison;
+                SetAttributedPoison(poison, from, PoisonChangeKind.Application);
+                if (m_Poison != poison)
+                    return ApplyPoisonResult.Blocked;
+                OnPoisoned(from, poison, oldPoison);
+                return ApplyPoisonResult.Poisoned;
+            }
+            finally { turnScope.Dispose(); }
         }
 
         /// <summary>
@@ -10454,19 +10501,25 @@ namespace Server
         /// <returns>True if poison was cured, false if otherwise.</returns>
         public virtual bool CurePoison(Mobile from)
         {
-            if (CheckCure(from))
+            IDisposable turnScope = TurnBasedCombatBridge.BeginMutation(new TurnMutationRequest(from, this,
+                TurnMutationKind.Poison, m_Poison == null ? -1 : m_Poison.Level, -1));
+            if (turnScope == null)
+                return false;
+            try
             {
-                Poison oldPoison = m_Poison;
-                this.Poison = null;
-
-                OnCured(from, oldPoison);
-
-                return true;
+                if (CheckCure(from))
+                {
+                    Poison oldPoison = m_Poison;
+                    SetAttributedPoison(null, from, PoisonChangeKind.Cure);
+                    if (m_Poison != null)
+                        return false;
+                    OnCured(from, oldPoison);
+                    return true;
+                }
+                OnFailedCure(from);
+                return false;
             }
-
-            OnFailedCure(from);
-
-            return false;
+            finally { turnScope.Dispose(); }
         }
 
         #endregion
