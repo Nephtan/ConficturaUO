@@ -23,6 +23,7 @@ python -X utf8 tools/champion-outbreak/SendNativeRequest.py `
 
 | Request | Private setup/action |
 | --- | --- |
+| live-turn | Explicit test-arm enrollment, running manager scheduler and production boss pulses; natural warning/impact, no directly constructed web or backend EndTurn. Use the bounded LiveTurnClient/RunLiveTurn workflow. |
 | `show` | Display the native QA control gump. |
 | `reset` | Disable/dissolve the private battle and recreate the stationary boss scene. |
 | `warn`, `arm` | Trigger the real warning immediately or after eight seconds; natural warning/restraint durations remain unchanged. |

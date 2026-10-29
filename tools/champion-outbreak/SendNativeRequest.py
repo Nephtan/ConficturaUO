@@ -11,7 +11,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--allow-incomplete', action='store_true', help='Explicitly retain and leave an incomplete site attempt')
-    parser.add_argument('command', choices=['reset','warn','arm','show','dose','turn-self','turn-pet','status','queue','claim','stop'] + ['site-'+str(i) for i in range(6)])
+    parser.add_argument('command', choices=['reset','warn','arm','show','dose','turn-self','turn-pet','live-turn','status','queue','claim','stop'] + ['site-'+str(i) for i in range(6)])
     args = parser.parse_args()
     root = args.output.resolve()
     guard = root/'evidence/native-private-root.txt'

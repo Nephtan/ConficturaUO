@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
+using System.Xml;
 using Server;
 using Server.Accounting;
 using Server.Gumps;
@@ -29,6 +30,10 @@ namespace Server.TestOnly
         private static int LastAP = -1;
         private static bool SubjectHeld;
         private static bool Stopping;
+        private static bool LiveTurns;
+        private static int LastWarning, LastCurrent, LastBossAP = -1;
+        private static long WarningTurn;
+        private static DateTime WarningObserved;
         private static Point3D Center = new Point3D(2514,2088,0);
         private static DateTime End = DateTime.UtcNow.AddMinutes(30);
         private static DateTime CastAt = DateTime.MaxValue;
@@ -42,7 +47,8 @@ namespace Server.TestOnly
         public static void Initialize()
         {
             string guard = Path.Combine(Evidence,"native-private-root.txt");
-            if (!File.Exists(guard) || !String.Equals(Path.GetFullPath(File.ReadAllText(guard)).TrimEnd('\\'), Core.BaseDirectory.TrimEnd('\\'), StringComparison.OrdinalIgnoreCase))
+            if (!File.Exists(guard) || !String.Equals(Path.GetFullPath(File.ReadAllText(guard)).TrimEnd('\\'), Core.BaseDirectory.TrimEnd('\\'), StringComparison.OrdinalIgnoreCase)
+                || ArachnidOutbreakController.DeliveryReady)
                 throw new InvalidOperationException("Native acceptance fixture requires its exact disposable-root guard.");
             AutoSave.SavesEnabled = false;
             Timer.DelayCall(TimeSpan.FromSeconds(1),Start);
@@ -62,14 +68,52 @@ namespace Server.TestOnly
         {
             Account = Accounts.GetAccount(File.ReadAllText(Path.Combine(Evidence,"account-name.private")));
             if (Account == null) throw new Exception("Private copied account unavailable.");
-            for (int i=0;i<7;++i) if (Account[i] is PlayerMobile) { Actor=(PlayerMobile)Account[i];break; }
+            string selection=Path.Combine(Evidence,"native-actor.txt");
+            if(File.Exists(selection))
+            {
+                if(File.ReadAllText(selection).Trim()!="Zanthus")throw new Exception("Unsupported copied actor selection.");
+                foreach(Mobile mobile in World.Mobiles.Values)
+                    if(mobile is PlayerMobile && String.Equals(mobile.Name,"Zanthus",StringComparison.OrdinalIgnoreCase))
+                    {if(Actor!=null)throw new Exception("Ambiguous copied actor.");Actor=(PlayerMobile)mobile;}
+                if(Actor==null || !Actor.Alive || Actor.Blessed || Actor.AccessLevel!=AccessLevel.Player)
+                    throw new Exception("Requires actual living unblessed Player Zanthus; no substitute or grants.");
+                ActorManifest("native-actor-original.private.xml");
+                IAccount original=Actor.Account;
+                if(original!=null)for(int i=0;i<original.Length;++i)if(original[i]==Actor){original[i]=null;break;}
+                Account[0]=Actor;
+            }
+            else for (int i=0;i<7;++i) if (Account[i] is PlayerMobile) { Actor=(PlayerMobile)Account[i];break; }
             if (Actor==null) throw new Exception("Private copied actor unavailable.");
             Reset();
             Poll=Timer.DelayCall(TimeSpan.Zero,TimeSpan.FromMilliseconds(100),Tick);
             File.WriteAllText(Path.Combine(Evidence,"native-ready.txt"),"Instrumented private presentation rig; production remains disabled; original stats/equipment retained.");
         }
+        private static void ActorManifest(string name)
+        {
+            using(XmlWriter writer=XmlWriter.Create(Path.Combine(Evidence,name),new XmlWriterSettings{Indent=true}))
+            {
+                writer.WriteStartElement("character");Attribute(writer,"serial",Actor.Serial.Value);
+                Attribute(writer,"access",Actor.AccessLevel);Attribute(writer,"blessed",Actor.Blessed);
+                Attribute(writer,"rawStr",Actor.RawStr);Attribute(writer,"rawDex",Actor.RawDex);Attribute(writer,"rawInt",Actor.RawInt);
+                Attribute(writer,"hitsMax",Actor.HitsMax);Attribute(writer,"stamMax",Actor.StamMax);Attribute(writer,"manaMax",Actor.ManaMax);
+                for(int i=0;i<Actor.Skills.Length;++i)
+                {
+                    Skill skill=Actor.Skills[i];if(skill.Base==0 && skill.Value==0)continue;
+                    writer.WriteStartElement("skill");Attribute(writer,"name",skill.SkillName);Attribute(writer,"base",skill.Base);
+                    Attribute(writer,"effective",skill.Value);Attribute(writer,"cap",skill.Cap);writer.WriteEndElement();
+                }
+                foreach(Item item in Actor.Items)
+                {
+                    if(item.Layer==Layer.Backpack || item.Layer==Layer.Bank)continue;
+                    writer.WriteStartElement("equipment");Attribute(writer,"serial",item.Serial.Value);
+                    Attribute(writer,"type",item.GetType().FullName);Attribute(writer,"layer",item.Layer);writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+            }
+        }
         private static void Reset()
         {
+            LiveTurns=false;LastWarning=0;LastCurrent=0;LastBossAP=-1;WarningTurn=0;WarningObserved=DateTime.MinValue;
             if (Manager != null) Manager.Disable("private native scene reset");
             if (Pet != null && !Pet.Deleted) Pet.Delete();
             if (Controller!=null) Controller.Delete();
@@ -94,6 +138,71 @@ namespace Server.TestOnly
             creatures.Add(Boss); Boss.MoveToWorld(Center,Map.Sosaria); StopAI();
             Subject=Actor;SubjectHeld=false;LastAP=-1;
             CastAt=DateTime.MaxValue;Scene="ready";Event("scripted-reset");Show();
+        }
+        private static void LiveTurnScene()
+        {
+            Reset();
+            if (Actor.NetState == null) throw new InvalidOperationException("Live turn scene requires a connected private Player.");
+            Manager=TurnBasedCombatManager.Instance;
+            string reason=null;
+            if(Manager==null || !Manager.TryEnable(out reason))
+                throw new InvalidOperationException("Live manager enable failed: "+reason);
+            Timer scheduler=(Timer)typeof(TurnBasedCombatManager).GetField("m_Scheduler",Private).GetValue(Manager);
+            if(!scheduler.Running)throw new InvalidOperationException("Live scheduler is not running.");
+            Boss.FightMode=FightMode.Closest;Boss.CantWalk=false;
+            Manager.ArmTestMobile(Boss);
+            TurnActionDecision opening=TurnBasedCombatBridge.BeginAction(new TurnActionRequest(Actor,Boss,Controller,TurnActionKind.ItemUse,4,true,false));
+            if(opening.Lease!=null)TurnBasedCombatBridge.CompleteAction(opening.Lease,new TurnActionResult(Actor,Boss,TurnActionPhase.Refund,false));
+            if(Manager.GetParticipant(Actor)==null || Manager.GetParticipant(Boss)==null)
+                throw new InvalidOperationException("Live scene did not enroll both actors.");
+            Boss.Combatant=Actor;
+            LiveTurns=true;Scene="live-turn";Event("live-turn-natural-scheduler");
+            WriteLiveStatus();Show();
+        }
+        private static void Attribute(XmlWriter writer,string name,object value)
+        { writer.WriteAttributeString(name,Convert.ToString(value,System.Globalization.CultureInfo.InvariantCulture)); }
+        private static void WriteLiveStatus()
+        {
+            if(!LiveTurns)return;
+            TurnParticipant actor=Manager.GetParticipant(Actor),boss=Manager.GetParticipant(Boss);
+            ArachnidWebWarning warning=null;
+            foreach(Item item in World.Items.Values)
+                if(item is ArachnidWebWarning && !item.Deleted && ((ArachnidWebWarning)item).Victim==Actor)
+                {warning=(ArachnidWebWarning)item;break;}
+            int warningSerial=warning==null?0:warning.Serial.Value;
+            if(warningSerial!=LastWarning)
+            {
+                LastWarning=warningSerial;
+                if(warning!=null)
+                {
+                    WarningObserved=DateTime.UtcNow;
+                    WarningTurn=(long)typeof(ArachnidWebWarning).GetField("m_TurnsStarted",Private).GetValue(warning);
+                }
+                Event(warning==null?"live-warning-ended":"live-warning-observed");
+            }
+            int current=actor==null || actor.Group.Current==null?0:actor.Group.Current.Mobile.Serial.Value;
+            if(current!=LastCurrent){LastCurrent=current;Event("live-turn-changed");}
+            int bossAP=boss==null?-1:boss.ActionPoints;
+            if(bossAP!=LastBossAP){LastBossAP=bossAP;Event("live-boss-ap-changed");}
+            ArachnidWebRestraint hold=ArachnidWebRestraint.Find(Actor);
+            Timer scheduler=(Timer)typeof(TurnBasedCombatManager).GetField("m_Scheduler",Private).GetValue(Manager);
+            string path=Path.Combine(Evidence,"live-turn-state.xml");
+            using(XmlWriter writer=XmlWriter.Create(path+".tmp",new XmlWriterSettings{Indent=true}))
+            {
+                writer.WriteStartElement("liveTurn");
+                Attribute(writer,"utc",DateTime.UtcNow.ToString("o"));Attribute(writer,"schedulerRunning",scheduler.Running);
+                Attribute(writer,"actor",Actor.Serial.Value);Attribute(writer,"boss",Boss.Serial.Value);Attribute(writer,"current",current);
+                Attribute(writer,"actorAP",actor==null?-1:actor.ActionPoints);Attribute(writer,"bossAP",bossAP);
+                Attribute(writer,"actorTurns",actor==null?-1:actor.TurnsStarted);Attribute(writer,"bossTurns",boss==null?-1:boss.TurnsStarted);
+                Attribute(writer,"warning",warningSerial);Attribute(writer,"warningTurn",WarningTurn);
+                Attribute(writer,"warningObserved",WarningObserved.ToString("o"));
+                Attribute(writer,"held",hold!=null);Attribute(writer,"web",hold==null?0:hold.Serial.Value);
+                Attribute(writer,"x",Actor.X);Attribute(writer,"y",Actor.Y);Attribute(writer,"z",Actor.Z);
+                Attribute(writer,"alive",Actor.Alive);Attribute(writer,"online",Actor.NetState!=null);
+                Attribute(writer,"pending",actor!=null && actor.Pending!=null);Attribute(writer,"stopping",Stopping);
+                writer.WriteEndElement();
+            }
+            if(File.Exists(path))File.Replace(path+".tmp",path,null);else File.Move(path+".tmp",path);
         }
         private static void StopAI()
         {
@@ -151,8 +260,12 @@ namespace Server.TestOnly
         private static void StopFixture()
         {
             Stopping=true;Poll.Stop();
+            WriteLiveStatus();
+            if(File.Exists(Path.Combine(Evidence,"native-actor.txt")))ActorManifest("native-actor-final.private.xml");
             if(Manager!=null)Manager.Disable("private native teardown");if(Pet!=null && !Pet.Deleted)Pet.Delete();
-            if(Controller!=null)Controller.Delete();Event("forced-stop-no-save");Core.Kill(false);
+            if(Controller!=null)Controller.Delete();Event("forced-stop-no-save");
+            File.WriteAllText(Path.Combine(Evidence,"native-stopped.txt"),"Owned fixture cleaned without saving; forced exit, not graceful shutdown.");
+            Core.Kill(false);
         }
         private static void Tick()
         {
@@ -163,7 +276,7 @@ namespace Server.TestOnly
                 PlayerMobile connected=Account[i] as PlayerMobile;
                 if(connected!=null && connected.NetState!=null && connected!=Actor){Actor=connected;Reset();break;}
             }
-            StopAI();
+            if(!LiveTurns)StopAI();
             string request=Path.Combine(Evidence,"native-request.txt");
             if(File.Exists(request))
             {
@@ -180,6 +293,7 @@ namespace Server.TestOnly
                 else if(command=="show")Show();
                 else if(command=="turn-self")TurnScene(false);
                 else if(command=="turn-pet")TurnScene(true);
+                else if(command=="live-turn")LiveTurnScene();
                 else if(command=="status")CommandSystem.Handle(Actor,"[BroodAntivenom");
                 else if(command=="queue")
                 {
@@ -209,6 +323,7 @@ namespace Server.TestOnly
             if(hold!=null && Scene!="held"){Scene="held";Event("held");}
             else if(hold==null && !warning && (Scene=="held" || Scene=="warning")){Scene="released-or-avoided";Event(Scene);}
             File.WriteAllText(Path.Combine(Evidence,"native-state.json"),"{\"utc\":\""+DateTime.UtcNow.ToString("o")+"\",\"scene\":\""+Scene+"\",\"ap\":"+ap+",\"subjectHeld\":"+subjectHeld.ToString().ToLowerInvariant()+",\"points\":"+Points().ToString(System.Globalization.CultureInfo.InvariantCulture)+",\"x\":"+Actor.X+",\"y\":"+Actor.Y+",\"z\":"+Actor.Z+",\"alive\":"+Actor.Alive.ToString().ToLowerInvariant()+",\"connected\":"+(Actor.NetState!=null).ToString().ToLowerInvariant()+",\"held\":"+(hold!=null).ToString().ToLowerInvariant()+",\"warning\":"+warning.ToString().ToLowerInvariant()+",\"access\":\""+Actor.AccessLevel+"\",\"blessed\":"+Actor.Blessed.ToString().ToLowerInvariant()+"}");
+            WriteLiveStatus();
         }
         private sealed class AcceptanceGump:Gump
         {
@@ -219,7 +334,8 @@ namespace Server.TestOnly
                 AddButton(20,75,4005,4007,2,GumpButtonType.Reply,0);AddLabel(55,75,1152,"Reset scene");
                 AddButton(20,105,4005,4007,3,GumpButtonType.Reply,0);AddLabel(55,105,1152,"Antivenom status");
                 AddButton(20,135,4005,4007,4,GumpButtonType.Reply,0);AddLabel(55,135,1152,"Collect queued reward");
-                AddLabel(20,185,1152,"Scene and scheduler controlled.");AddLabel(20,210,1152,"No AI or pacing acceptance.");
+                AddLabel(20,185,1152,LiveTurns?"Natural AI/scheduler; test enrollment.":"Scene and scheduler controlled.");
+                AddLabel(20,210,1152,LiveTurns?"No pacing or production acceptance.":"No AI or pacing acceptance.");
                 AddLabel(20,235,1152,"Private source-hash gate verified.");
             }
             public override void OnResponse(NetState sender,RelayInfo info)
