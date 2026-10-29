@@ -39,6 +39,14 @@ namespace Server.TestOnly
         private static int IncomingDamage, OutgoingDamage, RestoredHits;
         private static readonly Dictionary<string, Item> Supplies = new Dictionary<string, Item>();
         private static readonly List<Item> Equipment = new List<Item>();
+        private static int ProbeSequence;
+        private static string ProbeName;
+        private static string ProbeItem;
+        private static BaseCreature ProbeTarget;
+        private static readonly List<BaseCreature> ProbeExtras = new List<BaseCreature>();
+        private static int ProbeMana, ProbeHits, ProbeStam, ProbeTithing, ProbeAmount, ProbeTargetHits;
+        private static DateTime ProbeDeadline;
+        private static bool ProbeResultWritten;
 
         [CallPriority(Int32.MaxValue)]
         public static void Initialize()
@@ -212,6 +220,9 @@ namespace Server.TestOnly
         }
         private static void OnHealthChanged(HealthChangedEventArgs e)
         {
+            if (ProbeName != null && State == "toolkit-" + ProbeName
+                && (e.Mobile == Actor || e.Mobile == ProbeTarget || ProbeExtras.Contains(e.Mobile as BaseCreature)))
+                File.AppendAllText(Path.Combine(Evidence, "toolkit-health.csv"), DateTime.UtcNow.ToString("o") + "," + ProbeSequence + "," + e.Mobile.Serial.Value + "," + (e.Source == null ? 0 : e.Source.Serial.Value) + "," + e.Kind + "," + e.OldHits + "," + e.NewHits + "\n");
             if (!State.StartsWith("running")) return;
             int change = e.NewHits - e.OldHits;
             if (e.Mobile == Actor)
@@ -228,6 +239,99 @@ namespace Server.TestOnly
             ++EnemyDeaths;
             if (mobile is ArachnidOutbreakChampion) BossKilled = true;
         }
+        private static void ClearProbeTargets()
+        {
+            if (ProbeTarget != null && !ProbeTarget.Deleted) ProbeTarget.Delete();
+            ProbeTarget = null;
+            foreach (BaseCreature extra in ProbeExtras) if (!extra.Deleted) extra.Delete();
+            ProbeExtras.Clear();
+        }
+        private static BaseCreature ProbeSpider(int dx, int dy)
+        {
+            BaseCreature spider = new Cow();
+            spider.Name = "controlled toolkit target"; spider.Fame = 5000; spider.Karma = -5000; spider.Tamable = false;
+            spider.SetHits(10000); spider.SetDamage(0); spider.FightMode = FightMode.None; spider.CantWalk = true;
+            spider.SetResistance(ResistanceType.Physical, 50); spider.SetResistance(ResistanceType.Fire, 25);
+            spider.SetResistance(ResistanceType.Energy, 25);
+            spider.MoveToWorld(new Point3D(Actor.X + dx, Actor.Y + dy, Actor.Z), Actor.Map);
+            if (spider.AIObject != null && spider.AIObject.m_Timer != null) spider.AIObject.m_Timer.Stop();
+            return spider;
+        }
+        private static int Remaining(string key)
+        {
+            Item item;
+            return Supplies.TryGetValue(key, out item) && !item.Deleted ? item.Amount : 0;
+        }
+        private static void BeginProbe(string name)
+        {
+            if (Started != DateTime.MinValue || Controller != null || Actor.NetState == null || !Actor.Alive)
+                throw new Exception("Toolkit probes require the connected idle preparation scene, never a measured run.");
+            string[] allowed = new string[] { "strength", "agility", "refresh", "petals", "cure", "cleanse", "bandage", "heal", "close-wounds", "consecrate", "fury", "enemy-one", "holy-light", "dispel", "remove-curse", "ability-1", "ability-2", "ability-3", "ability-4", "ability-5" };
+            if (Array.IndexOf(allowed, name) < 0) throw new Exception("Unknown toolkit probe.");
+            State = "preparing-probe";
+            Failure = null;
+            Actor.Combatant = null; Actor.Warmode = false; Actor.Blessed = false;
+            Actor.Paralyzed = false; Actor.Frozen = false; Actor.CurePoison(Actor);
+            WeaponAbility.ClearCurrentAbility(Actor);
+            BandageContext bandage = BandageContext.GetContext(Actor);
+            if (bandage != null) bandage.StopHeal();
+            ClearProbeTargets();
+            if (!Supplies.ContainsKey("strength"))
+            {
+                Supply("strength", new GreaterStrengthPotion(), 20);
+                Supply("agility", new GreaterAgilityPotion(), 20);
+                Supply("refresh", new TotalRefreshPotion(), 20);
+            }
+            if (name == "remove-curse")
+            {
+                Actor.RemoveStatMod("[Magic] Str Offset");
+                Actor.AddStatMod(new StatMod(StatType.Str, "[Magic] Str Offset", -20, TimeSpan.FromMinutes(1)));
+            }
+            Actor.Hits = Actor.HitsMax; Actor.Stam = Actor.StamMax; Actor.Mana = Actor.ManaMax;
+            if (name == "heal" || name == "close-wounds") Actor.Hits -= 100;
+            if (name == "refresh" || name == "fury") Actor.Stam = 20;
+            if (name == "cure" || name == "cleanse" || name == "bandage" || name.StartsWith("ability-") || name == "holy-light" || name == "dispel")
+                ProbeTarget = ProbeSpider(0, 1);
+            if (name == "ability-1")
+            {
+                ProbeExtras.Add(ProbeSpider(-1, 0)); ProbeExtras.Add(ProbeSpider(1, 0));
+            }
+            if (name == "cure" || name == "cleanse" || name == "bandage")
+            {
+                Actor.ApplyPoison(ProbeTarget, name == "cure" ? Poison.Lethal : Poison.Deadly);
+                if (!Actor.Poisoned) throw new Exception("Probe poison setup did not apply.");
+            }
+            ++ProbeSequence; ProbeName = name; ProbeItem = Array.IndexOf(new string[] { "strength", "agility", "refresh", "petals", "cure", "bandage", "heal" }, name) >= 0 ? name : null;
+            ProbeMana = Actor.Mana; ProbeHits = Actor.Hits; ProbeStam = Actor.Stam; ProbeTithing = Actor.TithingPoints;
+            ProbeAmount = ProbeItem == null ? 0 : Remaining(ProbeItem); ProbeTargetHits = ProbeTarget == null ? 0 : ProbeTarget.Hits;
+            ProbeDeadline = DateTime.UtcNow.AddSeconds(25); ProbeResultWritten = false;
+            State = "toolkit-" + name;
+        }
+        private static bool ProbeSucceeded()
+        {
+            bool item = ProbeItem != null && Remaining(ProbeItem) < ProbeAmount;
+            bool spell = Actor.TithingPoints < ProbeTithing && Actor.Mana < ProbeMana;
+            if (ProbeName == "strength") return item && Actor.Str == 150;
+            if (ProbeName == "agility") return item && Actor.Dex == 150;
+            if (ProbeName == "refresh") return item && Actor.Stam == Actor.StamMax;
+            if (ProbeName == "petals") return item;
+            if (ProbeName == "cure" || ProbeName == "bandage") return item && !Actor.Poisoned;
+            if (ProbeName == "cleanse") return spell && !Actor.Poisoned;
+            if (ProbeName == "heal") return item && Actor.Hits > ProbeHits;
+            if (ProbeName == "close-wounds") return spell && Actor.Hits > ProbeHits;
+            if (ProbeName == "consecrate") return spell && ((BaseWeapon)Actor.Weapon).Consecrated;
+            if (ProbeName == "fury") return spell && DivineFurySpell.UnderEffect(Actor) && Actor.Stam == Actor.StamMax;
+            if (ProbeName == "enemy-one") return spell && (Actor.WaitingForEnemy || Actor.EnemyOfOneType != null);
+            if (ProbeName == "holy-light") return spell && ProbeTarget.Hits < ProbeTargetHits;
+            if (ProbeName == "dispel") return spell && ProbeTarget.CheckFlee();
+            if (ProbeName == "remove-curse")
+            {
+                StatMod mod = Actor.GetStatMod("[Magic] Str Offset");
+                return spell && (mod == null || mod.Offset >= 0);
+            }
+            return ProbeName.StartsWith("ability-") && Actor.Mana < ProbeMana && ProbeTarget.Hits < ProbeTargetHits
+                && WeaponAbility.GetCurrentAbility(Actor) == null;
+        }
         private static void Tick()
         {
             try
@@ -240,6 +344,7 @@ namespace Server.TestOnly
                     else if (command == "start-antivenom") Begin(true);
                     else if (command == "start-navigation" && State == "ready" && Actor.NetState != null)
                     { NavigationOnly = true; State = "navigation"; Started = DateTime.UtcNow; }
+                    else if (command.StartsWith("probe-")) BeginProbe(command.Substring(6));
                     else if (command == "stop") State = "stopped";
                     else throw new Exception("Unknown benchmark command.");
                 }
@@ -254,15 +359,28 @@ namespace Server.TestOnly
                     Point3D destination = NavigationStage == 3 ? Placement.Boss : Placement.Brood(NavigationStage);
                     if (Actor.InRange(destination, 1) && ++NavigationStage > 3) State = "navigation-completed";
                 }
+                if (ProbeName != null && State == "toolkit-" + ProbeName)
+                {
+                    if (ProbeSucceeded()) State = "toolkit-complete";
+                    else if (DateTime.UtcNow > ProbeDeadline || !Actor.Alive || Actor.Hits < Actor.HitsMax / 5)
+                    { State = "toolkit-failed"; Failure = "Timeout or unsafe health: " + ProbeName; Actor.Blessed = true; Actor.CurePoison(Actor); }
+                    if (State == "toolkit-complete" || State == "toolkit-failed") { Actor.Combatant = null; Actor.Warmode = false; }
+                }
                 if (Actor != null && Actor.NetState != null && State == "ready" && !ManifestConnected)
                 { WriteManifest(); ManifestConnected = true; }
                 if (File.Exists(Path.Combine(Evidence, "benchmark-driver-failed.txt")) && (State.StartsWith("running") || State == "navigation"))
                     State = "driver-failed";
                 if (Started != DateTime.MinValue && !State.StartsWith("running") && State != "navigation" && Ended == DateTime.MinValue) Ended = DateTime.UtcNow;
                 WriteStatus();
+                if (ProbeName != null && !ProbeResultWritten && (State == "toolkit-complete" || State == "toolkit-failed"))
+                {
+                    File.Copy(Path.Combine(Evidence, "benchmark-state.xml"), Path.Combine(Evidence, "toolkit-result-" + ProbeSequence + ".xml"));
+                    ProbeResultWritten = true;
+                }
                 if (DateTime.UtcNow > Deadline || File.Exists(Path.Combine(Evidence, "native-stop.txt")))
                 {
                     if (Controller != null) Controller.Delete();
+                    ClearProbeTargets();
                     Poll.Stop(); AutoSave.SavesEnabled = false;
                     File.WriteAllText(Path.Combine(Evidence, "native-stopped.txt"), "Benchmark stopped without saving.");
                 }
@@ -361,15 +479,30 @@ namespace Server.TestOnly
                 Attr(writer, "failure", Failure); Attr(writer, "incomingDamage", IncomingDamage); Attr(writer, "outgoingDamage", OutgoingDamage); Attr(writer, "restoredHits", RestoredHits);
                 Attr(writer, "enemyDeaths", EnemyDeaths); Attr(writer, "bossKilled", BossKilled);
                 Attr(writer, "navigationOnly", NavigationOnly); Attr(writer, "navigationStage", NavigationStage);
+                if (ProbeName != null)
+                {
+                    Attr(writer, "probe", ProbeName); Attr(writer, "probeSequence", ProbeSequence);
+                    Attr(writer, "probeManaBefore", ProbeMana); Attr(writer, "probeHitsBefore", ProbeHits); Attr(writer, "probeStamBefore", ProbeStam);
+                    Attr(writer, "probeTithingBefore", ProbeTithing); Attr(writer, "probeAmountBefore", ProbeAmount);
+                    Attr(writer, "probeTarget", ProbeTarget == null ? 0 : ProbeTarget.Serial.Value);
+                    Attr(writer, "probeTargetHitsBefore", ProbeTargetHits); Attr(writer, "probeTargetHits", ProbeTarget == null ? 0 : ProbeTarget.Hits);
+                    Attr(writer, "probeScope", "Controlled native ability probe; harmless stopped targets; Player actor; between-case setup; not encounter acceptance");
+                }
                 if (Actor != null)
                 {
                     Attr(writer, "actor", Actor.Serial.Value); Attr(writer, "online", Actor.NetState != null); Attr(writer, "alive", Actor.Alive);
                     Attr(writer, "x", Actor.X); Attr(writer, "y", Actor.Y); Attr(writer, "z", Actor.Z);
                     Attr(writer, "hits", Actor.Hits); Attr(writer, "hitsMax", Actor.HitsMax); Attr(writer, "mana", Actor.Mana); Attr(writer, "poisoned", Actor.Poisoned);
+                    Attr(writer, "stam", Actor.Stam); Attr(writer, "stamMax", Actor.StamMax); Attr(writer, "manaMax", Actor.ManaMax);
+                    WeaponAbility currentAbility = WeaponAbility.GetCurrentAbility(Actor);
+                    Attr(writer, "currentAbility", currentAbility == null ? String.Empty : currentAbility.GetType().Name);
                     Attr(writer, "str", Actor.Str); Attr(writer, "dex", Actor.Dex); Attr(writer, "int", Actor.Int);
                     Attr(writer, "paralyzed", Actor.Paralyzed); Attr(writer, "frozen", Actor.Frozen);
                     Attr(writer, "blessed", Actor.Blessed); Attr(writer, "tithing", Actor.TithingPoints);
                     Attr(writer, "bandaging", BandageContext.GetContext(Actor) != null);
+                    Attr(writer, "spellCooldownSeconds", Math.Max(0.0, (Actor.NextSpellTime - TurnBasedCombatBridge.GetTime(Actor)).TotalSeconds));
+                    Attr(writer, "currentSpell", Actor.Spell == null ? String.Empty : Actor.Spell.GetType().Name);
+                    Attr(writer, "targetPending", Actor.Target != null);
                     int effects;
                     BroodAntivenomEffect protection = BroodAntivenomEffect.Find(Actor, out effects);
                     Attr(writer, "antivenomCharges", protection != null && protection.Active(DateTime.UtcNow) ? protection.Charges : 0);

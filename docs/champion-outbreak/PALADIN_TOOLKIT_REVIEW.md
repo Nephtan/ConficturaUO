@@ -78,3 +78,40 @@ Use defender-first targeting and the now-tested connected short navigation legs.
 Curing must include all three available routes: a near-complete bandage when safely affordable, Cleanse By Fire when health/mana/casting conditions permit, and the highly reliable Greater Cure fallback for urgency, control, low mana or spell failure. Keep healing/cure restrictions and actual potion cooldowns. Remove significant curses/mortal wounds when actionable; self Remove Curse cannot start while ordinarily paralyzed. Noble Sacrifice remains excluded from a strictly solo run with no eligible ally, but belongs in cooperative testing. Sacred Journey is not executable without a real validated destination. These are requirements for a policy to validate and freeze, not an already accepted replacement macro.
 
 The user subsequently approved removing only the inherited outbreak breath and adapting crowd qualification. Those are separately verified scoped design changes; they do not replace this full-toolkit testing requirement or authorize general player/NPC ability repairs.
+
+## Controlled native toolkit checks (2026-10-29)
+
+The copied client now executes all 20 controlled cases through its normal ClassicAssist player APIs: seven consumable actions, eight solo Chivalry actions and the five actual GiftKatana moves. Accepted copy: `D:/ConficturaUOTestTools/outbreak-toolkit-20261029-002`. `evidence/toolkit-verification.json` verifies 20/20 cases, frozen fixture/driver/reference identities, all 6,742 production inputs, all 20 private save files, protected original source/settings/profiles and acknowledged forced no-save teardown. No owned process or private listener remains. Production/reservation flags remain false; automatic tuning passes remain zero.
+
+These are controlled action checks. Targets have stopped AI and zero configured melee damage; poison, missing health/mana/stamina and the negative stat modifier are synthetic setup between cases. The actor uses Player access and is not blessed during successful cases. No encounter is running. Ordinary player swings can overlap harmful effects, so aggregate target health loss is not an isolated spell/ability damage measurement or a DPS comparison. Dispel verifies the target's actual flee flag, not natural fleeing movement with active AI. Orange petals verifies use/consumption here; its poison-level protection remains source/component evidence. None of these cases counts toward three completed reference runs.
+
+| Action | Observed native result |
+| --- | --- |
+| Greater Strength / Agility | Strength150 with325 maximum HP; Dexterity150 with300 maximum stamina. Buffing maximum HP does not itself heal missing HP. |
+| Total Refresh | Stamina20 to300. |
+| Cleanse By Fire | Deadly poison removed;6 mana/10 tithes spent;7 actual self fire damage after resistance. |
+| Greater Cure / bandage | Lethal poison removed by potion; deadly poison removed by bandaging. Bandage cure did not also heal damage. |
+| Greater Heal / Close Wounds |54 and39 actual HP restored respectively in this sample; Close Wounds spent6 mana. |
+| Consecrate / Divine Fury / Enemy of One | Actual effect checks pass; net mana costs6/9/12. Fury refilled stamina. |
+| Holy Light | Native cast, resource expenditure and target health loss observed; overlapping swings prevent a standalone damage claim. |
+| Dispel Evil | Flee flag eventually applied after six paid casts:60 tithes and33 net mana spent, with regeneration during retries. Do not budget it as a guaranteed single-cast rescue. |
+| Remove Curse | Negative `[Magic] Str Offset` removed; maximum HP returned245 to285 without healing current HP;12 mana spent. |
+| Double Whirlwind / Armor Ignore / Double Strike / Fire Strike / Death Blow | Correct ability selected through `[SAD` and `[Set1`–`[Set5`, observed armed before attack, then native damage and mana costs12/9/15/9/27. Whirlwind damaged all three adjacent targets and ended at199 stamina from300. Double Strike/Fire Strike include paired immediate health-loss events. |
+
+The loaded suit has110 raw DefendChance,0 AttackChance,30 WeaponSpeed,50 WeaponDamage and0 equipment RegenMana. Under the current `BaseWeapon.CheckHit` ordering, Fury's20-point defense penalty still leaves this suit above the45 cap. Its hit/damage benefits and mana upkeep should therefore be evaluated using these actual bonuses, rather than assuming the full defense penalty is paid. This source-derived breakpoint does not establish a measured DPS improvement.
+
+First copy001 retains its compiler failure and failed Cleanse case. The fixture initially called an unavailable `BaseAI.Stop`; the corrected fixture stops the owned AI timer. Its one-second target wait also missed the Chivalry cursor. Fresh copy002 uses a four-second wait and succeeds. Copy001's other12 cases pass, with preserved hashes/teardown; its failed cure remains failed. These were test-fixture/driver repairs, not spell or encounter balance changes.
+
+Reproduce after preparing/starting a guarded copied benchmark fixture and client:
+
+```powershell
+python tools/champion-outbreak/FreezeBenchmark.py <copy> --policy controlled-native-toolkit-v2-target-wait
+python tools/champion-outbreak/RunToolkitProbes.py <copy>
+# Publish native-stop.txt, wait for native-stopped.txt, then stop only the owned copy.
+tools/champion-outbreak/StopNativeCopy.ps1 -Root <copy>
+python tools/champion-outbreak/VerifyToolkitProbes.py <copy> --require-complete
+```
+
+Source/evidence: `tests/ArachnidOutbreakBenchmark.cs` (`BeginProbe`, `ProbeSucceeded`, health observer and immutable case results); `tools/champion-outbreak/BenchmarkClient.py` (`toolkit`); `RunToolkitProbes.py`; `VerifyToolkitProbes.py`; `StopNativeCopy.ps1`. These fixtures remain outside `Data/Scripts`; the preparer copies them only into guarded disposable runtimes. Loaded production source/core are unchanged from approved candidate002; forced runtime compilation and copied-world startup pass. The dedicated toolkit verifier must be used: ordinary `VerifyBenchmark.py` requires a measured run's final artifact and correctly refuses to classify calibration as a run.
+
+Remaining: validate a real Sacred Journey destination and retreat path; Noble Sacrifice needs a suitable ally and remains excluded from the solo policy; qualify a resource-aware combat policy using actual buff/cooldown/cure state, then freeze a fresh finite loadout and run normal AI. The broader cooperative, live-scheduler, visibility, current-world and economics gates remain open.

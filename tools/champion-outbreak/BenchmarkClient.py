@@ -13,6 +13,7 @@ from ClassicAssist.Data.Macros.Commands.ActionCommands import Attack
 from ClassicAssist.Data.Macros.Commands.ObjectCommands import UseObject
 from ClassicAssist.Data.Macros.Commands.TargetCommands import Target, WaitForTarget
 from ClassicAssist.Data.Macros.Commands.SpellCommands import Cast
+from ClassicAssist.Data.Macros.Commands.MsgCommands import Msg
 
 ROOT = os.path.abspath(OUTBREAK_ROOT)
 EVIDENCE = os.path.join(ROOT, 'evidence')
@@ -47,6 +48,9 @@ warning_seen = 0
 route_stage = -1
 route_index = 0
 navigation_rejections = 0
+probe_sequence = -1
+probe_attempt = 0
+probe_attack = False
 
 def log(kind, **values):
     values.update(event=kind, utc_epoch=time.time())
@@ -118,6 +122,45 @@ def use(supplies, key, target=False):
     log('use', key=key, serial=serial)
     return True
 
+def toolkit(state):
+    global probe_sequence, probe_attempt, probe_attack
+    sequence = int(value(state,'probeSequence'))
+    name = state.GetAttribute('probe')
+    now = time.time()
+    if probe_sequence != sequence:
+        probe_sequence, probe_attempt, probe_attack = sequence, 0, False
+        log('toolkit_case',sequence=sequence,name=name)
+    if now-probe_attempt < 2.5:
+        return
+    probe_attempt = now
+    supplies = dict((n.GetAttribute('key'),n) for n in state.SelectNodes('supply'))
+    if name in ('strength','agility','refresh','petals','cure','bandage','heal'):
+        if name == 'bandage' and state.GetAttribute('bandaging') == 'True':
+            return
+        use(supplies,name,name=='bandage')
+        return
+    if name.startswith('ability-'):
+        expected = ['DoubleWhirlwindAttack','ArmorIgnore','DoubleStrike','FireStrike','DeathBlow'][int(name[-1])-1]
+        if state.GetAttribute('currentAbility') != expected:
+            Msg('[SAD',0)
+            time.sleep(.3)
+            Msg('[Set'+name[-1],0)
+            log('toolkit_arm_requested',sequence=sequence,ability=expected)
+        elif not probe_attack:
+            log('toolkit_arm_observed',sequence=sequence,ability=expected)
+            Attack(int(value(state,'probeTarget')))
+            probe_attack=True
+        return
+    spells = {'cleanse':('Cleanse By Fire',True),'close-wounds':('Close Wounds',True),
+        'consecrate':('Consecrate Weapon',False),'fury':('Divine Fury',False),
+        'enemy-one':('Enemy of One',False),'holy-light':('Holy Light',False),
+        'dispel':('Dispel Evil',False),'remove-curse':('Remove Curse',True)}
+    spell,target = spells[name]
+    Cast(spell)
+    if target and WaitForTarget(4000):
+        Target(Engine.Player.Serial)
+    log('toolkit_cast',sequence=sequence,spell=spell)
+
 log('started', policy='defender-first; connected short navigation legs; toolkit qualification pending')
 try:
     while not os.path.exists(os.path.join(EVIDENCE, 'native-stop.txt')):
@@ -131,6 +174,10 @@ try:
         if int(value(state, 'actor')) != int(Engine.Player.Serial):
             raise Exception('Connected actor differs from frozen reference')
         mode = state.GetAttribute('state')
+        if mode.startswith('toolkit-'):
+            if mode not in ('toolkit-complete','toolkit-failed'):
+                toolkit(state)
+            continue
         if mode == 'navigation':
             now = time.time()
             if navigation_rejections >= 10 and state.GetAttribute('paralyzed') != 'True' and state.GetAttribute('frozen') != 'True':
