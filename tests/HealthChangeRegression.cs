@@ -9,6 +9,7 @@ using Server.Targeting;
 internal static class HealthChangeRegression
 {
     private static int s_Checks;
+    private static int s_Deaths;
     private static readonly List<HealthChangedEventArgs> s_Events = new List<HealthChangedEventArgs>();
     private static void Check(bool condition,string message)
     {
@@ -21,6 +22,7 @@ internal static class HealthChangeRegression
         public bool Throw;
         public bool SelfWrite;
         public bool RewriteOnce;
+        public bool VetoDeath;
         public Mobile Other;
         public Mobile NestedHealer;
         public override void OnHeal(ref int amount,Mobile from)
@@ -35,6 +37,7 @@ internal static class HealthChangeRegression
             if(RewriteOnce){RewriteOnce=false;Hits+=1;}
             base.OnHitsChange(oldValue);
         }
+        public override bool OnBeforeDeath(){return !VetoDeath && base.OnBeforeDeath();}
         public override void OnDamage(int amount,Mobile from,bool willKill)
         {
             if(NestedHealer!=null)Heal(5,NestedHealer,false);
@@ -60,6 +63,7 @@ internal static class HealthChangeRegression
         public void EmergencyDisable(string reason,Exception exception){throw new Exception(reason,exception);}
     }
     private static void Capture(HealthChangedEventArgs e){s_Events.Add(e);}
+    private static void Died(Mobile mobile){++s_Deaths;}
     private static void BadObserver(HealthChangedEventArgs e){throw new InvalidOperationException("expected observer-isolation fixture");}
     private static void Prepare(Mobile mobile,int hits)
     {
@@ -71,7 +75,7 @@ internal static class HealthChangeRegression
         Denier denier=new Denier();
         try
         {
-            Prepare(patient,90);EventSink.HealthChanged+=Capture;
+            Prepare(patient,90);EventSink.HealthChanged+=Capture;EventSink.MobileDeath+=Died;
             patient.Heal(100,healer,false);
             Check(s_Events.Count==1 && s_Events[0].Mobile==patient && s_Events[0].Source==healer
                 && s_Events[0].Kind==HealthChangeKind.Healing && s_Events[0].OldHits==90 && s_Events[0].NewHits==100,"heal reports actual clamped restoration and source");
@@ -104,16 +108,20 @@ internal static class HealthChangeRegression
                 && s_Events[1].Kind==HealthChangeKind.Damage && s_Events[1].Source==attacker,"nested heal restores outer damage source and kind");patient.NestedHealer=null;
             s_Events.Clear();patient.Blessed=true;patient.Damage(10,attacker);
             Check(s_Events.Count==0,"invulnerability rejects damage without notification");patient.Blessed=false;
+            patient.VetoDeath=true;patient.Kill();
+            Check(patient.Alive && s_Deaths==0,"vetoed death emits no death notification");patient.VetoDeath=false;
             Prepare(patient,25);EventSink.HealthChanged-=Capture;EventSink.HealthChanged+=BadObserver;EventSink.HealthChanged+=Capture;
             patient.Damage(5000,attacker);
             Check(s_Events.Count==1 && s_Events[0].OldHits==25 && s_Events[0].NewHits==0,"overkill reports actual loss despite failing prior observer");
             Check(!patient.Alive,"failing observer cannot interrupt death resolution");
+            Check(s_Deaths==1,"accepted death emits one general notification");
             EventSink.HealthChanged-=BadObserver;EventSink.Reset();s_Events.Clear();other.Hits-=1;
             Check(s_Events.Count==0,"EventSink reset removes new subscriptions");
         }
         finally
         {
             TurnBasedCombatBridge.Unregister(denier);EventSink.HealthChanged-=BadObserver;EventSink.HealthChanged-=Capture;
+            EventSink.MobileDeath-=Died;
             patient.Delete();healer.Delete();attacker.Delete();other.Delete();
         }
     }

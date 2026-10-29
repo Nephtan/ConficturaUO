@@ -38,12 +38,6 @@ namespace Server.Custom.Confictura.Champions
             }
         }
 
-        public override void OnDamage(int amount, Mobile from, bool willKill)
-        {
-            base.OnDamage(amount, from, willKill);
-            if (m_Controller != null)
-                m_Controller.RecordCombat(this, from, Math.Min(amount, Hits));
-        }
 
         public override void OnThink()
         {
@@ -120,12 +114,6 @@ namespace Server.Custom.Confictura.Champions
             m_AttemptId = controller.AttemptId;
             SetHits(ChampionHealth);
             Tamable = false;
-        }
-        public override void OnDamage(int amount, Mobile from, bool willKill)
-        {
-            base.OnDamage(amount, from, willKill);
-            if (m_Controller != null)
-                m_Controller.RecordCombat(this, from, Math.Min(amount, Hits));
         }
         public override void OnThink()
         {

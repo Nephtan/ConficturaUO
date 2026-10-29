@@ -162,6 +162,78 @@ internal static class ArachnidOutbreakRewardRegression
         }
         finally {controller.Delete();pet.Delete();provoked.Delete();wild.Delete();owner.Delete();bard.Delete();replacement.Delete();}
     }
+    private static void HealingProvenance()
+    {
+        ArachnidOutbreakController controller=Begin();
+        Mobile healer=Player();Mobile patient=Player();Mobile outsider=Player();
+        DreadSpider pet=new DreadSpider();pet.SetHits(100);pet.Controlled=true;pet.ControlMaster=healer;
+        try
+        {
+            List<Mobile> foes=(List<Mobile>)typeof(ArachnidOutbreakController).GetField("m_Creatures",Private).GetValue(controller);
+            ArachnidOutbreakLedger ledger=Ledger(controller);
+            patient.Damage(20,outsider);patient.Damage(20,foes[0]);
+            ArachnidOutbreakState state=(ArachnidOutbreakState)typeof(ArachnidOutbreakController).GetField("m_State",Private).GetValue(controller);
+            Check(!state.Engaged,"being attacked without acting cannot keep an encounter engaged");
+            patient.Heal(10,healer,false);
+            Check(ledger.Points(0,healer)==0,"preexisting unrelated injury is restored without contribution");
+            patient.Heal(15,healer,false);
+            Check(ledger.Points(0,healer)==0.5 && state.Engaged,"only five actual encounter health restored counts and refreshes activity");
+            patient.Heal(15,patient,false);
+            Check(ledger.Points(0,healer)==0.5 && ledger.Points(0,patient)==0,"self healing consumes injury without credit");
+            patient.Damage(20,outsider);patient.Heal(20,healer,false);
+            Check(ledger.Points(0,healer)==0.5,"resolved encounter injury cannot credit later unrelated healing");
+            patient.Damage(40,foes[0]);patient.Damage(10,patient);patient.Heal(50,healer,false);
+            Check(ledger.Points(0,healer)==4.5,"self inflicted damage does not inflate legitimate enemy restoration");
+            patient.Damage(20,foes[0]);patient.Hits+=20;patient.Damage(20,outsider);patient.Heal(100,healer,false);
+            Check(ledger.Points(0,healer)==4.5,"direct restoration consumes injury; overheal cannot replay it");
+            patient.Damage(20,foes[1]);patient.Damage(20,foes[2]);patient.Heal(40,healer,false);
+            Check(ledger.Points(1,healer)==2 && ledger.Points(2,healer)==2,"mixed encounter wounds credit their exact separate stages");
+            BaseCreature source=(BaseCreature)foes[0];source.Controlled=true;source.ControlMaster=outsider;
+            patient.Damage(20,source);patient.Heal(20,healer,false);
+            Check(ledger.Points(0,healer)==4.5,"player controlled event creature cannot manufacture support wounds");
+            source.Controlled=false;source.ControlMaster=null;source.BardProvoked=true;source.BardMaster=outsider;source.BardTarget=patient;
+            patient.Damage(20,source);patient.Heal(20,healer,false);
+            Check(ledger.Points(0,healer)==4.5,"player provoked event creature cannot manufacture support wounds");source.BardProvoked=false;
+            patient.Damage(60,foes[0]);patient.Heal(60,healer,false);
+            Check(ledger.Qualified(0).Contains(healer),"actual effective healing can independently qualify without damage");
+            pet.Damage(20,foes[2]);pet.Heal(20,healer,false);
+            Check(ledger.Points(2,healer)==4,"helping a participating controlled pet counts actual restoration");
+            healer.Damage(20,foes[2]);healer.Heal(20,healer,false);
+            Check(ledger.Points(2,healer)==4,"healing own character earns no support credit");
+            patient.Damage(10,foes[2]);
+            ArachnidOutbreakWounds wounds=(ArachnidOutbreakWounds)typeof(ArachnidOutbreakController).GetField("m_Wounds",Private).GetValue(controller);
+            MemoryStream bytes=new MemoryStream();BinaryFileWriter writer=new BinaryFileWriter(bytes,true);
+            wounds.Serialize(writer);writer.Write(83721);writer.Close();
+            BinaryFileReader reader=new BinaryFileReader(new BinaryReader(new MemoryStream(bytes.ToArray())));
+            ArachnidOutbreakWounds restored=new ArachnidOutbreakWounds();restored.Deserialize(reader);
+            Check(reader.ReadInt()==83721,"wound serializer consumes exact positional data");reader.Close();
+            typeof(ArachnidOutbreakController).GetField("m_Wounds",Private).SetValue(controller,restored);
+            patient.Heal(10,healer,false);
+            Check(ledger.Points(2,healer)==5,"saved injury balance can be restored and consumed once");
+            patient.Damage(100,foes[2]);patient.Heal(100,healer,false);
+            Check(ledger.Points(2,healer)==10,"exactly zero health survivor retains genuine encounter healing eligibility");
+            patient.Damage(10,foes[2]);patient.Damage(1000,foes[2]);
+            Check(!patient.Alive,"overkill causes actual player death");patient.Resurrect();patient.Heal(100,outsider,false);
+            Check(ledger.Points(2,outsider)==0,"resurrection cannot reuse pre-death wounds");
+            patient.Damage(20,foes[2]);bool rescued=false;
+            PlayerDeathEventHandler immediate=delegate(PlayerDeathEventArgs e)
+            {
+                if(e.Mobile==patient){patient.Resurrect();patient.Heal(100,outsider,false);rescued=true;}
+            };
+            EventSink.PlayerDeath+=immediate;
+            try{patient.Kill();}finally{EventSink.PlayerDeath-=immediate;}
+            Check(rescued && patient.Alive && ledger.Points(2,outsider)==0,"injuries clear before a death callback resurrects and heals");
+            pet.IsBonded=true;pet.Damage(1000,foes[2]);
+            Check(pet.IsDeadBondedPet,"actual bonded pet death recognized");pet.ResurrectPet();pet.Heal(100,outsider,false);
+            Check(ledger.Points(2,outsider)==0,"bonded pet resurrection cannot reuse old wounds");
+            pet.Damage(20,foes[2]);pet.Controlled=false;pet.ControlMaster=null;pet.Heal(20,outsider,false);
+            pet.Damage(20,outsider);pet.Controlled=true;pet.ControlMaster=healer;pet.Heal(20,outsider,false);
+            Check(ledger.Points(2,outsider)==0,"released pet cannot exchange healed encounter wounds for later unrelated injury");
+            ledger.Seal(1);patient.Damage(20,foes[1]);patient.Heal(20,healer,false);
+            Check(ledger.Points(1,healer)==2,"completed stage cannot gain late support eligibility");
+        }
+        finally {controller.Delete();pet.Delete();healer.Delete();patient.Delete();outsider.Delete();}
+    }
     public static int Main(string[] args)
     {
         try
@@ -169,8 +241,8 @@ internal static class ArachnidOutbreakRewardRegression
             Core.Assembly=typeof(Core).Assembly;Core.Expansion=Expansion.SA;Core.DataDirectories.Add(args[0]);
             typeof(World).GetField("m_Items",BindingFlags.Static|BindingFlags.NonPublic).SetValue(null,new Dictionary<Serial,Item>());
             typeof(World).GetField("m_Mobiles",BindingFlags.Static|BindingFlags.NonPublic).SetValue(null,new Dictionary<Serial,Mobile>());
-            MapDefinitions.Configure();Corpse.Initialize();
-            Scoring(); Delivery(); Attribution();
+            MapDefinitions.Configure();RaceDefinitions.Configure();Corpse.Initialize();ArachnidOutbreakController.Initialize();
+            Scoring(); Delivery(); Attribution(); HealingProvenance();
             Console.WriteLine("PASS outbreak rewards: "+s_Checks+" component assertions; no world saves or listeners.");return 0;
         }
         catch(Exception exception){Console.Error.WriteLine(exception);return 1;}

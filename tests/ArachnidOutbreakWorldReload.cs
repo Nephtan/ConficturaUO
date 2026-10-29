@@ -99,6 +99,15 @@ internal static class ArachnidOutbreakWorldReload
                     boss.Serial.Value.ToString(),brood.Items[0].Serial.Value.ToString(),boss.Items[0].Serial.Value.ToString() }));
             }
             File.WriteAllText("participant.txt",participant.Serial.Value.ToString());
+            if (name == "engaged")
+            {
+                participant.Body=0x190;participant.Hits=participant.HitsMax;
+                HealthChangedEventHandler handler=(HealthChangedEventHandler)Delegate.CreateDelegate(typeof(HealthChangedEventHandler),
+                    typeof(ArachnidOutbreakController).GetMethod("OnHealthChanged",BindingFlags.Static|BindingFlags.NonPublic));
+                EventSink.HealthChanged+=handler;
+                try { participant.Damage(30,Creatures(controller)[0]); }
+                finally { EventSink.HealthChanged-=handler; }
+            }
         }
         string expected = String.Join("\t", new string[] { controller.Serial.Value.ToString(),
             ((int)controller.Phase).ToString(), controller.ClearedBroods.ToString(), controller.AttemptId,
@@ -147,7 +156,22 @@ internal static class ArachnidOutbreakWorldReload
             Mobile participant = World.FindMobile((Serial)Int32.Parse(File.ReadAllText("participant.txt")));
             ArachnidOutbreakLedger ledger = (ArachnidOutbreakLedger)typeof(ArachnidOutbreakController).GetField("m_Ledger",Private).GetValue(controller);
             Check(ledger.Points(1,participant)>4.6 && ledger.Points(2,participant)==4, "partial damage and support survive item-before-mobile deserialization");
-            Check(!participant.Alive && participant.NetState==null, "saved contributor remains dead and offline");
+            Check(participant.Alive==(name=="engaged") && participant.NetState==null, "saved contributor life and offline state preserved");
+            if(name=="engaged")
+            {
+                Mobile healer=new Mobile();healer.Player=true;
+                HealthChangedEventHandler handler=(HealthChangedEventHandler)Delegate.CreateDelegate(typeof(HealthChangedEventHandler),
+                    typeof(ArachnidOutbreakController).GetMethod("OnHealthChanged",BindingFlags.Static|BindingFlags.NonPublic));
+                EventSink.HealthChanged+=handler;
+                try
+                {
+                    participant.Heal(30,healer,false);
+                    Check(ledger.Points(0,healer)==3,"actual persisted encounter injury earns only restored health after fresh load");
+                    participant.Heal(30,healer,false);
+                    Check(ledger.Points(0,healer)==3,"loaded injury cannot pay twice");
+                }
+                finally {EventSink.HealthChanged-=handler;healer.Delete();}
+            }
         }
         ArachnidOutbreakController.Initialize();
         Check(controller.Phase == ArachnidOutbreakPhase.Disabled, "delivery gate disarms loaded controller");

@@ -4274,6 +4274,10 @@ namespace Server
             else if (!OnBeforeDeath())
                 return;
 
+            // Death has passed both vetoes. Notify before inventory, corpse and
+            // resurrection callbacks; bonded pets may not call base.OnDeath.
+            EventSink.InvokeMobileDeath(this);
+
             if (RaceID > 0)
                 BodyValue = RaceID;
 

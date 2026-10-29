@@ -63,6 +63,7 @@ namespace Server
     }
 
     public delegate void HealthChangedEventHandler(HealthChangedEventArgs e);
+    public delegate void MobileDeathEventHandler(Mobile mobile);
     public delegate void CharacterCreatedEventHandler(CharacterCreatedEventArgs e);
     public delegate void OpenDoorMacroEventHandler(OpenDoorMacroEventArgs e);
     public delegate void SpeechEventHandler(SpeechEventArgs e);
@@ -1180,6 +1181,7 @@ namespace Server
         public static event MovementEventHandler Movement;
         public static event HungerChangedEventHandler HungerChanged;
         public static event HealthChangedEventHandler HealthChanged;
+        public static event MobileDeathEventHandler MobileDeath;
         public static event CrashedEventHandler Crashed;
         public static event ShutdownEventHandler Shutdown;
         public static event HelpRequestEventHandler HelpRequest;
@@ -1437,6 +1439,18 @@ namespace Server
             }
         }
 
+        public static void InvokeMobileDeath(Mobile mobile)
+        {
+            MobileDeathEventHandler handlers = MobileDeath;
+            if (handlers == null)
+                return;
+            foreach (MobileDeathEventHandler handler in handlers.GetInvocationList())
+            {
+                try { handler(mobile); }
+                catch (Exception error) { Console.WriteLine("MobileDeath observer failed: {0}", error); }
+            }
+        }
+
         public static void InvokeMovement(MovementEventArgs e)
         {
             if (Movement != null)
@@ -1495,6 +1509,7 @@ namespace Server
             Movement = null;
             HungerChanged = null;
             HealthChanged = null;
+            MobileDeath = null;
             Crashed = null;
             Shutdown = null;
             HelpRequest = null;

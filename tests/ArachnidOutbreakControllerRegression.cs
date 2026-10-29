@@ -177,10 +177,10 @@ internal static class ArachnidOutbreakControllerRegression
                 Check(spider.Controller == controller && spider.AttemptId == controller.AttemptId && spider.Guardian, "ownership points to exact attempt");
                 Check(spider.HitsMax == 3000 && !spider.Tamable, "initial guardian tuning and no taming");
             }
-            Invoke(controller, "RecordCombat", guardians[0], unrelated, 20);
+            guardians[0].Damage(20, unrelated);
             Check(!State(controller).Engaged, "unattributed NPC fighting does not refresh recovery");
             unrelated.Player = true;
-            Invoke(controller, "RecordCombat", guardians[0], unrelated, 20);
+            guardians[0].Damage(20, unrelated);
             Check(State(controller).Engaged, "attributed combat starts recovery");
             Check(!State(controller).CompleteBrood(0, DateTime.MinValue), "invalid timestamp cannot complete stage");
             Check(controller.ClearedBroods == 0, "failed completion leaves progress intact");

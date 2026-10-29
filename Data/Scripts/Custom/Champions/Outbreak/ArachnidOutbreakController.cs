@@ -13,6 +13,7 @@ namespace Server.Custom.Confictura.Champions
         private static readonly List<ArachnidOutbreakController> m_Controllers = new List<ArachnidOutbreakController>();
         private ArachnidOutbreakState m_State = new ArachnidOutbreakState();
         private ArachnidOutbreakLedger m_Ledger;
+        private ArachnidOutbreakWounds m_Wounds = new ArachnidOutbreakWounds();
         private List<Mobile> m_Creatures = new List<Mobile>();
         private List<Item> m_Signs = new List<Item>();
         private ArachnidOutbreakPlacement m_Placement;
@@ -32,6 +33,10 @@ namespace Server.Custom.Confictura.Champions
         public static void Initialize()
         {
             CommandSystem.Register("ArachnidOutbreak", AccessLevel.Administrator, OnCommand);
+            EventSink.HealthChanged -= OnHealthChanged;
+            EventSink.HealthChanged += OnHealthChanged;
+            EventSink.MobileDeath -= OnMobileDeath;
+            EventSink.MobileDeath += OnMobileDeath;
             // Initialize runs after World.Load. Never create or enable a controller here.
             foreach (ArachnidOutbreakController controller in m_Controllers.ToArray())
                 controller.Restore();
@@ -153,6 +158,12 @@ namespace Server.Custom.Confictura.Champions
             if (!DeliveryReady || FindUnique(out count) != this)
             {
                 Stop();
+                return;
+            }
+            if (m_State.Active && (m_Ledger == null || m_Ledger.AttemptId != AttemptId))
+            {
+                Stop();
+                m_Status = "Attempt disarmed: contribution state is missing or belongs to another attempt.";
                 return;
             }
             if (m_State.Phase != ArachnidOutbreakPhase.Disabled)
@@ -282,6 +293,7 @@ namespace Server.Custom.Confictura.Champions
 
         private void Cleanup(string attempt)
         {
+            m_Wounds.Clear();
             foreach (Mobile mobile in m_Creatures.ToArray())
                 if (mobile != null && !mobile.Deleted && Owns(mobile, attempt))
                     mobile.Delete();
@@ -372,19 +384,63 @@ namespace Server.Custom.Confictura.Champions
             return null;
         }
 
-        internal void RecordCombat(Mobile target, Mobile attacker, int amount)
+        private bool OwnedStage(Mobile mobile, out int stage)
         {
-            if (Deleted || !m_State.Active || amount <= 0 || !m_Creatures.Contains(target)
-                || !Owns(target, AttemptId) || attacker == null)
+            stage = -1;
+            if (mobile == null || mobile.Deleted || !m_Creatures.Contains(mobile) || !Owns(mobile, AttemptId))
+                return false;
+            ArachnidOutbreakSpider spider = mobile as ArachnidOutbreakSpider;
+            stage = spider == null ? 3 : spider.Stage;
+            return stage >= 0 && stage < 4 && !m_Ledger.IsSealed(stage);
+        }
+
+        private static bool IsHealingPatient(Mobile mobile)
+        {
+            if (mobile.Player)
+                return true;
+            BaseCreature creature = mobile as BaseCreature;
+            return creature != null && ((creature.Controlled && creature.ControlMaster != null && creature.ControlMaster.Player)
+                || (creature.Summoned && creature.SummonMaster != null && creature.SummonMaster.Player));
+        }
+
+        private static void OnMobileDeath(Mobile mobile)
+        {
+            if (mobile == null)
                 return;
-            Mobile principal = attacker.Player ? attacker : attacker.GetDamageMaster(target);
-            if (principal != null && principal.Player)
+            foreach (ArachnidOutbreakController controller in m_Controllers)
+                controller.m_Wounds.Forget(mobile);
+        }
+
+        private static void OnHealthChanged(HealthChangedEventArgs e)
+        {
+            int count;
+            ArachnidOutbreakController controller = FindUnique(out count);
+            if (controller == null || !controller.m_State.Active || controller.m_Ledger == null
+                || controller.m_Ledger.AttemptId != controller.AttemptId || e.Mobile == null || e.Mobile.Deleted)
+                return;
+            int stage;
+            if (e.Kind == HealthChangeKind.Damage && e.NewHits < e.OldHits && controller.OwnedStage(e.Mobile, out stage))
             {
-                m_State.RecordActivity(DateTime.UtcNow);
-                ArachnidOutbreakSpider spider = target as ArachnidOutbreakSpider;
-                if (m_Ledger != null && m_Ledger.AttemptId == AttemptId)
-                    m_Ledger.CreditDamage(spider == null ? 3 : spider.Stage, principal, amount);
+                Mobile principal = e.Source == null ? null : e.Source.Player ? e.Source : e.Source.GetDamageMaster(e.Mobile);
+                if (principal != null && principal.Player && !principal.Deleted)
+                {
+                    controller.m_Ledger.CreditDamage(stage, principal, e.OldHits - e.NewHits);
+                    controller.m_State.RecordActivity(DateTime.UtcNow);
+                }
             }
+            if (!IsHealingPatient(e.Mobile))
+            {
+                controller.m_Wounds.Forget(e.Mobile);
+                return;
+            }
+            int incomingStage = -1;
+            BaseCreature source = e.Source as BaseCreature;
+            if (e.Kind == HealthChangeKind.Damage && source != null && !source.Controlled && !source.Summoned
+                && !source.BardProvoked && controller.OwnedStage(source, out stage))
+                incomingStage = stage;
+            Mobile healer = e.Source == null ? null : e.Source.Player ? e.Source : e.Source.GetDamageMaster(e.Mobile);
+            if (controller.m_Wounds.Observe(e, incomingStage, healer, controller.m_Ledger))
+                controller.m_State.RecordActivity(DateTime.UtcNow);
         }
 
         private void QueueStage(int stage)
@@ -470,7 +526,7 @@ namespace Server.Custom.Confictura.Champions
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)1);
+            writer.Write((int)2);
             m_State.Serialize(writer);
             writer.Write(m_Creatures, true);
             writer.Write(m_Signs, true);
@@ -480,6 +536,7 @@ namespace Server.Custom.Confictura.Champions
             writer.Write(m_Ledger != null);
             if (m_Ledger != null)
                 m_Ledger.Serialize(writer);
+            m_Wounds.Serialize(writer);
         }
         public override void Deserialize(GenericReader reader)
         {
@@ -496,6 +553,8 @@ namespace Server.Custom.Confictura.Champions
                 m_Ledger = new ArachnidOutbreakLedger();
                 m_Ledger.Deserialize(reader);
             }
+            if (version >= 2)
+                m_Wounds.Deserialize(reader);
         }
     }
 }
