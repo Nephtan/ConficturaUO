@@ -24,10 +24,10 @@ def verify(output):
             assert distance<=18
             worst=max(worst,distance);points+=1
     assert goals(center,(0,0,0))==grid
-    result=dict(remembered_client_location_first=True,retained_lost_boss_geometry_recovers_view_range=True,
+    result=dict(remembered_client_location_first=True,illustrative_memory_priority_case=True,
         arena_tiles_checked=points,worst_nearest_search_distance=worst,outside_memory_ignored=True,
         client_source_sha256=hashlib.sha256(source).hexdigest(),
-        scope='Planner geometry only; no line-of-sight, native terrain, enemy movement or combat acceptance')
+        scope='Retained actor/boss separation with a synthetic remembered point; planner geometry only; no line-of-sight, native terrain, enemy movement or combat acceptance')
     assert not output.exists();output.write_text(json.dumps(result,indent=2));print(json.dumps(result))
 
 

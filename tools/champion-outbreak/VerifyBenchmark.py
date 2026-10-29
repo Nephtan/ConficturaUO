@@ -119,6 +119,8 @@ def verify(root, require_clear=False, require_navigation=False, production_ref=N
                   incoming_health_loss=int(state.get('incomingDamage')),
                   owned_enemy_health_loss=int(state.get('outgoingDamage')),
                   actual_restored_hits=int(state.get('restoredHits')), supplies_consumed=used,
+                  tithing_net_reduction=(int(reference.get('tithing'))-int(state.get('tithing'))
+                                 if reference.get('tithing') is not None and state.get('tithing') is not None else None),
                   client_errors=errors, production_inputs_checked=len(inputs), private_save_files=len(hashes(root/'shard/Saves')),
                   pacing_gate='Not evaluated: requires three complete frozen-reference runs',
                   tuning_passes=0, production_activation=False, site_approval=False,

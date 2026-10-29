@@ -1,0 +1,40 @@
+# Outbreak economic observations
+
+Status: partial. No completed reference series, Zanthus farming measurement or live market valuation is accepted.
+
+## Recorded spend and source prices
+
+Retained pilot008 stops alive after all broods, without killing the boss. Its recorded consumption is 142 bandages, 4 greater cure, 1 greater heal, 11 greater strength, 13 greater agility, 3 total refresh and 2 orange petals. Tithing falls from the frozen initial balance to the terminal balance by 630 points. This measures net balance reduction rather than every spell's gross expenditure. These observations come from a partial, not a complete encounter.
+
+| Item | Consumed | Listed NPC base price | Replacement subtotal |
+| --- | ---: | ---: | ---: |
+| Bandage | 142 | 2 | 284 |
+| Greater cure | 4 | 60 | 240 |
+| Greater heal | 1 | 60 | 60 |
+| Greater strength | 11 | 60 | 660 |
+| Greater agility | 13 | 60 | 780 |
+| Total refresh | 3 | 30 | 90 |
+| Tithing points | 630 | 1 gold per donated point | 630 |
+| **Priced subtotal** | | | **2,744** |
+
+Bandages use SBHealer's GenericBuyInfo at StoreSalesList.cs:16829. Potion entries are SBAlchemist at lines 8251, 8263, 8299, 8335, 8359. The potion offers are conditional on MyServerSettings.SellRareChance and initially stock random quantities; this is not guaranteed replenishment at one visit. BaseVendor.GetPriceScalar applies town taxation, and GenericBuyInfo.Price applies its scalar. TithingGump consumes the offered gold and adds the same number of points.
+
+The table excludes petals, repairs, travel, obtaining equipment, time, taxes/actual checkout and potential empty-bottle resale. Crafting or player trade can change acquisition costs. Evidence and source hash/line extraction: D:/ConficturaUOTestTools/outbreak-economics-20261029-002/price-observation.json. This clarifies the first report's tithing label as net balance replacement. VerifyBenchmark.py now reports the observed finite tithing balance reduction alongside supplies. A source-price subtotal is neither an actual shopping receipt nor a net-profit result.
+
+## Reward value remains a separate question
+
+The specified 15,000 gold is a shared ground shower, not 15,000 per participant. RollVictory creates 25 stacks of 600 only after the boss victory path succeeds; pilot008 did not earn it. Four inherited UltraRich corpse packs and the skull/artifact opportunity are separate from that fixed sum. Gold actually collected, ordinary loot retained, travel/looting time, repairs and the completed-run resource spend remain unmeasured.
+
+Six personal glands from a fully qualified clear can make 12 treatments at guaranteed Alchemy 100 success, consuming 12 petals, 36 garlic and 12 bottles as well. Actual crafter prices, failure costs below 100, demand and support/pet use still need evidence. A skilled bandager's few potion cures do not show that protection has no value: prevention can preserve a healing action or protect another recipient. They also do not prove that hunters will buy the reward. Do not increase poison pressure merely to manufacture demand.
+
+Compare the completed no-antivenom and antivenom runs, support/pet cases and actual Zanthus farming before declaring the reward worth pursuing or changing rates. Keep the fixed gold shared, unique power inflation out of this reward, and the role of crafting/trade visible. No reward or general economy change follows from this subtotal.
+
+## Source traces
+
+- [StoreSalesList.cs](../../Data/Scripts/Mobiles/Base/StoreSalesList.cs): SBAlchemist/SBHealer buy offers; SellInfo values are not substituted for player purchase prices.
+- [Settings.cs](../../Data/Scripts/System/Misc/Settings.cs): MyServerSettings.SellRareChance.
+- [BaseVendor.cs](../../Data/Scripts/Mobiles/Base/BaseVendor.cs) and [GenericBuy.cs](../../Data/Scripts/Mobiles/Base/GenericBuy.cs): price scalar and actual listed-price calculation.
+- [TithingGump.cs](../../Data/Scripts/System/Gumps/TithingGump.cs): gold donation/point conversion.
+- [ArachnidOutbreakController.cs](../../Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakController.cs): RollVictory,25 validated gold positions, shared award routing.
+- [Mephitis.cs](../../Data/Scripts/Custom/Champions/Mobiles/Champs-UO/Mephitis.cs): inherited four UltraRich packs. [LootPack.cs](../../Data/Scripts/Items/Containers/LootPack.cs): actual pack definitions.
+- [DefAlchemy.cs](../../Data/Scripts/Trades/Crafting/DefAlchemy.cs), [VerifyBenchmark.py](../../tools/champion-outbreak/VerifyBenchmark.py), [BENCHMARK.md](BENCHMARK.md): recipe, frozen/native supply observations and incomplete-run limits.
