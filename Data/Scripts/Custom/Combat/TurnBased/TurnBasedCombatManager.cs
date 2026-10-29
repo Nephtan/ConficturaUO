@@ -2580,11 +2580,6 @@ namespace Server.Custom.Confictura
                 participant.LogicalTime,
                 wallTime
             );
-            participant.Mobile.NextActionTime = ComputeRebasedCooldown(
-                participant.Mobile.NextActionTime,
-                participant.LogicalTime,
-                wallTime
-            );
             participant.Mobile.NextCombatTime = ComputeRebasedCooldown(
                 participant.Mobile.NextCombatTime,
                 participant.LogicalTime,

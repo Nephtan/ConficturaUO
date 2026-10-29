@@ -2026,6 +2026,8 @@ namespace Server
             return String.Format("0x{0:X} \"{1}\"", m_Serial.Value, Name);
         }
 
+        // Packet/lift flood control stays on wall time; paid combat actions have
+        // their own actor-clock/AP gates and must not freeze this input delay.
         public DateTime NextActionTime
         {
             get { return m_NextActionTime; }
@@ -4827,7 +4829,7 @@ namespace Server
 
             if (
                 from.AccessLevel >= AccessLevel.GameMaster
-                || TurnBasedCombatBridge.GetTime(from) >= from.NextActionTime
+                || DateTime.Now >= from.NextActionTime
             )
             {
                 if (from.CheckAlive())
@@ -4965,7 +4967,7 @@ namespace Server
                                 from.Send(new PlaySound(liftSound, from));
 
                             from.NextActionTime =
-                                TurnBasedCombatBridge.GetTime(from) + TimeSpan.FromSeconds(0.5);
+                                DateTime.Now + TimeSpan.FromSeconds(0.5);
 
                             if (fixMap != null && shouldFix)
                                 fixMap.FixColumn(fixLoc.m_X, fixLoc.m_Y);

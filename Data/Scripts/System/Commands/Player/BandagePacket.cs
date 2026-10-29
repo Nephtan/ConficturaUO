@@ -28,7 +28,7 @@ namespace Server.Network
         {
             Mobile from = state.Mobile;
 
-            if (from.AccessLevel >= AccessLevel.Counselor || TurnBasedCombatBridge.GetTime(from) >= from.NextActionTime)
+            if (from.AccessLevel >= AccessLevel.Counselor || DateTime.Now >= from.NextActionTime)
             {
                 Serial use = pvSrc.ReadInt32();
                 Serial targ = pvSrc.ReadInt32();
@@ -48,7 +48,7 @@ namespace Server.Network
                             if (Bandage.TryApply(from, to, bandage))
                             {
                                 bandage.Consume();
-                                from.NextActionTime = TurnBasedCombatBridge.GetTime(from)
+                                from.NextActionTime = DateTime.Now
                                     + TimeSpan.FromSeconds(0.5);
                             }
                         }

@@ -1,5 +1,6 @@
 {
   "actions": {"classification": "current-regression", "sources": ["tests/FoundationActionRegression.cs"], "main": "FoundationActionRegression", "marker": "PASS current actions"},
+  "packet-input-throttle": {"classification": "current-regression", "sources": ["tests/PacketInputThrottleRegression.cs"], "main": "PacketInputThrottleRegression", "marker": "PASS packet input throttle:"},
   "actions-historical": {"classification": "historical-characterization", "sources": ["tests/FoundationActionRegression.cs"], "main": "FoundationActionRegression", "args": ["historical"], "marker": "REPRODUCED historical actions"},
   "payments": {"classification": "current-regression", "sources": ["tests/FoundationPaymentRegression.cs"], "main": "FoundationPaymentRegression", "marker": "PASS current payments"},
   "payments-historical": {"classification": "historical-characterization", "sources": ["tests/FoundationPaymentRegression.cs"], "main": "FoundationPaymentRegression", "args": ["historical"], "marker": "REPRODUCED historical payments"},

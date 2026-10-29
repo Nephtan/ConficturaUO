@@ -14,7 +14,7 @@ Run from the repository root:
 
 The generator scans every live runtime `.cs` file under `Data/Scripts`, excluding generated `bin` and `obj` trees. `Scripts.csproj` remains IDE/project hygiene rather than the runtime boundary.
 It seeds system ownership from the completed codebase-audit runtime inventory and records a canonical SHA-256 hash for every runtime script. Hashing reads source as text, normalizes CRLF and lone CR to LF, and encodes UTF-8 without a byte-order mark. Line-ending or BOM-only deployment transformations therefore remain compatible, while all other whitespace and source changes still produce drift. Enable is refused when a script is added, removed, or meaningfully changed after generation.
-The generator also fails the gate when a runtime script directly mixes a participant cooldown (`NextActionTime`, `NextSkillTime`, `NextSpellTime`, or `NextCombatTime`) with `DateTime.Now` instead of the actor-time bridge.
+The generator also fails the gate when a runtime script directly mixes a participant cooldown (`NextSkillTime`, `NextSpellTime`, or `NextCombatTime`) with `DateTime.Now` instead of the actor-time bridge. `NextActionTime` is the native half-second packet/lift input throttle and stays on wall time; it must neither freeze with actor time nor be rebased on leaving a battle. Existing AP and action legality gates still apply after that input check. Source: `Mobile.Lift`, `PacketHandlers.UseReq`, `XmlAttach.UseReq`, `BandagePacket.BandageRequest`, and `TurnBasedCombatManager.RebaseCooldowns`; regression: `tests/PacketInputThrottleRegression.cs`.
 
 ## Runtime controls
 
