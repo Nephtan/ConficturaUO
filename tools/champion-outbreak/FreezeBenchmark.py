@@ -135,6 +135,6 @@ if __name__ == '__main__':
     parser.add_argument('root',type=Path)
     parser.add_argument('--policy',required=True)
     parser.add_argument('--compare-reference',type=Path)
-    parser.add_argument('--start',choices=['no-antivenom','antivenom','navigation','recovery-navigation'])
+    parser.add_argument('--start',choices=['no-antivenom','antivenom','navigation','recovery-navigation','near-recovery-navigation'])
     parser.add_argument('--prepare',action='store_true',help='Use normal native preparation before freezing and starting a fresh v3 run')
     freeze(parser.parse_args())

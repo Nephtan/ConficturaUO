@@ -32,6 +32,8 @@ namespace Server.TestOnly
         private static bool ManifestConnected;
         private static bool NavigationOnly;
         private static bool NavigationRecovery;
+        private static bool NavigationNearRecovery, NavigationPinnedPassed;
+        private static Point3D PinnedGoal;
         private static int NavigationStage = 1;
         private static readonly Point3D[][] Travel = new Point3D[3][];
         private static int EnemyDeaths;
@@ -438,6 +440,17 @@ namespace Server.TestOnly
                         NavigationOnly = NavigationRecovery = true; NavigationStage = 3;
                         State = "navigation"; Started = DateTime.UtcNow;
                     }
+                    else if (command == "start-near-recovery-navigation" && State == "ready" && Actor.NetState != null)
+                    {
+                        Point3D origin = new Point3D(Site.Center.X - 23, Site.Center.Y + 17, 0);
+                        origin.Z = Actor.Map.GetAverageZ(origin.X, origin.Y);
+                        if (!Actor.Map.CanSpawnMobile(origin)) throw new Exception("Near recovery origin is blocked.");
+                        PinnedGoal = new Point3D(Site.Center.X - 1, Site.Center.Y + 19, 0);
+                        PinnedGoal.Z = Actor.Map.GetAverageZ(PinnedGoal.X, PinnedGoal.Y);
+                        Actor.MoveToWorld(origin, Actor.Map);
+                        NavigationOnly = NavigationRecovery = NavigationNearRecovery = true; NavigationStage = 3;
+                        State = "navigation"; Started = DateTime.UtcNow;
+                    }
                     else if ((command == "prepare-player" || command == "prepare-antivenom") && State == "ready" && Started == DateTime.MinValue && ProbeName == null && !PlayerPrepared)
                     {
                         if (command == "prepare-antivenom") Supply("antivenom", new BroodAntivenom(), 12);
@@ -461,8 +474,13 @@ namespace Server.TestOnly
                 }
                 if (State == "navigation")
                 {
-                    Point3D destination = NavigationStage == 3 ? Placement.Boss : Placement.Brood(NavigationStage);
-                    if (Actor.InRange(destination, 1) && ++NavigationStage > 3) State = "navigation-completed";
+                    if (NavigationNearRecovery && !NavigationPinnedPassed)
+                    { if (Actor.InRange(PinnedGoal, 1)) NavigationPinnedPassed = true; }
+                    else
+                    {
+                        Point3D destination = NavigationStage == 3 ? Placement.Boss : Placement.Brood(NavigationStage);
+                        if (Actor.InRange(destination, 1) && ++NavigationStage > 3) State = "navigation-completed";
+                    }
                 }
                 if (ProbeName != null && State == "toolkit-" + ProbeName)
                 {
@@ -602,6 +620,8 @@ namespace Server.TestOnly
                 Attr(writer, "enemyDeaths", EnemyDeaths); Attr(writer, "bossKilled", BossKilled);
                 Attr(writer, "navigationOnly", NavigationOnly); Attr(writer, "navigationStage", NavigationStage);
                 Attr(writer, "navigationRecovery", NavigationRecovery);
+                Attr(writer, "navigationNearRecovery", NavigationNearRecovery); Attr(writer, "navigationPinnedPassed", NavigationPinnedPassed);
+                Attr(writer, "pinnedX", PinnedGoal.X); Attr(writer, "pinnedY", PinnedGoal.Y); Attr(writer, "pinnedZ", PinnedGoal.Z);
                 if (ProbeName != null)
                 {
                     Attr(writer, "probe", ProbeName); Attr(writer, "probeSequence", ProbeSequence);

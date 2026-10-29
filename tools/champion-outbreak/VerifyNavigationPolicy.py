@@ -23,8 +23,12 @@ def verify(output):
         point=candidates[0]
         assert sum((point[i]-goal[i])**2 for i in range(2))<sum((position[i]-goal[i])**2 for i in range(2))
         position=point[:3];hops+=1;assert hops<20
-    assert scope['local_goals'](position,goal)==[goal]
-    report=dict(bounded_simulated_dodges=1000,reacquisition_local_hops=hops,short_goal_preserved=True,
+    assert scope['local_goals'](position,goal)[0]==goal
+    near=(2491,2105,2);near_goal=(2513,2107,0,1)
+    candidates=scope['local_goals'](near,near_goal)
+    assert candidates[0]==near_goal and len(candidates)>1
+    assert all(max(abs(p[i]-near[i]) for i in range(2))<=6 for p in candidates[1:])
+    report=dict(bounded_simulated_dodges=1000,reacquisition_local_hops=hops,short_goal_preserved=True,rejected_near_goal_has_local_alternatives=True,
                 client_source_sha256=hashlib.sha256(source).hexdigest(),scope='Planner invariants only; native walking and combat remain separate')
     assert not output.exists();output.write_text(json.dumps(report,indent=2));print(json.dumps(report))
 

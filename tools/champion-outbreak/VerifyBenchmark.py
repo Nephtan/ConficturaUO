@@ -102,8 +102,7 @@ def verify(root, require_clear=False, require_navigation=False, production_ref=N
             and max(abs(int(state.get('x'))-int(end.get('x'))),abs(int(state.get('y'))-int(end.get('y')))) <= 1
             and int(state.get('incomingDamage')) == int(state.get('outgoingDamage')) == int(state.get('enemyDeaths')) == 0)
         if state.get('navigationRecovery')=='True':
-            long_requests=[e for e in events if e['event']=='walk' and 'origin' in e
-                           and max(abs(e['origin'][0]-e['requested'][0]),abs(e['origin'][1]-e['requested'][1]))>24]
+            long_requests=[e for e in events if e['event']=='walk' and 'origin' in e and e['goal']!=e['requested']]
             recovery_passed=(state.get('state')=='navigation-completed' and state.get('navigationStage')=='4'
                 and not errors and not any(used.values()) and long_requests
                 and all(max(abs(e['origin'][0]-e['goal'][0]),abs(e['origin'][1]-e['goal'][1]))<=6 for e in long_requests)
@@ -111,6 +110,8 @@ def verify(root, require_clear=False, require_navigation=False, production_ref=N
                 and not any(e['event'] in ('attack','cast','use','escape') for e in events)
                 and max(abs(int(state.get('x'))-int(end.get('x'))),abs(int(state.get('y'))-int(end.get('y'))))<=1
                 and int(state.get('incomingDamage'))==int(state.get('outgoingDamage'))==int(state.get('enemyDeaths'))==0)
+            if state.get('navigationNearRecovery')=='True':
+                recovery_passed=recovery_passed and state.get('navigationPinnedPassed')=='True'
     report = dict(provenance_preservation_and_teardown_passed=True, reference_clear_passed=clear,
                   outcome=state.get('state'), seconds=float(state.get('seconds')),
                   boss_killed=state.get('bossKilled') == 'True', cleared_brood_mask=int(state.get('clearedBroods','0')),

@@ -80,10 +80,12 @@ def value(node, key, default=0):
 
 def local_goals(start, goal):
     x,y,z=start
-    if max(abs(goal[0]-x),abs(goal[1]-y))<=24:
-        return [goal]
-    candidates=[(x+dx*6,y+dy*6,z,1) for dx in (-1,0,1) for dy in (-1,0,1) if dx or dy]
-    return sorted(candidates,key=lambda p:(p[0]-goal[0])**2+(p[1]-goal[1])**2)
+    distance=max(abs(goal[0]-x),abs(goal[1]-y))
+    if distance<=1:return [goal]
+    step=min(6,distance)
+    candidates=[(x+dx*step,y+dy*step,z,1) for dx in (-1,0,1) for dy in (-1,0,1) if dx or dy]
+    ordered=sorted(candidates,key=lambda p:(p[0]-goal[0])**2+(p[1]-goal[1])**2)
+    return ([goal] if distance<=24 else [])+[p for p in ordered if p!=goal]
 
 def dodge_goals(x,y,z,center_x,center_y):
     candidates=[(x-2,y,z,0),(x+2,y,z,0),(x,y-2,z,0),(x,y+2,z,0)]
@@ -240,7 +242,13 @@ try:
             now = time.time()
             if navigation_rejections >= 10 and state.GetAttribute('paralyzed') != 'True' and state.GetAttribute('frozen') != 'True':
                 raise Exception('Ten native navigation requests rejected without control effect')
-            navigate_stage(state,int(value(state,'navigationStage')),Engine.Player,now)
+            if state.GetAttribute('navigationNearRecovery')=='True':
+                if state.GetAttribute('navigationPinnedPassed')!='True':
+                    navigate(value(state,'pinnedX'),value(state,'pinnedY'),value(state,'pinnedZ'),1,now)
+                else:
+                    anchor=state.SelectSingleNode("anchor[@stage='3']")
+                    navigate(value(anchor,'x'),value(anchor,'y'),value(anchor,'z'),1,now)
+            else:navigate_stage(state,int(value(state,'navigationStage')),Engine.Player,now)
             continue
         if not mode.startswith('running'):
             if mode in ('completed', 'dead', 'failed', 'aborted', 'stopped', 'driver-failed', 'navigation-completed'):
@@ -323,7 +331,10 @@ try:
         else:
             mask = int(value(state, 'clearedBroods'))
             stage = next((n for n in range(3) if not mask & (1 << n)), 3)
-            navigate_stage(state,stage,player,now)
+            if stage==3:
+                anchor=state.SelectSingleNode("anchor[@stage='3']")
+                navigate(value(anchor,'x'),value(anchor,'y'),value(anchor,'z'),1,now)
+            else:navigate_stage(state,stage,player,now)
 
         fraction = value(state, 'hits') / max(1, value(state, 'hitsMax'))
         poisoned = state.GetAttribute('poisoned') == 'True'
