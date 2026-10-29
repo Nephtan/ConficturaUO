@@ -48,6 +48,17 @@ def read_status(path):
             time.sleep(.1)
 
 
+def movement_policy(root):
+    profiles=[]
+    for path in (root/'client/Data/Profiles').rglob('*.json'):
+        data=json.loads(path.read_text(encoding='utf-8-sig'))
+        if isinstance(data,dict) and 'always_run' in data:
+            profiles.append(dict(path=str(path.relative_to(root)),always_run=data['always_run'],
+                                 always_run_unless_hidden=data.get('always_run_unless_hidden',False)))
+    assert len(profiles)==1,'Movement policy requires the single active copied profile'
+    return profiles[0]
+
+
 def capability_signature(path):
     reference = ET.parse(path).getroot()
     fields = ('access','race','rawStr','rawDex','rawInt','str','dex','int','hitsMax','stamMax','manaMax',
@@ -115,6 +126,7 @@ def freeze(args):
     for key, path in files.items():
         shutil.copy2(path, snapshots/(key+path.suffix))
     frozen = dict(utc=state.get('utc'),state='ready; no combat yet',policy=args.policy,
+                  movement_policy=movement_policy(root),
                   production_input_count=len(inputs),
                   compared_reference=None if comparison is None else str(comparison),
                   capability_comparison=('Same capabilities; ordinary durability rolls and NPC randomness retained' if comparison is not None

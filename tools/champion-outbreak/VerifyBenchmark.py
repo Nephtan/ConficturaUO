@@ -29,6 +29,9 @@ def verify(root, require_clear=False, require_navigation=False, production_ref=N
     assert sha(root/'shard/Data/Scripts/TestOnly/ArachnidOutbreakBenchmark.cs') == frozen['files']['fixture']['sha256']
     assert sha(root/'client/ClassicAssist/OutbreakBenchmarkClient.py') == frozen['files']['client_policy']['sha256']
     assert sha(evidence/'benchmark-reference.xml') == frozen['files']['reference_xml']['sha256']
+    if 'movement_policy' in frozen:
+        from FreezeBenchmark import movement_policy
+        assert movement_policy(root)==frozen['movement_policy'],'Copied movement policy changed'
     assert sha(root/'shard/ConficturaServer.exe') == prepared['core_sha256']
     inputs = json.loads((Path(prepared['candidate'])/'inputs.json').read_text(encoding='utf-8-sig'))['files']
     mismatches = [p for p,expected in inputs.items() if sha(repo/p) != expected]
@@ -121,6 +124,8 @@ def verify(root, require_clear=False, require_navigation=False, production_ref=N
                   actual_restored_hits=int(state.get('restoredHits')), supplies_consumed=used,
                   tithing_net_reduction=(int(reference.get('tithing'))-int(state.get('tithing'))
                                  if reference.get('tithing') is not None and state.get('tithing') is not None else None),
+                  native_run_requests=(int(state.get('movementRunRequests')) if state.get('movementRunRequests') is not None else None),
+                  native_walk_requests=(int(state.get('movementWalkRequests')) if state.get('movementWalkRequests') is not None else None),
                   client_errors=errors, production_inputs_checked=len(inputs), private_save_files=len(hashes(root/'shard/Saves')),
                   pacing_gate='Not evaluated: requires three complete frozen-reference runs',
                   tuning_passes=0, production_activation=False, site_approval=False,

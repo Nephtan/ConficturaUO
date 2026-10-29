@@ -37,6 +37,7 @@ namespace Server.TestOnly
         private static int NavigationStage = 1;
         private static readonly Point3D[][] Travel = new Point3D[3][];
         private static int EnemyDeaths;
+        private static int RunRequests, WalkRequests;
         private static DateTime Deadline = DateTime.UtcNow.AddHours(2);
         private static string State = "preparing";
         private static string Failure = String.Empty;
@@ -68,6 +69,7 @@ namespace Server.TestOnly
             AutoSave.SavesEnabled = false;
             EventSink.HealthChanged += OnHealthChanged;
             EventSink.MobileDeath += OnMobileDeath;
+            EventSink.Movement += OnMovement;
             Timer.DelayCall(TimeSpan.FromSeconds(1), Prepare);
         }
 
@@ -303,6 +305,11 @@ namespace Server.TestOnly
                 else RestoredHits += change;
             }
             else if (change < 0 && Creatures().Contains(e.Mobile)) OutgoingDamage -= change;
+        }
+        private static void OnMovement(MovementEventArgs e)
+        {
+            if (Actor == null || e.Mobile != Actor) return;
+            if ((e.Direction & Direction.Running) != 0) ++RunRequests; else ++WalkRequests;
         }
         private static void OnMobileDeath(Mobile mobile)
         {
@@ -618,6 +625,7 @@ namespace Server.TestOnly
                 Attr(writer, "seconds", Started == DateTime.MinValue ? 0 : ((Ended == DateTime.MinValue ? DateTime.UtcNow : Ended) - Started).TotalSeconds);
                 Attr(writer, "failure", Failure); Attr(writer, "incomingDamage", IncomingDamage); Attr(writer, "outgoingDamage", OutgoingDamage); Attr(writer, "restoredHits", RestoredHits);
                 Attr(writer, "enemyDeaths", EnemyDeaths); Attr(writer, "bossKilled", BossKilled);
+                Attr(writer, "movementRunRequests", RunRequests); Attr(writer, "movementWalkRequests", WalkRequests);
                 Attr(writer, "navigationOnly", NavigationOnly); Attr(writer, "navigationStage", NavigationStage);
                 Attr(writer, "navigationRecovery", NavigationRecovery);
                 Attr(writer, "navigationNearRecovery", NavigationNearRecovery); Attr(writer, "navigationPinnedPassed", NavigationPinnedPassed);

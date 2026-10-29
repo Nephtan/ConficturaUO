@@ -11,11 +11,14 @@ $lines.Add('Client SHA256: '+(Get-FileHash -LiteralPath $Client -Algorithm SHA25
 $type=$assembly.GetType($TypeName,$true)
 foreach ($method in $type.GetMethods([Reflection.BindingFlags]'Public,NonPublic,Static,Instance') | Where-Object { $_.Name -eq $MethodName }) {
     $lines.Add($method.ToString())
-    $bytes=$method.GetMethodBody().GetILAsByteArray();$position=0
+    $body=$method.GetMethodBody()
+    if ($null -eq $body) { $lines.Add('No managed IL body; metadata does not establish implementation.');continue }
+    $bytes=$body.GetILAsByteArray();$position=0
     while ($position -lt $bytes.Length) {
         $offset=$position;$value=[int]$bytes[$position];$position++
-        if ($value -eq 254) { $value=65280+[int]$bytes[$position];$position++ }
+        if ($value -eq 254) { $value=65024+[int]$bytes[$position];$position++ }
         $opcode=$opcodes[$value];$operand=''
+        if ($null -eq $opcode) { throw ('Unknown IL opcode {0:X4} at offset {1:X4}; inspection refused.' -f $value,$offset) }
         switch ($opcode.OperandType.ToString()) {
             'InlineNone' {}
             'ShortInlineI' { $operand=[int]$bytes[$position];$position++ }

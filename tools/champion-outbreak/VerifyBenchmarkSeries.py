@@ -12,7 +12,7 @@ def series(roots, output):
     roots=[p.resolve() for p in roots]
     assert len(roots)==3 and len(set(roots))==3,'Exactly three distinct completed runs are required'
     assert not output.exists(),'Never overwrite a prior series result'
-    rows=[];signatures=[];policies=[];fixtures=[];inputs=[];saves=[];stocks=[];cores=[]
+    rows=[];signatures=[];policies=[];fixtures=[];inputs=[];saves=[];stocks=[];cores=[];movement=[]
     for root in roots:
         verify(root,require_clear=True)
         evidence=root/'evidence'
@@ -26,6 +26,9 @@ def series(roots, output):
         frozen=json.loads((evidence/'reference-freeze.json').read_text())
         prepared=json.loads((evidence/'prepared.json').read_text(encoding='utf-8-sig'))
         policies.append(frozen['files']['client_policy']['sha256'])
+        assert 'movement_policy' in frozen,'Movement configuration was not frozen'
+        assert frozen['movement_policy']['always_run'] is True,'The competent reference requires ordinary running'
+        movement.append(frozen['movement_policy'])
         fixtures.append(frozen['files']['fixture']['sha256'])
         inputs.append(json.loads((Path(prepared['candidate'])/'inputs.json').read_text(encoding='utf-8-sig'))['files'])
         saves.append(prepared['source_saves_sha256']);cores.append(prepared['core_sha256'])
@@ -34,10 +37,11 @@ def series(roots, output):
         assert stock.pop('antivenom',0)==(12 if mode=='antivenom' else 0)
         stocks.append(stock)
         report=json.loads((evidence/'benchmark-verification.json').read_text())
+        assert report['native_run_requests'] is not None and report['native_run_requests']>0,'No actual running requests observed'
         rows.append(dict(root=str(root),mode=mode,seconds=float(state.get('seconds')),
                          supplies_consumed=report['supplies_consumed'],
                          native_walk_rejections=report['native_walk_rejections']))
-    for values in (signatures,policies,fixtures,inputs,saves,stocks,cores):
+    for values in (signatures,policies,fixtures,inputs,saves,stocks,cores,movement):
         assert all(value==values[0] for value in values[1:]),'Runs are not the same frozen reference/policy/source/starting world/stock'
     assert any(row['mode']=='no-antivenom' for row in rows),'At least one complete run must exclude antivenom'
     median=statistics.median(row['seconds'] for row in rows)/60
