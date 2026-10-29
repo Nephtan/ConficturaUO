@@ -101,6 +101,12 @@ namespace Server.Custom.Confictura.Champions
     public class ArachnidOutbreakChampion : Mephitis, IArachnidOutbreakOwned
     {
         public const int ChampionHealth = 9000;
+        public const int WebIntervalSeconds = 15;
+        private DateTime m_NextWeb;
+        private ArachnidWebWarning m_Web;
+        private bool m_WebClockSet;
+        private TurnParticipant m_WebActor;
+        private TurnCombatGroup m_WebGroup;
         private ArachnidOutbreakController m_Controller;
         private string m_AttemptId;
         private int m_Reinforcements;
@@ -108,6 +114,70 @@ namespace Server.Custom.Confictura.Champions
         public string AttemptId { get { return m_AttemptId; } }
         public override bool AwardLegacyChampionRewards { get { return false; } }
         public virtual Item RollVictoryArtifact() { return GetArtifact(); }
+
+        private void ThinkWeb()
+        {
+            if (m_Web != null && !m_Web.Deleted)
+            {
+                m_Web.TryResolve(true);
+                if (!m_Web.Deleted) return;
+            }
+            TryStartWeb(Combatant);
+        }
+
+        internal bool TryStartWeb(Mobile victim)
+        {
+            DateTime now = TurnBasedCombatBridge.GetTime(this);
+            TurnParticipant actor = ArachnidOutbreakWebItem.Actor(this);
+            TurnCombatGroup group = actor == null ? null : actor.Group;
+            if (m_WebClockSet && (actor != m_WebActor || group != m_WebGroup))
+            {
+                if (m_Web != null) m_Web.Delete();
+                m_NextWeb = now.AddSeconds(WebIntervalSeconds);
+            }
+            m_WebClockSet = true; m_WebActor = actor; m_WebGroup = group;
+            if ((m_Web != null && !m_Web.Deleted) || now < m_NextWeb || ArachnidWebRestraint.Find(victim) != null
+                || m_Controller == null || !m_Controller.IsWebContext(this, victim))
+                return false;
+            bool started = PerformWebAction(victim, delegate
+            {
+                m_Web = new ArachnidWebWarning(this, victim);
+                return true;
+            });
+            if (started) m_NextWeb = TurnBasedCombatBridge.GetTime(this).AddSeconds(WebIntervalSeconds);
+            return started;
+        }
+
+        internal bool PerformWebAction(Mobile victim, Func<bool> apply)
+        {
+            if (Deleted || !Alive || Paralyzed || Frozen || BardPacified || m_Controller == null || !m_Controller.IsWebContext(this, victim))
+                return false;
+            TurnParticipant participant = ArachnidOutbreakWebItem.Actor(this);
+            if (participant != null && (participant.Group.Current != participant || participant.Pending != null))
+                return false;
+            TurnActionDecision decision = TurnBasedCombatBridge.BeginAction(new TurnActionRequest(this, victim, this, TurnActionKind.ItemUse, 4, true, false));
+            if (!decision.Allowed) return false;
+            bool succeeded = false;
+            try
+            {
+                using (IDisposable action = TurnBasedCombatBridge.BeginActionScope(decision.Lease))
+                using (IDisposable effect = TurnBasedCombatBridge.BeginMutation(new TurnMutationRequest(this, victim, TurnMutationKind.Effect, 0, 0)))
+                {
+                    TurnParticipant targetActor;
+                    if (effect == null || !ArachnidOutbreakWebItem.SameMode(this, victim, out targetActor)) return false;
+                    RevealingAction();
+                    DoHarmful(victim);
+                    if (!m_Controller.IsWebContext(this, victim)) return false;
+                    succeeded = apply();
+                    return succeeded;
+                }
+            }
+            finally
+            {
+                TurnBasedCombatBridge.CompleteAction(decision.Lease,
+                    new TurnActionResult(this, victim, succeeded ? TurnActionPhase.Commit : TurnActionPhase.Refund, succeeded));
+            }
+        }
 
         public ArachnidOutbreakChampion(ArachnidOutbreakController controller)
         {
@@ -126,6 +196,7 @@ namespace Server.Custom.Confictura.Champions
             if (!m_Controller.KeepCreatureInBounds(this))
                 return;
             base.OnThink();
+            ThinkWeb();
             for (int i = 0; i < 3; ++i)
             {
                 int bit = 1 << i;

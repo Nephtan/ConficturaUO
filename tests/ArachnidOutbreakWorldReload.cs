@@ -50,7 +50,7 @@ internal static class ArachnidOutbreakWorldReload
         ArachnidOutbreakController controller = new ArachnidOutbreakController();
         ArachnidOutbreakState state = State(controller);
         if (name != "disabled") state.SetEnabled(true);
-        if (name.StartsWith("broods-") || name.StartsWith("boss") || name == "engaged" || name == "cooldown")
+        if (name.StartsWith("broods-") || name.StartsWith("boss") || name == "engaged" || name == "cooldown" || name == "webs")
         {
             Point3D bossPoint = new Point3D(1000, 1000, 0);
             Point3D[] nests = new Point3D[] { new Point3D(972,980,0), new Point3D(1028,980,0), new Point3D(1000,1030,0) };
@@ -65,13 +65,22 @@ internal static class ArachnidOutbreakWorldReload
                 if ((mask & (1 << spider.Stage)) != 0) spider.Kill();
             }
             if (mask != 0 || name == "engaged") state.RecordActivity(DateTime.UtcNow);
-            if (name == "boss" || name == "cooldown")
+            if (name == "boss" || name == "cooldown" || name == "webs")
             {
                 ArachnidOutbreakChampion boss = new ArachnidOutbreakChampion(controller);
                 typeof(ArachnidOutbreakChampion).GetField("m_Reinforcements", Private).SetValue(boss, 7);
                 Creatures(controller).Add(boss);
                 typeof(ArachnidOutbreakController).GetField("m_BossCreated", Private).SetValue(controller, true);
                 boss.MoveToWorld(bossPoint, Map.Sosaria);
+                if (name == "webs")
+                {
+                    Mobile warned = new Mobile(); warned.Player = true; warned.Body = 0x190; warned.RawStr = 100; warned.Hits = warned.HitsMax; warned.MoveToWorld(bossPoint,Map.Sosaria);
+                    Mobile held = new Mobile(); held.Player = true; held.Body = 0x190; held.RawStr = 100; held.Hits = held.HitsMax; held.MoveToWorld(bossPoint,Map.Sosaria);
+                    ArachnidWebWarning warning = (ArachnidWebWarning)Activator.CreateInstance(typeof(ArachnidWebWarning),Private,null,new object[]{boss,warned},null);
+                    ArachnidWebRestraint restraint = (ArachnidWebRestraint)Activator.CreateInstance(typeof(ArachnidWebRestraint),Private,null,new object[]{boss,held},null);
+                    Check(ArachnidWebRestraint.Find(held) == restraint, "producer binds a live transient restraint before saving");
+                    File.WriteAllText("webs.tsv",String.Join("\t",new string[]{warning.Serial.Value.ToString(),restraint.Serial.Value.ToString(),warned.Serial.Value.ToString(),held.Serial.Value.ToString(),boss.Serial.Value.ToString()}));
+                }
                 if (name == "cooldown") boss.Kill();
             }
         }
@@ -193,11 +202,26 @@ internal static class ArachnidOutbreakWorldReload
                 finally {EventSink.HealthChanged-=handler;healer.Delete();}
             }
         }
+        if (name == "webs")
+        {
+            string[] web = File.ReadAllText("webs.tsv").Split('\t');
+            ArachnidWebWarning warning = World.FindItem((Serial)Int32.Parse(web[0])) as ArachnidWebWarning;
+            ArachnidWebRestraint restraint = World.FindItem((Serial)Int32.Parse(web[1])) as ArachnidWebRestraint;
+            Check(warning != null && restraint != null && warning.Controller == controller && restraint.Controller == controller, "new serialized web types and controller references load");
+            Check(warning.Victim == World.FindMobile((Serial)Int32.Parse(web[2])) && restraint.Victim == World.FindMobile((Serial)Int32.Parse(web[3]))
+                && warning.Champion == World.FindMobile((Serial)Int32.Parse(web[4])) && restraint.Champion == warning.Champion, "web victim/boss references survive item-before-mobile loading");
+            Check(ArachnidWebRestraint.Find(restraint.Victim) == null && !restraint.Victim.Frozen && !restraint.Victim.Paralyzed, "fresh process does not rebind a saved restraint or status flags");
+        }
         ArachnidOutbreakController.Initialize();
         Check(controller.Phase == ArachnidOutbreakPhase.Disabled, "delivery gate disarms loaded controller");
         Check(Creatures(controller).Count == 0 && Signs(controller).Count == 0, "startup removed owned encounter objects");
         Check(World.FindItem((Serial)Int32.Parse(expected[5])) != null, "foreign item survives startup cleanup");
         Check(World.FindMobile((Serial)Int32.Parse(expected[6])) != null, "unrelated creature survives startup cleanup");
+        if (name == "webs")
+        {
+            string[] web = File.ReadAllText("webs.tsv").Split('\t');
+            Check(World.FindItem((Serial)Int32.Parse(web[0])) == null && World.FindItem((Serial)Int32.Parse(web[1])) == null, "gated startup deletes owned web markers without resuming callbacks");
+        }
         if(name=="antivenom")
         {
             string[] data=File.ReadAllText("antivenom.tsv").Split('\t');Mobile owner=World.FindMobile((Serial)Int32.Parse(data[0]));
@@ -294,7 +318,7 @@ internal static class ArachnidOutbreakWorldReload
             }
             string exe = Assembly.GetExecutingAssembly().Location;
             string root = Path.Combine(Path.GetDirectoryName(exe), "outbreak-world-reload-" + Guid.NewGuid().ToString("N"));
-            string[] cases = new string[] { "disabled", "searching", "broods-0", "engaged", "broods-1", "broods-2", "broods-3", "broods-4", "broods-5", "broods-6", "boss-pending", "boss", "cooldown", "rewards", "antivenom" };
+            string[] cases = new string[] { "disabled", "searching", "broods-0", "engaged", "broods-1", "broods-2", "broods-3", "broods-4", "broods-5", "broods-6", "boss-pending", "boss", "cooldown", "rewards", "antivenom", "webs" };
             foreach (string name in cases)
             {
                 string directory = Path.Combine(root, name);
@@ -305,7 +329,7 @@ internal static class ArachnidOutbreakWorldReload
                 if (name == "antivenom") Worker(exe,args[0],"effect",name,directory);
                 Console.WriteLine("PASS fresh-process world reload: " + name);
             }
-            Console.WriteLine("PASS outbreak world reload: 15 worlds, 32 bounded workers; no existing saves or listeners.");
+            Console.WriteLine("PASS outbreak world reload: 16 worlds, 34 bounded workers; no existing saves or listeners.");
             return 0;
         }
         catch (Exception exception) { Console.Error.WriteLine(exception); return 1; }

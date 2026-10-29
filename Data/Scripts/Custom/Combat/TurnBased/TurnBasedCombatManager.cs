@@ -47,6 +47,9 @@ namespace Server.Custom.Confictura
         public bool Acted;
         public int ActionPoints;
         public DateTime LogicalTime;
+        public DateTime ActionTime;
+        public double ActionSecondsThisTurn;
+        public long TurnsStarted;
         public bool HasTakenFirstTurn;
         public bool Disconnected;
         public DateTime DisconnectedSince;
@@ -843,6 +846,8 @@ namespace Server.Custom.Confictura
 
             if (refund)
                 participant.ActionPoints += pending.Cost;
+            else
+                AdvanceActionTime(participant, pending.Cost * 0.25);
 
             participant.Pending = null;
 
@@ -981,6 +986,24 @@ namespace Server.Custom.Confictura
         {
             TurnParticipant participant = GetParticipant(mobile);
             return participant == null ? wallTime : participant.LogicalTime;
+        }
+
+        // Short, movement-only effects can expire within a turn without changing
+        // the existing start/end-of-turn clocks used by poison and regeneration.
+        public DateTime GetActionTime(Mobile mobile, DateTime wallTime)
+        {
+            TurnParticipant participant = GetParticipant(mobile);
+            return participant == null ? wallTime : participant.ActionTime == DateTime.MinValue ? participant.LogicalTime : participant.ActionTime;
+        }
+
+        private static void AdvanceActionTime(TurnParticipant participant, double seconds)
+        {
+            if (seconds <= 0.0)
+                return;
+            if (participant.ActionTime == DateTime.MinValue)
+                participant.ActionTime = participant.LogicalTime;
+            participant.ActionTime = participant.ActionTime.AddSeconds(seconds);
+            participant.ActionSecondsThisTurn += seconds;
         }
 
         public TimeSpan GetActorInterval(Mobile mobile)
@@ -1229,6 +1252,7 @@ namespace Server.Custom.Confictura
                 participant.PendingEndEffectElapsed = TimeSpan.Zero;
             }
 
+            AdvanceActionTime(participant, Math.Max(0.0, m_Configuration.ActorSeconds - participant.ActionSecondsThisTurn));
             participant.ActionPoints = 0;
             participant.Acted = true;
             ClearRunningState(mobile);
@@ -1336,6 +1360,7 @@ namespace Server.Custom.Confictura
             );
             participant.EligibleRound = eligibleRound;
             participant.LogicalTime = DateTime.Now;
+            participant.ActionTime = participant.LogicalTime;
             participant.Effects = CaptureEffects(mobile);
             participant.Disconnected = mobile.Player && mobile.NetState == null;
             participant.DisconnectedSince = participant.Disconnected ? DateTime.Now : DateTime.MinValue;
@@ -1545,6 +1570,8 @@ namespace Server.Custom.Confictura
 
             group.Current = next;
             next.ActionPoints = m_Configuration.ActionPoints;
+            next.ActionSecondsThisTurn = 0.0;
+            ++next.TurnsStarted;
             next.AIDecisionsThisTurn = 0;
             next.AINoProgressCount = 0;
             next.AISimulatedSecondsThisTurn = 0.0;

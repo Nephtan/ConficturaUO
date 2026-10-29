@@ -418,6 +418,35 @@ namespace Server.Custom.Confictura.Champions
             return OwnedStage(enemy, out stage) ? stage : -1;
         }
 
+        internal bool IsWebContext(ArachnidOutbreakChampion champion, Mobile victim)
+        {
+            int count, stage;
+            if (Deleted || FindUnique(out count) != this || m_State.Phase != ArachnidOutbreakPhase.Boss || m_Placement == null
+                || m_Ledger == null || m_Ledger.AttemptId != AttemptId || !OwnedStage(champion, out stage) || stage != 3
+                || !champion.Alive || champion.Controlled || champion.Summoned || champion.BardProvoked
+                || victim == null || victim.Deleted || !victim.Alive || victim.IsDeadBondedPet || !IsHealingPatient(victim)
+                || victim.AccessLevel != AccessLevel.Player || champion.Map != Map.Sosaria || victim.Map != champion.Map
+                || !champion.InRange(victim.Location, 12) || !champion.CanSee(victim) || !champion.InLOS(victim) || !champion.CanBeHarmful(victim, false))
+                return false;
+            int radius = ArachnidOutbreakSite.Radius;
+            return new Rectangle2D(m_Placement.Boss.X - radius, m_Placement.Boss.Y - radius, radius * 2 + 1, radius * 2 + 1).Contains(victim.Location);
+        }
+
+        internal void RegisterWeb(ArachnidOutbreakWebItem web)
+        {
+            if (!Owns(web, AttemptId)) throw new InvalidOperationException("Foreign outbreak web.");
+            m_Signs.Add(web);
+        }
+
+        internal void RecordWebRescue(ArachnidOutbreakChampion champion, Mobile helper, Mobile patient)
+        {
+            if (helper != null && helper.Player && !helper.Deleted && helper != patient && IsWebContext(champion, patient))
+            {
+                m_Ledger.CreditValidatedSupport(3, helper, 2.0);
+                m_State.RecordActivity(DateTime.UtcNow);
+            }
+        }
+
         private void ObserveBards(DateTime utcNow, bool credit)
         {
             if (!Deleted && m_State.Active && m_Ledger != null && m_Ledger.AttemptId == AttemptId

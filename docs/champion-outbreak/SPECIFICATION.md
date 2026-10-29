@@ -22,6 +22,8 @@ The encounter targets **20–35 minutes for a fixed, artifact-equipped veteran b
 
 In turn-based combat, warnings must allow a legal reaction opportunity, and attacks, escapes, and effects must respect the existing action rules. Wall-clock callbacks cannot bypass them.
 
+The initial web attack selects the current hostile player or participating pet and marks that target's original tile. Its default interval is fifteen boss actor seconds. A red warning changes to a binding web on impact; double-clicking the binding web frees its target within two tiles and line of sight. Telegraph and impact each use the existing four-AP item-action allowance in turn-based combat, as does freeing a web. The warning remains visible for at least three real seconds and waits for the target to complete a reaction turn before a later legal boss pulse can apply it. A four-second restraint uses real time outside turn-based combat and committed action time inside it (one second per four paid AP); refunds add no time, and ending the victim's turn advances the unspent interval. This permits attacks, healing and casting while restrained and lets movement resume within the same turn. Existing poison/regeneration clocks are unchanged. Clock/group changes, relocation, death and encounter cleanup cancel transient webs; warnings and restraints do not resume across restart, while earned rescue points persist.
+
 ## Rewards, participation, and crafting
 
 | Result | Reward |

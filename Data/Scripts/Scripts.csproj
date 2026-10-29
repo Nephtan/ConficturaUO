@@ -143,6 +143,7 @@
     <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakWounds.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakPoisons.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakBards.cs" />
+    <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakWebs.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakCreatures.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakSite.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakSites.cs" />
