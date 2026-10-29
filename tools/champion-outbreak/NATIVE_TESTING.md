@@ -38,3 +38,29 @@ The fixture requires `evidence/native-private-root.txt` to match its executable 
 Turn scenes bypass encounter discovery/placement and directly construct a restraint. The scheduler and boss/pet AI are stopped. Keep their native item/target/AP evidence separate from legal warning impact, live AI, pacing, site approval and combat rewards. Preserve the original character's equipment/stats; record any fixture-only scene changes. Opening the backpack currently costs the ordinary four-AP ItemUse allowance; prepare inventory before benchmarks and do not silently change that policy.
 
 After testing, check the exact process paths before stopping owned processes, confirm their listeners are gone, and compare all original and private save hashes against `protected-source-inputs.json`/`prepared.json`. Preserve failed logs and identify crash exits separately from explicit stop markers. Never remove unrelated processes or profiles. Native004's request-sharing crash is retained;005 completed forced teardown;007 verifies final fixture compilation and atomic publication only.
+
+## Copied-client site traversal
+
+Pass `--fixture site-traversal` to preparation for `tests/ArachnidOutbreakSiteTraversal.cs` instead of the stationary combat fixture. Keep it outside the production script tree. Force runtime compilation, then start only the guarded copy. With `-service`, compiler/startup diagnostics go to the copy's `Data/Logs/Console.log`; an empty redirected stdout file does not mean compilation succeeded.
+
+The fixture loads the copied Player, disables autosave, grants travel-only invulnerability, and checks all six inactive proposals against copied-world structural exclusions. Actual `Movement.CheckMovement` builds cardinal ground routes from a north boundary entrance through all three brood anchors and the boss anchor to a south boundary exit. It writes `site-routes.csv` only after every route is ready. This is stronger movement evidence than the spawnable-tile connectivity survey, but it is still planning until the client walks it.
+
+Before launching the copied client, install its bounded macros:
+
+```powershell
+python -X utf8 tools/champion-outbreak/InstallSiteTraversalMacros.py --output <private-root>
+```
+
+This edits only the unambiguous copied `macros.xml`. The original profiles stay untouched. Control+Shift+Z runs two calibration steps; confirm exactly two connected-client positions with zero deviations before continuing. Then reset with the atomic publisher's `--allow-incomplete site-0` request, explicitly retaining the partial calibration attempt. Control+Shift+A through F run the respective six routes in proposal order. Select each subsequent starting point using `site-1` through `site-5`, wait for consumption and reobserve the client before input. Site changes refuse an incomplete or deviating prior attempt unless `--allow-incomplete` explicitly acknowledges it; inspect and retain the failure first. All translation after setup uses normal client Walk actions and movement packets; the server fixture never follows a route with `Move` or `MoveToWorld`. Walking requests turn first, wait500ms between inputs, and pause4000ms at anchors.
+
+Observe the client during traversal and at visually questionable anchors; recorded positions alone cannot prove readable terrain. `site-events.csv` retains calibration, resets, deviations and checkpoint positions. `site-state.json` is transient telemetry. The fixture has a45-minute watchdog and remains in real time with turn-based combat disabled. Invulnerability and markers make these travel tests, not encounter/AI/pacing acceptance.
+
+Use the publisher's `stop` request, stop only the exact copied client, confirm processes/listeners are gone, then run:
+
+```powershell
+python -X utf8 tools/champion-outbreak/VerifySiteTraversal.py --output <private-root>
+```
+
+The verifier requires every step and checkpoint of the latest attempt at every site, connected-client state, no deviation, an explicit no-save stop marker, matching fixture/core/production-source hashes, and unchanged private saves and original source/profile inputs. It writes partial results and returns nonzero if any route fails; preservation has a separate result. Native screenshots/visual findings remain separate. It does not approve reservations, establish current deployment-world clearance, or enable production. The first live survey is documented in [SITE_TRAVERSAL.md](../../docs/champion-outbreak/SITE_TRAVERSAL.md): five routes complete, southeastern unresolved after two attempts.
+
+Client macro format source: [ClassicUO MacroManager](https://github.com/ClassicUO/ClassicUO/blob/main/src/ClassicUO.Client/Game/Managers/MacroManager.cs), `Macro.Load` and the Walk/Delay cases. Delay must have a `text` attribute so the loader creates `MacroObjectString`. The first private survey calibration used an incorrect `str` attribute and crashed the copied client; retain that rejected attempt and its logs, rather than treating it as a shard or traversal failure.

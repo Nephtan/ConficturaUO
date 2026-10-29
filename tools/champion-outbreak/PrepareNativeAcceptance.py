@@ -66,9 +66,10 @@ def prepare(args):
         shutil.copy2(repo/'Data/TurnBasedCombat'/name, destination)
     text = (shard/'Data/TurnBasedCombat/TurnBasedCombat.cfg').read_text(encoding='utf-8-sig')
     assert 'Enabled=false' in text and 'RequireCompatibilityGate=true' in text
-    harness = shard/'Data/Scripts/TestOnly/ArachnidOutbreakNativeAcceptance.cs'
+    fixture = 'ArachnidOutbreakSiteTraversal.cs' if args.fixture == 'site-traversal' else 'ArachnidOutbreakNativeAcceptance.cs'
+    harness = shard/'Data/Scripts/TestOnly'/fixture
     harness.parent.mkdir(exist_ok=True)
-    shutil.copy2(repo/'tests/ArachnidOutbreakNativeAcceptance.cs', harness)
+    shutil.copy2(repo/'tests'/fixture, harness)
     (root/'evidence/native-private-root.txt').write_text(str(shard), encoding='utf-8')
     register = subprocess.run(['powershell','-NoProfile','-File',str(repo/'scripts/Generate-TurnBasedCombatCompatibility.ps1'),
                                '-RepositoryRoot',str(shard)], capture_output=True, text=True, timeout=120, check=True)
@@ -85,8 +86,10 @@ def prepare(args):
     record = dict(port=port, candidate=str(candidate), core_sha256=sha(shard/'ConficturaServer.exe'),
                   source_saves_sha256=protected[str(old/'shard/Saves')],
                   overlays={rel:sha(shard/'Data/Scripts'/rel) for rel in provenance['overlays']},
-                  harness_sha256=sha(harness), private_compatibility_gate=True,
-                  scope='Scene construction and stopped scheduler; no global TBC activation, AI, warning reaction or pacing acceptance.')
+                  harness_sha256=sha(harness), fixture=args.fixture, private_compatibility_gate=True,
+                  scope=('Planned copied-client site traversal; blessed travel-only Player; no encounter, site approval or pacing acceptance.'
+                         if args.fixture == 'site-traversal' else
+                         'Scene construction and stopped scheduler; no global TBC activation, AI, warning reaction or pacing acceptance.'))
     (root/'evidence/prepared.json').write_text(json.dumps(record, indent=2), encoding='utf-8')
     assert hashes(shard/'Saves') == protected[str(old/'shard/Saves')]
     for name, expected in protected.items():
@@ -101,4 +104,5 @@ if __name__ == '__main__':
     parser.add_argument('--candidate', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--assets', type=Path, required=True)
+    parser.add_argument('--fixture', choices=['acceptance','site-traversal'], default='acceptance')
     prepare(parser.parse_args())

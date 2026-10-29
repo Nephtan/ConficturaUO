@@ -68,3 +68,9 @@ Retained failed observations include the private native helper's initial account
 - `tools/champion-outbreak/ReservationCandidateSurvey.cs`, `SelectReservationCandidates.py`, `RenderReservationAtlas.cs`: terrain, anonymous copied-world screening and mapped proposal.
 
 Before approval: finish native traversal/anchors and western visibility, investigate the inactive malformed legacy controller, and repeat occupancy/maximum-city-growth checks against a fresh deployment-world copy. Only then may source review flags and matching site entries be promoted. Keep outbreak production activation disabled through all remaining reward, mechanic and pacing gates.
+
+## Copied-client traversal follow-up - 2026-10-29
+
+[SITE_TRAVERSAL.md](SITE_TRAVERSAL.md) records normal client walks through all anchors and opposite boundaries at five proposals: central226, northern224 on retry, eastern228, northwestern228 and western226 steps. Southeastern remains unresolved after two failed fixed-macro attempts; neither is counted as a completed route. Current-world approval is still absent.
+
+Native views identified foliage overlapping the standing character near the northern/western boss positions and dense canopy at eastern brood0. Those need actual encounter/ground-warning visibility checks or clearer placements before approval. The northwestern river edge has an actual complete walking route and a visible boss position; that resolves access along this tested route, not every placement/use case in the footprint. No proposal or housing rule was activated.
