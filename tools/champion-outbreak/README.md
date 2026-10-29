@@ -11,3 +11,10 @@ The legacy SDK's Trammel uses file index 0. Both helpers remap its three file-0 
 Current full private survey artifacts: `D:/ConficturaUOTestTools/outbreak-map-survey-20261028/`. The source save is dated October 17, 2026, not a live occupancy feed. The private CCWM-derived exporter retains exact serializer assemblies and a hash-verified separate save copy; its extra geometry output omits player identities. No public/repository export of player save data is intended.
 
 `HousingEligibilityProbe.cs` uses actual `HousePlacement.Check` against a standard small-house multi across the original candidate footprints. Any legal placement disqualifies a candidate. A negative result for this one shape is explicitly inconclusive and never approves a site. Reference matching core/runtime assemblies when compiling and pass asset directory plus Regions.xml path. No house is constructed.
+
+
+`HousingCandidateSurvey.cs` and `ProtectedLandmarkSurvey.cs` reference matching server/runtime assemblies, like the eligibility probe. Pass asset directory and Regions.xml. They bootstrap empty world dictionaries and checked-in regions without loading saves, calling script Initialize, opening listeners or creating houses. Their observations cannot establish live occupancy.
+
+The candidate survey samples an eight-tile grid, then checks actual topology before detailed two-shape housing screening. It has a 500 detailed-candidate cap and never approves a site; unsampled locations and untested house templates remain unknown. The landmark survey measures connected ground and 5x5 staging inside named protected rectangles; it does not certify access routes or fit the current encounter's clearance box.
+
+`RenderLandmarkAtlas.exe ASSET_DIRECTORY OUTPUT_PNG OVERLAY_CSV` uses the same Ultima.dll/System.Drawing references and remapping as RenderMap. Its six landmark rectangles and component counts are a fixed 2026-10-28 survey snapshot, not a live report. Regenerate and review them with the landmark probe if assets/regions change. The optional copied-save geometry remains private. Results and limitations: `docs/champion-outbreak/SITE_SURVEY.md`.

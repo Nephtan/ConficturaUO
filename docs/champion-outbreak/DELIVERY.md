@@ -105,3 +105,47 @@ Current placement-004 candidate: server build and forced runtime compile passed;
 Subsequent actual placement probe found legal small-house locations **inside all six original encounter footprints**, not merely housing-permissive region flags. This conclusively disqualifies those sites under the user's requirement. Private evidence: `occupancy-001/housing-eligibility-probe.log`; reproducible probe source is `tools/champion-outbreak/HousingEligibilityProbe.cs`. This probe only disqualifies; absence of one small-house placement would not prove permanent non-housing status for all supported shapes.
 
 Placement-004 IDE/project hygiene build passed against the verified x86 server assembly with BuildProjectReferences=false and isolated outputs. Core/runtime source and exact fixture hashes were revalidated before the focused placement checkpoint commit. Batch 1 is still InProgress; the replacement site search and world controller are not complete.
+
+
+### Step 1b - Disarmed owned-world controller (2026-10-28)
+
+Implemented the separate controller and owned spiders/champion/web signs. This is a gated intermediate implementation, not a playable or deployed outbreak. `ArachnidOutbreakController.DeliveryReady` remains false and the reviewed catalog remains empty. Startup registers a command but never creates a controller.
+
+- Entry point: `ArachnidOutbreakController.Initialize` registers `[ArachnidOutbreak <status|create|start|stop>]` at Administrator access and restores loaded controllers. The handler independently guards null/deleted/low-access mobiles. Creation is disabled by default; start rejects incomplete delivery, ambiguous controllers, and absent reviewed sites.
+- A five-second controller timer (enabled only after readiness) handles search, recovery, reconciliation and cooldown. Reviewed-site terrain validation and live nest occupancy checks precede placement. There is no random-coordinate fallback.
+- Three owned guardians/signs progress through real guarded death callbacks. Deletion is not victory. Owned-object cleanup requires both controller identity and attempt identity, including contaminated saved reference lists.
+- Reconciliation preserves cleared stages, detects removed guardians/bosses, and cancels invalid attempts without victory. A failed leash return cancels instead of stranding an internalized creature whose AI may stop thinking.
+- Permanent housing protection and structural clearance are rechecked every thirty seconds; new reinforcement groups also check clearance. All four identified temporary travel-spell gate classes exclude fresh placement but do not cancel an active attempt. Actual spawn points still avoid all portals and houses.
+- Brood reinforcement masks allow four initial defenders and two at each health threshold; boss masks permit six total. Healing/repeated callbacks do not replay spent budgets. Failed placement consumes that threshold budget, preserving an upper bound rather than an unbounded retry source.
+- `BaseChampion.AwardLegacyChampionRewards` defaults true; the new boss opts out of legacy scroll/gold/skull transactions so the new reward ledger can own its complete transaction. Existing champion serializers and reward defaults are unchanged. New rewards and participation are not implemented yet.
+
+New positional serializers (all version 0, after their base serializer):
+
+| Type | Custom field order |
+|---|---|
+| `ArachnidOutbreakController` | version, versioned state, strong mobile list, strong item list, next search date, last site string, boss-created bool |
+| `ArachnidOutbreakSpider` | version, controller item, attempt string, stage int, guardian bool, reinforcement-mask int |
+| `ArachnidOutbreakChampion` | version, controller item, attempt string, reinforcement-mask int |
+| `ArachnidBroodSign` | version, controller item, attempt string |
+
+The state serializer's existing version-0 field order is unchanged. All new world types have Serial constructors. Timer, placement cache, safety-check date and status are derived, not serialized.
+
+Source traces: `Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakController.cs` (`Initialize`, `OnCommand`, `TryEnable`, `TryStart`, `Reconcile`, `Cleanup`, `KeepCreatureInBounds`, `Serialize`/`Deserialize`); `ArachnidOutbreakCreatures.cs` (`OnDamage`, `OnThink`, `OnDeath`); `ArachnidOutbreakSite.cs` (`HasStructuralConflict`, `IsPortal`, `IsTravelSpellGate`); `Data/Scripts/Custom/Champions/System/Mobiles/BaseChampion.cs` (`AwardLegacyChampionRewards`).
+
+Verification and accepted snapshot are recorded below after the final fixture run. Batch 1 remains InProgress: approved placement/layout and actual saved-world reload are still required. Batch 2, turn-based mechanics, native client feedback and pacing acceptance remain pending.
+
+
+Accepted controller snapshot: `D:/ConficturaUOTestTools/outbreak-20261028-controller-007`.
+Command: `python scripts/foundation_fixture_runner.py --snapshot D:\ConficturaUOTestTools\outbreak-20261028-controller-007 --fixtures outbreak outbreak-controller champion --prepare`.
+
+Release/x86 server build and forced runtime script compile passed. Components passed **234** lifecycle/serialization assertions, **56** controller assertions and **679** existing champion reward assertions. Exact production runtime/core input hashes and the copied controller fixture were rechecked against the worktree. Project truth is zero missing includes and zero unlisted runtime sources. Scripts.csproj IDE/project hygiene is verified separately with the matching x86 server reference and isolated output paths.
+
+The fixtures test real death callbacks, duplicate outcomes, reference-list ownership contamination, binary serialization/sentinels, finite reinforcement replay, command access and disabled activation, four temporary travel gate families, and failed leash recovery. They use private reflection setup for terrain/catalog prerequisites and deliberately do not claim real placement approval. No saves, listeners, main timer thread or native game client are started by these component fixtures. Full saved-world reload, native behavior and pacing remain unavailable as acceptance evidence at this checkpoint.
+
+Failed observations are retained: controller-001 initially failed runtime compile for a missing `Server.Items` import; a controller-004 reinforcement test initially used health above the threshold it intended to test, then corrected its input. Later accepted snapshots passed. No core source was changed and the tracked root executable is untouched.
+
+### Map-backed placement design review - 2026-10-28
+
+See [SITE_SURVEY.md](SITE_SURVEY.md) for the measured protected-landmark atlas and search limits. The broader eight-tile scan examined 250,240 sample positions and 1,094 candidate centers; all candidates failed the rigid current layout. This does not prove there are no sites at unsampled centers or with different geometry.
+
+Central Orc Fort provides 4,041 connected tiles within an existing 74x64 permanent housing ban, plus no copied houses/portals within 24 tiles in the October 17 save. It is a concrete lead, not an approved deployment site: the current footprint/buffer does not fit. Smaller protected landmarks have differing terrain, portal and adjacent-house constraints. The user is reviewing whether to fit encounter layouts to existing protected geography or reconsider larger reserved wilderness areas. No new ban, footprint relaxation, activation or production catalog entry was applied.

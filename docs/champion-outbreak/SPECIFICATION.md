@@ -100,3 +100,8 @@ Record combat time, deaths, retreats, supplies, gold, artifacts, glands, and tre
 Deliver a tested local prototype, committed source and required executable, reproducible fixtures, results, and enable/disable instructions. **Production activation remains disabled.** Preserve unrelated worktree changes.
 
 The larger loot economy and beginner progression remain separate work. This pilot gives champion hunting a clearer identity and a crafting connection; it does not claim to solve either broader problem.
+
+
+## Placement design review pending - 2026-10-28
+
+[The map-backed survey](SITE_SURVEY.md) identifies a conflict between the provisional universal square footprint/buffer and the existing protected overworld geography. Central Orc Fort has 4,041 connected tiles within its permanent housing ban but different dimensions. Site-specific protected layouts are proposed for the future event family; neither that revision nor new wilderness reservations is approved here. Existing requirements and disabled activation remain in force pending that design decision.
