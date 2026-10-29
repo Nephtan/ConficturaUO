@@ -6,6 +6,7 @@ using Server.Accounting;
 using Server.Items;
 using Server.Mobiles;
 using Server.Misc;
+using Server.Network;
 using Server.Custom.Confictura.Champions;
 
 namespace Server.TestOnly
@@ -24,6 +25,13 @@ namespace Server.TestOnly
         private static int Progress;
         private static int Deviations;
         private static bool Stopping;
+        private static PacketHandler OriginalMovement;
+        private static PacketHandler OriginalMovement6017;
+        private static int MovementPackets;
+        private static int DiagnosticFailures;
+        private static int ThrottleCalls;
+        private static int ThrottleRefusals;
+        private static DateTime NextSample;
 
         private sealed class Route
         {
@@ -40,6 +48,14 @@ namespace Server.TestOnly
             if (!File.Exists(guard) || !String.Equals(Path.GetFullPath(File.ReadAllText(guard)).TrimEnd('\\'), Core.BaseDirectory.TrimEnd('\\'), StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException("Site traversal requires its exact disposable-root guard.");
             AutoSave.SavesEnabled = false;
+            OriginalMovement = PacketHandlers.GetHandler(0x02);
+            OriginalMovement6017 = PacketHandlers.Get6017Handler(0x02);
+            if (OriginalMovement == null || OriginalMovement6017 == null)
+                throw new InvalidOperationException("Original movement handlers missing.");
+            PacketHandlers.Register(0x02, OriginalMovement.Length, OriginalMovement.Ingame, ObserveMovement);
+            PacketHandlers.GetHandler(0x02).ThrottleCallback = ObserveThrottle;
+            PacketHandlers.Register6017(0x02, OriginalMovement6017.Length, OriginalMovement6017.Ingame, ObserveMovement6017);
+            PacketHandlers.Get6017Handler(0x02).ThrottleCallback = ObserveThrottle6017;
             Deadline = DateTime.UtcNow.AddMinutes(45);
             Timer.DelayCall(TimeSpan.FromSeconds(1), Start);
         }
@@ -78,6 +94,9 @@ namespace Server.TestOnly
             }
             File.WriteAllText(Path.Combine(Evidence, "site-routes.csv"), plans);
             File.WriteAllText(Path.Combine(Evidence, "site-events.csv"), "utc,site,event,step,x,y,z,connected\n");
+            File.WriteAllText(Path.Combine(Evidence, "site-packets.csv"), "utc,site,plannedStep,requestedDirection,packetSequence,serverSequenceBefore,xBefore,yBefore,zBefore,facingBefore,staminaBefore,staminaMax,terrainAllowed,terrainZ,frozen,paralyzed,occupants,xAfter,yAfter,zAfter,facingAfter,staminaAfter,serverSequenceAfter,result\n");
+            File.WriteAllText(Path.Combine(Evidence, "site-throttles.csv"), "utc,site,plannedStep,stamina,staminaMax,allowed\n");
+            File.WriteAllText(Path.Combine(Evidence, "site-next-steps.csv"), "utc,site,plannedStep,x,y,z,stamina,staminaMax,nextX,nextY,nextZ,terrainAllowed,occupants\n");
             File.WriteAllText(Path.Combine(Evidence, "native-ready.txt"), "Six planned walking routes; travel-only Player is blessed. No encounter, production activation or site approval.");
             Poll = Timer.DelayCall(TimeSpan.Zero, TimeSpan.FromMilliseconds(50), Tick);
             Select(0);
@@ -190,10 +209,84 @@ namespace Server.TestOnly
             File.AppendAllText(Path.Combine(Evidence, "site-events.csv"), DateTime.UtcNow.ToString("o") + "," + Active.Id + "," + kind + "," + Progress + "," + Actor.X + "," + Actor.Y + "," + Actor.Z + "," + (Actor.NetState != null) + "\n");
         }
 
+        private static void ObserveMovement(NetState state, PacketReader reader)
+        {
+            ObserveMovement(state, reader, OriginalMovement);
+        }
+
+        private static bool ObserveThrottle(NetState state) { return ObserveThrottle(state, OriginalMovement); }
+        private static bool ObserveThrottle6017(NetState state) { return ObserveThrottle(state, OriginalMovement6017); }
+        private static bool ObserveThrottle(NetState state, PacketHandler original)
+        {
+            bool allowed = original.ThrottleCallback == null || original.ThrottleCallback(state);
+            if (Actor != null && Active != null && state.Mobile == Actor)
+            {
+                ++ThrottleCalls; if (!allowed) ++ThrottleRefusals;
+                try { File.AppendAllText(Path.Combine(Evidence, "site-throttles.csv"), DateTime.UtcNow.ToString("o") + "," + Active.Id + "," + Progress + "," + Actor.Stam + "," + Actor.StamMax + "," + allowed + "\n"); }
+                catch (IOException) { ++DiagnosticFailures; }
+            }
+            return allowed;
+        }
+
+        private static string Occupants(Point3D point)
+        {
+            string occupants = "";
+            IPooledEnumerable nearby = Map.Sosaria.GetMobilesInRange(point, 0);
+            try
+            {
+                foreach (Mobile mobile in nearby)
+                    if (mobile != Actor && Math.Abs(mobile.Z - point.Z) < 16)
+                        occupants += mobile.Serial.Value + ":" + mobile.GetType().FullName.Replace(',', ';') + ":alive=" + mobile.Alive + ":hidden=" + mobile.Hidden + ";";
+            }
+            finally { nearby.Free(); }
+            return occupants;
+        }
+
+        private static void ObserveMovement6017(NetState state, PacketReader reader)
+        {
+            ObserveMovement(state, reader, OriginalMovement6017);
+        }
+
+        private static void ObserveMovement(NetState state, PacketReader reader, PacketHandler original)
+        {
+            if (Actor == null || Active == null || state.Mobile != Actor)
+            {
+                original.OnReceive(state, reader);
+                return;
+            }
+            int position = reader.Seek(0, SeekOrigin.Current);
+            Direction direction = (Direction)reader.ReadByte();
+            int sequence = reader.ReadByte();
+            reader.Seek(position, SeekOrigin.Begin);
+            Point3D before = Actor.Location;
+            Direction facing = Actor.Direction;
+            int stamina = Actor.Stam, serverSequence = state.Sequence, terrainZ;
+            bool translation = (facing & Direction.Mask) == (direction & Direction.Mask);
+            bool terrain = Server.Movement.Movement.CheckMovement(Actor, direction, out terrainZ);
+            int x = before.X, y = before.Y;
+            Server.Movement.Movement.Offset(direction, ref x, ref y);
+            string occupants = Occupants(new Point3D(x, y, terrainZ));
+            bool frozen = Actor.Frozen, paralyzed = Actor.Paralyzed;
+            try { original.OnReceive(state, reader); }
+            finally
+            {
+                ++MovementPackets;
+                string result = Actor.Location != before ? "moved" : !translation && Actor.Direction != facing ? "turned" : "stationary";
+                try
+                {
+                    File.AppendAllText(Path.Combine(Evidence, "site-packets.csv"), DateTime.UtcNow.ToString("o") + "," + Active.Id + "," + Progress + "," + (int)direction + "," + sequence + "," + serverSequence
+                        + "," + before.X + "," + before.Y + "," + before.Z + "," + (int)facing + "," + stamina + "," + Actor.StamMax + "," + terrain + "," + terrainZ
+                        + "," + frozen + "," + paralyzed + "," + occupants + "," + Actor.X + "," + Actor.Y + "," + Actor.Z + "," + (int)Actor.Direction + "," + Actor.Stam + "," + state.Sequence + "," + result + "\n");
+                }
+                catch (IOException) { ++DiagnosticFailures; }
+            }
+        }
+
         private static void Stop()
         {
             Stopping = true; Poll.Stop();
             foreach (Item marker in Markers) marker.Delete();
+            File.WriteAllText(Path.Combine(Evidence, "site-packet-summary.json"), "{\"movementPackets\":" + MovementPackets + ",\"throttleCalls\":" + ThrottleCalls + ",\"throttleRefusals\":" + ThrottleRefusals + ",\"diagnosticFailures\":" + DiagnosticFailures + "}");
             File.WriteAllText(Path.Combine(Evidence, "site-forced-stop.txt"), DateTime.UtcNow.ToString("o") + " forced no-save teardown");
             Core.Kill(false);
         }
@@ -221,6 +314,14 @@ namespace Server.TestOnly
                 }
                 else { ++Deviations; Record("off-planned-route"); }
                 Last = Actor.Location;
+            }
+            if (Actor.NetState != null && Progress + 1 < Active.Points.Count && Actor.Location == Active.Points[Progress] && DateTime.UtcNow >= NextSample)
+            {
+                NextSample = DateTime.UtcNow.AddMilliseconds(250);
+                Point3D next = Active.Points[Progress + 1]; int z;
+                bool terrain = Server.Movement.Movement.CheckMovement(Actor, Map.Sosaria, Actor.Location, DirectionBetween(Actor.Location, next), out z);
+                try { File.AppendAllText(Path.Combine(Evidence, "site-next-steps.csv"), DateTime.UtcNow.ToString("o") + "," + Active.Id + "," + Progress + "," + Actor.X + "," + Actor.Y + "," + Actor.Z + "," + Actor.Stam + "," + Actor.StamMax + "," + next.X + "," + next.Y + "," + next.Z + "," + terrain + "," + Occupants(next) + "\n"); }
+                catch (IOException) { ++DiagnosticFailures; }
             }
             File.WriteAllText(Path.Combine(Evidence, "site-state.json"), "{\"utc\":\"" + DateTime.UtcNow.ToString("o") + "\",\"site\":\"" + Active.Id + "\",\"progress\":" + Progress + ",\"steps\":" + (Active.Points.Count - 1) + ",\"deviations\":" + Deviations + ",\"x\":" + Actor.X + ",\"y\":" + Actor.Y + ",\"z\":" + Actor.Z + ",\"connected\":" + (Actor.NetState != null).ToString().ToLowerInvariant() + ",\"playerAccess\":" + (Actor.AccessLevel == AccessLevel.Player).ToString().ToLowerInvariant() + ",\"blessedTravelOnly\":" + Actor.Blessed.ToString().ToLowerInvariant() + "}");
         }
