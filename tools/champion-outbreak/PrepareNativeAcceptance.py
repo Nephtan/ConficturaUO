@@ -69,6 +69,7 @@ def prepare(args):
     fixture = {'site-traversal':'ArachnidOutbreakSiteTraversal.cs',
                'benchmark':'ArachnidOutbreakBenchmark.cs',
                'profile-inspection':'ArachnidCharacterInspection.cs',
+               'archmage-preparation':'ArachnidArchmagePreparation.cs',
                'acceptance':'ArachnidOutbreakNativeAcceptance.cs'}[args.fixture]
     harness = shard/'Data/Scripts/TestOnly'/fixture
     harness.parent.mkdir(exist_ok=True)
@@ -116,6 +117,8 @@ def prepare(args):
                          'Scene construction and stopped scheduler; no global TBC activation, AI, warning reaction or pacing acceptance.'))
     if args.fixture=='profile-inspection':
         record['scope']='Read-only matching-serializer inspection of the offline copied character; no client, character mutation or gameplay acceptance.'
+    if args.fixture=='archmage-preparation':
+        record['scope']='Actual historical copied Zanthus, native original-macro maintenance only; no encounter, grants or combat acceptance.'
     (root/'evidence/prepared.json').write_text(json.dumps(record, indent=2), encoding='utf-8')
     assert hashes(shard/'Saves') == protected[str(old/'shard/Saves')]
     for name, expected in protected.items():
@@ -130,5 +133,5 @@ if __name__ == '__main__':
     parser.add_argument('--candidate', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--assets', type=Path, required=True)
-    parser.add_argument('--fixture', choices=['acceptance','site-traversal','benchmark','profile-inspection'], default='acceptance')
+    parser.add_argument('--fixture', choices=['acceptance','site-traversal','benchmark','profile-inspection','archmage-preparation'], default='acceptance')
     prepare(parser.parse_args())

@@ -57,6 +57,10 @@ last_bandage = last_strength = last_agility = last_special = last_dispel = 0
 previous_ability = ''
 retreat_requested = 0
 dodge_requested = 0
+boss_last_seen = None
+boss_search_route = None
+boss_search_index = 0
+last_search_goal = None
 
 def log(kind, **values):
     values.update(event=kind, utc_epoch=time.time())
@@ -90,6 +94,14 @@ def local_goals(start, goal):
 def dodge_goals(x,y,z,center_x,center_y):
     candidates=[(x-2,y,z,0),(x+2,y,z,0),(x,y-2,z,0),(x,y+2,z,0)]
     return sorted(candidates,key=lambda p:(p[0]-center_x)**2+(p[1]-center_y)**2)
+
+def boss_reacquisition_goals(center, remembered):
+    x,y,z=center
+    valid=remembered is not None and max(abs(remembered[0]-x),abs(remembered[1]-y))<=56
+    origin=remembered if valid else center
+    grid=[(x+dx,y+dy,z,1) for dx in (-40,-16,16,40) for dy in (-40,-16,16,40)]
+    grid.sort(key=lambda p:(p[0]-origin[0])**2+(p[1]-origin[1])**2)
+    return ([tuple(remembered)+(1,)] if valid else [])+grid
 
 def navigate(x, y, z, distance, now):
     global last_goal, last_walk
@@ -292,6 +304,11 @@ try:
                 enemies.append((distance, int(mobile.Serial), mobile))
                 enemy_names[int(mobile.Serial)] = node.GetAttribute('name')
                 enemy_types[int(mobile.Serial)] = node.GetAttribute('type')
+                if node.GetAttribute('type')=='ArachnidOutbreakChampion':
+                    observed=(int(mobile.X),int(mobile.Y),int(mobile.Z))
+                    if observed!=boss_last_seen:log('boss_client_seen',position=observed)
+                    boss_last_seen=observed
+                    boss_search_route=None
                 if node.GetAttribute('name') == 'a dread spider':
                     defenders.add(int(mobile.Serial))
         enemies.sort(key=lambda item: (item[0], item[1]))
@@ -333,7 +350,20 @@ try:
             stage = next((n for n in range(3) if not mask & (1 << n)), 3)
             if stage==3:
                 anchor=state.SelectSingleNode("anchor[@stage='3']")
-                navigate(value(anchor,'x'),value(anchor,'y'),value(anchor,'z'),1,now)
+                if boss_search_route is None:
+                    center=(int(value(anchor,'x')),int(value(anchor,'y')),int(value(anchor,'z')))
+                    boss_search_route=boss_reacquisition_goals(center,boss_last_seen)
+                    boss_search_index=0
+                while boss_search_index<len(boss_search_route):
+                    goal=boss_search_route[boss_search_index]
+                    if max(abs(int(player.X)-goal[0]),abs(int(player.Y)-goal[1]))>1:break
+                    boss_search_index+=1
+                if boss_search_index==len(boss_search_route):boss_search_index=0
+                goal=boss_search_route[boss_search_index]
+                if goal!=last_search_goal:
+                    log('boss_search_goal',goal=goal,last_client_seen=boss_last_seen)
+                    last_search_goal=goal
+                navigate(goal[0],goal[1],goal[2],goal[3],now)
             else:navigate_stage(state,stage,player,now)
 
         fraction = value(state, 'hits') / max(1, value(state, 'hitsMax'))
