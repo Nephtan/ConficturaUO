@@ -32,6 +32,37 @@ using Server.Network;
 
 namespace Server
 {
+    public enum HealthChangeKind
+    {
+        Unattributed,
+        Damage,
+        Healing
+    }
+
+    public sealed class HealthChangedEventArgs : EventArgs
+    {
+        private readonly Mobile m_Mobile;
+        private readonly Mobile m_Source;
+        private readonly int m_OldHits;
+        private readonly int m_NewHits;
+        private readonly HealthChangeKind m_Kind;
+        public Mobile Mobile { get { return m_Mobile; } }
+        public Mobile Source { get { return m_Source; } }
+        public int OldHits { get { return m_OldHits; } }
+        public int NewHits { get { return m_NewHits; } }
+        public HealthChangeKind Kind { get { return m_Kind; } }
+
+        public HealthChangedEventArgs(Mobile mobile, Mobile source, int oldHits, int newHits, HealthChangeKind kind)
+        {
+            m_Mobile = mobile;
+            m_Source = source;
+            m_OldHits = oldHits;
+            m_NewHits = newHits;
+            m_Kind = kind;
+        }
+    }
+
+    public delegate void HealthChangedEventHandler(HealthChangedEventArgs e);
     public delegate void CharacterCreatedEventHandler(CharacterCreatedEventArgs e);
     public delegate void OpenDoorMacroEventHandler(OpenDoorMacroEventArgs e);
     public delegate void SpeechEventHandler(SpeechEventArgs e);
@@ -1148,6 +1179,7 @@ namespace Server
         public static event ServerListEventHandler ServerList;
         public static event MovementEventHandler Movement;
         public static event HungerChangedEventHandler HungerChanged;
+        public static event HealthChangedEventHandler HealthChanged;
         public static event CrashedEventHandler Crashed;
         public static event ShutdownEventHandler Shutdown;
         public static event HelpRequestEventHandler HelpRequest;
@@ -1390,6 +1422,21 @@ namespace Server
                 HungerChanged(e);
         }
 
+        public static void InvokeHealthChanged(Mobile mobile, Mobile source, int oldHits, int newHits, HealthChangeKind kind)
+        {
+            HealthChangedEventHandler handlers = HealthChanged;
+            if (handlers == null)
+                return;
+            HealthChangedEventArgs args = new HealthChangedEventArgs(mobile, source, oldHits, newHits, kind);
+            // These observers cannot cancel an already committed change. An
+            // observer failure must not interrupt death or other health observers.
+            foreach (HealthChangedEventHandler handler in handlers.GetInvocationList())
+            {
+                try { handler(args); }
+                catch (Exception error) { Console.WriteLine("HealthChanged observer failed: {0}", error); }
+            }
+        }
+
         public static void InvokeMovement(MovementEventArgs e)
         {
             if (Movement != null)
@@ -1447,6 +1494,7 @@ namespace Server
             ServerList = null;
             Movement = null;
             HungerChanged = null;
+            HealthChanged = null;
             Crashed = null;
             Shutdown = null;
             HelpRequest = null;

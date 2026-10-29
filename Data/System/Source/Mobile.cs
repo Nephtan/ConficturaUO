@@ -542,6 +542,43 @@ namespace Server
     /// </summary>
     public class Mobile : IEntity, IHued, IComparable<Mobile>, ISerializable, ISpawnable
     {
+        [ThreadStatic]
+        private static Mobile s_HealthTarget;
+        [ThreadStatic]
+        private static Mobile s_HealthSource;
+        [ThreadStatic]
+        private static HealthChangeKind s_HealthKind;
+
+        // Scope is thread-local and target-specific: nested healing/damage and
+        // exceptions must not leave attribution on a later unrelated Hits write.
+        private struct HealthChangeContext
+        {
+            private readonly Mobile m_PreviousTarget;
+            private readonly Mobile m_PreviousSource;
+            private readonly HealthChangeKind m_PreviousKind;
+            public HealthChangeContext(Mobile target, Mobile source, HealthChangeKind kind)
+            {
+                m_PreviousTarget = s_HealthTarget;
+                m_PreviousSource = s_HealthSource;
+                m_PreviousKind = s_HealthKind;
+                s_HealthTarget = target;
+                s_HealthSource = source;
+                s_HealthKind = kind;
+            }
+            public void Dispose()
+            {
+                s_HealthTarget = m_PreviousTarget;
+                s_HealthSource = m_PreviousSource;
+                s_HealthKind = m_PreviousKind;
+            }
+        }
+        private void SetAttributedHits(int value, Mobile source, HealthChangeKind kind)
+        {
+            HealthChangeContext context = new HealthChangeContext(this, source, kind);
+            try { Hits = value; }
+            finally { context.Dispose(); }
+        }
+
         #region CompareTo(...)
         public int CompareTo(IEntity other)
         {
@@ -5927,14 +5964,14 @@ namespace Server
                 {
                     m_LastKiller = from;
 
-                    Hits = 0;
+                    SetAttributedHits(0, from, HealthChangeKind.Damage);
 
                     if (oldHits >= 0)
                         Kill();
                 }
                 else
                 {
-                    Hits = newHits;
+                    SetAttributedHits(newHits, from, HealthChangeKind.Damage);
                 }
             }
             }
@@ -6030,7 +6067,7 @@ namespace Server
                 amount = HitsMax - Hits;
             }
 
-            Hits += amount;
+            SetAttributedHits(Hits + amount, from, HealthChangeKind.Healing);
 
             if (message && amount > 0 && m_NetState != null)
                 m_NetState.Send(
@@ -9391,7 +9428,17 @@ namespace Server
                     int oldValue = m_Hits;
                     m_Hits = value;
                     Delta(MobileDelta.Hits);
-                    OnHitsChange(oldValue);
+                    Mobile healthSource = s_HealthTarget == this ? s_HealthSource : null;
+                    HealthChangeKind healthKind = s_HealthTarget == this ? s_HealthKind : HealthChangeKind.Unattributed;
+                    // Observers and OnHitsChange may themselves write Hits. Those
+                    // writes need their own explicit operation to gain attribution.
+                    HealthChangeContext callbackContext = new HealthChangeContext(null, null, HealthChangeKind.Unattributed);
+                    try
+                    {
+                        EventSink.InvokeHealthChanged(this, healthSource, oldValue, value, healthKind);
+                        OnHitsChange(oldValue);
+                    }
+                    finally { callbackContext.Dispose(); }
                 }
             }
         }

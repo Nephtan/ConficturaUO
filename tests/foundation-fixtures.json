@@ -12,6 +12,7 @@
   "bandages-historical": {"classification": "historical-characterization", "sources": ["tests/FoundationBandageRegression.cs"], "main": "FoundationBandageRegression", "args": ["historical"], "marker": "REPRODUCED historical bandages"},
   "outbreak": {"classification": "current-regression", "sources": ["tests/ArachnidOutbreakRegression.cs"], "main": "ArachnidOutbreakRegression", "marker": "PASS current outbreak:"},
   "outbreak-rewards": {"classification": "current-regression", "sources": ["tests/ArachnidOutbreakRewardRegression.cs"], "main": "ArachnidOutbreakRewardRegression", "marker": "PASS outbreak rewards:"},
+  "health-changes": {"classification": "current-regression", "sources": ["tests/HealthChangeRegression.cs"], "main": "HealthChangeRegression", "marker": "PASS health changes:"},
   "outbreak-sites": {"classification": "current-regression", "sources": ["tests/ArachnidOutbreakSiteSurvey.cs"], "main": "ArachnidOutbreakSiteSurvey", "args": ["D:/ConficturaUO-main/Data/System/XML/Regions.xml", "retired"], "marker": "PASS retired-site housing exclusion:", "timeout": 300},
   "outbreak-controller": {"classification": "current-regression", "sources": ["tests/ArachnidOutbreakControllerRegression.cs"], "main": "ArachnidOutbreakControllerRegression", "marker": "PASS outbreak controller:"},
   "outbreak-world": {"classification": "current-regression", "sources": ["tests/ArachnidOutbreakWorldReload.cs"], "main": "ArachnidOutbreakWorldReload", "marker": "PASS outbreak world reload:", "timeout": 300},
