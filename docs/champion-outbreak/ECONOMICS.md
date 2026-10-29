@@ -27,7 +27,13 @@ Mounted-v4 run001 finishes in 1452.7598366 seconds with no player death. It cons
 
 The owned horse came from one declared fixture cage before freezing; its nominal base acquisition price is 550, separate from recurring resources. Native cage release/mounting passed, but no NPC purchase or actual gold expenditure is claimed. No replacement horse was used during combat. Evidence: D:/ConficturaUOTestTools/outbreak-mounted-benchmark-20261029-001/evidence/benchmark-verification.json and priced-cost-observation.json.
 
-This completes one resource-cost observation. The benchmark did not observe collection of the gold shower, ordinary corpse loot or pending personal rewards before cleanup, so subtracting 4198 from 15000 is not an observed profit. The separate archmage clear directly observed the 15,000 ground gold and pending 6 glands/1 skull; it does not substitute for collection in this reference case. Antivenom comparison and the three-run pacing series remain open.
+This completes one resource-cost observation. The benchmark did not observe collection of the gold shower, ordinary corpse loot or pending personal rewards before cleanup, so subtracting 4198 from 15000 is not an observed profit. The separate archmage clear directly observed the 15,000 ground gold and pending 6 glands/1 skull; it does not substitute for collection in this reference case. Broader antivenom assessment and the three-run pacing series remain open.
+
+## Second complete reference with antivenom
+
+Mounted-v4 run002 completes in 1526.8203048 seconds without a player death. Actual use is 171 bandages, 16 greater cures, 4 greater heals, 11 greater strengths, 13 greater agilities, 2 total refreshes, 2 orange petals and 12 antivenom treatments; net tithing reduction is 700. The same priced categories total 3742 gold (342+960+240+660+780+60+700), excluding all 12 treatments and other unpriced costs. The horse is the same declared preparation asset, with no replacement during combat. Evidence is run002's benchmark-verification.json and priced-cost-observation.json.
+
+These two independent randomized encounters do not isolate antivenom's causal effect or establish a cheaper loadout, player demand or net profit. Both retain unobserved reward collection and corpse loot. Keep the actual doses and their unpriced ingredient/trade cost visible when comparing the subtotals; no reward change follows from them.
 
 ## Reward value remains a separate question
 

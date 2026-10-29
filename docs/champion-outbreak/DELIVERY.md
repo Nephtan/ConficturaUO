@@ -14,12 +14,12 @@ Checked implementation rows below do not close the separate native, pacing or si
 | Placement and permanent reservations | Six inactive proposals, terrain validation and all six native walking routes/1,356 steps | Ground-warning visibility, current-world safety preflight and explicit site approval; the occupancy survey's source save is dated2026-10-17 |
 | Participation, claims and crafting | Component/fresh-process persistence records; native claims/treatment checks; original archmage full clear earns6 glands/1 skull and15,000 shared ground gold | Another connected player's effective support/cooperative feedback; ordinary corpse loot remains unassessed in the full clear |
 | Web/TBC integration | Production-method/AP tests, stopped-scheduler native scenes and live003 natural warning/reaction/impact/native self-escape | Native live dodge, cooperative roles and remaining ground presentation |
-| Veteran reference | Legal prepared v3f manifest and actual ordinary running;010 stops alive/incomplete at2261.441 seconds |0/3 complete comparable clears; one must omit antivenom; median not evaluated; tuning0 |
+| Veteran reference | Mounted-v4 run001 completes without antivenom in 1452.760 seconds; frozen capabilities and preservation pass |2/3 complete comparable clears; run002 also completes in 1526.820 seconds; median not evaluated; tuning0 |
 | Original Zanthus stress | Original stationary partial and route-assisted full clear at277.502 seconds; character/source/save preservation passes | No repeatable-farm, current live-character or veteran pacing inference |
-| Boss behavior | Ordinary fleeing retained; revised territorial-survival/mobility review in [BOSS_BEHAVIOR_REVIEW.md](BOSS_BEHAVIOR_REVIEW.md) | Validate mounts/speed powers and review a bounded retreat specification; no stand-and-fight patch |
-| Economics and release | Source prices, partial reference costs and private archmage net resource deltas retained; focused local commits | Completed-reference costs/ordinary preparations, final requirement audit and operational instructions; no deployment |
+| Boss behavior | Ordinary fleeing retained; native horse mounting/recovery and first full pursuit clear pass | Review any further territorial-survival change separately; broader AI remains read-only and no stand-and-fight patch is applied |
+| Economics and release | First complete reference costs and 4198 source-price subtotal; operating notes and 44-row evidence register | Further antivenom/cooperative economics, ordinary corpse/reward collection, final requirement audit and operational review; no deployment |
 
-Current stress/tool checkpoint: fa40b12a. Production remains disabled; no reservation is approved.
+Recorded native/evidence checkpoints: 7c94464e and 90f465ae. Production remains disabled; no reservation is approved.
 
 [ACCEPTANCE_REQUIREMENTS.csv](ACCEPTANCE_REQUIREMENTS.csv) maps 44 specification/reported-design entries to implementation/test sources, recorded evidence scope and remaining verification. ComponentEvidence and NativePartial are scope labels, not completed delivery; Open, OperationalDraft and DesignReview remain unresolved. The final audit must inspect current source and retained results for every row before completion.
 
@@ -28,6 +28,12 @@ Current stress/tool checkpoint: fa40b12a. Production remains disabled; no reserv
 Mounted-v4 no-antivenom run001 completes in 1452.7598366 seconds (24 minutes 13 seconds), all three broods and all 40 owned deaths including Mephitis. The character remains alive; actual loss/restoration is 7846 each, with 2094 native run requests, no walk requests/refusals and no client errors. No production ability, AI or tuning change was made. This is one complete candidate run, not the required three-run median.
 
 The unchanged terminal capture, frozen capabilities/policy and verification remain at D:/ConficturaUOTestTools/outbreak-mounted-benchmark-20261029-001/evidence/. VerifyBenchmark.py --require-clear passes 6742 production inputs, matching core, 20 private save files, protected originals and acknowledged forced no-save teardown. Resource deltas and source-price limits are recorded in ECONOMICS.md. The missing-initial-status preparation wait now tolerates startup without restarting the server; the series verifier accepts consistent prepared v3 or v4 series and still rejects mixed capabilities/versions. Its three-run integration remains pending. The second fresh copy is prepared from the same baseline and candidate for comparison.
+
+## Recovered second complete reference
+
+The original mounted-v4 antivenom run002 continues through the model-capacity interruption without a duplicate or restart. The same actual server/client identities, live process-bound observer, frozen fixture and driver are verified on recovery. It completes in 1526.8203048 seconds (25 minutes 27 seconds), all 40 enemies defeated, no player death, 1746 run requests, no walk/refusal/client errors. VerifyBenchmark --require-clear passes 6742 source inputs, matching core, 20 private saves, protected originals and acknowledged no-save teardown. Native health loss/restoration is 8131/8100. The third comparable run remains required; no median is accepted yet. Mounted-v4 run003 is now running without antivenom after the same native preparation and a successful capability comparison with run001; its fixture and driver remain unchanged.
+
+Evidence remains in D:/ConficturaUOTestTools/outbreak-mounted-benchmark-20261029-002/evidence/. ECONOMICS records actual finite consumption and exclusions. The capacity interruption did not change source, character capabilities, policy or production flags. The first-clear/helper/register batch is committed as 90f465ae. The untouched three original untracked files remain outside this work.
 
 ## Baseline - 2026-10-28
 

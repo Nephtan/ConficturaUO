@@ -16,9 +16,15 @@ The unmounted reference010 stops alive/incomplete at2261.441 seconds with4,841 a
 - Wind Runner is not a free interchangeable option. MysticSpell.CheckCast requires MonkNotIllegal, which rejects the reference's ordinary sword; its equipment/ability checks matter in addition to the listed skill70. Syth Speed rejects this reference's positive Karma. Shinobi/Animal Form and speed footwear require their own eligibility, acquisition and build-tradeoff review.
 - Speed powers send a client speed-control packet and have explicit server movement-throttle handling. Native effects and travel time must be measured; spell names and a buff icon alone are insufficient.
 
-First validate ordinary acquisition/ownership and native mounting in a disposable copy, then measure the same recovery route and actual chase. Freeze a new mobility policy before any complete reference series. Review Celerity's real learned-power/resource path and record why each option is used or omitted. Existing partial pilots remain retained; complete reference clears0/3 and tuning0. Faster character movement is a player capability, not NPC tuning.
+First validate ordinary acquisition/ownership and native mounting in a disposable copy, then measure the same recovery route and actual chase. Freeze a new mobility policy before any complete reference series. Review Celerity's real learned-power/resource path and record why each option is used or omitted. Existing partial pilots remain retained; current accepted complete reference clears 2/3 and tuning0. Faster character movement is a player capability, not NPC tuning.
 
-Follow-up mounted-navigation001 passes native cage release/mounting, ownership/rider and unchanged other reference capabilities. One declared vendor-obtainable cage is provided as a fixture asset rather than a claimed purchase. Recovery takes21.179 seconds with86 running requests; the earlier foot004 sample is26.454 seconds. Actual chase/full combat is still unproven. Celerity's mounted-caster rejection makes it an omitted alternative for mounted v4 rather than an additional boost. Its normal Player command also requires HasSpell; actual unmounted learning/resources remain a separate test.
+Follow-up mounted-navigation001 passes native cage release/mounting, ownership/rider and unchanged other reference capabilities. One declared vendor-obtainable cage is provided as a fixture asset rather than a claimed purchase. Recovery takes21.179 seconds with86 running requests; the earlier foot004 sample is26.454 seconds. The later run001 below establishes one complete mounted combat/pursuit clear. Celerity's mounted-caster rejection makes it an omitted alternative for mounted v4 rather than an additional boost. Its normal Player command also requires HasSpell; actual unmounted learning/resources remain a separate test.
+
+## First complete mounted pursuit
+
+Mounted-v4 no-antivenom run001 completes the encounter in 1452.7598366 seconds, with all 40 owned enemies defeated, no player death and no client/path errors. Native mounting, frozen capabilities, source/core, private/original input preservation and acknowledged no-save teardown pass. No NPC AI, player ability or automatic tuning change was needed for this clear. The matching antivenom run002 also completes in 1526.8203048 seconds; both pass current-input/preservation verification. These are two demonstrated pursuit outcomes; the third comparable run, pacing median and broader human usability remain separate.
+
+The earlier foot result was insufficient grounds to diagnose an unavoidable boss escape. Ordinary mobility needed native testing first. Continue the frozen mounted series before making any further behavior decision. Celerity remains omitted from this mounted policy because its production entry rejects mounted casting; its unmounted learned-power/resource eligibility is a separate question.
 
 ## Outbreak-only territorial survival candidate
 
@@ -27,6 +33,12 @@ Use the existing113x113 combat footprint as the territory; its surrounding perma
 Preserve normal movement legality/AP, web warnings/costs, damage, finite reinforcement budgets, rewards and player power. Do not add healing, health resets, invulnerability, new reinforcement waves, forced dismounts or a minimum clear duration. The existing out-of-bounds correction remains a safety guard rather than the normal retreat route. Ordinary world Mephitis stays unchanged.
 
 The concrete policy still needs implementation-seam, path, cornering, target-legality, TBC/AP and restart review before source changes. AI behavior remains outside the automatic HP/damage/interval tuning allowance. No further design answer is necessary to investigate mobility; a bounded retreat specification will be made reviewable after those findings.
+
+## Implementation review boundaries
+
+A future outbreak-only candidate could use a dedicated MeleeAI subclass through the champion's ForcedAI seam, leaving ordinary Mephitis and shared MeleeAI unchanged. It must handle the controller/attempt being unavailable during construction/loading and safely fall back to ordinary behavior. BaseCreature.ChangeAIType reads ForcedAI twice and stops the old timer first: returning a new running AI on each getter access would risk two created timers, while blindly returning an old stopped instance would risk inert AI. Constructor, repeat AI changes and fresh-process reload must each establish exactly one live owned scheduler. This is a seam review, not an approved patch.
+
+Do not rely on OnActionFlee alone to replace the action: BaseAI dispatch calls that hook and then DoActionFlee for the selected branch. Any future implementation must preserve native legal movement, turn/AP dispatch, target eligibility and the controller's bounded cleanup. Review retreat destination legality, blocked paths/corners, catching the boss, actor-clock transitions, reload and an absent controller before behavioral acceptance. Existing permanent-reserve clearance remains outside combat territory. Keep the current frozen pacing fixture/source unchanged while that design is reviewed.
 
 ## General NPC AI exploration
 
@@ -41,7 +53,7 @@ A broader investigation should distinguish fleeing to a useful refuge from merel
 - [BaseMount.cs](../../Data/Scripts/Mobiles/Base/BaseMount.cs), [AnimalCages.cs](../../Data/Scripts/Items/Containers/AnimalCages.cs), [StoreSalesList.cs](../../Data/Scripts/Mobiles/Base/StoreSalesList.cs): mounting, caged horses and conditional stock.
 - [Celerity.cs](../../Data/Scripts/Magic/Jedi/Spells/Celerity.cs), [JediSpell.cs](../../Data/Scripts/Magic/Jedi/JediSpell.cs): power284, maximum-of-two skill gate, alignment/resources/region checks.
 - [WindRunner.cs](../../Data/Scripts/Magic/Mystic/Spells/WindRunner.cs), [MysticSpell.cs](../../Data/Scripts/Magic/Mystic/MysticSpell.cs), [SythSpell.cs](../../Data/Scripts/Magic/Syth/SythSpell.cs): distinct speed-power eligibility.
-- [Behavior.cs](../../Data/Scripts/Mobiles/Base/Behavior.cs): MeleeAI below20% flee selection and above50% recovery; ordinary action/TBC dispatch.
+- [BaseCreature.cs](../../Data/Scripts/Mobiles/Base/BaseCreature.cs): ForcedAI, ChangeAIType and action callbacks; [Behavior.cs](../../Data/Scripts/Mobiles/Base/Behavior.cs): BaseAI constructor/dispatch and MeleeAI below20% flee selection and above50% recovery; ordinary action/TBC dispatch.
 - [ArachnidOutbreakController.cs](../../Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakController.cs): KeepCreatureInBounds.
 - [AITacticalTargeting.cs](../../Data/Scripts/Custom/Combat/AIOverhaul/AITacticalTargeting.cs), [AI_HANDOFF.md](../../Data/Scripts/Custom/Combat/AIOverhaul/AI_HANDOFF.md): current rollout and existing roadmap; no project phase is executed here.
 - [BENCHMARK.md](BENCHMARK.md), [PALADIN_TOOLKIT_REVIEW.md](PALADIN_TOOLKIT_REVIEW.md), [ARCHMAGE_STRESS.md](ARCHMAGE_STRESS.md): retained separate evidence classes and incomplete reference series.
