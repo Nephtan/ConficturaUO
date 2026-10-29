@@ -2,6 +2,10 @@
 
 Status: **proposed, inactive**. The user selected consideration of new permanent wilderness reservations on 2026-10-28. No proposal has been enabled, no player land has been restricted, and the outbreak delivery gate remains false.
 
+## Selected final-preflight evidence basis
+
+On 2026-10-29 the user explicitly selected the available October 17 offline test-world save. D:/ConficturaUOTestTools/shard/Saves contains 20 files dated 2026-10-17 and matches the native baseline byte-for-byte. The matching-source final preflight will use a separate copy of that chosen snapshot. This supersedes the pending request for a fresher folder; it does not claim current live occupancy or approve any reservation. Existing proposals/review flags remain inactive. A future deployment must consider changes after the chosen snapshot.
+
 ## Proposed geography
 
 Each reservation is 161x161 tiles, enclosing the unchanged 113x113 combat footprint and 24-tile buffer. All three 5x5 brood staging areas and the 4,000-tile connected-space floor remain required. These are six alternate locations for one active outbreak, not six simultaneous encounters.
@@ -67,7 +71,7 @@ Retained failed observations include the private native helper's initial account
 - `Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakSite.cs`: permanent-policy proof and exclusion of unguarded villages/public/protected services as well as guarded towns.
 - `tools/champion-outbreak/ReservationCandidateSurvey.cs`, `SelectReservationCandidates.py`, `RenderReservationAtlas.cs`: terrain, anonymous copied-world screening and mapped proposal.
 
-Before approval: finish native traversal/anchors and western visibility, investigate the inactive malformed legacy controller, and repeat occupancy/maximum-city-growth checks against a fresh deployment-world copy. Only then may source review flags and matching site entries be promoted. Keep outbreak production activation disabled through all remaining reward, mechanic and pacing gates.
+Before approval: finish native traversal/anchors and western visibility, investigate the inactive malformed legacy controller, and complete the final occupancy/maximum-city-growth/portal checks against the user-selected October 17 copy. Only then may source review flags and matching site entries be promoted. Keep outbreak production activation disabled through all remaining reward, mechanic and pacing gates.
 
 ## Copied-client traversal follow-up - 2026-10-29
 

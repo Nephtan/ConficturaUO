@@ -19,7 +19,11 @@ def context(root):
         if name.replace('\\','/') not in ('client/settings.json','client/ClassicAssist/Profiles/settings.json'):assert sha(root/name)==expected,name
     fixture=root/'shard/Data/Scripts/TestOnly/ArachnidOutbreakNativeAcceptance.cs'
     assert sha(fixture)==p['harness_sha256']==sha(repo/'tests/ArachnidOutbreakNativeAcceptance.cs')
-    assert sha(root/'client/ClassicAssist/LiveTurnClient.py')==sha(repo/'tools/champion-outbreak/LiveTurnClient.py')
+    case=frozen.get('case','escape');assert case in ('escape','dodge')
+    driver='LiveDodgeClient.py' if case=='dodge' else 'LiveTurnClient.py'
+    assert frozen.get('client_policy',driver)==driver
+    assert sha(root/'client/ClassicAssist'/driver)==sha(repo/'tools/champion-outbreak'/driver)
+    p['_case']=case
     return root,e,repo,p
 
 def run(root):
@@ -37,7 +41,9 @@ def run(root):
     deadline=time.monotonic()+190;previous=None;next_progress=0
     while time.monotonic()<deadline:
         alive()
-        if (e/'live-turn-client-error.txt').exists():raise RuntimeError('Client case failed; inspect retained private error and stop owned copy')
+        if (e/'live-turn-client-error.txt').exists():
+            if not (e/'native-request.txt').exists():publish(e,'native-request.txt','stop')
+            raise RuntimeError('Client case failed; retained error and requested owned no-save stop')
         if (e/'live-turn-state.xml').exists():
             state=read_status(e/'live-turn-state.xml');key=tuple((k,v) for k,v in state.attrib.items() if k!='utc')
             if key!=previous:
@@ -49,7 +55,7 @@ def run(root):
             if (e/'live-turn-client-result.json').exists():
                 (e/'live-turn-terminal.xml').write_bytes(read_shared(e/'live-turn-state.xml'))
                 publish(e,'native-request.txt','stop')
-                print('Native scripted reaction/escape retained; owned no-save stop requested.',flush=True);return
+                print('Native scripted reaction/'+p['_case']+' retained; owned no-save stop requested.',flush=True);return
         time.sleep(.05)
     publish(e,'native-request.txt','stop')
     raise RuntimeError('Natural case deadline; stop requested, no restart')
@@ -61,19 +67,31 @@ def verify(root):
     rows=[json.loads(line) for line in (e/'live-turn-observer.jsonl').read_text().splitlines()]
     assert rows and all(r['schedulerRunning']=='True' and r['alive']=='True' for r in rows)
     assert any(int(r['warning'])>0 and r['held']=='False' and r['current']==r['actor'] and int(r['actorTurns'])>int(r['warningTurn']) for r in rows)
-    held=[r for r in rows if r['held']=='True'];assert held
+    held=[r for r in rows if r['held']=='True']
     stamp=lambda s:datetime.fromisoformat(s.replace('Z','+00:00'))
-    assert (stamp(held[0]['utc'])-stamp(held[0]['warningObserved'])).total_seconds()>=3
-    assert all(int(r['actorTurns'])>int(r['warningTurn']) for r in held)
     actions=[json.loads(line) for line in (e/'live-turn-client.jsonl').read_text().splitlines()]
     reaction=next(r for r in actions if r['event']=='reaction_turn_observed')
     ended=next(r for r in actions if r['event']=='native_reaction_end_turn')
-    use=next(r for r in actions if r['event']=='native_web_use')
     assert ended['epoch']-reaction['epoch']>=3.5
     terminal=ET.parse(e/'live-turn-terminal.xml').getroot()
     assert terminal.get('held')=='False' and terminal.get('pending')=='False' and terminal.get('current')==terminal.get('actor')
-    assert int(terminal.get('actorAP'))==use['before_ap']-4
-    assert any(r['current']==r['actor'] and r['actorAP']==str(use['before_ap']) and r['web']==str(use['web']) for r in held)
+    if p['_case']=='escape':
+        assert held
+        assert (stamp(held[0]['utc'])-stamp(held[0]['warningObserved'])).total_seconds()>=3
+        assert all(int(r['actorTurns'])>int(r['warningTurn']) for r in held)
+        use=next(r for r in actions if r['event']=='native_web_use')
+        assert int(terminal.get('actorAP'))==use['before_ap']-4
+        assert any(r['current']==r['actor'] and r['actorAP']==str(use['before_ap']) and r['web']==str(use['web']) for r in held)
+    else:
+        assert result['case']=='natural-warning-reaction-native-dodge' and not held
+        assert not any(r['event'] in ('failed','native_web_use') for r in actions)
+        moved=next(r for r in actions if r['event']=='native_dodge_moved')
+        assert moved['movement_ap']==moved['before_ap']-moved['after_ap']>0
+        assert moved['turn']==reaction['turn']==ended['turn']
+        assert moved['position']!=moved['origin'][:2]
+        assert int(terminal.get('actorTurns'))>moved['turn'] and int(terminal.get('bossTurns'))>moved['boss_turn']
+        assert (int(terminal.get('x')),int(terminal.get('y')))!=tuple(moved['origin'][:2])
+        assert any(r['current']==r['actor'] and int(r['actorTurns'])==moved['turn'] and int(r['actorAP'])==moved['after_ap'] and r['warning']=='0' for r in rows)
     if(e/'native-actor.txt').exists():
         original=ET.parse(e/'native-actor-original.private.xml').getroot()
         source=ET.parse(e/'native-actor-inspection.private.xml').getroot().find('character')
@@ -113,6 +131,11 @@ def verify(root):
                 preserved_inputs_and_teardown=True,computer_use_proven_by_this_verifier=False,
                 scope='Explicit test-arm enrollment; natural production boss warning/impact and live scheduler; ordinary client EndTurn/UseObject; no pacing/cooperation/site approval',
                 production_activation=False)
+    if p['_case']=='dodge':
+        report.pop('natural_scheduler_reaction_and_native_escape_passed');report.pop('escape_ap')
+        report.update(natural_scheduler_reaction_and_native_dodge_passed=True,
+                      observed_movement_ap=moved['movement_ap'],
+                      scope='Explicit test-arm enrollment; natural warning/live scheduler; native client movement cancels original warning and later boss turn causes no hold; no Computer Use/cooperation/site approval inferred')
     (e/'live-turn-verification.json').write_text(json.dumps(report,indent=2));print(json.dumps(report))
 
 if __name__=='__main__':
