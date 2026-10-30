@@ -151,23 +151,41 @@ namespace Server.Custom.Confictura.Champions
             return false;
         }
 
-        public bool TryFindLoot(Point3D anchor, int range, out Point3D point)
+        public bool TryFindLootPoints(Point3D anchor, int range, int count, out Point3D[] points)
         {
-            int offset = Utility.Random(m_Walkable.Length);
+            points = null;
+            if (count <= 0 || count > m_Walkable.Length || range < 0)
+                return false;
+            List<Point3D> candidates = new List<Point3D>();
+            Dictionary<Point2D, bool> occupied = new Dictionary<Point2D, bool>();
             for (int i = 0; i < m_Walkable.Length; ++i)
             {
-                Point3D candidate = m_Walkable[(i + offset) % m_Walkable.Length];
+                Point3D candidate = m_Walkable[i];
                 // Loot can share ground with players/corpses, but not houses or
                 // portals. Every candidate still belongs to validated terrain.
                 if (Math.Abs(candidate.X - anchor.X) <= range && Math.Abs(candidate.Y - anchor.Y) <= range
                     && Map.Sosaria.CanFit(candidate.X, candidate.Y, candidate.Z, 1, false, false) && ClearForSpawn(candidate))
                 {
-                    point = candidate;
-                    return true;
+                    Point2D key = new Point2D(candidate.X, candidate.Y);
+                    if (!occupied.ContainsKey(key))
+                    {
+                        occupied.Add(key, true);
+                        candidates.Add(candidate);
+                    }
                 }
             }
-            point = Point3D.Zero;
-            return false;
+            if (candidates.Count < count)
+                return false;
+            // Sample eligible tiles without replacement. Starting a cyclic scan
+            // in the full terrain cache biases local rewards toward its first tile.
+            points = new Point3D[count];
+            for (int i = 0; i < points.Length; ++i)
+            {
+                int selected = Utility.Random(candidates.Count);
+                points[i] = candidates[selected];
+                candidates.RemoveAt(selected);
+            }
+            return true;
         }
 
         private static bool ClearForSpawn(Point3D point)

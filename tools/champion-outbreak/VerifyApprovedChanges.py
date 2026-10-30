@@ -24,6 +24,9 @@ def verify(args):
     if args.geography:
         approved = {'Data/Scripts/Custom/Champions/Outbreak/WildernessEncounterReserve.cs',
                     'Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakSites.cs'}
+    if args.gold_scatter:
+        approved = {'Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakController.cs',
+                    'Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakSite.cs'}
     assert set(changed) == approved, 'Unexpected source changes: '+repr(changed)
     assert sha(baseline/'ConficturaServer.exe') == sha(repo/'ConficturaServer.exe'), 'Core artifact mismatch'
     # Every core/config input is unchanged from the accepted source-matching core.
@@ -70,6 +73,9 @@ def verify(args):
                      'ArachnidOutbreakRewardRegression','ArachnidOutbreakWebRegression']
     if args.geography:
         fixture_names = ['ArachnidOutbreakReservationRegression','ArachnidOutbreakControllerRegression']
+    if args.gold_scatter:
+        fixture_names = ['ChampionRewardRegression','ArachnidOutbreakControllerRegression',
+                         'ArachnidOutbreakRewardRegression']
     fixtures = output/'fixtures';fixtures.mkdir()
     fixture_hashes = {}
     results = {}
@@ -107,4 +113,5 @@ if __name__ == '__main__':
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--assets',type=Path,required=True)
     parser.add_argument('--geography',action='store_true',help='Verify only the explicitly approved reservation/catalog source changes')
+    parser.add_argument('--gold-scatter',action='store_true',help='Verify the two-file boss gold placement repair')
     verify(parser.parse_args())

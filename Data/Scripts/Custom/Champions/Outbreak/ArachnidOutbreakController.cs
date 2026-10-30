@@ -623,11 +623,10 @@ namespace Server.Custom.Confictura.Champions
         {
             if (m_Placement == null || m_Ledger == null || m_Ledger.AttemptId != AttemptId || m_Ledger.IsSealed(3))
                 return false;
-            Point3D[] points = new Point3D[25];
-            for (int i = 0; i < points.Length; ++i)
-                if (!m_Placement.TryFindLoot(m_Placement.Boss, 12, out points[i])
-                    && !m_Placement.TryFindLoot(m_Placement.Boss, 56, out points[i]))
-                    return false;
+            Point3D[] points;
+            if (!m_Placement.TryFindLootPoints(champion.Location, 12, 25, out points)
+                && !m_Placement.TryFindLootPoints(champion.Location, 56, 25, out points))
+                return false;
             List<Mobile> qualified = m_Ledger.Qualified(3);
             if (qualified.Count > 0)
             {

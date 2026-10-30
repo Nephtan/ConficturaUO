@@ -1,0 +1,33 @@
+{
+  "production_inputs": 6742,
+  "changed_inputs": [
+    "Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakController.cs",
+    "Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakSite.cs"
+  ],
+  "core_sha256": "dbb7b2360c435834b32e0f1f4b0854a859cd9086971a4c270981b58d8f2f3ddb",
+  "script_sha256": "40263e0b9a92d4bc9f4cd4db12961d90f6de76d0097e2994af9cce890dcb9a19",
+  "fixture_hashes": {
+    "ChampionRewardRegression.cs": "8a3ec963fddc616d1cc61d99ab5e1f7f54bb84ca51266d50a39b0e6df4892d39",
+    "ArachnidOutbreakControllerRegression.cs": "b0b189d7752c2cfb59295c28db1ba78eb473d8ff2e38a7abe4b49d0b0d61bf25",
+    "ArachnidOutbreakRewardRegression.cs": "4d80c261f16533f00915614beb51baabb55b452b9d4cdbd6ed34d40e841c9b80"
+  },
+  "results": {
+    "ChampionRewardRegression": "PASS: 679 assertions; no world saves loaded or listeners started.",
+    "ArachnidOutbreakControllerRegression": "PASS outbreak controller: 63 component assertions; private setup; no saves or listeners.",
+    "ArachnidOutbreakRewardRegression": "PASS outbreak rewards: 343 component assertions; no world saves or listeners."
+  },
+  "runtime_compile": true,
+  "core_build": false,
+  "source_input_match": true,
+  "no_world_or_listener": true,
+  "candidate": "D:\\ConficturaUOTestTools\\outbreak-gold-scatter-20261030-003",
+  "baseline_reproduction": "D:\\ConficturaUOTestTools\\outbreak-gold-scatter-repro-20261030-001",
+  "production_source_hashes": {
+    "Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakController.cs": "27b2a0f50304a46238f421b71413b758e6bb6c593f7443c77bbeefc822cb4f63",
+    "Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakSite.cs": "0329d7a6c89cffc0c7da0ca5e73562dc8ca7e73f8044be801419b2474d49dc0c"
+  },
+  "native_visual_repair_acceptance": false,
+  "falling_gold_animation": false,
+  "deployment": false,
+  "serialization_or_runtime_hook_change": false
+}

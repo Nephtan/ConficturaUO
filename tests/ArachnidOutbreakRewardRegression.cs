@@ -31,14 +31,26 @@ internal static class ArachnidOutbreakRewardRegression
     {
         return (ArachnidOutbreakLedger)typeof(ArachnidOutbreakController).GetField("m_Ledger", Private).GetValue(controller);
     }
-    private static ArachnidOutbreakController Begin()
+    private static ArachnidOutbreakController Begin(bool singleLootTile = false)
     {
         ArachnidOutbreakController controller = new ArachnidOutbreakController();
         ArachnidOutbreakState state = (ArachnidOutbreakState)typeof(ArachnidOutbreakController).GetField("m_State", Private).GetValue(controller);
         state.SetEnabled(true);
         Point3D boss = new Point3D(2514,2088,0);
+        List<Point3D> tiles = new List<Point3D>();
+        tiles.Add(boss);
+        if (!singleLootTile)
+        {
+            SosariaOutbreakTerrain terrain = new SosariaOutbreakTerrain();
+            for (int x = boss.X - 56; x <= boss.X + 56; ++x)
+                for (int y = boss.Y - 56; y <= boss.Y + 56; ++y)
+                {
+                    Point3D point;
+                    if (terrain.TryGetPoint(x,y,out point)) tiles.Add(point);
+                }
+        }
         ArachnidOutbreakPlacement placement = new ArachnidOutbreakPlacement(boss,
-            new Point3D[] { new Point3D(2486,2068,0), new Point3D(2542,2068,0), new Point3D(2514,2118,0) }, new Point3D[] { boss });
+            new Point3D[] { new Point3D(2486,2068,0), new Point3D(2542,2068,0), new Point3D(2514,2118,0) }, tiles.ToArray());
         typeof(ArachnidOutbreakController).GetMethod("BeginAt", Private).Invoke(controller,
             new object[] { new ArachnidOutbreakSite("rewards-fixture",2514,2088,false), placement });
         return controller;
@@ -290,7 +302,7 @@ internal static class ArachnidOutbreakRewardRegression
     {
         int total=0;foreach(Item item in World.Items.Values)if(item is PowerScroll)++total;return total;
     }
-    private static void BossRewards(bool damageParticipant,bool artifact)
+    private static void BossRewards(bool damageParticipant,bool artifact,bool distantLoot = false)
     {
         ArachnidOutbreakController controller=Begin();
         Mobile support=Player();Mobile damage=Player();Mobile patient=Player();
@@ -306,9 +318,41 @@ internal static class ArachnidOutbreakRewardRegression
             for(int i=0;i<2;++i){patient.Damage(60,boss);patient.Heal(60,support,false);}
             Check(Ledger(controller).Qualified(3).Contains(support),"actual boss-stage support qualifies independently");
             support.Body=0x192;
+            Point3D death = new Point3D(2483,2121,0);
+            boss.MoveToWorld(death,Map.Sosaria);
+            if(distantLoot)
+            {
+                List<Point3D> tiles=new List<Point3D>();
+                SosariaOutbreakTerrain terrain=new SosariaOutbreakTerrain();
+                for(int x=boss.Home.X-8;x<=boss.Home.X+8 && tiles.Count<25;++x)
+                    for(int y=boss.Home.Y-8;y<=boss.Home.Y+8 && tiles.Count<25;++y)
+                    {
+                        Point3D point;
+                        if(terrain.TryGetPoint(x,y,out point))tiles.Add(point);
+                    }
+                Check(tiles.Count==25,"fallback fixture has 25 safe tiles beyond the death's local radius");
+                typeof(ArachnidOutbreakController).GetField("m_Placement",Private).SetValue(controller,
+                    new ArachnidOutbreakPlacement(boss.Home,new Point3D[]{boss.Home,boss.Home,boss.Home},tiles.ToArray()));
+            }
             int gold=GroundGold();int scrolls=Scrolls();boss.Kill();
             Check(controller.Phase==ArachnidOutbreakPhase.Cooldown && Ledger(controller).IsSealed(3),"real boss death settles and seals stage");
             Check(GroundGold()-gold==15000,"boss shower contains exactly 15000 shared ground gold");
+            HashSet<Point2D> positions = new HashSet<Point2D>();
+            int piles = 0;
+            foreach (Item item in World.Items.Values)
+                if (item is Gold && item.Parent == null && item.Map == Map.Sosaria)
+                {
+                    ++piles;
+                    positions.Add(new Point2D(item.X,item.Y));
+                    Check(item.Amount == 600,"each shared gold pile contains 600");
+                }
+            Check(piles == 25 && positions.Count == 25,"all 25 gold piles occupy different ground tiles");
+            foreach (Point2D point in positions)
+                Check(Math.Abs(point.X-death.X)<=(distantLoot?56:12) && Math.Abs(point.Y-death.Y)<=(distantLoot?56:12),
+                    "gold follows the actual boss death rather than the original spawn anchor");
+            if(distantLoot)
+                foreach(Point2D point in positions)
+                    Check(Math.Abs(point.X-death.X)>12 || Math.Abs(point.Y-death.Y)>12,"wider safe-ground fallback actually supplies the payout");
             Check(boss.Rolls==1,"one existing artifact opportunity per clear");
             List<ArachnidOutbreakClaim> all=Claims(support);all.AddRange(Claims(damage));
             int glands=0,skulls=0,artifacts=0;
@@ -336,20 +380,40 @@ internal static class ArachnidOutbreakRewardRegression
             foreach(Item item in cleanup)item.Delete();
         }
     }
-    private static void UnsafeBossLoot()
+    private static void UnsafeBossLoot(bool blockWithPortal)
     {
-        ArachnidOutbreakController controller=Begin();Mobile player=Player();CollectibleBoss boss=new CollectibleBoss(controller);
-        Moongate portal=new Moongate();
+        ArachnidOutbreakController controller=Begin(true);Mobile player=Player();CollectibleBoss boss=new CollectibleBoss(controller);
+        List<Moongate> portals=new List<Moongate>();
         try
         {
             List<Mobile> foes=(List<Mobile>)typeof(ArachnidOutbreakController).GetField("m_Creatures",Private).GetValue(controller);
             foreach(Mobile guardian in foes.ToArray())guardian.Kill();
-            foes.Add(boss);boss.MoveToWorld(new Point3D(2514,2088,0),Map.Sosaria);portal.MoveToWorld(boss.Location,Map.Sosaria);
+            foes.Add(boss);boss.MoveToWorld(new Point3D(2514,2088,0),Map.Sosaria);
+            List<Point3D> tiles=new List<Point3D>();
+            if(blockWithPortal)
+            {
+                SosariaOutbreakTerrain terrain=new SosariaOutbreakTerrain();
+                for(int x=boss.X-12;x<=boss.X+12 && tiles.Count<25;++x)
+                    for(int y=boss.Y-12;y<=boss.Y+12 && tiles.Count<25;++y)
+                    {
+                        Point3D point;
+                        if(terrain.TryGetPoint(x,y,out point))tiles.Add(point);
+                    }
+                Check(tiles.Count==25,"portal fixture starts with 25 valid distinct terrain tiles");
+                foreach(Point3D point in tiles)
+                {
+                    Moongate portal=new Moongate();portal.MoveToWorld(point,Map.Sosaria);portals.Add(portal);
+                }
+            }
+            else
+                for(int i=0;i<25;++i)tiles.Add(boss.Location);
+            typeof(ArachnidOutbreakController).GetField("m_Placement",Private).SetValue(controller,
+                new ArachnidOutbreakPlacement(boss.Location,new Point3D[]{boss.Location,boss.Location,boss.Location},tiles.ToArray()));
             boss.Damage(1000,player);int gold=GroundGold();boss.Kill();
-            Check(controller.Phase==ArachnidOutbreakPhase.Cooldown && controller.Status.Contains("cancelled"),"no safe cached loot ground cancels outcome without coordinate fallback");
+            Check(controller.Phase==ArachnidOutbreakPhase.Cooldown && controller.Status.Contains("cancelled"),"fewer than 25 distinct safe loot tiles cancels outcome without stacking fallback");
             Check(Claims(player).Count==0 && GroundGold()==gold && boss.Rolls==0,"unsafe outcome creates no new boss rewards or collectible roll");
         }
-        finally {portal.Delete();controller.Delete();boss.Delete();player.Delete();}
+        finally {foreach(Moongate portal in portals)portal.Delete();controller.Delete();boss.Delete();player.Delete();}
     }
     public static int Main(string[] args)
     {
@@ -359,7 +423,7 @@ internal static class ArachnidOutbreakRewardRegression
             typeof(World).GetField("m_Items",BindingFlags.Static|BindingFlags.NonPublic).SetValue(null,new Dictionary<Serial,Item>());
             typeof(World).GetField("m_Mobiles",BindingFlags.Static|BindingFlags.NonPublic).SetValue(null,new Dictionary<Serial,Mobile>());
             MapDefinitions.Configure();RaceDefinitions.Configure();Corpse.Initialize();ArachnidOutbreakController.Initialize();
-            Scoring(); CrowdQualification(); Delivery(); Attribution(); HealingProvenance();BossRewards(true,true);BossRewards(false,true);BossRewards(false,false);UnsafeBossLoot();
+            Scoring(); CrowdQualification(); Delivery(); Attribution(); HealingProvenance();BossRewards(true,true);BossRewards(false,true);BossRewards(false,false);BossRewards(true,false,true);UnsafeBossLoot(true);UnsafeBossLoot(false);
             Console.WriteLine("PASS outbreak rewards: "+s_Checks+" component assertions; no world saves or listeners.");return 0;
         }
         catch(Exception exception){Console.Error.WriteLine(exception);return 1;}
