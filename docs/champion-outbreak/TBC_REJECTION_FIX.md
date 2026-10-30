@@ -2,7 +2,7 @@
 
 The staged presentation001 copy reports a core bridge fault about 10 seconds after the northern pose: TurnBasedCombatManager.DecideCombatantChange throws NullReferenceException and the bridge disables turn-based combat. Its trace is retained at D:/ConficturaUOTestTools/outbreak-presentation-20261029-001/shard/Data/Logs/Console.log. The eastern pose then refuses the already-faulted bridge; no eastern rendering acceptance is claimed. Both observed frames and the failed copy remain retained with acknowledged no-save cleanup.
 
-Source review identifies a real rejection branch: an unjoined actor targeting an existing participant can be rejected when it cannot join, yet the rejection log reads actorParticipant.Group. The actual-manager regression reproduces that null dereference on the accepted old assembly before the fix. The repair logs a null group when no actor participant exists. It changes no eligibility decision, enrollment, AP, movement, damage, NPC ability, reward or serializer. Native chained-scene confirmation is still required before attributing every observed native failure to this branch.
+Source review identifies a real rejection branch: an unjoined actor targeting an existing participant can be rejected when it cannot join, yet the rejection log reads actorParticipant.Group. The actual-manager regression reproduces that null dereference on the accepted old assembly before the fix. The repair logs a null group when no actor participant exists. It changes no eligibility decision, enrollment, AP, movement, damage, NPC ability, reward or serializer. The later chained-scene rerun completes without fault; exact rejected-outsider branch proof remains the separate component/core-bridge case.
 
 ## Verification
 
@@ -14,10 +14,14 @@ Source review identifies a real rejection branch: an unjoined actor targeting an
 
 The three-run mounted pacing series remains accepted at its frozen baseline. It is not relabeled as newly replayed source: those runs have TBC disabled, the benchmark never enables it, and DecideCombatantChange returns Native before reaching this logging branch when disabled. The corrected regression explicitly checks that guard. Thus no new pacing series is justified by this logging repair. Original real-time Zanthus stress has the same control-flow boundary.
 
-The selected-snapshot offline reservation preflight invokes Configure/Region.Load/World.Load without Initialize or enabling the combat manager. Its terrain/housing/city/portal behavior and serializers are unaffected by this change; its original hashes/report remain intact. Older TBC native escape/dodge results retain their recorded source scope; the corrected manager has current component/bridge checks, with native presentation confirmation pending. Broader NPC AI remains read-only.
+The selected-snapshot offline reservation preflight invokes Configure/Region.Load/World.Load without Initialize or enabling the combat manager. Its terrain/housing/city/portal behavior and serializers are unaffected by this change; its original hashes/report remain intact. Older TBC native escape/dodge results retain their recorded source scope; the corrected manager has current component/bridge checks, with a completed corrected native presentation rerun. Broader NPC AI remains read-only.
 
 ## Source traces
 
 - [TurnBasedCombatManager.cs](../../Data/Scripts/Custom/Combat/TurnBased/TurnBasedCombatManager.cs): ClassifyCombatantIntent, CanJoinInteraction, DecideCombatantChange Reject branch and Log. Trigger: native combatant intent from an eligible living actor/target; existing null/deleted/living/join guards remain.
 - [TurnBasedCombat.cs](../../Data/System/Source/TurnBasedCombat.cs): DecideCombatantChange catches handler faults and Fail disables the bridge; unchanged core.
 - [CombatantIntentRejectionRegression.cs](../../tests/CombatantIntentRejectionRegression.cs): actual manager/bridge, outsider rejection, preserved group/AP and real-time guard. Compiled/run against matching private core/script assemblies; --expect-fault is only the retained old-assembly reproduction.
+
+## Corrected native presentation
+
+Presentation002 completes all six boss samples plus two brood-anchor samples without fixture error or a bridge-fault log. This native run contains no ungrouped rejection log, so it does not replace the explicit actual-manager/core-bridge branch regression. Source/private/original preservation and acknowledged forced teardown pass. See [PRESENTATION.md](PRESENTATION.md) for observations, foreground-occlusion concerns and rendering-only boundaries.

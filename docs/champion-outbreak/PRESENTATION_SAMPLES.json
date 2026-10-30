@@ -1,0 +1,64 @@
+{
+  "production_inputs_checked": 6742,
+  "private_runtime_inputs_checked": 6611,
+  "private_save_files": 20,
+  "six_recorded_boss_samples": true,
+  "retained_fixture_error": false,
+  "verifier_confirms_rendered_pixels": false,
+  "scope": "Staged camera and production graphics with AI/turn scheduler stopped; manual sample observations only, no natural timing/AI/movement/pacing/geography approval",
+  "production_activation": false,
+  "site_approval": false,
+  "observations": [
+    {
+      "site": "central-woodland",
+      "anchor": "boss",
+      "observation": "Darker ambient view: red foot strands readable, boss legs overlap nearby but silhouette remains visible; HUD moved clear",
+      "scope": "Staged copied Zanthus rendering; one sample tile"
+    },
+    {
+      "site": "northern-woodland",
+      "anchor": "boss",
+      "observation": "Darker grass sample: red strands and warning message readable; boss body/name visible beside rock; nearby wildlife present",
+      "scope": "Staged copied Zanthus rendering; one sample tile"
+    },
+    {
+      "site": "eastern-woodland",
+      "anchor": "boss",
+      "observation": "Red web/message visible; blue-green foreground clutter partly overlaps avatar and boss legs; outline remains discernible. Foreground graphic origin unclassified.",
+      "scope": "Staged copied Zanthus rendering; one sample tile; clutter caveat"
+    },
+    {
+      "site": "northwestern-woodland",
+      "anchor": "boss",
+      "observation": "Open riverbank grass: boss outline, red foot strands and warning message readable; distant hostile NPC visible below",
+      "scope": "Staged copied Zanthus rendering; one sample tile"
+    },
+    {
+      "site": "southeastern-woodland",
+      "anchor": "boss",
+      "observation": "Open grass: red foot strands and warning text readable, boss silhouette unobscured; small flowers around feet",
+      "scope": "Staged copied Zanthus rendering; one sample tile"
+    },
+    {
+      "site": "western-woodland",
+      "anchor": "boss",
+      "observation": "Warning message readable and some red strands visible; foreground tree crosses avatar and parts of boss. Readability concern retained, not a clean-visibility approval.",
+      "scope": "Staged copied Zanthus rendering; one sample tile; tree occlusion concern",
+      "occlusion_concern": true
+    },
+    {
+      "site": "central-woodland",
+      "anchor": 0,
+      "observation": "White brood web marker partly visible below staged boss; red foot warning/message readable. Marker text not inspected.",
+      "scope": "Staged brood-anchor rendering; no guardian/clear credit"
+    },
+    {
+      "site": "eastern-woodland",
+      "anchor": 2,
+      "observation": "Eastern brood sample beside dense tree cluster: white web marker, red foot strands and red message visible; right boss legs overlap foreground trunk.",
+      "scope": "Staged brood-anchor rendering; local occlusion caveat"
+    }
+  ],
+  "native_bridge_fault_lines": 0,
+  "native_ungrouped_rejection_lines": 0
+}

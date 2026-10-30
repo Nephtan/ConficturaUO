@@ -3,6 +3,8 @@ from pathlib import Path
 import argparse
 from datetime import datetime
 import json
+import hashlib
+import subprocess
 import time
 import xml.etree.ElementTree as ET
 from FreezeBenchmark import read_shared,read_status
@@ -60,7 +62,7 @@ def run(root):
     publish(e,'native-request.txt','stop')
     raise RuntimeError('Natural case deadline; stop requested, no restart')
 
-def verify(root):
+def verify(root,production_ref=None):
     root,e,repo,p=context(root)
     result=json.loads((e/'live-turn-client-result.json').read_text());assert result['passed']
     assert not (e/'live-turn-client-error.txt').exists()
@@ -106,7 +108,14 @@ def verify(root):
         serials=lambda n:sorted(s.get('serial') for s in n.findall('equipment'))
         assert serials(original)==serials(final)
     inputs=json.loads((Path(p['candidate'])/'inputs.json').read_text())['files']
-    assert all(sha(repo/name)==expected for name,expected in inputs.items())
+    historical=None
+    for name,expected in inputs.items():
+        if sha(repo/name)==expected:continue
+        assert production_ref,'Production input changed; retained evidence needs an explicit historical source ref'
+        if historical is None:historical=subprocess.check_output(['git','rev-parse',production_ref+'^{commit}'],cwd=repo,text=True).strip()
+        blob=subprocess.check_output(['git','show',historical+':'+name],cwd=repo)
+        versions=[blob,blob.replace(b'\r\n',b'\n').replace(b'\n',b'\r\n')]
+        assert expected in [hashlib.sha256(value).hexdigest() for value in versions],name
     runtime_checked=0
     for name,expected in inputs.items():
         name=name.replace('\\','/')
@@ -136,8 +145,12 @@ def verify(root):
         report.update(natural_scheduler_reaction_and_native_dodge_passed=True,
                       observed_movement_ap=moved['movement_ap'],
                       scope='Explicit test-arm enrollment; natural warning/live scheduler; native client movement cancels original warning and later boss turn causes no hold; no Computer Use/cooperation/site approval inferred')
+    if historical is not None:report['historical_production_ref']=historical
     (e/'live-turn-verification.json').write_text(json.dumps(report,indent=2));print(json.dumps(report))
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('root',type=Path);parser.add_argument('--verify',action='store_true')
-    args=parser.parse_args();(verify if args.verify else run)(args.root)
+    parser.add_argument('--production-ref',help='Exact historical source for retained verification only')
+    args=parser.parse_args()
+    if args.production_ref and not args.verify:parser.error('--production-ref is verification-only')
+    verify(args.root,args.production_ref) if args.verify else run(args.root)
