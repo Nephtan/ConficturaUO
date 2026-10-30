@@ -9,6 +9,18 @@ if (-not $acknowledged -and -not $FailedServer) { throw 'No no-save stop acknowl
 if ($StopObserver -and -not $FailedServer) { throw 'Observer stop requires explicit failed-server cleanup' }
 $prepared = Get-Content -LiteralPath (Join-Path $evidence 'prepared.json') -Raw | ConvertFrom-Json
 $allowed = @((Join-Path $copyRoot 'client\ClassicUO.exe'), (Join-Path $copyRoot 'shard\ConficturaServer.exe'))
+$cooperativeInputs = Join-Path $evidence 'cooperative-inputs.json'
+if (Test-Path -LiteralPath $cooperativeInputs) {
+    $cooperative = Get-Content -LiteralPath $cooperativeInputs -Raw | ConvertFrom-Json
+    $helperClient = Join-Path $copyRoot 'ally-client\ClassicUO.exe'
+    $frozenHelper = $cooperative.files.'ally-client\ClassicUO.exe'
+    if (-not $frozenHelper) { $frozenHelper = $cooperative.files.'ally-client/ClassicUO.exe' }
+    if (-not $cooperative.synthetic_roles -or $cooperative.expected_clients -ne 2 -or -not $frozenHelper -or
+        (Get-FileHash -LiteralPath $helperClient -Algorithm SHA256).Hash.ToLowerInvariant() -ne $frozenHelper) {
+        throw 'Cooperative helper client is not the frozen disposable executable'
+    }
+    $allowed += $helperClient
+}
 $owned = @(Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -and $_.ExecutablePath.StartsWith($copyRoot + '\', [StringComparison]::OrdinalIgnoreCase) })
 foreach ($process in $owned) { if ($process.ExecutablePath -notin $allowed) { throw 'Unexpected owned process; inspect before stopping' } }
 if ($FailedServer) {

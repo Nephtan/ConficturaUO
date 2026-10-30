@@ -1,0 +1,80 @@
+{
+  "all_six_independent_native_role_types_verified": true,
+  "single_six_case_run": false,
+  "synthetic_roles": true,
+  "production_inputs_identical_and_current": 6742,
+  "copied_plugin_observed_sha256": "e82cb7082e6c4eec55183ed1453dba46b91110216e6c3c2bd6a7399769ab38f3",
+  "cases": [
+    {
+      "case": "heal",
+      "sequence": 1,
+      "points_before": 0.0,
+      "points_after": 5.0,
+      "both_connected": true,
+      "both_alive": true,
+      "source_copy": "outbreak-cooperative-20261029-004"
+    },
+    {
+      "case": "cure",
+      "sequence": 2,
+      "points_before": 0.0,
+      "points_after": 2.0,
+      "both_connected": true,
+      "both_alive": true,
+      "source_copy": "outbreak-cooperative-20261029-004"
+    },
+    {
+      "case": "rescue",
+      "sequence": 3,
+      "points_before": 0.0,
+      "points_after": 2.0,
+      "both_connected": true,
+      "both_alive": true,
+      "source_copy": "outbreak-cooperative-20261029-004"
+    },
+    {
+      "case": "treat",
+      "sequence": 4,
+      "points_before": 0.0,
+      "points_after": 0.0,
+      "both_connected": true,
+      "both_alive": true,
+      "source_copy": "outbreak-cooperative-20261029-004"
+    },
+    {
+      "case": "prevent",
+      "sequence": 5,
+      "points_before": 0.0,
+      "points_after": 2.0,
+      "both_connected": true,
+      "both_alive": true,
+      "source_copy": "outbreak-cooperative-20261029-004"
+    },
+    {
+      "case": "bard",
+      "sequence": 1,
+      "points_before": 0.0,
+      "points_after": 0.50302964,
+      "both_connected": true,
+      "both_alive": true,
+      "source_copy": "outbreak-cooperative-20261029-006"
+    }
+  ],
+  "source_reports": [
+    {
+      "copy": "outbreak-cooperative-20261029-004",
+      "report_sha256": "cd672d2dc9f62b79494e386af64d3ef2c5ce9ef2b1ff2dde89b5df5242899e9d",
+      "current_fixture_matches": false,
+      "current_client_driver_matches": false
+    },
+    {
+      "copy": "outbreak-cooperative-20261029-006",
+      "report_sha256": "4517ac5ada6847546c20845b6cfc20bd4475051a484e75aebc6ee17bbc0945fb",
+      "current_fixture_matches": true,
+      "current_client_driver_matches": true
+    }
+  ],
+  "scope": "Independent connected synthetic role scenes; owned injury/poison/party and finite supplies staged; enemy AI paused; production bard observer sampled on wall clock; no group difficulty/pacing/economics/actual-Zanthus capability or Computer Use role acceptance",
+  "production_activation": false,
+  "site_approval": false
+}

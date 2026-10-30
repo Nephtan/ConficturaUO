@@ -119,3 +119,7 @@ Computer Use separately confirms the copied game window, news/inventory/characte
 ## Staged all-site presentation samples
 
 [PRESENTATION.md](PRESENTATION.md) records six boss-location and two brood-anchor samples through Computer Use in corrected presentation002. Actual red warning graphics/message are discernible in sampled scenes; western tree and eastern clutter concerns remain. This stops AI/scheduler and relocates the camera, so it adds rendering evidence only. It does not alter natural live-turn/dodge or pacing evidence, establish universal visibility or approve reservations. Preservation and acknowledged forced teardown pass; no bridge fault/fixture error occurs. The precise rejected-outsider branch has separate regression proof, not a claimed native rejection in this run.
+
+## Two-client controlled cooperative roles
+
+[COOPERATIVE.md](COOPERATIVE.md) and COOPERATIVE_CASES.json record actual ally healing/cure/web rescue/party treatment/prevention in004 and useful-time bard support in006. All six are independent controlled native scenes with both players connected; fixture setup, stopped enemy AI and bard observer sampling remain explicit. There is no combined six-case run or Computer Use role claim. Current production/preservation/owned teardown checks pass. Native role feedback gates now have bounded evidence; ordinary reward collection/economics, final source reconciliation and explicit reservation/occlusion approval remain separate.
