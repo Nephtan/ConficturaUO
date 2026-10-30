@@ -537,7 +537,8 @@ namespace Server.Custom.Confictura
                 }
                 case TurnCombatantIntentDisposition.Reject:
                 {
-                    Log("combatant_selection_blocked", actorParticipant.Group, actor, "Not current actor.");
+                    // An outsider denied entry has no participant record to log.
+                    Log("combatant_selection_blocked", actorParticipant == null ? null : actorParticipant.Group, actor, "Not current actor.");
                     return GetCombatantChangeMode(disposition);
                 }
                 default:
