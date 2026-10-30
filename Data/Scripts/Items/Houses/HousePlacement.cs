@@ -75,9 +75,6 @@ namespace Server.Multis
             if (from.AccessLevel >= AccessLevel.GameMaster)
                 return HousePlacementResult.Valid; // Staff can place anywhere
 
-            if (Server.Custom.Confictura.Champions.WildernessEncounterReserves.ContainsHousingTile(map, center.X, center.Y))
-                return HousePlacementResult.BadRegion;
-
             NoHousingRegion noHousingRegion = (NoHousingRegion)
                 Region.Find(center, map).GetRegion(typeof(NoHousingRegion));
 
@@ -123,11 +120,6 @@ namespace Server.Multis
                         continue; // There are no tiles here, continue checking somewhere else
 
                     Point3D testPoint = new Point3D(tileX, tileY, center.Z);
-
-                    // Check every occupied multi tile, including a house whose
-                    // center is outside a permanent encounter reservation.
-                    if (Server.Custom.Confictura.Champions.WildernessEncounterReserves.ContainsHousingTile(map, tileX, tileY))
-                        return HousePlacementResult.BadRegion;
 
                     Region reg = Region.Find(testPoint, map);
 

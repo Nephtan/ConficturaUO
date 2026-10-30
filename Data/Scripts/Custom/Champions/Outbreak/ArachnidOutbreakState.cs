@@ -20,6 +20,7 @@ namespace Server.Custom.Confictura.Champions
         private int m_ClearedBroods;
         private DateTime m_LastActivity;
         private DateTime m_NextStart;
+        private bool m_Infestation;
 
         public ArachnidOutbreakPhase Phase { get { return m_Phase; } }
         public string AttemptId { get { return m_AttemptId; } }
@@ -28,6 +29,7 @@ namespace Server.Custom.Confictura.Champions
         public DateTime LastActivity { get { return m_LastActivity; } }
         public DateTime NextStart { get { return m_NextStart; } }
         public bool Engaged { get { return m_LastActivity != DateTime.MinValue; } }
+        public bool Infestation { get { return m_Infestation; } }
         public bool Active
         {
             get { return m_Phase == ArachnidOutbreakPhase.Broods || m_Phase == ArachnidOutbreakPhase.Boss; }
@@ -54,6 +56,22 @@ namespace Server.Custom.Confictura.Champions
             m_AttemptId = Guid.NewGuid().ToString("N");
             m_SiteId = siteId;
             m_Phase = ArachnidOutbreakPhase.Broods;
+            return true;
+        }
+
+        public bool TryStartInfestation(string id)
+        {
+            if (!TryStart(id)) return false;
+            m_Infestation = true;
+            m_Phase = ArachnidOutbreakPhase.Boss;
+            return true;
+        }
+
+        public bool CompleteMilestone(int milestone, DateTime now)
+        {
+            if (!m_Infestation || !Active || milestone < 0 || milestone > 2 || (m_ClearedBroods & (1 << milestone)) != 0) return false;
+            m_ClearedBroods |= 1 << milestone;
+            RecordActivity(now);
             return true;
         }
 
@@ -136,23 +154,25 @@ namespace Server.Custom.Confictura.Champions
             m_SiteId = String.Empty;
             m_ClearedBroods = 0;
             m_LastActivity = DateTime.MinValue;
+            m_Infestation = false;
         }
 
         public void Serialize(GenericWriter writer)
         {
-            writer.Write((int)0);
+            writer.Write((int)1);
             writer.Write((int)m_Phase);
             writer.Write(m_AttemptId);
             writer.Write(m_SiteId);
             writer.Write(m_ClearedBroods);
             writer.Write(m_LastActivity);
             writer.Write(m_NextStart);
+            writer.Write(m_Infestation);
         }
 
         public void Deserialize(GenericReader reader)
         {
             int version = reader.ReadInt();
-            if (version != 0)
+            if (version < 0 || version > 1)
                 throw new InvalidOperationException("Unsupported arachnid outbreak state version.");
 
             m_Phase = (ArachnidOutbreakPhase)reader.ReadInt();
@@ -161,11 +181,12 @@ namespace Server.Custom.Confictura.Champions
             m_ClearedBroods = reader.ReadInt();
             m_LastActivity = reader.ReadDateTime();
             m_NextStart = reader.ReadDateTime();
+            m_Infestation = version >= 1 && reader.ReadBool();
 
             if (!Enum.IsDefined(typeof(ArachnidOutbreakPhase), m_Phase)
                 || m_ClearedBroods < 0 || m_ClearedBroods > 7
                 || (Active && (String.IsNullOrEmpty(m_AttemptId) || String.IsNullOrEmpty(m_SiteId)))
-                || (m_Phase == ArachnidOutbreakPhase.Boss && m_ClearedBroods != 7)
+                || (m_Phase == ArachnidOutbreakPhase.Boss && !m_Infestation && m_ClearedBroods != 7)
                 || (m_Phase == ArachnidOutbreakPhase.Broods && m_ClearedBroods == 7)
                 || (m_Phase == ArachnidOutbreakPhase.Cooldown && m_NextStart == DateTime.MinValue))
                 throw new InvalidOperationException("Invalid persisted arachnid outbreak state.");

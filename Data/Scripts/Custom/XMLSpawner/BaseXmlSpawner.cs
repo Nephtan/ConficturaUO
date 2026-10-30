@@ -10084,29 +10084,6 @@ namespace Server.Mobiles
                 out status_str
             );
 
-            Server.Engines.CannedEvil.ChampionSpawn legacyChampion = item as Server.Engines.CannedEvil.ChampionSpawn;
-            if (legacyChampion != null)
-            {
-                // Check the final configured area, not just its anchor: property
-                // strings can enlarge it after initial placement. No unsafe fallback.
-                int attempts = 0;
-                while (Server.Custom.Confictura.Champions.WildernessEncounterReserves.Intersects(legacyChampion.Map, legacyChampion.SpawnArea))
-                {
-                    if (spawner == null || spawner.Deleted || attempts++ >= 10)
-                    {
-                        legacyChampion.Delete();
-                        theSpawn.SpawnedObjects.Remove(legacyChampion);
-                        status_str = "Champion placement skipped: wilderness encounter reserve.";
-                        return;
-                    }
-                    Point3D retryPack = Point3D.Zero;
-                    if (theSpawn.PackRange >= 0 && theSpawn.SubGroup > 0)
-                        retryPack = spawner.GetPackCoord(theSpawn.SubGroup);
-                    Point3D next = spawner.GetSpawnPosition(requiresurface, theSpawn.PackRange, retryPack, spawnpositioning);
-                    legacyChampion.MoveToWorld(next, map);
-                }
-            }
-
             // if the object has an OnAfterSpawnAndModify method, then invoke it
             //InvokeOnAfterSpawnAndModify(item);
         }

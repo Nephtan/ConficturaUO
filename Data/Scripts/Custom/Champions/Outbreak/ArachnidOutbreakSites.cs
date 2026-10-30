@@ -6,7 +6,7 @@ namespace Server.Custom.Confictura.Champions
 {
     public static class ArachnidOutbreakSites
     {
-        // Keep approved encounter centers tied to their permanent housing policy.
+        // Legacy lookup API only. Production infestation discovery samples the map.
         private static readonly ReadOnlyCollection<ArachnidOutbreakSite> m_Candidates =
             CreateReviewedCandidates();
 

@@ -1,0 +1,56 @@
+{
+  "production_inputs": 6742,
+  "changed_inputs": [
+    "Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakController.cs",
+    "Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakSite.cs"
+  ],
+  "core_sha256": "dbb7b2360c435834b32e0f1f4b0854a859cd9086971a4c270981b58d8f2f3ddb",
+  "script_sha256": "0f0675748df22c691154d83ee5bfe007065ef7239933c1654cbeb7b38b805083",
+  "fixture_hashes": {
+    "ChampionRewardRegression.cs": "8a3ec963fddc616d1cc61d99ab5e1f7f54bb84ca51266d50a39b0e6df4892d39",
+    "ArachnidOutbreakControllerRegression.cs": "b0b189d7752c2cfb59295c28db1ba78eb473d8ff2e38a7abe4b49d0b0d61bf25",
+    "ArachnidOutbreakRewardRegression.cs": "7508904d2a2d8e0a5eac1a00454718aadb47a32eab3dac8daa5a1d9023367bbc"
+  },
+  "results": {
+    "ChampionRewardRegression": "PASS: 679 assertions; no world saves loaded or listeners started.",
+    "ArachnidOutbreakControllerRegression": "PASS outbreak controller: 63 component assertions; private setup; no saves or listeners.",
+    "ArachnidOutbreakRewardRegression": "PASS outbreak rewards: 347 component assertions; no world saves or listeners."
+  },
+  "runtime_compile": true,
+  "core_build": false,
+  "source_input_match": true,
+  "no_world_or_listener": true,
+  "candidate": "D:\\ConficturaUOTestTools\\outbreak-gold-shower-20261030-001",
+  "production_source_hashes": {
+    "Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakController.cs": "e9e151dff4f76c07cd53a3e47f61496b151931944b70e383443c291bcfa71357",
+    "Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakSite.cs": "0329d7a6c89cffc0c7da0ca5e73562dc8ca7e73f8044be801419b2474d49dc0c"
+  },
+  "new_cosmetic_timer_entrypoint": "ArachnidOutbreakController.PlayGoldShower",
+  "callbacks_per_victory": 25,
+  "callback_spacing_milliseconds": 160,
+  "gold_awarded_immediately": true,
+  "serialization_change": false,
+  "deployment": false,
+  "native_observation": {
+    "copy": "D:\\ConficturaUOTestTools\\outbreak-zanthus-gold-shower-20261030-001",
+    "completed": true,
+    "seconds": 220.3432926,
+    "owned_kills": 40,
+    "player_deaths": 0,
+    "native_visible_piles": 25,
+    "unique_ground_tiles": 25,
+    "gold_per_pile": 600,
+    "gold_total": 15000,
+    "late_sparkles_seen": true,
+    "full_moving_coin_record": false,
+    "audio_captured": false,
+    "rewards_collected": false,
+    "pending_glands": 6,
+    "pending_skulls": 1,
+    "pending_artifact_claims": 0,
+    "fixture_disarmed": true,
+    "client_server_open": true,
+    "original_inputs_and_20_private_saves_preserved": true,
+    "frames": 42
+  }
+}

@@ -10,7 +10,7 @@ The original `ArachnidOutbreakPlacement.TryFindLoot` started at a random index i
 
 Each pile remains 600 gold, for 15,000 shared gold total. Terrain fit, house and portal checks remain. Player/corpse occupancy is allowed. Eligibility, glands, skull/artifact routing, duplicate-death guards and cooldown rules are unchanged. No serializer, runtime hook, project inclusion, core executable or activation flag changes. Delivery remains disabled.
 
-Gold still appears through immediate `MoveToWorld`; falling coins, timed effects and a victory announcement are separate presentation work. The held showcase client runs the original source and must not be presented as a native demonstration of this repair.
+The placement-only commit still used immediate `MoveToWorld` with no animation. The subsequent [gold shower animation](GOLD_SHOWER.md) decorates those existing piles with bounded effects. The original watched stacking run remains separate evidence; it was subsequently closed without saving before preparing the fresh repaired run.
 
 ## Verification
 
@@ -18,7 +18,7 @@ Gold still appears through immediate `MoveToWorld`; falling coins, timed effects
 
 The new distinct-tile check fails against the accepted pre-repair runtime while its 15,000 quantity check passes. Private reproduction: `D:/ConficturaUOTestTools/outbreak-gold-scatter-repro-20261030-001/`.
 
-Final verification passes in `D:/ConficturaUOTestTools/outbreak-gold-scatter-20261030-003/`: forced runtime compilation plus 679 legacy champion assertions, 63 controller assertions and 343 outbreak reward assertions (1,085 total). All 6,742 recorded production inputs match; the unchanged core artifact matches every accepted core/config input. The current static delivery inventory also passes with all 13 outbreak scripts included and activation disabled. [GOLD_SCATTER_VERIFICATION.json](GOLD_SCATTER_VERIFICATION.json) records source/fixture/assembly hashes and evidence limits.
+Placement-only verification passes in `D:/ConficturaUOTestTools/outbreak-gold-scatter-20261030-003/`: forced runtime compilation plus 679 legacy champion assertions, 63 controller assertions and 343 outbreak reward assertions (1,085 total). All 6,742 recorded production inputs match that snapshot; the unchanged core artifact matches every accepted core/config input. Static delivery inventory also passes with all 13 outbreak scripts included and activation disabled. [GOLD_SCATTER_VERIFICATION.json](GOLD_SCATTER_VERIFICATION.json) records that placement-only snapshot. The later [animation and fresh native run](GOLD_SHOWER.md) have their own current-source verification record.
 
 The first candidate's runtime compile caught an unsupported `HashSet` reference; the implementation now uses the shard's existing `Dictionary` pattern. The second candidate compiled, but the default broad suite stopped on the older lifecycle fixture's pre-approval assumption that every catalog site remains unapproved. That same assertion fails against the unchanged accepted baseline; it is an existing fixture assumption, not evidence of a gold regression. The focused gold suite covers legacy champion rewards, controller behavior and outbreak rewards. Failed attempts remain retained separately.
 

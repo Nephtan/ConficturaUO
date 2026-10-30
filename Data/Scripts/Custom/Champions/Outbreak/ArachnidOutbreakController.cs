@@ -6,7 +6,7 @@ using Server.Items;
 
 namespace Server.Custom.Confictura.Champions
 {
-    public class ArachnidOutbreakController : Item
+    public partial class ArachnidOutbreakController : Item
     {
         // Open only after reward, site, combat and native-client acceptance gates.
         public static bool DeliveryReady { get { return false; } }
@@ -125,17 +125,9 @@ namespace Server.Custom.Confictura.Champions
                 reason = "Delivery acceptance remains incomplete; activation is disabled.";
                 return false;
             }
-            bool reviewed = false;
-            foreach (ArachnidOutbreakSite site in ArachnidOutbreakSites.Candidates)
-                reviewed |= site.Reviewed;
-            if (!reviewed)
-            {
-                reason = "No reviewed permanently non-housing site is available.";
-                return false;
-            }
             m_State.SetEnabled(true);
             StartTimer();
-            reason = "Director enabled; it will select a currently safe reviewed site.";
+            reason = "Director enabled; it will search for a suitable random infestation origin.";
             return true;
         }
 
@@ -170,6 +162,11 @@ namespace Server.Custom.Confictura.Champions
                 m_Status = "Attempt disarmed: contribution state is missing or belongs to another attempt.";
                 return;
             }
+            if (m_State.Active && m_Infestation == null)
+            {
+                Abort(DateTime.UtcNow, "Legacy staged outbreak retired during infestation migration; earned claims retained.");
+            }
+            if (m_Infestation != null) m_Infestation.Resume(DateTime.UtcNow);
             if (m_State.Phase != ArachnidOutbreakPhase.Disabled)
                 StartTimer();
         }
@@ -196,6 +193,12 @@ namespace Server.Custom.Confictura.Champions
                 return;
             }
             string attempt = AttemptId;
+            if (m_Infestation != null && m_State.Active)
+            {
+                TickInfestation(utcNow);
+                ObserveBards(utcNow, true);
+                return;
+            }
             if (m_State.Advance(utcNow, Utility.RandomMinMax(30, 60)))
             {
                 Cleanup(attempt);
@@ -204,30 +207,7 @@ namespace Server.Custom.Confictura.Champions
             if (m_State.Phase == ArachnidOutbreakPhase.Searching && utcNow >= m_NextSearch)
             {
                 m_NextSearch = utcNow.AddMinutes(5);
-                List<ArachnidOutbreakSite> sites = new List<ArachnidOutbreakSite>();
-                foreach (ArachnidOutbreakSite site in ArachnidOutbreakSites.Candidates)
-                    if (site.Reviewed)
-                        sites.Add(site);
-                int offset = Utility.Random(sites.Count);
-                bool started = false;
-                for (int pass = 0; pass < 2 && !started; ++pass)
-                {
-                    for (int i = 0; i < sites.Count; ++i)
-                    {
-                        ArachnidOutbreakSite site = sites[(offset + i) % sites.Count];
-                        if ((pass == 0 && site.Id == m_LastSite) || (pass == 1 && site.Id != m_LastSite))
-                            continue;
-                        string reason;
-                        if (TryStart(site, utcNow, out reason))
-                        {
-                            started = true;
-                            break;
-                        }
-                        m_Status = reason;
-                    }
-                }
-                if (sites.Count == 0)
-                    m_Status = "Waiting for a reviewed site; no placement fallback.";
+                if (TryRandomInfestation(utcNow)) return;
             }
             if (m_State.Active)
             {
@@ -311,6 +291,8 @@ namespace Server.Custom.Confictura.Champions
                     item.Delete();
             m_Creatures.Clear();
             m_Signs.Clear();
+            m_Infestation = null;
+            m_FounderPath = null;
         }
 
         private void Abort(DateTime utcNow, string reason)
@@ -399,7 +381,7 @@ namespace Server.Custom.Confictura.Champions
             if (m_Ledger == null || mobile == null || mobile.Deleted || !m_Creatures.Contains(mobile) || !Owns(mobile, AttemptId))
                 return false;
             ArachnidOutbreakSpider spider = mobile as ArachnidOutbreakSpider;
-            stage = spider == null ? 3 : spider.Stage;
+            stage = m_Infestation != null && mobile is ArachnidInfestationCreature ? InfestationMilestone() : spider == null ? 3 : spider.Stage;
             return stage >= 0 && stage < 4 && !m_Ledger.IsSealed(stage);
         }
 
@@ -428,6 +410,7 @@ namespace Server.Custom.Confictura.Champions
                 || victim.AccessLevel != AccessLevel.Player || champion.Map != Map.Sosaria || victim.Map != champion.Map
                 || !champion.InRange(victim.Location, 12) || !champion.CanSee(victim) || !champion.InLOS(victim) || !champion.CanBeHarmful(victim, false))
                 return false;
+            if (m_Infestation != null) return InfestationContains(victim.Location);
             int radius = ArachnidOutbreakSite.Radius;
             return new Rectangle2D(m_Placement.Boss.X - radius, m_Placement.Boss.Y - radius, radius * 2 + 1, radius * 2 + 1).Contains(victim.Location);
         }
@@ -595,6 +578,7 @@ namespace Server.Custom.Confictura.Champions
         {
             if (Deleted || !m_State.Active || !m_Creatures.Contains(mobile) || !Owns(mobile, AttemptId))
                 return;
+            if (m_Infestation != null) { InfestationDeath(mobile); return; }
             ArachnidOutbreakSpider spider = mobile as ArachnidOutbreakSpider;
             if (spider != null && spider.Guardian)
             {
@@ -636,14 +620,63 @@ namespace Server.Custom.Confictura.Champions
                     ArachnidOutbreakClaimKind.Artifact, delegate { return champion.RollVictoryArtifact(); });
             }
             for (int i = 0; i < points.Length; ++i)
-                new Gold(600).MoveToWorld(points[i], Map.Sosaria);
+            {
+                Gold gold = new Gold(600);
+                gold.MoveToWorld(points[i], Map.Sosaria);
+                // Award immediately; delayed callbacks only decorate existing gold.
+                Timer.DelayCall(TimeSpan.FromMilliseconds(i * 160), new TimerStateCallback(PlayGoldShower), gold);
+            }
             return true;
+        }
+
+        private static void PlayGoldShower(object state)
+        {
+            Gold gold = state as Gold;
+            if (gold == null || gold.Deleted || gold.Parent != null || gold.Map != Map.Sosaria)
+                return;
+            Point3D above = new Point3D(gold.X, gold.Y, gold.Z + 40);
+            Effects.SendMovingEffect(new Entity(Serial.Zero, above, gold.Map), gold, 0xEED, 5, 0, true, false);
+            Effects.SendLocationEffect(gold.Location, gold.Map, 0x376A, 20, 10);
+            Effects.PlaySound(gold.Location, gold.Map, gold.GetDropSound());
         }
 
         internal bool KeepCreatureInBounds(BaseCreature creature)
         {
             if (Deleted || !m_State.Active || !m_Creatures.Contains(creature) || !Owns(creature, AttemptId))
             {
+                creature.Delete();
+                return false;
+            }
+            if (m_Infestation != null)
+            {
+                ArachnidInfestationCreature resident = creature as ArachnidInfestationCreature;
+                Point3D returnPoint;
+                if (creature.Map == Map.Sosaria && InfestationContains(creature.Location))
+                {
+                    if (Server.Multis.BaseHouse.FindHouseAt(creature.Location,Map.Sosaria,16) != null
+                        && FindInfestationPoint(creature.Location,8,out returnPoint))
+                    {
+                        creature.Combatant = null; creature.FocusMob = null;
+                        creature.Home = returnPoint; creature.RangeHome = 0;
+                        if (creature.AIObject != null) creature.AIObject.Action = ActionType.Wander;
+                        return false;
+                    }
+                    if (creature.RangeHome == 0 && (resident == null || !resident.Founder))
+                    {
+                        if (!creature.InRange(creature.Home,1)) return false;
+                        creature.RangeHome = resident == null ? 16 : 7;
+                    }
+                    return true;
+                }
+                if (creature.Map == Map.Sosaria
+                    && Math.Abs(creature.X-m_Infestation.Origin.X)<=ArachnidInfestationState.MaximumRadius+20
+                    && Math.Abs(creature.Y-m_Infestation.Origin.Y)<=ArachnidInfestationState.MaximumRadius+20)
+                {
+                    creature.Combatant = null; creature.FocusMob = null;
+                    creature.RangeHome = 0;
+                    if (creature.AIObject != null) creature.AIObject.Action = ActionType.Wander;
+                    return false;
+                }
                 creature.Delete();
                 return false;
             }
@@ -662,6 +695,7 @@ namespace Server.Custom.Confictura.Champions
 
         internal void SpawnDefenders(Mobile source, int stage, int count)
         {
+            if (m_Infestation != null) return;
             if (Deleted || !m_State.Active || m_Placement == null || !m_Creatures.Contains(source)
                 || !Owns(source, AttemptId) || source.Deleted || !source.Alive || count < 1 || count > 4)
                 return;
@@ -694,7 +728,7 @@ namespace Server.Custom.Confictura.Champions
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)2);
+            writer.Write((int)3);
             m_State.Serialize(writer);
             writer.Write(m_Creatures, true);
             writer.Write(m_Signs, true);
@@ -705,6 +739,8 @@ namespace Server.Custom.Confictura.Champions
             if (m_Ledger != null)
                 m_Ledger.Serialize(writer);
             m_Wounds.Serialize(writer);
+            writer.Write(m_Infestation != null);
+            if (m_Infestation != null) m_Infestation.Serialize(writer);
         }
         public override void Deserialize(GenericReader reader)
         {
@@ -723,6 +759,11 @@ namespace Server.Custom.Confictura.Champions
             }
             if (version >= 2)
                 m_Wounds.Deserialize(reader);
+            if (version >= 3 && reader.ReadBool())
+            {
+                m_Infestation = new ArachnidInfestationState();
+                m_Infestation.Deserialize(reader);
+            }
         }
     }
 }

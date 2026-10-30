@@ -26,45 +26,13 @@ namespace Server.Custom.Confictura.Champions
 
     public static class WildernessEncounterReserves
     {
-        // A reviewed reserve is permanent world geography. Encounter stop,
-        // cooldown and delivery flags must never reopen it for player housing.
-        // These six footprints have explicit user approval after copied-world/native review.
+        // Compatibility API only. The infestation has no permanent reservations.
         private static readonly ReadOnlyCollection<WildernessEncounterReserve> m_Proposals =
-            new List<WildernessEncounterReserve>(new WildernessEncounterReserve[]
-            {
-                new WildernessEncounterReserve("central-woodland", 2514, 2088, true),
-                new WildernessEncounterReserve("northern-woodland", 2242, 652, true),
-                new WildernessEncounterReserve("eastern-woodland", 3746, 876, true),
-                new WildernessEncounterReserve("northwestern-woodland", 1208, 928, true),
-                new WildernessEncounterReserve("southeastern-woodland", 3762, 2744, true),
-                new WildernessEncounterReserve("western-woodland", 1122, 1704, true)
-            }).AsReadOnly();
+            new List<WildernessEncounterReserve>().AsReadOnly();
 
         public static ReadOnlyCollection<WildernessEncounterReserve> Proposals { get { return m_Proposals; } }
 
-        public static bool ContainsHousingTile(Map map, int x, int y)
-        {
-            if (map != Map.Sosaria)
-                return false;
-            Point2D point = new Point2D(x, y);
-            foreach (WildernessEncounterReserve reserve in m_Proposals)
-                if (reserve.Reviewed && reserve.Bounds.Contains(point))
-                    return true;
-            return false;
-        }
-
-        public static bool Intersects(Map map, Rectangle2D bounds)
-        {
-            if (map != Map.Sosaria || bounds.Width <= 0 || bounds.Height <= 0)
-                return false;
-            foreach (WildernessEncounterReserve reserve in m_Proposals)
-            {
-                Rectangle2D other = reserve.Bounds;
-                if (reserve.Reviewed && bounds.X < other.X + other.Width && bounds.X + bounds.Width > other.X
-                    && bounds.Y < other.Y + other.Height && bounds.Y + bounds.Height > other.Y)
-                    return true;
-            }
-            return false;
-        }
+        public static bool ContainsHousingTile(Map map, int x, int y) { return false; }
+        public static bool Intersects(Map map, Rectangle2D bounds) { return false; }
     }
 }

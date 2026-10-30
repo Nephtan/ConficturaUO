@@ -116,6 +116,17 @@ namespace Server.Custom.Confictura.Champions
         public ArachnidOutbreakController Controller { get { return m_Controller; } }
         public string AttemptId { get { return m_AttemptId; } }
         public override bool AwardLegacyChampionRewards { get { return false; } }
+        public override bool HasBreath { get { return false; } }
+        public override bool PlayerRangeSensitive { get { return m_Controller != null && m_Controller.Infestation ? false : base.PlayerRangeSensitive; } }
+        public override bool IsEnemy(Mobile mobile)
+        {
+            if (m_Controller != null && m_Controller.Infestation)
+            {
+                if (mobile is IArachnidOutbreakOwned) return false;
+                if (ArachnidInfestationCreature.TownEnemy(this,mobile)) return true;
+            }
+            return base.IsEnemy(mobile);
+        }
         public virtual Item RollVictoryArtifact() { return GetArtifact(); }
 
         private void ThinkWeb()
@@ -199,6 +210,7 @@ namespace Server.Custom.Confictura.Champions
             if (!m_Controller.KeepCreatureInBounds(this))
                 return;
             base.OnThink();
+            if (m_Controller.Infestation) ArachnidInfestationCreature.AcquireTownTarget(this);
             ThinkWeb();
             for (int i = 0; i < 3; ++i)
             {

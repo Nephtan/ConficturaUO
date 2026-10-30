@@ -255,7 +255,7 @@ namespace Server.Custom.Confictura.Champions
             return IsReserved(bounds, false);
         }
 
-        private static bool IsTravelSpellGate(Item item)
+        internal static bool IsTravelSpellGate(Item item)
         {
             Type spell = item.GetType().DeclaringType;
             return item is Moongate && (spell == typeof(Server.Spells.Seventh.GateTravelSpell)

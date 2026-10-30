@@ -415,6 +415,28 @@ internal static class ArachnidOutbreakRewardRegression
         }
         finally {foreach(Moongate portal in portals)portal.Delete();controller.Delete();boss.Delete();player.Delete();}
     }
+    private static void GoldShowerSafety()
+    {
+        MethodInfo shower=typeof(ArachnidOutbreakController).GetMethod("PlayGoldShower",BindingFlags.Static|BindingFlags.NonPublic);
+        Mobile player=Player();Gold gold=new Gold(600);
+        try
+        {
+            gold.MoveToWorld(new Point3D(2514,2088,0),Map.Sosaria);
+            int total=GroundGold();int items=World.Items.Count;
+            shower.Invoke(null,new object[]{gold});shower.Invoke(null,new object[]{gold});
+            Check(GroundGold()==total && World.Items.Count==items && gold.Amount==600,"repeated cosmetic shower cannot create or change reward items");
+            player.Backpack.AddItem(gold);
+            shower.Invoke(null,new object[]{gold});
+            Check(gold.Parent==player.Backpack && gold.Amount==600 && World.Items.Count==items,"collected gold stays collected during delayed effects");
+            gold.MoveToWorld(Point3D.Zero,Map.Internal);
+            shower.Invoke(null,new object[]{gold});
+            Check(gold.Map==Map.Internal && gold.Amount==600,"internal-map gold is not relocated by a pending shower");
+            gold.Delete();items=World.Items.Count;
+            shower.Invoke(null,new object[]{gold});shower.Invoke(null,new object[]{null});shower.Invoke(null,new object[]{player});
+            Check(gold.Deleted && World.Items.Count==items,"deleted and invalid cosmetic targets cannot recreate gold");
+        }
+        finally {gold.Delete();player.Delete();}
+    }
     public static int Main(string[] args)
     {
         try
@@ -423,7 +445,7 @@ internal static class ArachnidOutbreakRewardRegression
             typeof(World).GetField("m_Items",BindingFlags.Static|BindingFlags.NonPublic).SetValue(null,new Dictionary<Serial,Item>());
             typeof(World).GetField("m_Mobiles",BindingFlags.Static|BindingFlags.NonPublic).SetValue(null,new Dictionary<Serial,Mobile>());
             MapDefinitions.Configure();RaceDefinitions.Configure();Corpse.Initialize();ArachnidOutbreakController.Initialize();
-            Scoring(); CrowdQualification(); Delivery(); Attribution(); HealingProvenance();BossRewards(true,true);BossRewards(false,true);BossRewards(false,false);BossRewards(true,false,true);UnsafeBossLoot(true);UnsafeBossLoot(false);
+            Scoring(); CrowdQualification(); Delivery(); Attribution(); HealingProvenance();BossRewards(true,true);BossRewards(false,true);BossRewards(false,false);BossRewards(true,false,true);UnsafeBossLoot(true);UnsafeBossLoot(false);GoldShowerSafety();
             Console.WriteLine("PASS outbreak rewards: "+s_Checks+" component assertions; no world saves or listeners.");return 0;
         }
         catch(Exception exception){Console.Error.WriteLine(exception);return 1;}

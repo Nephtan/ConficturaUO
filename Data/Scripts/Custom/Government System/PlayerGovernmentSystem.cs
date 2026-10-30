@@ -127,13 +127,6 @@ namespace Server
             if (from == null || from.Deleted || deed == null || deed.Deleted)
                 return;
 
-            Point2D center = new Point2D(p.X - deed.Offset.X, p.Y - deed.Offset.Y);
-            if (Server.Custom.Confictura.Champions.WildernessEncounterReserves.Intersects(from.Map, GetMaximumCityBounds(center)))
-            {
-                from.SendMessage("A city's territory cannot extend into a wilderness encounter reserve.");
-                return;
-            }
-
             if (CheckPlacement(from, p, deed.MultiID, deed.Offset))
             {
                 if (!CheckCitiesInRange(from, p))
