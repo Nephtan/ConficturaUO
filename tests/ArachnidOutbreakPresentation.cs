@@ -54,11 +54,12 @@ namespace Server.TestOnly
             ArachnidOutbreakController old = Field("Controller") as ArachnidOutbreakController;
             if (old != null) old.Delete();
             WildernessEncounterReserve reserve = WildernessEncounterReserves.Proposals[index];
-            if (reserve.Reviewed) throw new InvalidOperationException("Presentation does not approve reservations.");
-            ArachnidOutbreakSite site = new ArachnidOutbreakSite(reserve.Id, reserve.Center.X, reserve.Center.Y, false);
+            // The base acceptance fixture replaces the catalog with its private scene.
+            ArachnidOutbreakSite site = new ArachnidOutbreakSite(reserve.Id, reserve.Center.X, reserve.Center.Y, reserve.Reviewed);
             ArachnidOutbreakPlacement placement;
             string reason;
-            if (!site.Validate(new ProposedTerrain(), out placement, out reason))
+            IArachnidOutbreakTerrain validationTerrain = reserve.Reviewed ? (IArachnidOutbreakTerrain)new SosariaOutbreakTerrain() : new ProposedTerrain();
+            if (!site.Validate(validationTerrain, out placement, out reason))
                 throw new InvalidOperationException("Selected snapshot layout is invalid: " + reason);
             typeof(ArachnidOutbreakSites).GetField("m_Candidates", Static).SetValue(null, Array.AsReadOnly(new ArachnidOutbreakSite[] { site }));
             ArachnidOutbreakController controller = new ArachnidOutbreakController();

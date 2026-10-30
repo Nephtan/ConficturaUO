@@ -21,6 +21,9 @@ def verify(args):
     changed = sorted(name for name,value in inputs.items() if value != original[name])
     approved = {'Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakCreatures.cs',
                 'Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakLedger.cs'}
+    if args.geography:
+        approved = {'Data/Scripts/Custom/Champions/Outbreak/WildernessEncounterReserve.cs',
+                    'Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakSites.cs'}
     assert set(changed) == approved, 'Unexpected source changes: '+repr(changed)
     assert sha(baseline/'ConficturaServer.exe') == sha(repo/'ConficturaServer.exe'), 'Core artifact mismatch'
     # Every core/config input is unchanged from the accepted source-matching core.
@@ -65,6 +68,8 @@ def verify(args):
     compiler = Path('C:/Windows/Microsoft.NET/Framework/v4.0.30319/csc.exe')
     fixture_names = ['ChampionRewardRegression','ArachnidOutbreakRegression','ArachnidOutbreakControllerRegression',
                      'ArachnidOutbreakRewardRegression','ArachnidOutbreakWebRegression']
+    if args.geography:
+        fixture_names = ['ArachnidOutbreakReservationRegression','ArachnidOutbreakControllerRegression']
     fixtures = output/'fixtures';fixtures.mkdir()
     fixture_hashes = {}
     results = {}
@@ -79,6 +84,8 @@ def verify(args):
         arguments = [executable,args.assets.resolve()]
         if name == 'ArachnidOutbreakWebRegression':
             arguments.append(repo/'Data/TurnBasedCombat')
+        if name == 'ArachnidOutbreakReservationRegression':
+            arguments.append(repo/'Data/System/XML/Regions.xml')
         result = run(name+'-run',arguments)
         markers = [line.strip() for line in result.splitlines() if line.startswith('PASS')]
         assert markers, name+' returned success without its pass summary'
@@ -91,7 +98,7 @@ def verify(args):
         script_sha256=sha(output/'Data.dll'),fixture_hashes=fixture_hashes,results=results,
         runtime_compile=True,core_build=False,source_input_match=True,no_world_or_listener=True)
     (output/'approved-changes-verification.json').write_text(json.dumps(summary,indent=2))
-    print('Verified source-matching unchanged core, forced runtime compilation and five component fixtures; no world/listener.')
+    print('Verified source-matching unchanged core, forced runtime compilation and '+str(len(fixture_names))+' component fixtures; no world/listener.')
 
 
 if __name__ == '__main__':
@@ -99,4 +106,5 @@ if __name__ == '__main__':
     parser.add_argument('--baseline',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--assets',type=Path,required=True)
+    parser.add_argument('--geography',action='store_true',help='Verify only the explicitly approved reservation/catalog source changes')
     verify(parser.parse_args())

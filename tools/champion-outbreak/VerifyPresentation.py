@@ -8,7 +8,7 @@ import xml.etree.ElementTree as ET
 from VerifyBenchmark import sha,hashes
 
 
-def verify(root,require_six=False,production_ref=None):
+def verify(root,require_six=False,production_ref=None,fixture_ref=None):
     root=root.resolve();e=root/'evidence';repo=Path(__file__).resolve().parents[2]
     assert root.is_relative_to(Path('D:/ConficturaUOTestTools').resolve())
     assert Path((e/'native-private-root.txt').read_text()).resolve()==root/'shard'
@@ -16,7 +16,12 @@ def verify(root,require_six=False,production_ref=None):
     frozen=json.loads((e/'presentation-inputs.json').read_text())
     for name,expected in frozen['files'].items():
         if name.replace('\\','/')!='client/settings.json':assert sha(root/name)==expected,name
-    assert sha(repo/'tests/ArachnidOutbreakPresentation.cs')==sha(root/'shard/Data/Scripts/TestOnly/ArachnidOutbreakPresentation.cs')
+    fixture_history=None
+    if sha(repo/'tests/ArachnidOutbreakPresentation.cs')!=sha(root/'shard/Data/Scripts/TestOnly/ArachnidOutbreakPresentation.cs'):
+        selected=fixture_ref or production_ref;assert selected,'Retained fixture differs; explicit historical source required'
+        fixture_history=subprocess.check_output(['git','rev-parse',selected+'^{commit}'],cwd=repo,text=True).strip()
+        blob=subprocess.check_output(['git','show',fixture_history+':tests/ArachnidOutbreakPresentation.cs'],cwd=repo)
+        assert sha(root/'shard/Data/Scripts/TestOnly/ArachnidOutbreakPresentation.cs') in [hashlib.sha256(b).hexdigest() for b in (blob,blob.replace(b'\r\n',b'\n').replace(b'\n',b'\r\n'))]
     assert sha(root/'shard/Data/Scripts/TestOnly/ArachnidOutbreakNativeAcceptance.cs')==prepared['harness_sha256']
     inputs=json.loads((Path(prepared['candidate'])/'inputs.json').read_text(encoding='utf-8-sig'))['files']
     historical=None;runtime=0
@@ -57,11 +62,11 @@ def verify(root,require_six=False,production_ref=None):
         recorded_boss_location_samples=len(sites),six_recorded_boss_samples=complete,retained_fixture_error=errored,
         verifier_confirms_rendered_pixels=False,manual_computer_use_observations=observations,
         scope='Staged camera and production graphics with AI/turn scheduler stopped; manual sample observations only, no natural timing/AI/movement/pacing/geography approval',
-        production_activation=False,site_approval=False,historical_production_ref=historical)
+        production_activation=False,site_approval=False,historical_production_ref=historical,historical_fixture_ref=fixture_history)
     (e/'presentation-verification.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2))
     if require_six:assert complete,'Six current non-errored manually recorded boss samples required'
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('root',type=Path);parser.add_argument('--require-six',action='store_true');parser.add_argument('--production-ref')
-    args=parser.parse_args();verify(args.root,args.require_six,args.production_ref)
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('root',type=Path);parser.add_argument('--require-six',action='store_true');parser.add_argument('--production-ref');parser.add_argument('--fixture-ref')
+    args=parser.parse_args();verify(args.root,args.require_six,args.production_ref,args.fixture_ref)

@@ -45,10 +45,11 @@ internal static class LoadedReservationPreflight
         {
             string root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             if (!root.StartsWith(@"D:\ConficturaUOTestTools\outbreak-reserve-preflight-", StringComparison.OrdinalIgnoreCase)
-                || args.Length != 1 || !File.Exists(Path.Combine(root, "preflight-inputs.json"))
+                || (args.Length != 1 && (args.Length != 2 || args[1] != "approved")) || !File.Exists(Path.Combine(root, "preflight-inputs.json"))
                 || !Directory.Exists(Path.Combine(root, "Saves")))
                 throw new InvalidOperationException("Requires a prepared, exact private preflight root.");
             string assets = Path.GetFullPath(args[0]);
+            bool approved = args.Length == 2;
             if (!assets.StartsWith(@"D:\ConficturaUOTestTools\", StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException("Map assets must be in the private test workspace.");
             Directory.SetCurrentDirectory(root);
@@ -93,11 +94,11 @@ internal static class LoadedReservationPreflight
                 Attribute(writer, "staticSosariaRegions", staticRegions);
                 Attribute(writer, "malformedLegacyControllers", malformed);
                 Attribute(writer, "activeMalformedLegacyControllers", activeMalformed);
-                Attribute(writer, "hypotheticalReservationsOnly", true);
+                Attribute(writer, "hypotheticalReservationsOnly", !approved);
                 Attribute(writer, "productionActivation", ArachnidOutbreakController.DeliveryReady);
                 foreach (WildernessEncounterReserve reserve in WildernessEncounterReserves.Proposals)
                 {
-                    if (reserve.Reviewed) throw new InvalidOperationException("Preflight must not approve reservations.");
+                    if (reserve.Reviewed != approved) throw new InvalidOperationException("Declared review policy differs from the requested probe scope.");
                     ++total;
                     int houses = 0, cities = 0, champions = 0, portals = 0;
                     foreach (Item item in World.Items.Values)
@@ -115,8 +116,11 @@ internal static class LoadedReservationPreflight
                     }
                     ArachnidOutbreakPlacement placement;
                     string reason;
-                    bool valid = new ArachnidOutbreakSite(reserve.Id, reserve.Center.X, reserve.Center.Y, false)
-                        .Validate(new ProposedTerrain(), out placement, out reason);
+                    IArachnidOutbreakTerrain terrain = approved ? (IArachnidOutbreakTerrain)new SosariaOutbreakTerrain() : new ProposedTerrain();
+                    ArachnidOutbreakSite site = approved ? ArachnidOutbreakSites.Find(reserve.Id)
+                        : new ArachnidOutbreakSite(reserve.Id, reserve.Center.X, reserve.Center.Y, false);
+                    if (site == null || site.Reviewed != approved) throw new InvalidOperationException("Site catalog does not match the reservation policy.");
+                    bool valid = site.Validate(terrain, out placement, out reason);
                     bool clear = valid && houses == 0 && cities == 0 && champions == 0 && portals == 0;
                     if (clear) ++accepted;
                     writer.WriteStartElement("reserve");

@@ -28,16 +28,16 @@ namespace Server.Custom.Confictura.Champions
     {
         // A reviewed reserve is permanent world geography. Encounter stop,
         // cooldown and delivery flags must never reopen it for player housing.
-        // These proposals stay inactive until copied-world/native review.
+        // These six footprints have explicit user approval after copied-world/native review.
         private static readonly ReadOnlyCollection<WildernessEncounterReserve> m_Proposals =
             new List<WildernessEncounterReserve>(new WildernessEncounterReserve[]
             {
-                new WildernessEncounterReserve("central-woodland", 2514, 2088, false),
-                new WildernessEncounterReserve("northern-woodland", 2242, 652, false),
-                new WildernessEncounterReserve("eastern-woodland", 3746, 876, false),
-                new WildernessEncounterReserve("northwestern-woodland", 1208, 928, false),
-                new WildernessEncounterReserve("southeastern-woodland", 3762, 2744, false),
-                new WildernessEncounterReserve("western-woodland", 1122, 1704, false)
+                new WildernessEncounterReserve("central-woodland", 2514, 2088, true),
+                new WildernessEncounterReserve("northern-woodland", 2242, 652, true),
+                new WildernessEncounterReserve("eastern-woodland", 3746, 876, true),
+                new WildernessEncounterReserve("northwestern-woodland", 1208, 928, true),
+                new WildernessEncounterReserve("southeastern-woodland", 3762, 2744, true),
+                new WildernessEncounterReserve("western-woodland", 1122, 1704, true)
             }).AsReadOnly();
 
         public static ReadOnlyCollection<WildernessEncounterReserve> Proposals { get { return m_Proposals; } }

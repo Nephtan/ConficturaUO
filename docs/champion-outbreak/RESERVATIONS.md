@@ -1,22 +1,24 @@
 # Wilderness reservation prototype
 
-Status: **proposed, inactive**. The user selected consideration of new permanent wilderness reservations on 2026-10-28. No proposal has been enabled, no player land has been restricted, and the outbreak delivery gate remains false.
+Current decision: the user explicitly approved all six footprints. Source declarations and the derived six-site catalog are now reviewed; DeliveryReady remains false. [GEOGRAPHY_APPROVAL.md](GEOGRAPHY_APPROVAL.md) and [APPROVED_WORLD_PREFLIGHT.json](APPROVED_WORLD_PREFLIGHT.json) supersede the hypothetical-only preflight as the current policy verification. The earlier snapshot/method history below remains retained. No live deployment or post-October17 occupancy is claimed.
 
-## Selected final-preflight evidence basis
+Historical proposal checkpoint (superseded by the approval above): **proposed, inactive**. The user selected consideration of new permanent wilderness reservations on 2026-10-28. No proposal has been enabled, no player land has been restricted, and the outbreak delivery gate remains false.
+
+## Historical selected final-preflight evidence basis
 
 On 2026-10-29 the user explicitly selected the available October 17 offline test-world save. D:/ConficturaUOTestTools/shard/Saves contains 20 files dated 2026-10-17 and matches the native baseline byte-for-byte. The matching-source final preflight now passes in a separate copy of that chosen snapshot. This supersedes the pending request for a fresher folder; it does not claim current live occupancy or approve any reservation. Existing proposals/review flags remain inactive. A future deployment must consider changes after the chosen snapshot.
 
-## Final selected-snapshot preflight - 2026-10-29
+## Historical hypothetical selected-snapshot preflight - 2026-10-29
 
 The matching-source repeat passes all six hypothetical reservations in a separate copy of the user-selected October 17 world. The probe matches core startup order Configure -> Region.Load -> World.Load, with no script-wide Initialize, listener startup, timer-thread startup or world save. All 186 declared static Sosaria regions load. Each proposed layout passes production terrain/service-region/portal clearance, with zero house-area intersections at any elevation, zero maximum-city-growth intersections, zero valid legacy-area intersections and zero portal-item intersections. Connected tile counts match the table below.
 
-[SELECTED_WORLD_PREFLIGHT.json](SELECTED_WORLD_PREFLIGHT.json) retains the non-player aggregate. Private provenance/build/log/XML/preservation records remain at D:/ConficturaUOTestTools/outbreak-reserve-preflight-20261029-002/. Current 6742 production inputs, accepted core/script assemblies, Regions.xml and the 20 source/private save files remain unchanged. Source commit at preparation is f07b5e77; exact probe source and executable hashes are retained separately. The first private attempt fails compilation on the Rectangle2D.Contains overload before any world load; it is preserved with snapshot preservation evidence, then corrected in a fresh 002 root.
+[SELECTED_WORLD_PREFLIGHT.json](SELECTED_WORLD_PREFLIGHT.json) retains the non-player aggregate. Private provenance/build/log/XML/preservation records remain at D:/ConficturaUOTestTools/outbreak-reserve-preflight-20261029-002/. The 6742 production inputs captured at that checkpoint, accepted core/script assemblies, Regions.xml and the 20 source/private save files remain unchanged. Source commit at preparation is f07b5e77; exact probe source and executable hashes are retained separately. The first private attempt fails compilation on the Rectangle2D.Contains overload before any world load; it is preserved with snapshot preservation evidence, then corrected in a fresh 002 root.
 
-One inactive malformed legacy controller remains reported, unchanged and without guessed repair. This repeat establishes selected-snapshot clearance only. It does not approve land restrictions or establish occupancy after October 17. Native ground/sign presentation and explicit geography approval remain open; all flags stay false. Future deployment must handle any changes since that snapshot before promoting reservations.
+One inactive malformed legacy controller remains reported, unchanged and without guessed repair. This repeat establishes selected-snapshot clearance only. It does not approve land restrictions or establish occupancy after October 17. At that checkpoint, native ground/sign presentation and explicit geography approval remained open and all flags were false. Future deployment must handle any changes since that snapshot before promoting reservations.
 
 Reproduction: [RunReservationPreflight.py](../../tools/champion-outbreak/RunReservationPreflight.py) prepares a fresh root, verifies current candidate source hashes, copies the chosen saves/config, compiles [LoadedReservationPreflight.cs](../../tools/champion-outbreak/LoadedReservationPreflight.cs) against matching core/scripts, bounds the read-only worker and verifies input preservation. The probe's housing-ban predicate is explicitly hypothetical; it never marks a reserve reviewed or bypasses occupancy/terrain/region checks.
 
-## Proposed geography
+## Approved geography
 
 Each reservation is 161x161 tiles, enclosing the unchanged 113x113 combat footprint and 24-tile buffer. All three 5x5 brood staging areas and the 4,000-tile connected-space floor remain required. These are six alternate locations for one active outbreak, not six simultaneous encounters.
 
@@ -29,7 +31,7 @@ Each reservation is 161x161 tiles, enclosing the unchanged 113x113 combat footpr
 | southeastern-woodland | 3762,2744 | 12,422 |
 | western-woodland | 1122,1704 | 12,634 |
 
-Machine-readable measurements: [reservation-proposals.csv](reservation-proposals.csv). Canonical source definitions are `WildernessEncounterReserve.cs`; all six `Reviewed` values are false. The production site catalog still has no approved entries.
+Machine-readable measurements: [reservation-proposals.csv](reservation-proposals.csv). Canonical source definitions are `WildernessEncounterReserve.cs`; all six `Reviewed` values are now true following explicit user approval, and the site catalog derives those six entries. Event activation remains disabled.
 
 Terrain selection considered 486 local candidates, 882 expanded candidates and 289 farther northwest candidates. Copied-world filtering includes house areas, city regions, portal candidates, vendor/escort/quest-service types, and conservative legacy champion envelopes. It checks another 24 tiles beyond the proposed reservation. Static roof tiles are rejected: the first northwest lead contained map buildings despite having no player-house record, so it was replaced. Unnamed map content, traversal, player experience and today's live occupancy cannot be inferred from those filters.
 

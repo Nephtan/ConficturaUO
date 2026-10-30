@@ -1,6 +1,6 @@
 # Arachnid Outbreak native acceptance
 
-Current status: required native interaction categories have bounded evidence, reconciled in [RELEASE_REVIEW.md](RELEASE_REVIEW.md). Production activation and reservation flags remain false; exact geography approval is pending. The dated sections below retain their historical scopes and failures.
+Current status: required native interaction categories have bounded evidence, reconciled in [RELEASE_REVIEW.md](RELEASE_REVIEW.md). Production activation remains false; six permanent footprints and source catalog entries are now explicitly approved and real-policy verified. The dated sections below retain their historical scopes and failures.
 
 ## Evidence boundary
 

@@ -4,10 +4,10 @@
   "requirement_source_test_paths_checked": 44,
   "tracked_core_sha256": "dbb7b2360c435834b32e0f1f4b0854a859cd9086971a4c270981b58d8f2f3ddb",
   "source_activation": false,
-  "approved_reservations": 0,
-  "active_catalog_entries": 0,
+  "approved_reservations": 6,
+  "active_catalog_entries": 6,
   "proposed_coordinates_match": true,
   "test_fixtures_outside_runtime_tree": true,
   "scope": "Static source/project/artifact inventory only; runtime compilation, persistence and gameplay retain their separate recorded evidence",
-  "pending_decision": "Explicit permanent reservation/site approval; no source flag changed"
+  "pending_decision": null
 }

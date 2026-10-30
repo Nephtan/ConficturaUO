@@ -42,7 +42,8 @@ def run(args):
                 production_inputs=inputs,core_sha256=sha(root/'ConficturaServer.exe'),
                 scripts_sha256=sha(root/'Data.dll'),probe_sha256=sha(source),
                 regions_sha256=sha(regions),assets=str(assets),production_activation=False,
-                scope='Hypothetical reservation clearance in the selected snapshot; no live occupancy or geography approval')
+                scope=('User-approved reservation/catalog clearance using actual production protection predicates in the selected snapshot; no live occupancy or deployment'
+                       if args.approved else 'Hypothetical reservation clearance in the selected snapshot; no live occupancy or geography approval'))
     (root/'preflight-inputs.json').write_text(json.dumps(record,indent=2))
     compiler=Path(os.environ['WINDIR'])/'Microsoft.NET/Framework/v4.0.30319/csc.exe'
     executable=root/'LoadedReservationPreflight.exe'
@@ -54,7 +55,7 @@ def run(args):
         selected_and_private_saves_unchanged=hashes(root/'Saves')==before==hashes(saves)),indent=2))
     assert built.returncode==0,'Probe compile failed; retain compile.log'
     with (root/'run.log').open('w') as out,(root/'run.stderr.log').open('w') as err:
-        completed=subprocess.run([str(executable),str(assets)],cwd=root,stdout=out,stderr=err,timeout=120,creationflags=subprocess.CREATE_NO_WINDOW)
+        completed=subprocess.run([str(executable),str(assets)]+(['approved'] if args.approved else []),cwd=root,stdout=out,stderr=err,timeout=120,creationflags=subprocess.CREATE_NO_WINDOW)
     preserved=(hashes(root/'Saves')==before==hashes(saves))
     unchanged=(sha(root/'ConficturaServer.exe')==record['core_sha256']
                and sha(root/'Data.dll')==record['scripts_sha256'] and sha(regions)==record['regions_sha256']
@@ -66,14 +67,15 @@ def run(args):
     assert completed.returncode==0,'Loaded probe failed; inspect retained private logs/XML'
     xml=ET.parse(root/'preflight.xml').getroot();rows=[dict(n.attrib) for n in xml.findall('reserve')]
     assert len(rows)==6 and len({n['id'] for n in rows})==6 and all(n['passed']=='True' for n in rows)
-    assert xml.get('hypotheticalReservationsOnly')=='True' and xml.get('productionActivation')=='False'
+    assert xml.get('hypotheticalReservationsOnly')==str(not args.approved) and xml.get('productionActivation')=='False'
     assert xml.get('activeMalformedLegacyControllers')=='0'
     report=dict(selected_snapshot_preflight_passed=True,selected_snapshot_date='2026-10-17',
                 production_inputs_checked=len(inputs),selected_save_files=len(before),
                 core_sha256=record['core_sha256'],scripts_sha256=record['scripts_sha256'],regions_sha256=record['regions_sha256'],
                 static_sosaria_regions=int(xml.get('staticSosariaRegions')),
                 inactive_malformed_legacy_controllers=int(xml.get('malformedLegacyControllers')),
-                rows=rows,inputs_preserved=True,site_or_reservation_approval=False,production_activation=False,
+                rows=rows,inputs_preserved=True,site_or_reservation_approval=args.approved,production_activation=False,
+                actual_production_protection_predicates=args.approved,
                 scope=record['scope'])
     (root/'preflight-verification.json').write_text(json.dumps(report,indent=2))
     print(json.dumps(report,indent=2))
@@ -82,4 +84,5 @@ def run(args):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     for name in ('output','candidate','saves','baseline','assets'):parser.add_argument('--'+name,type=Path,required=True)
+    parser.add_argument('--approved',action='store_true',help='Verify already user-approved source declarations with real terrain/protection policy')
     run(parser.parse_args())

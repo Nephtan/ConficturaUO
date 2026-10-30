@@ -1,23 +1,23 @@
 # Arachnid Outbreak delivery checklist
 
-Status: AwaitingGeographyApproval. Production activation is disabled. Specification: [SPECIFICATION.md](SPECIFICATION.md).
+Status: CompletePrototype. Production activation is disabled. Specification: [SPECIFICATION.md](SPECIFICATION.md).
 
-Targeted native results and remaining acceptance gates: [NATIVE_ACCEPTANCE.md](NATIVE_ACCEPTANCE.md).
+Targeted native results and their evidence limits: [NATIVE_ACCEPTANCE.md](NATIVE_ACCEPTANCE.md).
 
 ## Current acceptance checkpoint
 
-[RELEASE_REVIEW.md](RELEASE_REVIEW.md) is the final source/evidence reconciliation. Historical sections below retain earlier states and failures. One policy decision remains: exact permanent reservation/site approval. All activation/review flags stay false and the active catalog is empty.
+[RELEASE_REVIEW.md](RELEASE_REVIEW.md) is the final source/evidence reconciliation. Historical sections below retain earlier states and failures. The user explicitly approved all six permanent footprints. Real-policy preflight, approved-catalog/housing/controller regressions and copied startup now pass; see GEOGRAPHY_APPROVAL.md. Six reservations/catalog entries are reviewed; DeliveryReady stays false.
 
 | Gate | Current evidence | Remaining boundary |
 | --- | --- | --- |
 | Source/runtime | 6742 current inputs match;13 outbreak project entries; forced runtime compile/startup in corrected native copies; current manager/bridge fault regression and web92 | Static inventory is separate from runtime, saved-world and gameplay evidence |
-| Geography | Chosen October17 snapshot6/6 clearance with186 regions;6 native routes/1356 steps;6 boss plus2 brood presentation samples | Exact permanent footprint approval; eastern/western foliage caveats; future deployment checks changes since snapshot |
+| Geography | Chosen October17 snapshot6/6 clearance with186 regions;6 native routes/1356 steps;6 boss plus2 brood presentation samples | Approval received; actual-policy6/6 preflight passes; foliage caveats and future deployment checks remain |
 | Participation/claims/crafting | Component/fresh-process records; native005 controlled claim collection;6 independently verified native role types; actual archmage earns6 glands/1 skull/15000 ground gold | Controlled scenes and earning/collection remain distinct |
 | Web/TBC | Production/AP tests; natural live003 reaction/escape; live-dodge0022AP avoidance; connected ally rescue | No stopped-scheduler timing or universal pixel claim |
 | Veteran |3/3 comparable complete mounted-v4 runs;24.426736-minute median;2 without antivenom | No rerun needed; tuning0; no broad AI change |
 | Zanthus | Original macro stationary partial133.473s and assisted clear277.502s; earned power preserved | One bounded observation per mode; no repeatable-farm/current-live-character claim |
 | Economic observations | Actual finite supplies; nominal recurring subtotals4198/3742/4318; separate pending/ground/backpack reward records | Pickup/corpse value/market demand unknown; no profit or antivenom-causality claim |
-| Delivery audit |44 per-requirement source/test records and final dispositions; guarded reproduction/teardown and operational/rollback notes | Geography approval before approved-catalog completion; production deployment remains outside authorization |
+| Delivery audit |44 per-requirement source/test records and final dispositions; guarded reproduction/teardown and operational/rollback notes | Approved catalog completed/verified; production deployment remains outside authorization |
 
 [ACCEPTANCE_REQUIREMENTS.csv](ACCEPTANCE_REQUIREMENTS.csv) preserves each evidence class and a separate final-review disposition. ComponentEvidence/NativePartial never become generic live passes. The final review explicitly retains all measurement and presentation limits. Recent focused checkpoints include6fc15604,fb88e3ad,67713875 andec27468c.
 
@@ -53,18 +53,18 @@ No production launch, save access, deployment, or automatic activation is author
 
 ## Prototype operation and enable/disable gates
 
-These are source-verified operating notes for a later explicitly approved environment. This checkout retains DeliveryReady=false, an empty reviewed catalog and six inactive reservation proposals.
+These are source-verified operating notes for a later explicitly approved environment. This checkout retains DeliveryReady=false, with six explicitly approved permanent reservations and six derived reviewed site descriptors. No live deployment occurs.
 
 | Client command (normal prefix [) | Access | Behavior |
 |---|---|---|
 | ArachnidOutbreak status | Administrator | Reports the unique controller's phase/site/cleared mask/status; missing or multiple controllers produce a count/error and no action |
 | ArachnidOutbreak create | Administrator | With zero controllers, creates one disabled controller; creation itself is permitted while DeliveryReady is false |
-| ArachnidOutbreak start | Administrator | Calls TryEnable; currently refuses because acceptance is incomplete; later also requires a unique controller and a reviewed site |
+| ArachnidOutbreak start | Administrator | Calls TryEnable; currently refuses because DeliveryReady remains false; later also requires a unique controller and a reviewed site |
 | ArachnidOutbreak stop | Administrator | Disables the director, stops its timer and removes only entities matching its controller/attempt ownership |
 | OutbreakClaim | Player | Collects that caller's pending awards subject to normal alive/backpack checks; uncollected/full-pack entitlements remain queued |
 | BroodAntivenom | Player | Shows current protection/reuse status through the production status interface |
 
-Future enabling requires completed native/pacing/economics/requirement gates, current copied-world occupancy and maximum-city-growth/service/portal checks, reviewed ground visibility, approved permanent non-housing polygons and an explicit deployment decision. Populate only approved catalog entries and approve only their corresponding permanent reserves; validate matching source/core, forced runtime compilation and copied-world reload before changing the delivery gate in that approved candidate. Test start/status/stop and legacy coexistence there first. These instructions do not authorize a production flag edit, world launch or deployment.
+The prototype native/pacing/observational/requirement gates and six-footprint approval are complete within their recorded scopes. Future enabling requires an explicit deployment decision and refreshed copied-world occupancy, maximum-city-growth/service/portal checks for changes since October 17. Retain the approved catalog, permanent protection and presentation caveats; validate matching source/core, forced runtime compilation and copied-world reload before changing the delivery gate in that separately approved candidate. Test start/status/stop and legacy coexistence there first. These instructions do not authorize a production flag edit, world launch or deployment.
 
 Stop is the operational disable path. Reservation protection is geography independent of the director, so stopping/deleting an encounter does not remove an approved housing ban. Pending awards are separate persistent claims; stopping is not a reward refund or replay. A missing/ambiguous controller must be inspected rather than silently creating/replacing active state. Do not use private fixture reflection as an operating procedure.
 
@@ -75,7 +75,7 @@ Source traces: [ArachnidOutbreakController.cs](../../Data/Scripts/Custom/Champio
 ## Batch 1 - Lifecycle, placement, persistence, staff controls
 
 - [x] Separate versioned controller and state; default disabled.
-- [ ] Six terrain-validated, traversed and sampled proposals; exact permanent geography approval and approved-catalog completion remain.
+- [x] Six terrain-validated, traversed/sampled and explicitly approved permanent footprints; real-policy preflight and derived catalog verified.
 - [x] Availability, engagement, three brood stages, boss, recovery, cooldown.
 - [x] Restart persistence, ownership cleanup, legacy coexistence (component/fresh-process evidence).
 - [x] Staff access/guards and status/start/stop controls.
@@ -104,7 +104,7 @@ Source traces: [ArachnidOutbreakController.cs](../../Data/Scripts/Custom/Champio
 
 - [x] Trace every requirement to source and appropriately scoped evidence or the explicit geography decision.
 - [x] Distinguish component, runtime compile, save/reload, scripted native, Computer Use and field/deployment evidence.
-- [x] No missing gate is represented as passed. Geography approval remains open and production activation remains disabled.
+- [x] No missing gate is represented as passed. Geography approval is recorded and production activation remains disabled.
 
 ## Evidence and decisions
 
@@ -559,3 +559,7 @@ Six independent native role types pass across retained004 (healing5 points; cure
 ## Final observational and source reconciliation
 
 RELEASE_REVIEW.md and the44-row final-review column consolidate the unchanged gameplay/source evidence. CheckDeliveryInventory verifies6742 current production inputs,13 project-listed outbreak scripts and44 source/test path pairs; it is a static check. RecordEconomicObservations reads retained accepted results without replay: all3 completed references plus stationary/route original-macro records retain supply, retreat, ground/pending/backpack and unknown collection/value categories separately. The economic record is not a profit/market pass. Exact permanent geography approval is the remaining decision before catalog completion; no deployment or source flag changes occur.
+
+## Completed user-approved geography
+
+The user approved all six footprints. GEOGRAPHY_APPROVAL.md records exactly two production source changes: reviewed definitions and a catalog derived from those definitions. Fresh candidate compile, reservation80/controller63 assertions, actual-policy copied-save preflight6/6 and copied -service -nocache startup all pass. Inputs/core/project/serializer boundaries remain explicit;20 source/private save files and protected originals are preserved. Owned startup teardown is acknowledged forced no-save, not graceful. No unchanged pacing/support runs are repeated. All prototype batches and requirement dispositions are reconciled; no pending design decision remains. DeliveryReady stays false, and live deployment/current-world changes remain outside this completed prototype.

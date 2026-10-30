@@ -1,0 +1,68 @@
+{
+  "user_answer": "Approve all six footprints",
+  "authorization": "Direct human reply to call_642d9319b5164d2bbabd691f8e77fd41; prototype geography only",
+  "recorded_at_utc": "2026-10-30T02:01:58Z",
+  "map": "Sosaria",
+  "reservation_size": [
+    161,
+    161
+  ],
+  "combat_size": [
+    113,
+    113
+  ],
+  "buffer_tiles": 24,
+  "reservations": [
+    {
+      "id": "central-woodland",
+      "center": [
+        2514,
+        2088
+      ],
+      "reviewed": true
+    },
+    {
+      "id": "northern-woodland",
+      "center": [
+        2242,
+        652
+      ],
+      "reviewed": true
+    },
+    {
+      "id": "eastern-woodland",
+      "center": [
+        3746,
+        876
+      ],
+      "reviewed": true
+    },
+    {
+      "id": "northwestern-woodland",
+      "center": [
+        1208,
+        928
+      ],
+      "reviewed": true
+    },
+    {
+      "id": "southeastern-woodland",
+      "center": [
+        3762,
+        2744
+      ],
+      "reviewed": true
+    },
+    {
+      "id": "western-woodland",
+      "center": [
+        1122,
+        1704
+      ],
+      "reviewed": true
+    }
+  ],
+  "housing_and_city_founding_policy_approved": true,
+  "production_activation": false,
+  "live_deployment_authorized": false
+}

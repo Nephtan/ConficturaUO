@@ -1,17 +1,25 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Server.Custom.Confictura.Champions
 {
     public static class ArachnidOutbreakSites
     {
-        // The original six terrain candidates were retired: all allowed housing.
-        // Add only sites with a permanent housing prohibition across the entire
-        // footprint/buffer, then copied-world occupancy and native-client review.
+        // Keep approved encounter centers tied to their permanent housing policy.
         private static readonly ReadOnlyCollection<ArachnidOutbreakSite> m_Candidates =
-            Array.AsReadOnly(new ArachnidOutbreakSite[]
+            CreateReviewedCandidates();
+
+        private static ReadOnlyCollection<ArachnidOutbreakSite> CreateReviewedCandidates()
+        {
+            List<ArachnidOutbreakSite> candidates = new List<ArachnidOutbreakSite>();
+            foreach (WildernessEncounterReserve reserve in WildernessEncounterReserves.Proposals)
             {
-            });
+                if (reserve.Reviewed)
+                    candidates.Add(new ArachnidOutbreakSite(reserve.Id, reserve.Center.X, reserve.Center.Y, true));
+            }
+            return candidates.AsReadOnly();
+        }
 
         public static ReadOnlyCollection<ArachnidOutbreakSite> Candidates
         {

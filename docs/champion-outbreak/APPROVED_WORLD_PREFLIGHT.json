@@ -1,0 +1,84 @@
+{
+  "selected_snapshot_preflight_passed": true,
+  "selected_snapshot_date": "2026-10-17",
+  "production_inputs_checked": 6742,
+  "selected_save_files": 20,
+  "core_sha256": "dbb7b2360c435834b32e0f1f4b0854a859cd9086971a4c270981b58d8f2f3ddb",
+  "scripts_sha256": "23f65d413f0595413fd890ac91bb251b5aca6ba631c53a614eb21ed354db67df",
+  "regions_sha256": "2b21c5bcdd6fb7a56344bc17914a626b22d4d08e05a8ad2729595baaceeaeb26",
+  "static_sosaria_regions": 186,
+  "inactive_malformed_legacy_controllers": 1,
+  "rows": [
+    {
+      "id": "central-woodland",
+      "layoutAndClearance": "True",
+      "housesAllElevations": "0",
+      "maximumCityGrowth": "0",
+      "validLegacyAreas": "0",
+      "portalItems": "0",
+      "connectedTiles": "12478",
+      "reason": "",
+      "passed": "True"
+    },
+    {
+      "id": "northern-woodland",
+      "layoutAndClearance": "True",
+      "housesAllElevations": "0",
+      "maximumCityGrowth": "0",
+      "validLegacyAreas": "0",
+      "portalItems": "0",
+      "connectedTiles": "12534",
+      "reason": "",
+      "passed": "True"
+    },
+    {
+      "id": "eastern-woodland",
+      "layoutAndClearance": "True",
+      "housesAllElevations": "0",
+      "maximumCityGrowth": "0",
+      "validLegacyAreas": "0",
+      "portalItems": "0",
+      "connectedTiles": "12439",
+      "reason": "",
+      "passed": "True"
+    },
+    {
+      "id": "northwestern-woodland",
+      "layoutAndClearance": "True",
+      "housesAllElevations": "0",
+      "maximumCityGrowth": "0",
+      "validLegacyAreas": "0",
+      "portalItems": "0",
+      "connectedTiles": "11553",
+      "reason": "",
+      "passed": "True"
+    },
+    {
+      "id": "southeastern-woodland",
+      "layoutAndClearance": "True",
+      "housesAllElevations": "0",
+      "maximumCityGrowth": "0",
+      "validLegacyAreas": "0",
+      "portalItems": "0",
+      "connectedTiles": "12422",
+      "reason": "",
+      "passed": "True"
+    },
+    {
+      "id": "western-woodland",
+      "layoutAndClearance": "True",
+      "housesAllElevations": "0",
+      "maximumCityGrowth": "0",
+      "validLegacyAreas": "0",
+      "portalItems": "0",
+      "connectedTiles": "12634",
+      "reason": "",
+      "passed": "True"
+    }
+  ],
+  "inputs_preserved": true,
+  "site_or_reservation_approval": true,
+  "production_activation": false,
+  "actual_production_protection_predicates": true,
+  "scope": "User-approved reservation/catalog clearance using actual production protection predicates in the selected snapshot; no live occupancy or deployment"
+}

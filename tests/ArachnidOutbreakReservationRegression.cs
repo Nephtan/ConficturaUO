@@ -96,12 +96,18 @@ internal static class ArachnidOutbreakReservationRegression
             FieldInfo catalog = typeof(WildernessEncounterReserves).GetField("m_Proposals",BindingFlags.Static|BindingFlags.NonPublic);
             object original = catalog.GetValue(null);
             List<WildernessEncounterReserve> reviewed = new List<WildernessEncounterReserve>();
-            Check(WildernessEncounterReserves.Proposals.Count == 6,"six reviewed-by-tool proposals, not runtime approvals");
+            Check(WildernessEncounterReserves.Proposals.Count == 6 && ArachnidOutbreakSites.Candidates.Count == 6,"six explicitly approved reserves populate the site catalog");
+            List<WildernessEncounterReserve> unreviewed = new List<WildernessEncounterReserve>();
             foreach (WildernessEncounterReserve reserve in WildernessEncounterReserves.Proposals)
             {
-                Check(!reserve.Reviewed && !WildernessEncounterReserves.ContainsHousingTile(Map.Sosaria,reserve.Center.X,reserve.Center.Y),"proposal does not silently impose a housing ban");
-                reviewed.Add(new WildernessEncounterReserve(reserve.Id,reserve.Center.X,reserve.Center.Y,true));
+                Check(reserve.Reviewed && WildernessEncounterReserves.ContainsHousingTile(Map.Sosaria,reserve.Center.X,reserve.Center.Y),"approved policy protects its center without encounter activation");
+                ArachnidOutbreakSite approved = ArachnidOutbreakSites.Find(reserve.Id);
+                Check(approved != null && approved.Reviewed && approved.Center == reserve.Center,"catalog is derived from its approved reservation");
+                reviewed.Add(reserve);
+                unreviewed.Add(new WildernessEncounterReserve(reserve.Id,reserve.Center.X,reserve.Center.Y,false));
             }
+            catalog.SetValue(null,unreviewed.AsReadOnly());
+            Check(!WildernessEncounterReserves.ContainsHousingTile(Map.Sosaria,reviewed[0].Center.X,reviewed[0].Center.Y),"unreviewed declarations still impose no ban");
             Mobile applicant = new Mobile();
             applicant.AccessLevel = AccessLevel.Player;
             applicant.Skills[SkillName.Camping].Base = 120;
@@ -153,8 +159,8 @@ internal static class ArachnidOutbreakReservationRegression
                 catalog.SetValue(null,original);
                 applicant.Delete();
             }
-            Check(!WildernessEncounterReserves.ContainsHousingTile(Map.Sosaria,reviewed[0].Center.X,reviewed[0].Center.Y),"test review simulation restored");
-            Console.WriteLine("PASS outbreak reservations: "+s_Checks+" assertions; actual housing and terrain, isolated review simulation; no new production bans.");
+            Check(WildernessEncounterReserves.ContainsHousingTile(Map.Sosaria,reviewed[0].Center.X,reviewed[0].Center.Y),"approved source policy restored after private negative-control simulation");
+            Console.WriteLine("PASS outbreak reservations: "+s_Checks+" assertions; approved catalog, actual housing and terrain; no world save or deployment.");
             return 0;
         }
         catch (Exception exception) { Console.Error.WriteLine(exception);return 1; }

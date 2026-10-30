@@ -1,0 +1,51 @@
+{
+  "production_inputs": 6742,
+  "changed_inputs": [
+    "Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakSites.cs",
+    "Data/Scripts/Custom/Champions/Outbreak/WildernessEncounterReserve.cs"
+  ],
+  "core_sha256": "dbb7b2360c435834b32e0f1f4b0854a859cd9086971a4c270981b58d8f2f3ddb",
+  "script_sha256": "23f65d413f0595413fd890ac91bb251b5aca6ba631c53a614eb21ed354db67df",
+  "fixture_hashes": {
+    "ArachnidOutbreakReservationRegression.cs": "7a5920b87ba17b98718a5a914f38ec5ebf6e68b73dbcd1fc063676fd2f7e98ae",
+    "ArachnidOutbreakControllerRegression.cs": "b0b189d7752c2cfb59295c28db1ba78eb473d8ff2e38a7abe4b49d0b0d61bf25"
+  },
+  "results": {
+    "ArachnidOutbreakReservationRegression": "PASS outbreak reservations: 80 assertions; approved catalog, actual housing and terrain; no world save or deployment.",
+    "ArachnidOutbreakControllerRegression": "PASS outbreak controller: 63 component assertions; private setup; no saves or listeners."
+  },
+  "runtime_compile": true,
+  "core_build": false,
+  "source_input_match": true,
+  "no_world_or_listener": true,
+  "startup": {
+    "forced_runtime_compile_world_initialize_and_loopback_startup": true,
+    "production_inputs_checked": 6742,
+    "private_runtime_inputs_checked": 6611,
+    "private_save_files": 20,
+    "originals_and_private_saves_preserved": true,
+    "acknowledged_forced_no_save_teardown": true,
+    "scope": "Copied-world startup with guarded test fixture; no client/gameplay acceptance, no graceful exit or live deployment claim",
+    "production_activation": false
+  },
+  "production_activation": false,
+  "user_approved_six_footprints": true,
+  "presentation_setup_compile": {
+    "compile_passed": true,
+    "production_inputs_checked": 6742,
+    "fixture_hashes": {
+      "ArachnidOutbreakNativeAcceptance.cs": "f7325d59be0243ee6200afdd9e676cd10d85d8775f3d6896f7fa9bf333ef6315",
+      "ArachnidOutbreakPresentation.cs": "dece2dbd1716dd93b8d6aa077721e6b0fc988d3350ce06c5c26b2c1797231439"
+    },
+    "source_and_snapshot_preserved": true,
+    "no_world_or_listener": true,
+    "production_activation": false,
+    "scope": "Current presentation setup plus unchanged base harness compiled together with production scripts; no Initialize, native scene or gameplay replay",
+    "service_console_log": "Data/Logs/Console.log",
+    "script_sha256": "46008071784dbb7963e5c0f88a71beda37fd77de329be755c9a9f73458850cbd",
+    "retained_failed_attempts": [
+      "Standalone-library compile.log cannot access internal production APIs across assemblies; no production API changed",
+      "Runtime compilation returned zero and passed; initial wrapper incorrectly expected stdout instead of service Console.log"
+    ]
+  }
+}

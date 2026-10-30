@@ -1,10 +1,10 @@
 # Arachnid Outbreak prototype review
 
-Status: technical evidence reconciled; exact permanent geography approval remains required. Production activation is disabled, all six reservation flags are false, and the approved site catalog is empty. No production save, live server launch or deployment occurs.
+Status: completed local prototype. The user explicitly approved all six footprints; six reservation flags and derived site descriptors are reviewed. Production activation remains disabled. See GEOGRAPHY_APPROVAL.md for actual-policy verification. No production save, live server launch or deployment occurs.
 
-## Decision required
+## Approved geography
 
-Approve or revise the six permanent161x161 wilderness reservations below. Each contains the113x113 combat area plus24 tiles of buffer. They are alternate locations for one available outbreak. An approved reservation must stay protected from housing while the event is idle or removed; city founding also checks maximum future growth. Considering reservations did not approve these exact footprints.
+The user approved the six permanent161x161 wilderness reservations below. Each contains the113x113 combat area plus24 tiles of buffer. They are alternate locations for one available outbreak. An approved reservation must stay protected from housing while the event is idle or removed; city founding also checks maximum future growth. That explicit reply completes the exact-footprint decision.
 
 | Source ID | Center on Sosaria | Connected combat tiles |
 | --- | --- | ---: |
@@ -19,15 +19,15 @@ The existing [local reservation atlas](D:/ConficturaUOTestTools/outbreak-map-sur
 
 The user-selected October17 snapshot passes all six current preflights with186 static Sosaria regions: no house areas, maximum city-growth areas, valid legacy encounter areas or portal items intersect the checked reserves. All six native routes pass1,356 steps. Six boss and two brood presentation samples retain western tree/eastern foreground overlap; the red warning/message remains discernible in those samples. These are normal foliage caveats, not universal visibility or approval claims. See [RESERVATIONS.md](RESERVATIONS.md), [SITE_TRAVERSAL.md](SITE_TRAVERSAL.md) and [PRESENTATION.md](PRESENTATION.md).
 
-Approval would allow the approved site catalog/reservation flags to be populated and verified against that chosen snapshot with the real protection predicates. DeliveryReady remains false. Later deployment still needs its own decision and checks for changes since October17. The inactive malformed legacy controller reported in RESERVATIONS.md remains untouched; its intended saved area must not be guessed.
+The approved catalog/reservation flags are populated and fresh preflight003 passes using actual protection predicates. DeliveryReady remains false. Later deployment still needs its own decision and checks for changes since October17. The inactive malformed legacy controller reported in RESERVATIONS.md remains untouched; its intended saved area must not be guessed.
 
 ## Requirement reconciliation
 
-[ACCEPTANCE_REQUIREMENTS.csv](ACCEPTANCE_REQUIREMENTS.csv) retains44 individual source/test/evidence records and adds a final-review disposition. Evidence classes remain distinct. Awaiting geography rows concern one policy decision; other rows are accepted only within their recorded scope.
+[ACCEPTANCE_REQUIREMENTS.csv](ACCEPTANCE_REQUIREMENTS.csv) retains44 individual source/test/evidence records and adds a final-review disposition. Evidence classes remain distinct. The former four geography/operational rows now record ApprovedPrototype; other rows remain accepted only within their recorded scope.
 
 | Requirements | Reconciled evidence and limits |
 | --- | --- |
-| R01-R08 | Separate director, lifecycle/cooldown, placement and legacy coexistence have component/native records. R03/R04 retain geography approval; R05 is clearance on the explicitly selected snapshot. No public marker/broadcast is added by the outbreak source. |
+| R01-R08 | Separate director, lifecycle/cooldown, placement and legacy coexistence have component/native records. R03/R04 now include explicit approval and real-policy preflight; R05 is clearance on the explicitly selected snapshot. No public marker/broadcast is added by the outbreak source. |
 | R09-R13 | Saved stage effort, finite reinforcement budgets, death/deletion/ownership guards and bounds have component/fresh-process evidence and actual40-enemy clears. Only outbreak spider breath is disabled; ordinary Dread Spider and shared AI remain. |
 | R14-R18 | Current92 production-method web assertions, natural live003 reaction/self-escape, live-dodge0022AP avoidance, controlled ally rescue and separately correlated Computer Use samples cover the named interactions. Stopped-scheduler rendering never supplies timing/AI proof. |
 | R19-R23 | Damage/pet/provocation, meaningful crowd qualification, genuine wound/poison provenance and bard time have current-source regression records. Six controlled native role types are independently verified; synthetic setup, paused AI and real-clock bard sampling remain explicit. |
@@ -35,15 +35,15 @@ Approval would allow the approved site catalog/reservation flags to be populated
 | R29-R33 | Immunity/provenance/order, charges/expiry/reuse/party/pets, serialization and status have distinct component, reload and native cases. Native004 confirms ally treatment, cure and prevention. Reconnect behavior retains its persistence/source evidence; no new native reconnect claim is made. Two complete references use ordinary cures without antivenom. |
 | R34-R36 | Full toolkit review includes20 controlled native actions plus travel/pet rescue/regeneration. Frozen legal mounted-v4 completes three comparable clears; median24.426736 minutes. Actual original Zanthus macro supplies133.473s stationary partial and277.502s assisted clear, with no defeat/minimum-duration requirement or repeatable-farm inference. |
 | R37-R39 | Automatic tuning passes0. Commands, hooks, positional serializers and project/runtime inclusion are reconciled below. Core artifact matches accepted source. Broader NPC AI remains read-only. |
-| R40-R41 | Chosen-snapshot clearance, traversal, native interaction categories and presentation samples are recorded. R40 awaits explicit permanent geography approval. Foliage and narrower native scopes remain visible. |
+| R40-R41 | Chosen-snapshot clearance, traversal, native interaction categories and presentation samples are recorded. R40 approval and real-policy preflight are complete. Foliage and narrower native scopes remain visible. |
 | R42 | Three finite supply/base-price observations and two bounded archmage records are complete as an observational record. Gold/corpse/claim pickup in references is unknown, not0; no profit, causal antivenom saving, market demand or economic-balance pass is claimed. |
-| R43/D01 | Reproducible fixtures, preserved failures, exact owned teardown and focused commits are retained. Operating/rollback steps exist. Geographic approval gates catalog completion; no additional AI change is approved or needed for the accepted pacing evidence. |
+| R43/D01 | Reproducible fixtures, preserved failures, exact owned teardown and focused commits are retained. Operating/rollback steps exist. The approved catalog is completed/verified; no additional AI change is approved or needed for the accepted pacing evidence. |
 
 ## Current source and carry-forward
 
-[DELIVERY_INVENTORY.json](DELIVERY_INVENTORY.json) checks all6,742 current production inputs,13 outbreak project entries,44 source/test path pairs, matching core and disabled flags. This is static inventory, not a substituted runtime build. Latest copied006 independently passes forced runtime script compile and world startup with its test extension. Earlier operational Release/x86, project hygiene and fresh-process reload evidence retain their original scope.
+[DELIVERY_INVENTORY.json](DELIVERY_INVENTORY.json) checks all6,742 current production inputs,13 outbreak project entries,44 source/test path pairs, matching core, six approved reserves/catalog entries and disabled delivery. This is static inventory, not a substituted runtime build. The approved-geography candidate and fresh copied startup001 pass forced runtime script compilation and world startup; GEOGRAPHY_VERIFICATION.json records their separate scopes. Earlier copied006 retains its original test-extension evidence. Earlier operational Release/x86, project hygiene and fresh-process reload evidence retain their original scope.
 
-The accepted tracked core is dbb7b2360c435834b32e0f1f4b0854a859cd9086971a4c270981b58d8f2f3ddb. The only subsequent production change after the frozen pacing/selected-world evidence is the null-safe rejected-outsider log. [TBC_REJECTION_FIX.md](TBC_REJECTION_FIX.md) reproduces the old fault and verifies the actual manager/core bridge. Real-time pacing and Zanthus cases have TBC disabled, returning Native before that branch; offline preflight never enables it. Those records are carried forward with original hashes, not relabeled as replays. Web92 and corrected native chained presentation additionally pass. No replay of the completed pacing series is justified by that logging change.
+The accepted tracked core is dbb7b2360c435834b32e0f1f4b0854a859cd9086971a4c270981b58d8f2f3ddb. Subsequent production changes are the null-safe rejected-outsider log and the final two-file static geography approval/catalog batch. GEOGRAPHY_APPROVAL.md records the unchanged central private-fixture policy and fresh actual-policy tests; no combat/reward rule changes. [TBC_REJECTION_FIX.md](TBC_REJECTION_FIX.md) reproduces the old fault and verifies the actual manager/core bridge. Real-time pacing and Zanthus cases have TBC disabled, returning Native before that branch; offline preflight never enables it. Those records are carried forward with original hashes, not relabeled as replays. Web92 and corrected native chained presentation additionally pass. No replay of the completed pacing series is justified by that logging change.
 
 Source review confirms that placement excludes four temporary spell-gate families, while active structural safety ignores those short-lived gates so player travel cannot cancel an outbreak. Permanent portals remain structural conflicts. The existing PortalClearance regressions exercise both policies; no gate/player ability change was needed.
 
