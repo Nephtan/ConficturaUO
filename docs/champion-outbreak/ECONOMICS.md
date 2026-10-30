@@ -1,6 +1,6 @@
 # Outbreak economic observations
 
-Status: partial. No completed reference series, Zanthus farming measurement or live market valuation is accepted.
+Current status: three completed comparable references and two bounded original-macro observations are recorded. Reward pickup, ordinary corpse valuation, repeatable farming and live market demand remain unmeasured. This is an observation record, not an economic-balance or profit pass. See [ECONOMIC_OBSERVATIONS.json](ECONOMIC_OBSERVATIONS.json).
 
 ## Recorded spend and source prices
 
@@ -27,7 +27,7 @@ Mounted-v4 run001 finishes in 1452.7598366 seconds with no player death. It cons
 
 The owned horse came from one declared fixture cage before freezing; its nominal base acquisition price is 550, separate from recurring resources. Native cage release/mounting passed, but no NPC purchase or actual gold expenditure is claimed. No replacement horse was used during combat. Evidence: D:/ConficturaUOTestTools/outbreak-mounted-benchmark-20261029-001/evidence/benchmark-verification.json and priced-cost-observation.json.
 
-This completes one resource-cost observation. The benchmark did not observe collection of the gold shower, ordinary corpse loot or pending personal rewards before cleanup, so subtracting 4198 from 15000 is not an observed profit. The separate archmage clear directly observed the 15,000 ground gold and pending 6 glands/1 skull; it does not substitute for collection in this reference case. Broader antivenom assessment and the three-run pacing series remain open.
+This completes one resource-cost observation. The benchmark did not observe collection of the gold shower, ordinary corpse loot or pending personal rewards before cleanup, so subtracting 4198 from 15000 is not an observed profit. The separate archmage clear directly observed the 15,000 ground gold and pending 6 glands/1 skull; it does not substitute for collection in this reference case. This was the first accepted resource observation; the later three-run pacing series is now complete.
 
 ## Second complete reference with antivenom
 
@@ -41,11 +41,11 @@ Run003 finishes without antivenom in 1465.6041709 seconds. Actual use: 199 banda
 
 ## Reward value remains a separate question
 
-The specified 15,000 gold is a shared ground shower, not 15,000 per participant. RollVictory creates 25 stacks of 600 only after the boss victory path succeeds; pilot008 did not earn it. Four inherited UltraRich corpse packs and the skull/artifact opportunity are separate from that fixed sum. Gold actually collected, ordinary loot retained, travel/looting time and repairs remain unmeasured; the first completed-reference resource spend is recorded above.
+The specified 15,000 gold is a shared ground shower, not 15,000 per participant. RollVictory creates 25 stacks of 600 only after the boss victory path succeeds; pilot008 did not earn it. Four inherited UltraRich corpse packs and the skull/artifact opportunity are separate from that fixed sum. Gold actually collected, ordinary loot retained, travel/looting time and repairs remain unmeasured; all three completed-reference resource spends are recorded above.
 
 Six personal glands from a fully qualified clear can make 12 treatments at guaranteed Alchemy 100 success, consuming 12 petals, 36 garlic and 12 bottles as well. Actual crafter prices, failure costs below 100, demand and support/pet use still need evidence. A skilled bandager's few potion cures do not show that protection has no value: prevention can preserve a healing action or protect another recipient. They also do not prove that hunters will buy the reward. Do not increase poison pressure merely to manufacture demand.
 
-Compare the completed no-antivenom and antivenom runs, support/pet cases and actual Zanthus farming before declaring the reward worth pursuing or changing rates. Keep the fixed gold shared, unique power inflation out of this reward, and the role of crafting/trade visible. No reward or general economy change follows from this subtotal.
+The completed references and controlled support/pet cases now supply bounded evidence. Repeatable farming and player demand remain future observations before declaring market value or changing rates. Keep the fixed gold shared, unique power inflation out of this reward, and the role of crafting/trade visible. No reward or general economy change follows from this subtotal.
 
 ## Source traces
 
@@ -56,3 +56,11 @@ Compare the completed no-antivenom and antivenom runs, support/pet cases and act
 - [ArachnidOutbreakController.cs](../../Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakController.cs): RollVictory,25 validated gold positions, shared award routing.
 - [Mephitis.cs](../../Data/Scripts/Custom/Champions/Mobiles/Champs-UO/Mephitis.cs): inherited four UltraRich packs. [LootPack.cs](../../Data/Scripts/Items/Containers/LootPack.cs): actual pack definitions.
 - [DefAlchemy.cs](../../Data/Scripts/Trades/Crafting/DefAlchemy.cs), [VerifyBenchmark.py](../../tools/champion-outbreak/VerifyBenchmark.py), [BENCHMARK.md](BENCHMARK.md): recipe, frozen/native supply observations and incomplete-run limits.
+
+## Final measurement reconciliation
+
+The completed references record0 player deaths and0 Sacred Journey cast requests/retreat arrivals. Tactical kiting and normal movement remain inside combat time; they are not relabeled as separate journey retreats. Antivenom consumption is0/12/0 across the three runs. Gold pickup, ordinary corpse contents/value and collected personal rewards are unknown in these references, rather than invented zeroes. The priced subtotals4198/3742/4318 exclude the stated costs, including all12 treatments in the middle run.
+
+The actual Zanthus route observation separately records277.5015906 seconds,0 deaths,15,000 ground gold and6 gland/1 skull/0 artifact claims pending. Before/after backpack manifests both contain91 item entries, with0 new serials and0 backpack gold before/after. That verifies no inventory gain in those endpoint manifests; it does not identify every corpse item or substitute for a transaction history. The stationary observation remains a distinct partial case in the JSON. A zero artifact claim in one clear is not a drop-rate estimate.
+
+[RecordEconomicObservations.py](../../tools/champion-outbreak/RecordEconomicObservations.py) reads the accepted reports, finite consumption/cost records, native action logs and private endpoint manifests; it never starts gameplay. Exact source evidence hashes remain in the private aggregate. This satisfies the specification's separate measurement record with explicit unknowns; it does not establish that15,000 was collected or that the event is profitable. A new20-35 minute reference replay solely to replace an unknown collection policy is not justified by the unchanged encounter. Native claim visibility/delivery has its separate controlled acceptance record. Sustained market demand, enjoyment and broader beginner/loot progression remain outside this prototype.

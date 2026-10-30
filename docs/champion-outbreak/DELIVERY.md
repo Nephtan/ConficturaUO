@@ -1,27 +1,25 @@
 # Arachnid Outbreak delivery checklist
 
-Status: InProgress. Production activation is disabled. Specification: [SPECIFICATION.md](SPECIFICATION.md).
+Status: AwaitingGeographyApproval. Production activation is disabled. Specification: [SPECIFICATION.md](SPECIFICATION.md).
 
 Targeted native results and remaining acceptance gates: [NATIVE_ACCEPTANCE.md](NATIVE_ACCEPTANCE.md).
 
-## Current acceptance checkpoint - 2026-10-29
+## Current acceptance checkpoint
 
-Checked implementation rows below do not close the separate native, pacing or site-approval gates. The dated sections retain earlier states and failed observations; this checkpoint describes the current result.
+[RELEASE_REVIEW.md](RELEASE_REVIEW.md) is the final source/evidence reconciliation. Historical sections below retain earlier states and failures. One policy decision remains: exact permanent reservation/site approval. All activation/review flags stay false and the active catalog is empty.
 
-| Gate | Current evidence | Remaining work |
-|---|---|---|
-| Production implementation and regressions | approved-20261029-002:6,742 matching inputs, forced runtime compile,1,167 assertions across five suites; copied-world startup separately passes | Keep activation disabled; preserve the narrower evidence classes in the dated records |
-| Placement and permanent reservations | Six inactive proposals, terrain validation and all six native walking routes/1,356 steps | Ground-warning visibility, current-world safety preflight and explicit site approval; the occupancy survey's source save is dated 2026-10-17 |
-| Participation, claims and crafting | Component/fresh-process persistence records; native claims/treatment checks; original archmage full clear earns6 glands/1 skull and15,000 shared ground gold | Another connected player's effective support/cooperative feedback; ordinary corpse loot remains unassessed in the full clear |
-| Web/TBC integration | Production-method/AP tests, stopped-scheduler native scenes and live003 natural warning/reaction/impact/native self-escape | Live-dodge002 now passes; cooperative roles and remaining ground presentation stay open |
-| Veteran reference | Mounted-v4 run001 completes without antivenom in 1452.760 seconds; frozen capabilities and preservation pass |3/3 complete comparable clears; median 24.426736 minutes passes 20-35; tuning0; native/cooperative/site gates remain separate |
-| Original Zanthus stress | Original stationary partial and route-assisted full clear at277.502 seconds; character/source/save preservation passes | No repeatable-farm, current live-character or veteran pacing inference |
-| Boss behavior | Ordinary fleeing retained; native horse mounting/recovery and first full pursuit clear pass | Review any further territorial-survival change separately; broader AI remains read-only and no stand-and-fight patch is applied |
-| Economics and release | First complete reference costs and 4198 source-price subtotal; operating notes and 44-row evidence register | Further antivenom/cooperative economics, ordinary corpse/reward collection, final requirement audit and operational review; no deployment |
+| Gate | Current evidence | Remaining boundary |
+| --- | --- | --- |
+| Source/runtime | 6742 current inputs match;13 outbreak project entries; forced runtime compile/startup in corrected native copies; current manager/bridge fault regression and web92 | Static inventory is separate from runtime, saved-world and gameplay evidence |
+| Geography | Chosen October17 snapshot6/6 clearance with186 regions;6 native routes/1356 steps;6 boss plus2 brood presentation samples | Exact permanent footprint approval; eastern/western foliage caveats; future deployment checks changes since snapshot |
+| Participation/claims/crafting | Component/fresh-process records; native005 controlled claim collection;6 independently verified native role types; actual archmage earns6 glands/1 skull/15000 ground gold | Controlled scenes and earning/collection remain distinct |
+| Web/TBC | Production/AP tests; natural live003 reaction/escape; live-dodge0022AP avoidance; connected ally rescue | No stopped-scheduler timing or universal pixel claim |
+| Veteran |3/3 comparable complete mounted-v4 runs;24.426736-minute median;2 without antivenom | No rerun needed; tuning0; no broad AI change |
+| Zanthus | Original macro stationary partial133.473s and assisted clear277.502s; earned power preserved | One bounded observation per mode; no repeatable-farm/current-live-character claim |
+| Economic observations | Actual finite supplies; nominal recurring subtotals4198/3742/4318; separate pending/ground/backpack reward records | Pickup/corpse value/market demand unknown; no profit or antivenom-causality claim |
+| Delivery audit |44 per-requirement source/test records and final dispositions; guarded reproduction/teardown and operational/rollback notes | Geography approval before approved-catalog completion; production deployment remains outside authorization |
 
-Recorded native/evidence checkpoints: 7c94464e and 90f465ae. Production remains disabled; no reservation is approved.
-
-[ACCEPTANCE_REQUIREMENTS.csv](ACCEPTANCE_REQUIREMENTS.csv) maps 44 specification/reported-design entries to implementation/test sources, recorded evidence scope and remaining verification. NativeVerified accepts only the named requirement; ComponentEvidence and NativePartial are scope labels, not completed delivery; Open, OperationalDraft and DesignReview remain unresolved. The final audit must inspect current source and retained results for every row before completion.
+[ACCEPTANCE_REQUIREMENTS.csv](ACCEPTANCE_REQUIREMENTS.csv) preserves each evidence class and a separate final-review disposition. ComponentEvidence/NativePartial never become generic live passes. The final review explicitly retains all measurement and presentation limits. Recent focused checkpoints include6fc15604,fb88e3ad,67713875 andec27468c.
 
 ## Mounted reference checkpoint - 2026-10-29
 
@@ -77,7 +75,7 @@ Source traces: [ArachnidOutbreakController.cs](../../Data/Scripts/Custom/Champio
 ## Batch 1 - Lifecycle, placement, persistence, staff controls
 
 - [x] Separate versioned controller and state; default disabled.
-- [ ] Six terrain-validated, client-reviewed mainland Sosaria sites.
+- [ ] Six terrain-validated, traversed and sampled proposals; exact permanent geography approval and approved-catalog completion remain.
 - [x] Availability, engagement, three brood stages, boss, recovery, cooldown.
 - [x] Restart persistence, ownership cleanup, legacy coexistence (component/fresh-process evidence).
 - [x] Staff access/guards and status/start/stop controls.
@@ -85,7 +83,7 @@ Source traces: [ArachnidOutbreakController.cs](../../Data/Scripts/Custom/Champio
 
 ## Batch 2 - Participation, rewards, crafting
 
-- [x] Stage ledger, combat/pet/support credit and abuse exclusions (native cooperative-role acceptance remains below).
+- [x] Stage ledger, combat/pet/support credit and abuse exclusions; six controlled native cooperative role types retain separate scope.
 - [x] Persistent idempotent pending awards and claim command.
 - [x] Glands, two-treatment Alchemy recipe, prevention and cooldown.
 - [x] Fixed shared gold shower, skull, artifact opportunity; no power scrolls.
@@ -95,18 +93,18 @@ Source traces: [ArachnidOutbreakController.cs](../../Data/Scripts/Custom/Champio
 ## Batch 3 - Combat and client acceptance
 
 - [x] Finite defenders/reinforcements and guarded death transitions.
-- [ ] Web warning, avoidance, restraint, escape/rescue; turn-based integration.
+- [x] Web warning, avoidance, restraint, escape/rescue and turn-based integration within recorded component/native scopes.
 - [x] Freeze legal veteran fixture and private Zanthus stress fixture.
 - [x] Three full reference runs (20-35 minute median), one without antivenom.
-- [ ] Zanthus macro/farming measurements and targeted native acceptance.
-- [ ] Economic/supply observations, failure evidence, bounded tuning record.
-- [ ] Test-input restoration, enable/disable instructions, focused commit.
+- [x] Original Zanthus stationary/faster-clear observations and targeted native acceptance; repeatable farming remains unmeasured.
+- [x] Separate economic/supply observations, retained failures and tuning0; unknown pickup/market values stay unknown.
+- [x] Test-input preservation, owned forced no-save teardown, enable/disable instructions and focused commits.
 
 ## Completion audit
 
-- [ ] Trace every specification requirement to source and appropriately scoped evidence.
-- [ ] Clearly distinguish component, runtime compile, save/reload, scripted-client and native-client results.
-- [ ] No missing gate is represented as passed. Production activation remains disabled.
+- [x] Trace every requirement to source and appropriately scoped evidence or the explicit geography decision.
+- [x] Distinguish component, runtime compile, save/reload, scripted native, Computer Use and field/deployment evidence.
+- [x] No missing gate is represented as passed. Geography approval remains open and production activation remains disabled.
 
 ## Evidence and decisions
 
@@ -557,3 +555,7 @@ Corrected presentation002 completes six boss and two brood-anchor Computer Use s
 ## Controlled cooperative role acceptance
 
 Six independent native role types pass across retained004 (healing5 points; cure/rescue/prevention2 each; party treatment3 protections with0 application points) and isolated006 (bard0.50302964 useful-time points). Both actors are connected living Players. These are synthetic controlled scenes with staged injury/poison/party/resources, paused enemy AI and real-clock sampling of the production bard observer; no group difficulty/pacing/economics or Computer Use role acceptance is inferred. The five successful cases are preserved rather than replayed for the bard isolation. All6742 production inputs match across copies; source/private/original preservation and acknowledged forced teardown pass. [COOPERATIVE.md](COOPERATIVE.md) records failures, the fixture Player-flag correction, the client packet-wait race, reproduction and carry-forward scope. No production source changes occur. Reward collection/economics, final requirement audit and explicit geography/occlusion review remain open.
+
+## Final observational and source reconciliation
+
+RELEASE_REVIEW.md and the44-row final-review column consolidate the unchanged gameplay/source evidence. CheckDeliveryInventory verifies6742 current production inputs,13 project-listed outbreak scripts and44 source/test path pairs; it is a static check. RecordEconomicObservations reads retained accepted results without replay: all3 completed references plus stationary/route original-macro records retain supply, retreat, ground/pending/backpack and unknown collection/value categories separately. The economic record is not a profit/market pass. Exact permanent geography approval is the remaining decision before catalog completion; no deployment or source flag changes occur.

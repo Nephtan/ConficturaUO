@@ -57,3 +57,7 @@ A broader investigation should distinguish fleeing to a useful refuge from merel
 - [ArachnidOutbreakController.cs](../../Data/Scripts/Custom/Champions/Outbreak/ArachnidOutbreakController.cs): KeepCreatureInBounds.
 - [AITacticalTargeting.cs](../../Data/Scripts/Custom/Combat/AIOverhaul/AITacticalTargeting.cs), [AI_HANDOFF.md](../../Data/Scripts/Custom/Combat/AIOverhaul/AI_HANDOFF.md): current rollout and existing roadmap; no project phase is executed here.
 - [BENCHMARK.md](BENCHMARK.md), [PALADIN_TOOLKIT_REVIEW.md](PALADIN_TOOLKIT_REVIEW.md), [ARCHMAGE_STRESS.md](ARCHMAGE_STRESS.md): retained separate evidence classes and incomplete reference series.
+
+## Final prototype disposition
+
+The mounted-v4 series now completes3/3 with24.426736-minute median while ordinary fleeing and bounded territory remain. No stand-and-fight/territorial AI patch is applied or required by that accepted pacing result. The seam discussion above remains a future proposal, not a pending authorization requirement for this prototype. Broad AI work remains read-only. See RELEASE_REVIEW.md and VETERAN_SERIES.json; no replay or whitelist expansion is authorized by this conclusion.

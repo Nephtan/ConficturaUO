@@ -1,0 +1,128 @@
+{
+  "veteran_references": [
+    {
+      "copy": "outbreak-mounted-benchmark-20261029-001",
+      "mode": "no-antivenom",
+      "seconds": 1452.7598366,
+      "player_deaths": 0,
+      "native_journey_cast_requests": 0,
+      "native_retreat_arrivals": 0,
+      "supplies_consumed": {
+        "bandage": 154,
+        "cure": 21,
+        "heal": 8,
+        "petals": 2,
+        "strength": 9,
+        "agility": 12,
+        "refresh": 8,
+        "rune": 0,
+        "mount-cage": 0
+      },
+      "tithing_net_reduction": 650,
+      "priced_recurring_replacement_subtotal": 4198,
+      "gold_collected": null,
+      "corpse_loot_collected": null,
+      "personal_rewards_collected": null,
+      "net_profit": null
+    },
+    {
+      "copy": "outbreak-mounted-benchmark-20261029-002",
+      "mode": "antivenom",
+      "seconds": 1526.8203048,
+      "player_deaths": 0,
+      "native_journey_cast_requests": 0,
+      "native_retreat_arrivals": 0,
+      "supplies_consumed": {
+        "bandage": 171,
+        "cure": 16,
+        "heal": 4,
+        "petals": 2,
+        "strength": 11,
+        "agility": 13,
+        "refresh": 2,
+        "rune": 0,
+        "mount-cage": 0,
+        "antivenom": 12
+      },
+      "tithing_net_reduction": 700,
+      "priced_recurring_replacement_subtotal": 3742,
+      "gold_collected": null,
+      "corpse_loot_collected": null,
+      "personal_rewards_collected": null,
+      "net_profit": null
+    },
+    {
+      "copy": "outbreak-mounted-benchmark-20261029-003",
+      "mode": "no-antivenom",
+      "seconds": 1465.6041709,
+      "player_deaths": 0,
+      "native_journey_cast_requests": 0,
+      "native_retreat_arrivals": 0,
+      "supplies_consumed": {
+        "bandage": 199,
+        "cure": 23,
+        "heal": 8,
+        "petals": 2,
+        "strength": 10,
+        "agility": 12,
+        "refresh": 2,
+        "rune": 0,
+        "mount-cage": 0
+      },
+      "tithing_net_reduction": 680,
+      "priced_recurring_replacement_subtotal": 4318,
+      "gold_collected": null,
+      "corpse_loot_collected": null,
+      "personal_rewards_collected": null,
+      "net_profit": null
+    }
+  ],
+  "archmage_observations": [
+    {
+      "mode": "stationary",
+      "seconds": 133.4729382,
+      "outcome": "stationary-idle",
+      "player_deaths": 0,
+      "pending_glands": 1,
+      "pending_skulls": 0,
+      "pending_artifacts": 0,
+      "new_ground_gold": 0,
+      "backpack_gold_before": 0,
+      "backpack_gold_after": 0,
+      "new_backpack_entry_count": 0,
+      "corpse_loot_assessed": false,
+      "retreat_count": null,
+      "supplies_observation": "Private endpoint item/research balance changes retained; no per-cast consumption claim",
+      "scope": "One bounded original-macro observation; route adds documented native walking assistance; no repeatable-farm/current-live-character inference"
+    },
+    {
+      "mode": "route",
+      "seconds": 277.5015906,
+      "outcome": "completed",
+      "player_deaths": 0,
+      "pending_glands": 6,
+      "pending_skulls": 1,
+      "pending_artifacts": 0,
+      "new_ground_gold": 15000,
+      "backpack_gold_before": 0,
+      "backpack_gold_after": 0,
+      "new_backpack_entry_count": 0,
+      "corpse_loot_assessed": false,
+      "retreat_count": null,
+      "supplies_observation": "Private endpoint item/research balance changes retained; no per-cast consumption claim",
+      "scope": "One bounded original-macro observation; route adds documented native walking assistance; no repeatable-farm/current-live-character inference"
+    }
+  ],
+  "omissions": [
+    "Reward pickup and ordinary corpse contents/value in references",
+    "Petals and antivenom ingredients/trade value",
+    "Repairs, travel, time and equipment acquisition",
+    "Actual checkout, tax and NPC stock",
+    "Repeated farming, enjoyment and market demand"
+  ],
+  "interpretation": "Finite consumption and nominal base-price replacement only. Tactical kiting is not counted as a Sacred Journey retreat. Pending rewards and ground awards are separate from collected backpack items. No profit, comparative antivenom causality or market value claim.",
+  "gameplay_replayed": false,
+  "production_activation": false,
+  "site_approval": false,
+  "private_source_evidence_file_count": 16
+}
