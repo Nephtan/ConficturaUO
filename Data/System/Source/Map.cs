@@ -911,7 +911,7 @@ namespace Server
             }
         }
 
-        private bool PlayersInRange(Sector sect, int range)
+        internal bool PlayersInRange(Sector sect, int range)
         {
             for (int x = sect.X - range; x <= sect.X + range; ++x)
             {

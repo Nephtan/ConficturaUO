@@ -77,6 +77,37 @@ namespace Server
         private List<BaseMulti> m_Multis;
         private List<RegionRect> m_RegionRects;
         private bool m_Active;
+        private bool m_Activating;
+        private int m_ActivityLeases;
+
+        // Runtime-only leases belong to their caller; acquire/dispose on the server thread.
+        public static event Action<Sector> Activating;
+        public int ActivityLeaseCount { get { return m_ActivityLeases; } }
+
+        public IDisposable AcquireActivityLease()
+        {
+            if (m_Owner == Map.Internal || m_X < 0 || m_Y < 0)
+                throw new InvalidOperationException("Cannot lease an internal or invalid sector.");
+            checked { ++m_ActivityLeases; }
+            try { Activate(); }
+            catch { --m_ActivityLeases; throw; }
+            return new ActivityLease(this);
+        }
+
+        private sealed class ActivityLease : IDisposable
+        {
+            private Sector m_Sector;
+            public ActivityLease(Sector sector) { m_Sector = sector; }
+            public void Dispose()
+            {
+                Sector sector = m_Sector;
+                if (sector == null) return;
+                m_Sector = null;
+                --sector.m_ActivityLeases;
+                if (sector.m_ActivityLeases == 0 && !sector.m_Owner.PlayersInRange(sector,Map.SectorActiveRange))
+                    sector.Deactivate();
+            }
+        }
 
         // TODO: Can we avoid this?
         private static List<Mobile> m_DefaultMobileList = new List<Mobile>();
@@ -253,30 +284,39 @@ namespace Server
 
         public void Activate()
         {
-            if (!Active && m_Owner != Map.Internal)
+            if (!Active && !m_Activating && m_Owner != Map.Internal)
             {
-                if (m_Items != null)
+                m_Activating = true;
+                try
                 {
-                    foreach (Item item in m_Items)
+                    // Admission happens before activation callbacks or the entering player's world snapshot.
+                    Action<Sector> handler = Activating;
+                    if (handler != null) handler(this);
+                    if (m_Items != null)
                     {
-                        item.OnSectorActivate();
+                        foreach (Item item in m_Items)
+                        {
+                            item.OnSectorActivate();
+                        }
                     }
-                }
 
-                if (m_Mobiles != null)
-                {
-                    foreach (Mobile mob in m_Mobiles)
+                    if (m_Mobiles != null)
                     {
-                        mob.OnSectorActivate();
+                        foreach (Mobile mob in m_Mobiles)
+                        {
+                            mob.OnSectorActivate();
+                        }
                     }
-                }
 
-                m_Active = true;
+                    m_Active = true;
+                }
+                finally { m_Activating = false; }
             }
         }
 
         public void Deactivate()
         {
+            if (m_ActivityLeases > 0) return;
             if (Active)
             {
                 if (m_Items != null)

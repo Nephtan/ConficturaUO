@@ -1,0 +1,18 @@
+{
+  "core_sha256": "397601520d3b7c33be051253cee9e37753f046e1cd23b6dd228b934793ce7bf1",
+  "complete_core_source_match": true,
+  "configuration": "Release|x86",
+  "core_build": true,
+  "forced_runtime_compile": true,
+  "sector_lease_core_checks": 12,
+  "no_saves_or_listener": true,
+  "not_production_activation": true,
+  "source_files": 125,
+  "source_manifest_sha256": "783b33be904f64018f4094bea134785144532d54c0eaf953112094fd2cc1cceb",
+  "scope": "Core sector leases and admission hook only; persistent territory and multiplayer hydration implementation/acceptance pending.",
+  "source_trace": [
+    "Data/System/Source/Sector.cs:AcquireActivityLease,ActivityLease.Dispose,Activating,Activate,Deactivate",
+    "Data/System/Source/Map.cs:PlayersInRange",
+    "tests/SectorActivityLeaseRegression.cs"
+  ]
+}
