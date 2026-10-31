@@ -1,5 +1,7 @@
 # Arachnid infestation implementation and acceptance
 
+October 31 revision: [PERSISTENT_SIMULATION.md](PERSISTENT_SIMULATION.md) is current. This initial plan is historical; its 16-patch/400-birth/per-attempt limits and two-hour lifetime are superseded by shared background budgets, persistent compact territory and protected ordinary actors. Five ranks and concurrent directors are implemented. Rows below do not represent current gate dispositions.
+
 Authorized October 30, 2026 in the existing loot/champion development session. Baseline is `da99f391`; the three pre-existing untracked user files remain excluded. The prior runs are closed and their evidence is OLD encounter evidence. Production activation and deployment remain out of scope.
 
 ## Intended behavior and reversible defaults

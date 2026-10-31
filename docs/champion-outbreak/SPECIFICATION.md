@@ -1,5 +1,7 @@
 # Arachnid Outbreak: first Champion Spawn delivery
 
+Historical staged specification. The later user-authorized persistent infestation supersedes its fixed sites, reservations, stage progression and pacing benchmark. See [PERSISTENT_SIMULATION.md](PERSISTENT_SIMULATION.md) for the current contract and evidence. Activation remains disabled.
+
 ## Agreed direction
 
 Build a recurring wilderness threat across **mainland Sosaria**, alongside the existing champion system.

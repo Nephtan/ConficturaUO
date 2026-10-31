@@ -1,0 +1,64 @@
+{
+  "inputs": 6750,
+  "runtime_sources": 6616,
+  "runtime_compile": true,
+  "core_sha256": "8746b2340e5116ad3b980afb0c1aef4466d86a9d658b8dc022d74f04e7cbf31b",
+  "script_sha256": "8821b80cc5baa22e8f30729d34a047db5c176a6837c7c9bac7664afd53b01fcb",
+  "results": {
+    "ChampionRewardRegression": [
+      "PASS: generic and vendor power scroll tooltip packets, confirmation titles, and save round-trip",
+      "PASS: boss scrolls/skull on Lodor, normal/alien with 0/2000 equipment Luck",
+      "PASS: boss scrolls/skull on Sosaria, normal/alien with 0/2000 equipment Luck",
+      "PASS: boss scrolls/skull on Underworld, normal/alien with 0/2000 equipment Luck",
+      "PASS: boss scrolls/skull on SerpentIsland, normal/alien with 0/2000 equipment Luck",
+      "PASS: boss scrolls/skull on IslesDread, normal/alien with 0/2000 equipment Luck",
+      "PASS: boss scrolls/skull on SavagedEmpire, normal/alien with 0/2000 equipment Luck",
+      "PASS: boss scrolls/skull on Atlantis, normal/alien with 0/2000 equipment Luck",
+      "PASS: rights, shared quantity, pet credit, expiry, ghost/full-pack delivery, and excluded maps",
+      "PASS: Lodor wave branches, pet master, 0.1% boundary, and no legacy extra roll",
+      "PASS: Sosaria wave branches, pet master, 0.1% boundary, and no legacy extra roll",
+      "PASS: Underworld wave branches, pet master, 0.1% boundary, and no legacy extra roll",
+      "PASS: SerpentIsland wave branches, pet master, 0.1% boundary, and no legacy extra roll",
+      "PASS: IslesDread wave branches, pet master, 0.1% boundary, and no legacy extra roll",
+      "PASS: SavagedEmpire wave branches, pet master, 0.1% boundary, and no legacy extra roll",
+      "PASS: Atlantis wave branches, pet master, 0.1% boundary, and no legacy extra roll",
+      "PASS: 679 assertions; no world saves loaded or listeners started."
+    ],
+    "ArachnidOutbreakRewardRegression": [
+      "PASS outbreak rewards: 347 component assertions; no world saves or listeners."
+    ],
+    "BroodAntivenomRegression": [
+      "PASS brood antivenom: 53 production-method assertions; no saves or listeners."
+    ],
+    "ArachnidOutbreakWebRegression": [
+      "PASS outbreak webs: 92 production-method assertions; real manager action/turn paths; synthetic roster; no existing saves/listeners."
+    ],
+    "ArachnidInfestationRegression": [
+      "PASS infestation: 428 source-method assertions; no saves/listener; native town/appearance acceptance separate."
+    ],
+    "OfflineCloneFidelityRegression": [
+      "PASS clone fidelity: 21 source-method checks; no existing saves or listener."
+    ],
+    "PersistentInfestationRegression": [
+      "PASS persistent infestation: 331 source-method checks; no saves/listener; synthetic scheduler/registry fixtures are not throughput or native gameplay evidence."
+    ]
+  },
+  "no_world_or_listener": true,
+  "candidate": "D:\\ConficturaUOTestTools\\infestation-persistent-components-20261031-006",
+  "status": "Finalresource-fair source compiled; seven suites pass; native007pending",
+  "expanded_persistent_checks": 911,
+  "expanded_proof": "D:/ConficturaUOTestTools/infestation-fairness-components-20261031-001",
+  "pre_fix_reproduction": "D:/ConficturaUOTestTools/infestation-fairness-reproduction-20261031-001",
+  "production_activation": false,
+  "native_capacity_pass": false,
+  "native_scope": {
+    "native003": "candidate002;16admitted/compaction/connectedreturn;notresourcefairnesspass",
+    "native005": "candidate004;18+establishednonretiredsinglecolony/all5ranks;75->212normalAI withbirths233unchanged;actualtownNPCdeaths;clonesrunning",
+    "native007": "candidate006;finalbody/resourcefairness;preparingactual16directorcase"
+  },
+  "actual_clients": {
+    "Zanthus": "candidate004;473.54scomplete,originalmacro,no winningrequirement",
+    "Sargar": "candidate004;33.645sdriver-limiteddeathretained; corrected265.229scomplete withnormalpet/vet/finiteitems/nativewalking; no winningrequirement;goldquantityunassessedbecauseoldfixedsiteinspector"
+  },
+  "storage_limit": "Syntheticvalueformat envelope excludesactualworldinventories/loadedshard/admission;notVPSproof"
+}

@@ -1,5 +1,7 @@
 # Arachnid Outbreak delivery checklist
 
+Historical staged checklist. The current user-authorized infestation is documented in [PERSISTENT_SIMULATION.md](PERSISTENT_SIMULATION.md). Its acceptance is still in progress and production activation remains disabled. Earlier CompletePrototype rows below do not establish acceptance of the replacement.
+
 Status: CompletePrototype. Production activation is disabled. Specification: [SPECIFICATION.md](SPECIFICATION.md).
 
 Targeted native results and their evidence limits: [NATIVE_ACCEPTANCE.md](NATIVE_ACCEPTANCE.md).

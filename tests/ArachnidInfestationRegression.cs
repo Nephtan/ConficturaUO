@@ -49,6 +49,7 @@ internal static class ArachnidInfestationRegression
         {
             Check(c.Phase==ArachnidOutbreakPhase.Boss && c.ClearedBroods==0 && Queen(c).Alive,"queen is vulnerable before any suppression milestone");
             Check(!Queen(c).HasBreath,"queen cannot inherit ordinary paralysis breath");
+            Check(Queen(c).AIObject!=null && Queen(c).AIObject.m_Timer.Running,"event queen AI activates without relying on player sector entry");
             ArachnidOutbreakChampion queen=Queen(c);
             queen.Damage(9000,playerCredit?player:npc);queen.Kill();
             Check(c.Phase==ArachnidOutbreakPhase.Cooldown && c.InfestationPopulation==0,"early queen death settles and removes owned colony: "+c.Phase+"; "+c.Status+"; queen="+(Queen(c)==null?"none":Queen(c).Hits.ToString()));
@@ -84,16 +85,11 @@ internal static class ArachnidInfestationRegression
             ArachnidInfestationState s=Colony(c);DateTime now=s.Started;int successful=0;
             for(int i=0;i<1500 && s.Patches.Count<ArachnidInfestationState.MaximumPatches;++i)
             {
-                // This save-free fixture has no running AI scheduler. Remove its
-                // stationary ordinary defenders; real NPC/AI containment is a separate gate.
-                foreach(Mobile mobile in Mobs(c).ToArray())
-                {
-                    ArachnidInfestationCreature defender=mobile as ArachnidInfestationCreature;
-                    if(defender!=null && !defender.Guardian && !defender.Founder && !defender.Deleted)defender.Delete();
-                }
+                // AI timers are not drained here. Quiet actors use the real compaction path;
+                // native cases remain the evidence for autonomous movement and resistance.
                 now=now.AddSeconds(5);Call(c,"Tick",now);
                 if(!c.Infestation)break;
-                Check(c.InfestationPopulation<=160 && s.Births<=400 && s.Patches.Count<=16,"live population, total births and patch identities stay bounded");
+                Check(c.InfestationPopulation<=160 && s.Patches.Count<=ArachnidInfestationState.MaximumPatches,"uncontested admission target and finite map bound hold without lifetime birth limits");
                 Check(s.RouteRequests<=2,"director respects local path request cap");
                 successful=s.Epoch;
                 if(successful>=4)break;
@@ -112,9 +108,9 @@ internal static class ArachnidInfestationRegression
                 foreach(Item item in (List<Item>)Get(c,"m_Signs"))Console.WriteLine("WEB "+item.ItemID+" flags="+item.ItemData.Flags+" loc="+item.Location);
             }
             Check(successful>0,"surviving founders establish connected broods without teleporting");
-            int weakest=2,strongest=0;
+            int weakest=4,strongest=0;
             foreach(ArachnidInfestationPatch patch in s.Patches)if(patch.Established && !patch.Retired) { weakest=Math.Min(weakest,s.Tier(patch));strongest=Math.Max(strongest,s.Tier(patch)); }
-            Check(weakest==0 && strongest==2,"new frontier remains weak while the interior is strong");
+            Check(weakest==0 && strongest==4,"new frontier remains weak while the interior is strong");
             int before=s.Epoch;DateTime started=s.Started;DateTime last=s.LastTick;
             s.Resume(last.AddHours(8));Check(s.Epoch==before && s.Started-started==TimeSpan.FromHours(8),"downtime freezes growth and lifetime instead of creating catch-up waves");
             MemoryStream bytes=new MemoryStream();BinaryFileWriter writer=new BinaryFileWriter(bytes,true);s.Serialize(writer);writer.Write(613201);writer.Close();

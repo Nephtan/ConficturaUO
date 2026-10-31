@@ -1,5 +1,7 @@
 # Wilderness reservation prototype
 
+Historical geography review. The later persistent infestation supersedes these fixed reservations and does not activate their housing restrictions. See [PERSISTENT_SIMULATION.md](PERSISTENT_SIMULATION.md) for current placement and acceptance.
+
 Current decision: the user explicitly approved all six footprints. Source declarations and the derived six-site catalog are now reviewed; DeliveryReady remains false. [GEOGRAPHY_APPROVAL.md](GEOGRAPHY_APPROVAL.md) and [APPROVED_WORLD_PREFLIGHT.json](APPROVED_WORLD_PREFLIGHT.json) supersede the hypothetical-only preflight as the current policy verification. The earlier snapshot/method history below remains retained. No live deployment or post-October17 occupancy is claimed.
 
 Historical proposal checkpoint (superseded by the approval above): **proposed, inactive**. The user selected consideration of new permanent wilderness reservations on 2026-10-28. No proposal has been enabled, no player land has been restricted, and the outbreak delivery gate remains false.

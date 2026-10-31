@@ -4,13 +4,20 @@ using Server.Mobiles;
 
 namespace Server.Custom.Confictura.Champions
 {
-    public class ArachnidInfestationCreature : BaseCreature, IArachnidOutbreakOwned
+    public class ArachnidInfestationCreature : BaseCreature, IArachnidOutbreakOwned, ISpreadingEncounterActor
     {
         private ArachnidOutbreakController m_Controller;
         private string m_AttemptId;
         private int m_Patch, m_Tier, m_Kind;
         private bool m_Guardian, m_Founder;
         private DateTime m_NextTownScan;
+        private Guid m_Identity = Guid.NewGuid();
+        private byte m_Slot;
+        public ISpreadingEncounter Encounter { get { return m_Controller; } }
+        public Guid Identity { get { return m_Identity; } }
+        public byte Slot { get { return m_Slot; } }
+        public int Kind { get { return m_Kind; } }
+        public DateTime LastRelevant, NextSpecial;
         public ArachnidOutbreakController Controller { get { return m_Controller; } }
         public string AttemptId { get { return m_AttemptId; } }
         public int PatchId { get { return m_Patch; } }
@@ -19,7 +26,7 @@ namespace Server.Custom.Confictura.Champions
         public bool Founder { get { return m_Founder; } }
         public override bool HasBreath { get { return false; } }
         public override bool PlayerRangeSensitive { get { return false; } }
-        public override Poison HitPoison { get { return m_Tier == 2 ? Poison.Greater : m_Kind == 1 && m_Tier == 1 ? Poison.Regular : null; } }
+        public override Poison HitPoison { get { return m_Tier >= 3 ? Poison.Greater : m_Kind == 1 && m_Tier >= 1 ? Poison.Regular : null; } }
 
         public ArachnidInfestationCreature(ArachnidOutbreakController controller, int patch, int tier, bool guardian, bool founder)
             : base(AIType.AI_Melee,FightMode.Closest,10,1,0.2,0.4)
@@ -32,21 +39,37 @@ namespace Server.Custom.Confictura.Champions
 
         public void ApplyTier(int tier)
         {
-            tier = Math.Max(0,Math.Min(2,tier));
+            tier = Math.Max(0,Math.Min(4,tier));
             double remaining = m_Tier < 0 ? 1.0 : HitsMax > 0 ? (double)Hits / HitsMax : 1.0;
+            double stamina = m_Tier < 0 ? 1.0 : StamMax > 0 ? (double)Stam/StamMax : 0.0;
+            double mana = m_Tier < 0 ? 1.0 : ManaMax > 0 ? (double)Mana/ManaMax : 0.0;
             m_Tier = tier;
-            int[] health = new int[] { 30,150,350 }, damage = new int[] { 2,10,22 };
-            Body = m_Guardian ? 319 : tier == 0 ? (m_Kind == 0 ? 28 : 48) : tier == 1 ? (m_Kind == 0 ? 68 : 315) : (m_Kind == 0 ? 460 : 873);
+            int[] health = new int[] { 30,80,150,250,350 }, damage = new int[] { 2,6,10,16,22 };
+            Body = m_Guardian ? (tier == 4 ? 460 : 319) : tier == 0 ? (m_Kind == 0 ? 28 : 48) : tier == 1 ? (m_Kind == 0 ? 140 : 48)
+                : tier == 2 ? (m_Kind == 0 ? 28 : 315) : tier == 3 ? (m_Kind == 0 ? 140 : 315) : (m_Kind == 0 ? 140 : 873);
             Hue = 0;
             Name = m_Founder ? "an arachnid brood founder" : m_Guardian ? "an arachnid nest guardian"
-                : tier == 0 ? "a frontier arachnid" : tier == 1 ? "a brood defender" : "an inner brood sentinel";
-            SetStr(40+tier*80); SetDex(50+tier*15); SetInt(20+tier*20);
+                : tier == 0 ? "a frontier arachnid" : tier == 1 ? "a venom brood defender" : m_Kind == 0 ? "an arachnid brood sorcerer"
+                : tier == 3 ? "an arachnid brood hunter" : "an inner brood sentinel";
+            SetStr(40+tier*40); SetDex(50+tier*8); SetInt(20+tier*40);
             SetHits(health[tier]*(m_Guardian ? 4 : 1)); SetDamage(damage[tier],damage[tier]+(tier == 0 ? 6 : 8));
             SetDamageType(ResistanceType.Physical,100);
-            SetResistance(ResistanceType.Physical,10+tier*20);
-            SetSkill(SkillName.FistFighting,30+tier*30); SetSkill(SkillName.Tactics,30+tier*30);
-            SetSkill(SkillName.MagicResist,20+tier*30);
+            SetResistance(ResistanceType.Physical,10+tier*10);
+            SetSkill(SkillName.FistFighting,30+tier*15); SetSkill(SkillName.Tactics,30+tier*15);
+            SetSkill(SkillName.MagicResist,20+tier*15);
+            bool caster = !m_Guardian && !m_Founder && m_Kind == 0 && tier >= 2;
+            AIType desired = caster ? AIType.AI_Mage : AIType.AI_Melee;
+            if (AI != desired) ChangeAIType(desired);
+            if (caster) { SetSkill(SkillName.Magery,50+tier*10); SetSkill(SkillName.Psychology,40+tier*10); }
+            FightMode = !m_Guardian && !caster && tier >= 3 ? FightMode.Weakest : FightMode.Closest;
+            ActiveSpeed = !m_Guardian && !caster && tier >= 3 ? 0.15 : 0.2;
             Hits = Math.Max(1,(int)Math.Ceiling(HitsMax*remaining));
+            Stam = (int)Math.Floor(StamMax*stamina); Mana = (int)Math.Floor(ManaMax*mana);
+        }
+
+        internal void Identify(Guid identity, byte slot, int kind)
+        {
+            m_Identity = identity; m_Slot = slot; m_Kind = kind; ApplyTier(m_Tier);
         }
 
         internal static bool TownEnemy(BaseCreature creature, Mobile target)
@@ -82,24 +105,35 @@ namespace Server.Custom.Confictura.Champions
 
         public override void OnThink()
         {
-            if (m_Controller == null || m_Controller.Deleted || !m_Controller.KeepCreatureInBounds(this)) { if (!Deleted) Delete(); return; }
-            if (DateTime.UtcNow >= m_NextTownScan) { m_NextTownScan = DateTime.UtcNow.AddSeconds(2); AcquireTownTarget(this); }
+            if (m_Controller == null || m_Controller.Deleted) { Delete(); return; }
+            if (!m_Controller.KeepCreatureInBounds(this)) return;
+            SpreadingEncounterScheduler.Track(this);
+            if (DateTime.UtcNow >= m_NextTownScan)
+            {
+                m_NextTownScan = DateTime.UtcNow.AddSeconds(2);
+                if (SpreadingEncounterScheduler.Interested(this) || SpreadingEncounterScheduler.Busy(this)) LastRelevant = DateTime.UtcNow;
+                AcquireTownTarget(this);
+            }
             base.OnThink();
         }
 
-        public override void GenerateLoot() { AddLoot(m_Tier == 0 ? LootPack.Meager : m_Tier == 1 ? LootPack.Average : LootPack.Rich); }
+        public override void GenerateLoot() { AddLoot(m_Tier == 0 ? LootPack.Meager : m_Tier <= 2 ? LootPack.Average : LootPack.Rich); }
         public override void OnDeath(Container corpse) { base.OnDeath(corpse); if (m_Controller != null) m_Controller.CreatureDied(this,corpse); }
+        public override void OnAfterDelete() { SpreadingEncounterScheduler.Untrack(this); base.OnAfterDelete(); }
         public ArachnidInfestationCreature(Serial serial) : base(serial) { }
         public override void Serialize(GenericWriter writer)
         {
-            base.Serialize(writer); writer.Write(0); writer.Write(m_Controller); writer.Write(m_AttemptId);
+            base.Serialize(writer); writer.Write(1); writer.Write(m_Controller); writer.Write(m_AttemptId);
             writer.Write(m_Patch); writer.Write(m_Tier); writer.Write(m_Kind); writer.Write(m_Guardian); writer.Write(m_Founder);
+            writer.Write(m_Identity.ToString("N")); writer.Write(m_Slot); writer.Write(LastRelevant); writer.Write(NextSpecial);
         }
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader); int version = reader.ReadInt(); m_Controller = reader.ReadItem() as ArachnidOutbreakController;
             m_AttemptId = reader.ReadString(); m_Patch = reader.ReadInt(); m_Tier = reader.ReadInt(); m_Kind = reader.ReadInt();
             m_Guardian = reader.ReadBool(); m_Founder = reader.ReadBool();
+            if (version >= 1) { m_Identity = new Guid(reader.ReadString()); m_Slot = reader.ReadByte(); LastRelevant = reader.ReadDateTime(); NextSpecial = reader.ReadDateTime(); }
+            else { m_Identity = Guid.NewGuid(); LastRelevant = DateTime.UtcNow; }
         }
     }
 
@@ -117,6 +151,7 @@ namespace Server.Custom.Confictura.Champions
             Movable = false; Name = "infestation webbing";
         }
         public ArachnidInfestationWeb(Serial serial) : base(serial) { }
+        public override void OnAfterDelete() { SpreadingEncounterScheduler.Untrack(this); base.OnAfterDelete(); }
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer); writer.Write(0); writer.Write(m_Controller); writer.Write(m_AttemptId); writer.Write(m_Patch);

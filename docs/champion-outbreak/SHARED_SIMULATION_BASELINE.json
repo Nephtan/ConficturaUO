@@ -1,0 +1,142 @@
+{
+  "status": "Source-grounded baseline and in-progress implementation; final current-source/native capacity acceptance pending",
+  "historical_census": {
+    "snapshot": "Selected October 17 copied save; no current-live count established",
+    "counts": {
+      "present": "14",
+      "configuredActive": "10",
+      "bossesPresent": "0",
+      "withLivingWaveActors": "12",
+      "restartTimersQueued": "2",
+      "xmlRelated": "20"
+    },
+    "by_facet": {
+      "Sosaria": {
+        "present": 9,
+        "active": 6,
+        "wave_instances": 7,
+        "bosses": 0,
+        "restart_queued": 1
+      },
+      "SavagedEmpire": {
+        "present": 1,
+        "active": 0,
+        "wave_instances": 1,
+        "bosses": 0,
+        "restart_queued": 1
+      },
+      "Underworld": {
+        "present": 1,
+        "active": 1,
+        "wave_instances": 1,
+        "bosses": 0,
+        "restart_queued": 0
+      },
+      "IslesDread": {
+        "present": 1,
+        "active": 1,
+        "wave_instances": 1,
+        "bosses": 0,
+        "restart_queued": 0
+      },
+      "Lodor": {
+        "present": 1,
+        "active": 1,
+        "wave_instances": 1,
+        "bosses": 0,
+        "restart_queued": 0
+      },
+      "SerpentIsland": {
+        "present": 1,
+        "active": 1,
+        "wave_instances": 1,
+        "bosses": 0,
+        "restart_queued": 0
+      }
+    },
+    "xml_configuration_rows": 20,
+    "offmap_control_rows": 9,
+    "save_files_unchanged": 20,
+    "reference_directors": 10,
+    "stress_envelope_directors": 16,
+    "margin": "Six additional directors; configurable test envelope, not a configured/current-live count or admission eviction cap",
+    "inventory_sha256": "565e996ccbcd85086c9f4aedba6efd6a53422405c70907fcf30b6706e65481ca",
+    "method": "Matching World.Load; no script Initialize or timer callback execution, no save/listener"
+  },
+  "hardware": {
+    "report": "User supplied: 6 vCPU,20GB RAM,300GB NVMe,AMD9684x",
+    "verified": false,
+    "dedicated_cpu_share_known": false,
+    "local_host_logical_processors": 24,
+    "local_measurements_are_vps_capacity": false,
+    "vps_access_or_deployment": false
+  },
+  "threading": [
+    {
+      "area": "Startup processor message",
+      "source": "Data/System/Source/Main.cs:553",
+      "finding": "Environment.ProcessorCount sets Core.MultiProcessor and prints recognized logical processor count. This does not promise parallel NPC thinking."
+    },
+    {
+      "area": "World callbacks",
+      "source": "Data/System/Source/Main.cs:641",
+      "finding": "Core world loop calls Timer.Slice and MessagePump.Slice as serial phases."
+    },
+    {
+      "area": "Timer scheduling versus execution",
+      "source": "Data/System/Source/Timer.cs:353",
+      "callback_source": "Data/System/Source/Timer.cs:408",
+      "finding": "Dedicated TimerThread schedules/enqueues due timers; Timer.Slice invokes OnTick callbacks on the world loop."
+    },
+    {
+      "area": "Creature AI",
+      "source": "Data/Scripts/Mobiles/Base/Behavior.cs:13201",
+      "finding": "AITimer.OnTick calls ProcessTurnBasedPulse; OnThink/Think and ordinary movement/combat decisions use this callback path, not one worker per recognized core."
+    },
+    {
+      "area": "Pathfinding",
+      "source": "Data/Scripts/System/Misc/Paths.cs:1759",
+      "algorithm_source": "Data/Scripts/System/Misc/Paths.cs:45",
+      "finding": "PathFollower constructs MovementPath synchronously. FastAStar uses shared static mutable buffers; do not dispatch world pathfinding or entity mutation into arbitrary background tasks."
+    },
+    {
+      "area": "Network receive",
+      "source": "Data/System/Source/Network/NetState.cs:1381",
+      "dispatch_source": "Data/System/Source/Network/MessagePump.cs:300",
+      "finding": "Asynchronous socket receive callbacks enqueue work; MessagePump.Slice dispatches packet handlers on the world loop."
+    },
+    {
+      "area": "Network send and workers",
+      "source": "Data/System/Source/Network/NetState.cs:1440",
+      "drain_source": "Data/System/Source/Network/NetState.cs:781",
+      "worker_source": "Data/System/Source/Network/NetState.cs:1203",
+      "finding": "Socket send completion is asynchronous. WorldSendTimer drains the world-send queue through ordinary timer callbacks; m_WorldSendDrainThread stores a thread ID, not a dedicated worker. ThreadPool writes diagnostics."
+    },
+    {
+      "area": "Saves",
+      "source": "Data/System/Source/Persistence/SaveStrategy.cs:31",
+      "parallel_source": "Data/System/Source/Persistence/DualSaveStrategy.cs:44",
+      "writer_source": "Data/System/Source/Persistence/StandardSaveStrategy.cs:53",
+      "finding": "Six recognized logical processors select DualSaveStrategy: items on a separate thread while mobiles/guilds serialize on the caller, then Join. Optional AsyncWriter disk workers depend on World.SaveType and background-write permission. This does not parallelize live AI."
+    },
+    {
+      "area": "Conditional parallel validation",
+      "source": "Data/System/Source/Main.cs:824",
+      "build_source": "Data/System/Source/Server.csproj:32",
+      "finding": "Parallel.ForEach for startup serializer validation is conditional on Framework_4_0. The verified Release|x86 build defines TRACE and does not enable that conditional."
+    },
+    {
+      "area": "Process architecture and GC",
+      "source": "Data/System/Source/Server.csproj:32",
+      "config_source": "ConficturaServer.exe.config",
+      "finding": "Verified tracked PE is x86 and not LargeAddressAware. Server GC is enabled. Twenty GB of machine RAM is not twenty GB of address space available to this process; actual process headroom still needs measurement."
+    }
+  ],
+  "implementation": {
+    "shared_director_scheduler": "One fair round-robin timer across registered encounter implementations, shared terrain/route/new-actor/scenery tokens. Counts10 active historical controllers; stress envelope16 includes six additional directors, not a lifetime or configured-controller cap.",
+    "overlap": "One territory-cell claim per facet across all current attempts, including suppression tombstones until that queen ends. No doubled territory density or ownership overwrite; no player housing reservation.",
+    "persistence": "Finite-map per-cell records and compact surviving actors. Queen actual entity is retained. Quiet actors may compact only without relevant players/NPCs, active combat/effects/modifiers, or recent threats. Logical GUID, wounds, resources, inventory and slot survive; compact territory does not heal or fight virtually.",
+    "protection": "Sector.MobileEntering admits survivors before world snapshots, even in already active sectors. Combined player/pet/NPC envelopes and aggression promote owed survivors above soft admission targets. Existing AI is not reduced for budgets; new background work waits.",
+    "staging": "Only arachnid content implemented. Production activation false; selected clones and active clients still required. Five ranks provisional until reachable/native behavior evidence."
+  }
+}

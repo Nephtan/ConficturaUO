@@ -1,5 +1,9 @@
 # Arachnid Outbreak prototype review
 
+October 31 current status: the persistent infestation supersedes the staged prototype below. Activation is disabled; acceptance continues. [PERSISTENT_SIMULATION.md](PERSISTENT_SIMULATION.md) records current behavior, serializers, evidence and open gates. The six-reservation approval and staged results below are historical, not active geography or infestation acceptance. Current core SHA: `8746b2340e5116ad3b980afb0c1aef4466d86a9d658b8dc022d74f04e7cbf31b`.
+
+## Historical staged prototype review
+
 Status: completed local prototype. The user explicitly approved all six footprints; six reservation flags and derived site descriptors are reviewed. Production activation remains disabled. See GEOGRAPHY_APPROVAL.md for actual-policy verification. No production save, live server launch or deployment occurs.
 
 ## Approved geography

@@ -46,17 +46,18 @@ namespace Server.Custom.Confictura.Champions
                 controller.Restore();
         }
 
-        [Usage("ArachnidOutbreak <status|create|start|stop>")]
+        [Usage("ArachnidOutbreak <status|create|start|stop> [serial]")]
         [Description("Inspect or control the separate arachnid outbreak director.")]
         private static void OnCommand(CommandEventArgs e)
         {
             Mobile from = e.Mobile;
             if (from == null || from.Deleted || from.AccessLevel < AccessLevel.Administrator)
                 return;
-            string action = e.Length == 1 ? e.GetString(0).ToLowerInvariant() : "status";
+            string action = e.Length >= 1 ? e.GetString(0).ToLowerInvariant() : "status";
             int count;
             ArachnidOutbreakController controller = FindUnique(out count);
-            if (action == "create" && count == 0)
+            if (e.Length >= 2) controller = World.FindItem(e.GetInt32(1)) as ArachnidOutbreakController;
+            if (action == "create")
             {
                 controller = new ArachnidOutbreakController();
                 from.SendMessage("Created a disabled outbreak controller ({0}).", controller.Serial);
@@ -64,7 +65,7 @@ namespace Server.Custom.Confictura.Champions
             }
             if (controller == null)
             {
-                from.SendMessage("Expected one controller; found {0}. No outbreak action taken.", count);
+                from.SendMessage("Found {0} controllers; specify the desired controller serial. No outbreak action taken.", count);
                 return;
             }
             if (action == "start")
@@ -79,7 +80,7 @@ namespace Server.Custom.Confictura.Champions
                 from.SendMessage("Outbreak stopped; only this controller's owned entities were removed.");
             }
             else if (action != "status")
-                from.SendMessage("Usage: ArachnidOutbreak <status|create|start|stop>");
+                from.SendMessage("Usage: ArachnidOutbreak <status|create|start|stop> [serial]");
             else
                 from.SendMessage("{0}: {1}; site={2}; cleared={3}; {4}", controller.Serial,
                     controller.Phase, controller.SiteId, controller.ClearedBroods, controller.Status);
@@ -114,8 +115,7 @@ namespace Server.Custom.Confictura.Champions
 
         public bool TryEnable(out string reason)
         {
-            int count;
-            if (Deleted || FindUnique(out count) != this)
+            if (Deleted)
             {
                 reason = "Controller missing or ambiguous.";
                 return false;
@@ -135,6 +135,7 @@ namespace Server.Custom.Confictura.Champions
         {
             string attempt = AttemptId;
             m_State.SetEnabled(false);
+            SpreadingEncounterScheduler.Unregister(this);
             if (m_Timer != null)
             {
                 m_Timer.Stop();
@@ -150,8 +151,7 @@ namespace Server.Custom.Confictura.Champions
         {
             if (Deleted)
                 return;
-            int count;
-            if (!DeliveryReady || FindUnique(out count) != this)
+            if (!DeliveryReady)
             {
                 Stop();
                 return;
@@ -166,15 +166,18 @@ namespace Server.Custom.Confictura.Champions
             {
                 Abort(DateTime.UtcNow, "Legacy staged outbreak retired during infestation migration; earned claims retained.");
             }
-            if (m_Infestation != null) m_Infestation.Resume(DateTime.UtcNow);
+            if (m_Infestation != null)
+            {
+                m_Infestation.Resume(DateTime.UtcNow);
+                RecoverInfestation();
+            }
             if (m_State.Phase != ArachnidOutbreakPhase.Disabled)
                 StartTimer();
         }
 
         private void StartTimer()
         {
-            if (m_Timer == null)
-                m_Timer = Timer.DelayCall(TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(5), OnTick);
+            SpreadingEncounterScheduler.Register(this);
         }
 
         private void OnTick()
@@ -186,12 +189,6 @@ namespace Server.Custom.Confictura.Champions
         {
             if (Deleted || m_State.Phase == ArachnidOutbreakPhase.Disabled)
                 return;
-            int count;
-            if (FindUnique(out count) != this)
-            {
-                Stop();
-                return;
-            }
             string attempt = AttemptId;
             if (m_Infestation != null && m_State.Active)
             {
@@ -280,6 +277,7 @@ namespace Server.Custom.Confictura.Champions
 
         private void Cleanup(string attempt)
         {
+            SpreadingEncounterScheduler.ReleaseTerritory(this);
             m_Bards.Clear();
             m_Wounds.Clear();
             m_Poisons.Clear();
@@ -291,8 +289,14 @@ namespace Server.Custom.Confictura.Champions
                     item.Delete();
             m_Creatures.Clear();
             m_Signs.Clear();
+            if (m_Infestation != null)
+                foreach (ArachnidInfestationPatch patch in m_Infestation.Patches)
+                    foreach (ArachnidInfestationResident resident in patch.Residents)
+                        if (resident.Actor == null && resident.Inventory != null && !resident.Inventory.Deleted && resident.Inventory.Parent == null)
+                            resident.Inventory.Delete();
             m_Infestation = null;
             m_FounderPath = null;
+            m_PendingPatch = null; m_LivePatches.Clear(); m_LiveSlots.Clear();
         }
 
         private void Abort(DateTime utcNow, string reason)
@@ -402,8 +406,8 @@ namespace Server.Custom.Confictura.Champions
 
         internal bool IsWebContext(ArachnidOutbreakChampion champion, Mobile victim)
         {
-            int count, stage;
-            if (Deleted || FindUnique(out count) != this || m_State.Phase != ArachnidOutbreakPhase.Boss || m_Placement == null
+            int stage;
+            if (Deleted || m_State.Phase != ArachnidOutbreakPhase.Boss || m_Placement == null
                 || m_Ledger == null || m_Ledger.AttemptId != AttemptId || !OwnedStage(champion, out stage) || stage != 3
                 || !champion.Alive || champion.Controlled || champion.Summoned || champion.BardProvoked
                 || victim == null || victim.Deleted || !victim.Alive || victim.IsDeadBondedPet || !IsHealingPatient(victim)
@@ -453,8 +457,9 @@ namespace Server.Custom.Confictura.Champions
         {
             if (World.Loading)
                 return;
-            int count, stage;
-            ArachnidOutbreakController controller = FindUnique(out count);
+            int stage;
+            IArachnidOutbreakOwned owned = enemy as IArachnidOutbreakOwned;
+            ArachnidOutbreakController controller = owned == null ? null : owned.Controller;
             if (controller != null && controller.m_State.Active && controller.OwnedStage(enemy, out stage))
                 controller.ObserveBards(DateTime.UtcNow, credit);
         }
@@ -480,8 +485,13 @@ namespace Server.Custom.Confictura.Champions
 
         private static void OnPoisonChanged(PoisonChangedEventArgs e)
         {
-            int count;
-            ArachnidOutbreakController controller = FindUnique(out count);
+            foreach (ArachnidOutbreakController controller in m_Controllers.ToArray())
+                if (!controller.Deleted) controller.OnPoisonChangedForAttempt(e);
+        }
+
+        private void OnPoisonChangedForAttempt(PoisonChangedEventArgs e)
+        {
+            ArachnidOutbreakController controller = this;
             if (controller == null || !controller.m_State.Active || controller.m_Ledger == null
                 || controller.m_Ledger.AttemptId != controller.AttemptId || e.Mobile == null || e.Mobile.Deleted)
                 return;
@@ -505,8 +515,9 @@ namespace Server.Custom.Confictura.Champions
 
         internal static void RecordPoisonPrevention(Mobile patient, Mobile source, Mobile helper)
         {
-            int count, stage;
-            ArachnidOutbreakController controller = FindUnique(out count);
+            int stage;
+            IArachnidOutbreakOwned owned = source as IArachnidOutbreakOwned;
+            ArachnidOutbreakController controller = owned == null ? null : owned.Controller;
             if (controller == null || !controller.m_State.Active || controller.m_Ledger == null || controller.m_Ledger.AttemptId != controller.AttemptId
                 || patient == null || patient.Deleted || !IsHealingPatient(patient) || helper == null || helper.Deleted)
                 return;
@@ -523,8 +534,13 @@ namespace Server.Custom.Confictura.Champions
 
         private static void OnHealthChanged(HealthChangedEventArgs e)
         {
-            int count;
-            ArachnidOutbreakController controller = FindUnique(out count);
+            foreach (ArachnidOutbreakController controller in m_Controllers.ToArray())
+                if (!controller.Deleted) controller.OnHealthChangedForAttempt(e);
+        }
+
+        private void OnHealthChangedForAttempt(HealthChangedEventArgs e)
+        {
+            ArachnidOutbreakController controller = this;
             if (controller == null || !controller.m_State.Active || controller.m_Ledger == null
                 || controller.m_Ledger.AttemptId != controller.AttemptId || e.Mobile == null || e.Mobile.Deleted)
                 return;
@@ -649,36 +665,13 @@ namespace Server.Custom.Confictura.Champions
             }
             if (m_Infestation != null)
             {
-                ArachnidInfestationCreature resident = creature as ArachnidInfestationCreature;
-                Point3D returnPoint;
-                if (creature.Map == Map.Sosaria && InfestationContains(creature.Location))
+                // Pursuit and combat use ordinary AI, including outside established territory.
+                if (creature.Map == Map.Sosaria && creature.Combatant == null && !InfestationContains(creature.Location))
                 {
-                    if (Server.Multis.BaseHouse.FindHouseAt(creature.Location,Map.Sosaria,16) != null
-                        && FindInfestationPoint(creature.Location,8,out returnPoint))
-                    {
-                        creature.Combatant = null; creature.FocusMob = null;
-                        creature.Home = returnPoint; creature.RangeHome = 0;
-                        if (creature.AIObject != null) creature.AIObject.Action = ActionType.Wander;
-                        return false;
-                    }
-                    if (creature.RangeHome == 0 && (resident == null || !resident.Founder))
-                    {
-                        if (!creature.InRange(creature.Home,1)) return false;
-                        creature.RangeHome = resident == null ? 16 : 7;
-                    }
-                    return true;
-                }
-                if (creature.Map == Map.Sosaria
-                    && Math.Abs(creature.X-m_Infestation.Origin.X)<=ArachnidInfestationState.MaximumRadius+20
-                    && Math.Abs(creature.Y-m_Infestation.Origin.Y)<=ArachnidInfestationState.MaximumRadius+20)
-                {
-                    creature.Combatant = null; creature.FocusMob = null;
                     creature.RangeHome = 0;
                     if (creature.AIObject != null) creature.AIObject.Action = ActionType.Wander;
-                    return false;
                 }
-                creature.Delete();
-                return false;
+                return true;
             }
             ArachnidOutbreakSite site = ArachnidOutbreakSites.Find(SiteId);
             if (site != null && creature.Map == Map.Sosaria && site.Bounds.Contains(creature.Location))
@@ -727,6 +720,7 @@ namespace Server.Custom.Confictura.Champions
 
         public override void Serialize(GenericWriter writer)
         {
+            CaptureInfestation();
             base.Serialize(writer);
             writer.Write((int)3);
             m_State.Serialize(writer);

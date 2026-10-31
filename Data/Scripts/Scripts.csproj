@@ -147,6 +147,7 @@
     <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakCreatures.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakSite.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidInfestation.cs" />
+    <Compile Include="Custom\Champions\Outbreak\SpreadingEncounterScheduler.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidInfestationActors.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidInfestationState.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidInfestationTerrain.cs" />

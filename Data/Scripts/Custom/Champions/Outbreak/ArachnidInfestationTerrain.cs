@@ -21,7 +21,9 @@ namespace Server.Custom.Confictura.Champions
         public static bool TryPoint(int x, int y, out Point3D point, bool placement)
         {
             point = Point3D.Zero;
-            if (m_Budgeted && m_Probes++ >= m_Limit) return false;
+            SpreadingEncounterScheduler.Terrain();
+            if (m_Budgeted && !SpreadingEncounterScheduler.PriorityAdmission && m_Probes++ >= m_Limit)
+                throw new SpreadingEncounterScheduler.Deferred();
             Map map = Map.Sosaria;
             if (x < 16 || x >= 5104 || y < 16 || y >= 3112) return false;
             point = new Point3D(x, y, map.GetAverageZ(x, y));

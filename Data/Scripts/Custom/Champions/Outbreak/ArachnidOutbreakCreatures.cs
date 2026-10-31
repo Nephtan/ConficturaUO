@@ -101,7 +101,7 @@ namespace Server.Custom.Confictura.Champions
         }
     }
 
-    public class ArachnidOutbreakChampion : Mephitis, IArachnidOutbreakOwned
+    public class ArachnidOutbreakChampion : Mephitis, IArachnidOutbreakOwned, ISpreadingEncounterActor
     {
         public const int ChampionHealth = 9000;
         public const int WebIntervalSeconds = 15;
@@ -117,7 +117,7 @@ namespace Server.Custom.Confictura.Champions
         public string AttemptId { get { return m_AttemptId; } }
         public override bool AwardLegacyChampionRewards { get { return false; } }
         public override bool HasBreath { get { return false; } }
-        public override bool PlayerRangeSensitive { get { return m_Controller != null && m_Controller.Infestation ? false : base.PlayerRangeSensitive; } }
+        public ISpreadingEncounter Encounter { get { return m_Controller; } }
         public override bool IsEnemy(Mobile mobile)
         {
             if (m_Controller != null && m_Controller.Infestation)
@@ -128,6 +128,7 @@ namespace Server.Custom.Confictura.Champions
             return base.IsEnemy(mobile);
         }
         public virtual Item RollVictoryArtifact() { return GetArtifact(); }
+        public override void OnAfterDelete() { SpreadingEncounterScheduler.Untrack(this); base.OnAfterDelete(); }
 
         private void ThinkWeb()
         {
@@ -207,6 +208,7 @@ namespace Server.Custom.Confictura.Champions
                 Delete();
                 return;
             }
+            if (m_Controller.Infestation) m_Controller.TrackInfestationQueen(this);
             if (!m_Controller.KeepCreatureInBounds(this))
                 return;
             base.OnThink();
