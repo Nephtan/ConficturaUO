@@ -70,6 +70,14 @@ def stop_route_walk():
     if not done.WaitOne(1000):raise Exception('Native path cancellation did not acknowledge')
     if bool(walking.GetValue(None)):raise Exception('Native path did not stop before casting')
 
+def infestation_search_goals(center, remembered):
+    origin=tuple(remembered) if remembered is not None else tuple(center)
+    goals=[origin+(1,)]
+    for radius in (16,40,80,120):
+        for dx,dy in ((0,-1),(1,-1),(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1)):
+            goals.append((origin[0]+dx*radius,origin[1]+dy*radius,origin[2],1))
+    return goals
+
 def route_navigation():
     global boss_last_seen,search_route,search_index
     observed=status()
@@ -88,12 +96,15 @@ def route_navigation():
         visible.sort();goal=visible[0][2]+(7,)
     else:
         mask=int(value(observed,'clearedBroods'))
-        stage=next((i for i in range(3) if not mask & (1<<i)),3)
+        infestation=os.path.exists(os.path.join(EVIDENCE,'infestation-case.txt'))
+        stage=3 if infestation else next((i for i in range(3) if not mask & (1<<i)),3)
         anchor=observed.SelectSingleNode("anchor[@stage='%d']"%stage)
         center=(int(value(anchor,'x')),int(value(anchor,'y')),int(value(anchor,'z')))
         if stage<3:goal=center+(7,)
         else:
-            if search_route is None:search_route=boss_reacquisition_goals(center,boss_last_seen);search_index=0
+            if search_route is None:
+                search_route=infestation_search_goals(center,boss_last_seen) if infestation else boss_reacquisition_goals(center,boss_last_seen)
+                search_index=0
             while search_index<len(search_route) and max(abs(int(player.X)-search_route[search_index][0]),abs(int(player.Y)-search_route[search_index][1]))<=1:
                 search_index+=1
             if search_index==len(search_route):search_index=0

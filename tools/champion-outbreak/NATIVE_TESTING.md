@@ -1,5 +1,27 @@
 # Isolated outbreak native acceptance
 
+## Persistent infestation workflow
+
+Current design and evidence classes: `docs/champion-outbreak/PERSISTENT_SIMULATION.md`. Use `VerifyInfestation.py` to freeze complete production inputs and force runtime compilation/separate component suites. Its `--core-candidate` must match the complete core source and tracked executable. `Scripts.csproj` builds remain IDE/project checks.
+
+Prepare a fresh copy with `PrepareNativeAcceptance.py --fixture infestation` for natural growth, aggregate/town/frontier/conflict/selected-clone scenes, or `--fixture archmage-preparation` for actual saved-client cases. Wait for the preparation command to finish successfully and for `prepared.json` before any dependent setup or launch. A returned session/PID is not proof of completed preparation or fixture readiness. Never restart a rejected world in place.
+
+Configure copied clients before starting the server. `PrepareTamerClient.py <root>` freezes the actual Sargar driver, saved pets and finite supplies; normal login can restore the saved mount and seven cats before the trainer fixture runs. `PrepareArchmageClient.py` retains the selected original Zanthus macro/helper; a private `infestation-case.txt` marker selects the new mode. No original profile/account/save is modified. Freeze and validate exact capability/equipment/skill/companion identities before combat; preparation regen and ordinary mount/login behavior are separate from grants.
+
+The infestation idle walking adapter searches for the immediately available queen regardless of suppression milestones. If no enemy is visible, it uses only the last client-observed boss position (or the known initial encounter origin) and 33 finite search goals out to 120 tiles from that observation. Ordinary local client walking still determines reachability. This test policy is not a world encounter radius, hidden server tracking, a combat-macro rewrite or a guarantee of successful pursuit. Retain the older staged-adapter partial run rather than silently relabeling it.
+
+For new actual-client fixtures, explicitly use `RunArchmageCase.py <root> --fixture-heartbeat` or `RunTamerCase.py <root>`. The file monitor validates guarded root, core hash, owned launch PID/path, stable instance and fresh UTC/file heartbeat. It refuses changed instances, stale status and permission failures. Bounded FileNotFound retries handle atomic replacement only; there is no permission fallback, elevation or automatic server relaunch. Historical process-handle mode is retained for old evidence and is not an instruction to retry denied access. File liveness is not OS exit proof.
+
+Record the exact executable/PID/port and input hashes. Before launch, require completed preparation/freeze, matching core/harness/overlays, unchanged copied saves, a free loopback port and no earlier launch record. Start only the private executable. Verify actual fresh fixture status before opening its existing disposable-login client. Do not automate authentication/security dialogs. A normal-user host execution approval does not authorize changing Windows privileges or security settings.
+
+Read live atomically replaced XML using the shared-delete readers in `FreezeBenchmark.py`; direct parsers can block File.Replace. Preserve failed launches, setup/driver failures, deaths and partial cases. Do not require a win. Assess resource grants as well as visits, and require more than 16 established non-retired cells for the natural depth gate. Synthetic scheduler probes, actual world NPCs, connected clients, paused artwork and VPS capacity are distinct evidence classes. Never use mass character clones as throughput evidence.
+
+The client fixture snapshots existing ground gold and measures new gold around the queen's last actual damage/death location. The old fixed-site inspector can report zero after a long pursuit; retain that limitation rather than declaring a missing reward. Record pet deaths as well as player survival.
+
+Request `native-stop.txt`, wait for the fixture's no-save acknowledgement, then use exact-owned `StopNativeCopy.ps1` and verify protected original inputs. Forced no-save termination is not graceful shutdown. Finish by reconciling every owned runtime and listener; do not infer teardown from a launched cleanup command.
+
+## Historical staged workflow
+
 Use only a disposable output. This parameterizes the established client005 copied-world workflow; it is not a production launcher or general gameplay agent.
 
 Preparation requires a verified foundation snapshot matching current core/runtime inputs, the existing isolated client005 baseline with its eight recorded isolation overlays, and installed test assets. It checks the original save/profile/settings hashes, creates a fresh loopback port, disables autosave in the guarded fixture, disables plugins in the copied client only, and generates a source-hash compatibility register for the private tree. It never starts a process. Do not print copied settings or account-name files.

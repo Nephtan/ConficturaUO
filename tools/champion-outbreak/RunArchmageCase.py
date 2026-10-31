@@ -44,13 +44,17 @@ def publish(evidence,name,text):
     temp=evidence/(str(uuid.uuid4())+'.tmp');temp.write_text(text);os.replace(temp,target)
 
 
-def run(root):
+def run(root,fixture_heartbeat=False):
     root=root.resolve();evidence=root/'evidence';repo=Path(__file__).resolve().parents[2]
     assert root.is_relative_to(Path('D:/ConficturaUOTestTools').resolve()),'Observer requires a disposable test root'
     prepared=json.loads((evidence/'prepared.json').read_text(encoding='utf-8-sig'))
     assert prepared['fixture']=='archmage-preparation'
     assert Path((evidence/'native-private-root.txt').read_text()).resolve()==root/'shard'
-    require_alive=bind_server(root,evidence)
+    if fixture_heartbeat:
+        from FixtureHeartbeat import bind_fixture
+        require_alive=bind_fixture(root,evidence)
+    else:
+        require_alive=bind_server(root,evidence)
     mode=(evidence/'archmage-mode.txt').read_text();assert mode in ('stationary','route')
     deadline=time.monotonic()+150
     while time.monotonic()<deadline:
@@ -104,4 +108,5 @@ def run(root):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('root',type=Path)
-    run(parser.parse_args().root)
+    parser.add_argument('--fixture-heartbeat',action='store_true',help='Explicit guarded fixture-file liveness; no OS process-handle attempt or permission fallback')
+    args=parser.parse_args();run(args.root,args.fixture_heartbeat)
