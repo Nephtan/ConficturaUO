@@ -317,7 +317,7 @@ namespace Server.Spells
 
         public virtual bool ConsumeReagents()
         {
-            if (m_Scroll != null || !m_Caster.Player)
+            if (m_Scroll != null || (!m_Caster.Player && !(m_Caster is Server.Custom.Confictura.CloneOfflinePlayerCharacters.CharacterClone)))
                 return true;
 
             if (AosAttributes.GetValue(m_Caster, AosAttribute.LowerRegCost) > Utility.Random(100))

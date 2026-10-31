@@ -9,6 +9,8 @@ using Server.Mobiles;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Server.Spells;
+using Server.Spells.Research;
 
 namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
 {
@@ -74,15 +76,7 @@ namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
         {
             Payday(this);
 
-            SetHits(Str * 2);
-            SetStam(Dex * 2);
-            SetMana(Int * 2);
-
             CalculateBaseDamage();
-
-            Hits = HitsMax;
-            Stam = StamMax;
-            Mana = ManaMax;
 
             ControlSlots = 4;
 
@@ -99,7 +93,44 @@ namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
 
         public override int GetMaxResistance(ResistanceType type)
         {
-            return 70;
+            return Original != null && !Original.Deleted ? Original.GetMaxResistance(type) : base.GetMaxResistance(type);
+        }
+
+        public void SynchronizeSnapshot(bool copyResources)
+        {
+            if (Deleted || Original == null || Original.Deleted) return;
+            int hits = copyResources ? Original.Hits : Hits;
+            int stam = copyResources ? Original.Stam : Stam;
+            int mana = copyResources ? Original.Mana : Mana;
+            // Equipment has already applied its modifiers. Do not apply them a second time.
+            RawStr += Original.Str-Str; RawDex += Original.Dex-Dex; RawInt += Original.Int-Int;
+            HitsMaxSeed = Math.Max(1,Original.HitsMax-GetStatOffset(StatType.Str));
+            StamMaxSeed = Math.Max(1,Original.StamMax-GetStatOffset(StatType.Dex));
+            ManaMaxSeed = Math.Max(1,Original.ManaMax-GetStatOffset(StatType.Int));
+            Hits = Math.Min(HitsMax,hits); Stam = Math.Min(StamMax,stam); Mana = Math.Min(ManaMax,mana);
+            CalculateBaseDamage();
+        }
+
+        public override bool CheckSpellCast(ISpell spell)
+        {
+            if (!base.CheckSpellCast(spell)) return false;
+            Spell known = spell as Spell;
+            if (known == null) return false;
+            if (known.Scroll != null) return true;
+            // Research spells validate their prepared bag/tome and consumables themselves.
+            if (known is ResearchSpell) return known.CheckCast();
+            int id = SpellRegistry.GetRegistryNumber(known);
+            return id >= 0 && Spellbook.Find(this,id) != null;
+        }
+
+        public bool TryBandage(Mobile patient)
+        {
+            if (Deleted || !Alive || Blessed || patient == null || patient.Deleted || Backpack == null
+                || !InRange(patient.Location,Bandage.Range) || !InLOS(patient) || BandageContext.GetContext(this) != null) return false;
+            Bandage bandage = Backpack.FindItemByType(typeof(Bandage),true) as Bandage;
+            if (bandage == null || bandage.Deleted || bandage.Amount < 1 || !Bandage.TryApply(this,patient,bandage)) return false;
+            bandage.Consume();
+            return true;
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -110,6 +141,7 @@ namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
 
         public override void OnThink()
         {
+            if (Original == null || Original.Deleted) { Delete(); return; }
             base.OnThink();
 
             int newRangeFight = CalculateRangeFight(Original);
@@ -139,6 +171,17 @@ namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
             }
 
             return base.OnBeforeDeath();
+        }
+
+        public override void OnAfterDelete()
+        {
+            if (m_PayTimer != null) { m_PayTimer.Stop(); m_PayTimer = null; }
+            List<object> owners = new List<object>();
+            foreach (DictionaryEntry entry in m_HireTable) if (entry.Value == this) owners.Add(entry.Key);
+            foreach (object owner in owners) m_HireTable.Remove(owner);
+            if (Mount is MountClone) ((MountClone)Mount).Delete();
+            else if (Mount is EtherealMountClone) ((EtherealMountClone)Mount).Delete();
+            base.OnAfterDelete();
         }
 
         public override void OnDeath(Server.Items.Container container)
@@ -286,6 +329,7 @@ namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
             {
                 Delete();
             }
+            else Timer.DelayCall(TimeSpan.Zero,delegate { SynchronizeSnapshot(false); });
         }
 
         public virtual bool AddHire(Mobile mobile)
@@ -407,10 +451,13 @@ namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
 
         private static int CalculateRangeFight(Mobile original)
         {
+            if (original == null) return 1;
             int maxRangeFight = 1;
             Item weapon =
                 original.FindItemOnLayer(Layer.OneHanded)
                 ?? original.FindItemOnLayer(Layer.TwoHanded);
+            BaseRanged ranged = weapon as BaseRanged;
+            if (ranged != null) return ranged.MaxRange;
 
             double meleeSkillSum =
                 original.Skills[SkillName.Swords].Value
@@ -449,35 +496,8 @@ namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
 
         private void CalculateBaseDamage()
         {
-            double tactics = Original.Skills[SkillName.Tactics].Value;
-            double anatomy = Original.Skills[SkillName.Anatomy].Value;
-            double lumberjacking = Original.Skills[SkillName.Lumberjacking].Value;
-            double strength = Original.Str;
-
-            double tacticsBonus = tactics >= 100 ? (tactics / 1.6) + 6.25 : tactics / 1.6;
-            double anatomyBonus = anatomy >= 100 ? (anatomy / 2) + 5 : anatomy / 2;
-            double lumberjackingBonus =
-                lumberjacking >= 100 ? (lumberjacking / 5) + 10 : lumberjacking / 5;
-            double strengthBonus = strength >= 100 ? (strength * 0.3) + 5 : strength * 0.3;
-
-            double totalDamageBonus =
-                tacticsBonus + anatomyBonus + lumberjackingBonus + strengthBonus;
-
-            Item weapon = FindItemOnLayer(Layer.OneHanded) ?? FindItemOnLayer(Layer.TwoHanded);
-            int minBaseDamage = 5;
-            int maxBaseDamage = 10;
-
-            if (weapon is BaseWeapon)
-            {
-                BaseWeapon baseWeapon = weapon as BaseWeapon;
-                minBaseDamage = baseWeapon.MinDamage;
-                maxBaseDamage = baseWeapon.MaxDamage;
-            }
-
-            int minFinalDamage = (int)(minBaseDamage + (minBaseDamage * totalDamageBonus / 100));
-            int maxFinalDamage = (int)(maxBaseDamage + (maxBaseDamage * totalDamageBonus / 100));
-
-            SetDamage(minFinalDamage, maxFinalDamage);
+            BaseWeapon weapon = Weapon as BaseWeapon;
+            SetDamage(weapon == null ? 1 : weapon.MinDamage,weapon == null ? 4 : weapon.MaxDamage);
         }
 
         private void SetItemsMovableFalse(Item item)

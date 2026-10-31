@@ -1,0 +1,28 @@
+{
+  "utc": "2026-10-31T00:40:40.943521+00:00",
+  "candidate": "D:\\ConficturaUOTestTools\\infestation-clone-components-20261030-001",
+  "source_inputs": 6749,
+  "complete_current_source_input_match": true,
+  "core_reused_after_complete_source_match": true,
+  "core_sha256": "dbb7b2360c435834b32e0f1f4b0854a859cd9086971a4c270981b58d8f2f3ddb",
+  "runtime_script_sha256": "abc7efff261506444fb2b07c095185fc299865ab601071af09648b4a4bc2ab57",
+  "forced_runtime_compile": true,
+  "clone_component_checks": 21,
+  "fixture_sha256": "be3194849e6377d507fdd6683802cbb2f012a9adc833509060bbb093d966ae28",
+  "baseline_red": "Pre-fix candidate fails: equipment bonuses must apply once.",
+  "retained_failure": "Initial bandage fixture ran on Map.Internal; corrected legal-map fixture passes without a production-code bypass.",
+  "other_component_checks": {
+    "legacy_champion": 679,
+    "outbreak_rewards": 347,
+    "antivenom": 53,
+    "webs": 92,
+    "infestation": 2919
+  },
+  "no_existing_saves_or_listeners": true,
+  "serialization": "CharacterClone v0 Original reference prefix unchanged; no new stored fields in this batch.",
+  "limits": [
+    "Selected actual-save clone comparison and autonomous cohort acceptance pending.",
+    "Pet loadout/ownership representation and broader toolkit decisions are separate follow-up.",
+    "No skilled-human or current-live-character equivalence claimed."
+  ]
+}

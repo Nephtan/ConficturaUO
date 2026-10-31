@@ -29,9 +29,9 @@ namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
             target.Direction = source.Direction;
             target.Hidden = false;
 
-            target.Dex = source.Dex;
-            target.Int = source.Int;
-            target.Str = source.Str;
+            target.RawDex = source.RawDex;
+            target.RawInt = source.RawInt;
+            target.RawStr = source.RawStr;
             target.Fame = source.Fame;
             target.Karma = source.Karma;
             target.NameHue = source.NameHue;
@@ -64,6 +64,7 @@ namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
 
             for (int i = 0; i < source.Skills.Length; i++)
             {
+                target.Skills[i].Cap = source.Skills[i].Cap;
                 target.Skills[i].Base = source.Skills[i].Base;
             }
 
@@ -257,6 +258,9 @@ namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
 
         public static void CloneMobileMount(Mobile source, Mobile target)
         {
+            CharacterClone character = target as CharacterClone;
+            if (character != null)
+                character.SynchronizeSnapshot(true);
             if (!source.Mounted)
             {
                 return;
@@ -289,6 +293,8 @@ namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
                     {
                         if (
                             prop.Name != "Parent"
+                            && prop.Name != "Spawner"
+                            && prop.Name != "HeldBy"
                             && prop.Name != "TotalWeight"
                             && prop.Name != "TotalItems"
                             && prop.Name != "TotalGold"

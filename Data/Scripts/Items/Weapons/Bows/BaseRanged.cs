@@ -272,7 +272,7 @@ namespace Server.Items
 
         public virtual bool OnFired(Mobile attacker, Mobile defender)
         {
-            if (this is ThrowingGloves && attacker.Player)
+            if (this is ThrowingGloves && (attacker.Player || attacker is Server.Custom.Confictura.CloneOfflinePlayerCharacters.CharacterClone))
             {
                 string ammoType = "Throwing Stones";
 
@@ -362,7 +362,7 @@ namespace Server.Items
 
             Server.Gumps.QuickBar.RefreshQuickBar(attacker);
 
-            if (attacker.Player)
+            if (attacker.Player || attacker is Server.Custom.Confictura.CloneOfflinePlayerCharacters.CharacterClone)
             {
                 BaseQuiver quiver = attacker.FindItemOnLayer(Layer.Cloak) as BaseQuiver;
                 Container pack = attacker.Backpack;

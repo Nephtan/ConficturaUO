@@ -139,6 +139,9 @@ namespace Server.Mobiles
                     case SkillName.Healing:
                         if (m_Mobile.Skills[SkillName.Healing].Value > 10.0)
                         {
+                            Server.Custom.Confictura.CloneOfflinePlayerCharacters.CharacterClone clone = m_Mobile as Server.Custom.Confictura.CloneOfflinePlayerCharacters.CharacterClone;
+                            if (clone != null)
+                                return clone.TryBandage(clone);
                             int delay = (int)(5.0 + (0.5 * ((120 - m_Mobile.Dex) / 10)));
                             new BandageContext(m_Mobile, m_Mobile, TimeSpan.FromSeconds(delay));
                             m_NextHealTime = DateTime.Now + TimeSpan.FromSeconds(delay + 1);

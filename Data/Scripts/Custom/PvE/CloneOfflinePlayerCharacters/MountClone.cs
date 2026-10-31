@@ -2,7 +2,6 @@
  * File: MountClone.cs
  * Description: Runtime clone of a mount ridden by an offline player.
  *************************************************************/
-using System.Reflection;
 using Server.Mobiles;
 
 namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
@@ -26,15 +25,14 @@ namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
                 original.PassiveSpeed
             )
         {
-            PropertyInfo[] properties = typeof(BaseMount).GetProperties();
-
-            foreach (PropertyInfo property in properties)
-            {
-                if (property.CanRead && property.CanWrite && property.Name != "Rider")
-                {
-                    property.SetValue(this, property.GetValue(original, null), null);
-                }
-            }
+            // Do not copy Spawner, control owners, summon owners, stabling or rider links.
+            CloneThings.CloneMobileProperties(original,this);
+            SetHits(original.HitsMax-GetStatOffset(StatType.Str));
+            SetStam(original.StamMax-GetStatOffset(StatType.Dex));
+            SetMana(original.ManaMax-GetStatOffset(StatType.Int));
+            Hits=original.Hits; Stam=original.Stam; Mana=original.Mana;
+            SetDamage(original.DamageMin,original.DamageMax);
+            VirtualArmor=original.VirtualArmor; Tamable=false;
         }
 
         public MountClone(Serial serial)

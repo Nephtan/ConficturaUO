@@ -4,7 +4,6 @@
  *************************************************************/
 using Server.Items;
 using Server.Mobiles;
-using System.Reflection;
 
 namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
 {
@@ -17,15 +16,8 @@ namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
         public EtherealMountClone(EtherealMount original)
             : base(original.RegularID, original.MountedID)
         {
-            PropertyInfo[] properties = typeof(EtherealMount).GetProperties();
-
-            foreach (PropertyInfo property in properties)
-            {
-                if (property.CanRead && property.CanWrite && property.Name != "Rider")
-                {
-                    property.SetValue(this, property.GetValue(original, null), null);
-                }
-            }
+            Name=original.Name; Hue=original.Hue; Weight=original.Weight;
+            Movable=false; LootType=LootType.Blessed;
         }
 
         public EtherealMountClone(Serial serial)
