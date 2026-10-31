@@ -82,6 +82,7 @@ namespace Server
 
         // Runtime-only leases belong to their caller; acquire/dispose on the server thread.
         public static event Action<Sector> Activating;
+        public static event Action<Sector, Mobile> MobileEntering;
         public int ActivityLeaseCount { get { return m_ActivityLeases; } }
 
         public IDisposable AcquireActivityLease()
@@ -190,6 +191,10 @@ namespace Server
         public void OnEnter(Mobile mob)
         {
             Add(ref m_Mobiles, mob);
+
+            // Also covers entries into an already active sector, before the client world snapshot.
+            Action<Sector, Mobile> entering = MobileEntering;
+            if (entering != null) entering(this, mob);
 
             if (mob.NetState != null)
             {

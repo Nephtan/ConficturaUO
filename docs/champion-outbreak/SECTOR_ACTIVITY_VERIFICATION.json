@@ -1,18 +1,18 @@
 {
-  "core_sha256": "397601520d3b7c33be051253cee9e37753f046e1cd23b6dd228b934793ce7bf1",
+  "core_sha256": "8746b2340e5116ad3b980afb0c1aef4466d86a9d658b8dc022d74f04e7cbf31b",
   "complete_core_source_match": true,
   "configuration": "Release|x86",
   "core_build": true,
   "forced_runtime_compile": true,
-  "sector_lease_core_checks": 12,
+  "sector_lease_core_checks": 16,
   "no_saves_or_listener": true,
   "not_production_activation": true,
-  "source_files": 125,
-  "source_manifest_sha256": "783b33be904f64018f4094bea134785144532d54c0eaf953112094fd2cc1cceb",
-  "scope": "Core sector leases and admission hook only; persistent territory and multiplayer hydration implementation/acceptance pending.",
+  "runtime_script_snapshot": "Previously accepted sector-core-001/compile; current encounter scripts will undergo their separate forced compile",
+  "current_encounter_forced_compile": "infestation-persistent-compile-20261031-003",
+  "script_sha256": "763f635eaaaed73952ed4c27bd1505c18ceadc17d8c25fe39cd45b9dff003a9d",
   "source_trace": [
-    "Data/System/Source/Sector.cs:AcquireActivityLease,ActivityLease.Dispose,Activating,Activate,Deactivate",
-    "Data/System/Source/Map.cs:PlayersInRange",
-    "tests/SectorActivityLeaseRegression.cs"
-  ]
+    "Data/System/Source/Sector.cs:MobileEntering and OnEnter(Mobile)",
+    "Data/System/Source/Mobile.cs:MoveToWorld/SetLocation calls Map.OnEnter/OnMove before SendEverything/client updates"
+  ],
+  "native_teleport_acceptance": "Pending; 16 checks verify core method entry/activation/lease order only"
 }
