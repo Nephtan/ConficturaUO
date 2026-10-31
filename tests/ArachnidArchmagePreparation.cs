@@ -11,6 +11,7 @@ using Server.Misc;
 using Server.Mobiles;
 using Server.Spells.Research;
 using Server.Custom.Confictura.Champions;
+using Server.Custom.Confictura.CloneOfflinePlayerCharacters;
 
 namespace Server.TestOnly
 {
@@ -33,6 +34,12 @@ namespace Server.TestOnly
         private static bool BossRewardCenterKnown;
         private static bool InfestationCase;
         private static string ActorName="Zanthus";
+        private static int SelectedSerial;
+        private static bool WeakFrontier, MixedCase;
+        private static DateTime FrontierStarted;
+        private static string FrontierSurvey=String.Empty;
+        private static ArachnidInfestationPatch TestedFrontier;
+        private static readonly List<CharacterClone> TestClones=new List<CharacterClone>();
         private static AnimalTrainer Trainer;
         private static readonly List<BaseCreature> SelectedPets=new List<BaseCreature>();
         private static readonly BindingFlags Private = BindingFlags.Instance | BindingFlags.NonPublic;
@@ -49,7 +56,12 @@ namespace Server.TestOnly
             InfestationCase = File.Exists(Path.Combine(Evidence,"infestation-case.txt"));
             string selected=Path.Combine(Evidence,"active-build.txt");
             if(File.Exists(selected))ActorName=File.ReadAllText(selected).Trim();
-            if(ActorName!="Zanthus" && ActorName!="Sargar")throw new Exception("Unsupported selected active build.");
+            string serialFile=Path.Combine(Evidence,"active-build-serial.private");
+            if(File.Exists(serialFile))SelectedSerial=Int32.Parse(File.ReadAllText(serialFile).Trim(),CultureInfo.InvariantCulture);
+            else if(ActorName!="Zanthus" && ActorName!="Sargar")throw new Exception("Unsupported selected active build.");
+            WeakFrontier=File.Exists(Path.Combine(Evidence,"weak-frontier-case.txt"));
+            MixedCase=File.Exists(Path.Combine(Evidence,"mixed-clones.private"));
+            if(WeakFrontier && !InfestationCase)throw new Exception("Frontier requires persistent infestation.");
             string mode = Path.Combine(Evidence, "archmage-mode.txt");
             if (File.Exists(mode)) Mode = File.ReadAllText(mode).Trim();
             if (Mode != "preparation" && Mode != "stationary" && Mode != "route") throw new Exception("Unsupported archmage case.");
@@ -64,7 +76,7 @@ namespace Server.TestOnly
             try
             {
                 foreach (Mobile mobile in World.Mobiles.Values)
-                    if (mobile is PlayerMobile && String.Equals(mobile.Name, ActorName, StringComparison.OrdinalIgnoreCase))
+                    if (mobile is PlayerMobile && (SelectedSerial!=0 ? mobile.Serial.Value==SelectedSerial : String.Equals(mobile.Name, ActorName, StringComparison.OrdinalIgnoreCase)))
                     {
                         if (Actor != null) throw new Exception("Ambiguous copied character.");
                         Actor = (PlayerMobile)mobile;
@@ -101,7 +113,7 @@ namespace Server.TestOnly
                     string reason;
                     if (!Site.Validate(new SosariaOutbreakTerrain(), out Placement, out reason)) throw new Exception(reason);
                     }
-                    staging = Placement.Brood(0); staging.Y -= 2;
+                    staging = WeakFrontier ? new Point3D(2490,2010,0) : Placement.Brood(0); if(!WeakFrontier)staging.Y -= 2;
                     staging.Z = Map.Sosaria.GetAverageZ(staging.X, staging.Y);
                 }
                 if (!Map.Sosaria.CanSpawnMobile(staging)) throw new Exception("Blocked initial staging.");
@@ -109,12 +121,13 @@ namespace Server.TestOnly
                 // Spell.Cast explicitly rejects blessed players. Keep actual
                 // Player vulnerability during native maintenance.
                 State = "ready";
+                CheckStatusSerialization();
             }
             catch (Exception error) { Failure = error.ToString(); State = "failed"; }
             Poll = Timer.DelayCall(TimeSpan.Zero, TimeSpan.FromMilliseconds(250), Tick);
         }
 
-        private static bool Running { get { return State.StartsWith("running-"); } }
+        private static bool Running { get { return (State.StartsWith("running-") || State=="growing-frontier"); } }
         private static bool Owns(Mobile mobile)
         {
             IArachnidOutbreakOwned owned = mobile as IArachnidOutbreakOwned;
@@ -124,18 +137,22 @@ namespace Server.TestOnly
         {
             if (!Running) return;
             int change = e.NewHits - e.OldHits;
-            if (e.Mobile == Actor) { if (change < 0) Incoming -= change; else Restored += change; }
-            else if (change < 0 && Owns(e.Mobile))
+            if (e.Mobile == Actor) { if (change < 0) Incoming -= change; else Restored += change;
+                File.AppendAllText(Path.Combine(Evidence,"player-health.private.tsv"),DateTime.UtcNow.ToString("o")+"\t"+State+"\t"+e.OldHits+"\t"+e.NewHits+"\t"+e.Kind+"\t"+e.Mobile.Map+"\t"+(e.Source==null?"none":e.Source.GetType().Name+":"+e.Source.Serial.Value)+"\n"); }
+            else if (change < 0 && Owns(e.Mobile) && e.Kind==HealthChangeKind.Damage)
             {
                 if(e.Mobile is ArachnidOutbreakChampion && e.Mobile.Map==Map.Sosaria){BossRewardCenter=e.Mobile.Location;BossRewardCenterKnown=true;}
                 Outgoing -= change; LastOwnedDamage = DateTime.UtcNow;
+                if(WeakFrontier)File.AppendAllText(Path.Combine(Evidence,"enemy-health.private.tsv"),DateTime.UtcNow.ToString("o")+"\t"+e.Mobile.Serial.Value+"\t"+e.OldHits+"\t"+e.NewHits+"\t"+e.Kind+"\t"+e.Mobile.Map+"\t"+(e.Source==null?"none":e.Source.GetType().Name+":"+e.Source.Serial.Value)+"\n");
                 if(e.Source==Actor)OutgoingDirect-=change;
                 else if(e.Source!=null && e.Source.GetDamageMaster(e.Mobile)==Actor)OutgoingPets-=change;
+                else if(e.Source is CharacterClone)OutgoingClones-=change;
                 else OutgoingOther-=change;
             }
+            if(change<0 && Owns(e.Mobile) && e.Kind!=HealthChangeKind.Damage)UnattributedOwnedLoss-=change;
             if(SelectedPets.Contains(e.Mobile as BaseCreature)){if(change<0)PetIncoming-=change;else PetRestored+=change;}
         }
-        private static int OutgoingDirect,OutgoingPets,OutgoingOther,PetIncoming,PetRestored;
+        private static int OutgoingDirect,OutgoingPets,OutgoingOther,OutgoingClones,UnattributedOwnedLoss,PetIncoming,PetRestored;
         private static readonly string FixtureInstance=Guid.NewGuid().ToString("N");
         private static void OnDeath(Mobile mobile)
         {
@@ -164,6 +181,7 @@ namespace Server.TestOnly
             }
             else typeof(ArachnidOutbreakController).GetMethod("BeginAt", Private).Invoke(Controller, new object[] { Site, Placement });
             typeof(ArachnidOutbreakController).GetMethod("StartTimer", Private).Invoke(Controller, null);
+            if(WeakFrontier){State="growing-frontier";FrontierStarted=DateTime.UtcNow;Deadline=DateTime.UtcNow.AddMinutes(15);}
         }
 
         private static void Tick()
@@ -182,11 +200,13 @@ namespace Server.TestOnly
                     else if (text == "stop") State = "stopped";
                     else throw new Exception("Unsupported archmage command.");
                 }
+                if(State=="growing-frontier")StageFrontier();
                 if (Running)
                 {
                     if (!Actor.Alive) State = "dead";
                     else if (Controller.Phase == ArachnidOutbreakPhase.Cooldown)
                         State = BossKilled && (Controller.Status == "Completed; cooldown active." || (InfestationCase && Controller.Status == "Queen defeated; infestation ended.")) ? "completed" : "aborted";
+                    else if(WeakFrontier && State=="running-route" && (DateTime.UtcNow-Started).TotalSeconds>=180)State="frontier-window-ended";
                     else if (Mode == "stationary" && (DateTime.UtcNow - Started).TotalSeconds >= 300) State = "stationary-window-ended";
                     else if (Mode == "stationary" && Controller.ClearedBroods != 0 && (DateTime.UtcNow - LastOwnedDamage).TotalSeconds >= 120) State = "stationary-idle";
                     else if ((DateTime.UtcNow - Started).TotalSeconds >= 2700) State = "timeout";
@@ -199,15 +219,78 @@ namespace Server.TestOnly
                 if (File.Exists(Path.Combine(Evidence, "native-stop.txt")) || DateTime.UtcNow > Deadline)
                 {
                     if (Controller != null) Controller.Delete();
+                    foreach(CharacterClone clone in TestClones)if(!clone.Deleted)clone.Delete();
                     if(Trainer!=null && !Trainer.Deleted)Trainer.Delete();
                     foreach(BaseCreature pet in SelectedPets)if(pet!=null && !pet.Deleted){pet.Combatant=null;pet.ControlOrder=OrderType.Stop;}
                     Poll.Stop(); AutoSave.SavesEnabled = false;
                     File.WriteAllText(Path.Combine(Evidence, "native-stopped.txt"), "Archmage fixture stopped without saving; only its owned encounter cleaned.");
                 }
             }
-            catch (Exception error) { Failure = error.ToString(); State = "failed"; Status(); }
+            catch (Exception error)
+            {
+                Failure=error.ToString();State="failed";
+                File.WriteAllText(Path.Combine(Evidence,"fixture-failure.txt"),Failure);
+                try{Status();}catch(Exception statusError){File.AppendAllText(Path.Combine(Evidence,"fixture-failure.txt"),"\nStatus: "+statusError);}
+                try
+                {
+                    if(Controller!=null && !Controller.Deleted)Controller.Delete();
+                    foreach(CharacterClone clone in TestClones)if(!clone.Deleted)clone.Delete();
+                    if(Poll!=null)Poll.Stop();AutoSave.SavesEnabled=false;
+                    File.WriteAllText(Path.Combine(Evidence,"native-stopped.txt"),"Failed test-only fixture cleaned owned encounter without saving; failure retained.");
+                }
+                catch(Exception stopError){File.AppendAllText(Path.Combine(Evidence,"fixture-failure.txt"),"\nCleanup: "+stopError);}
+            }
         }
 
+        private static void StageFrontier()
+        {
+            ArachnidInfestationState colony=(ArachnidInfestationState)typeof(ArachnidOutbreakController).GetField("m_Infestation",Private).GetValue(Controller);
+            if(colony==null)throw new Exception("Missing real colony.");
+            int young=0,furthest=0;
+            foreach(ArachnidInfestationPatch patch in colony.Patches)
+            {
+                if(patch.Id!=0 && patch.Established && !patch.Retired && colony.Tier(patch)==0){++young;furthest=Math.Max(furthest,Distance(patch.Center,colony.Origin));}
+                if(patch.Id==0 || !patch.Established || patch.Retired || colony.Tier(patch)!=0 || Distance(patch.Center,colony.Origin)<36)continue;
+                int dx=Math.Sign(patch.Center.X-colony.Origin.X),dy=Math.Sign(patch.Center.Y-colony.Origin.Y);
+                for(int offset=12;offset<=15;++offset)
+                {
+                    Point3D point;
+                    if(!ArachnidInfestationTerrain.TryPoint(patch.Center.X+dx*offset,patch.Center.Y+dy*offset,out point) || !Map.Sosaria.CanSpawnMobile(point))continue;
+                    bool highThreat=false;int nearby=0;
+                    foreach(Mobile enemy in (List<Mobile>)typeof(ArachnidOutbreakController).GetField("m_Creatures",Private).GetValue(Controller))
+                    {
+                        if(enemy==null || enemy.Deleted || !enemy.Alive)continue;
+                        int distance=Distance(enemy.Location,point);if(distance<=24)++nearby;
+                        ArachnidInfestationCreature ranked=enemy as ArachnidInfestationCreature;
+                        if(distance<=30 && (enemy is ArachnidOutbreakChampion || ranked!=null && ranked.Tier>=3))highThreat=true;
+                    }
+                    if(highThreat)continue;
+                    FrontierSurvey="Natural tier0 patch="+patch.Id+" rootDistance="+Distance(point,colony.Origin)+" offset="+offset+" ownedWithin24="+nearby+"; no queen/tier3+ within30 at staging; no threat removals";
+                    TestedFrontier=patch;Actor.MoveToWorld(point,Map.Sosaria);
+                    if(MixedCase)
+                    {
+                        string[] selected=File.ReadAllLines(Path.Combine(Evidence,"mixed-clones.private"));
+                        if(selected.Length<1 || selected.Length>2)throw new Exception("Only one or two selected proxy allies allowed.");
+                        foreach(string line in selected)
+                        {
+                            PlayerMobile original=World.FindMobile((Serial)Int32.Parse(line.Trim(),CultureInfo.InvariantCulture)) as PlayerMobile;
+                            if(original==null || original==Actor || !original.Alive || original.Blessed || original.AccessLevel!=AccessLevel.Player)throw new Exception("Invalid selected offline clone source.");
+                            CharacterClone clone=new FrontierProxyAlly(original);CloneThings.CloneMobileProperties(original,clone);
+                            CloneThings.CloneMobileItems(original,clone);CloneThings.CloneMobileBackpack(original,clone);CloneThings.CloneMobileMount(original,clone);
+                            // Test-only allies filter hostility to this encounter; ordinary OmniAI/capabilities/resources remain. No hired status or follower-cap override.
+                            clone.Team=190;clone.FightMode=FightMode.Closest;clone.Home=point;clone.RangeHome=24;
+                            clone.MoveToWorld(new Point3D(point.X+TestClones.Count,point.Y,point.Z),Map.Sosaria);TestClones.Add(clone);
+                        }
+                    }
+                    Started=LastOwnedDamage=DateTime.UtcNow;State="running-route";Manifest("frontier-start.private.xml");return;
+                }
+            }
+            FrontierSurvey="Waiting natural growth; established tier0="+young+" furthest young center from root="+furthest+"; minimum center36, no queen/tier3+within30 of scout";
+            if((DateTime.UtcNow-FrontierStarted).TotalSeconds>600)throw new Exception("No naturally established distant tier-zero frontier in bounded growth window; no substituted root test.");
+        }
+
+        private static int Distance(Point3D a,Point3D b){return Math.Max(Math.Abs(a.X-b.X),Math.Abs(a.Y-b.Y));}
+        public static bool IsProxyTarget(Mobile mobile){return mobile is IArachnidOutbreakOwned && ((IArachnidOutbreakOwned)mobile).Controller==Controller;}
         private static void Attr(XmlWriter writer, string name, object value)
         { writer.WriteAttributeString(name, Convert.ToString(value, CultureInfo.InvariantCulture)); }
 
@@ -233,43 +316,49 @@ namespace Server.TestOnly
             File.WriteAllText(Path.Combine(Evidence,"selected-pets-ready.txt"),SelectedPets.Count.ToString());
         }
 
-        private static void Manifest(string name)
+        private static void Manifest(string name) { WriteCharacterManifest(name,Actor); }
+
+        public static void WriteCharacterManifest(string name, PlayerMobile subject)
         {
             using (XmlWriter writer = XmlWriter.Create(Path.Combine(Evidence, name), new XmlWriterSettings { Indent = true }))
             {
-                writer.WriteStartElement("character"); Attr(writer, "serial", Actor.Serial.Value);
-                Attr(writer, "access", Actor.AccessLevel); Attr(writer, "blessed", Actor.Blessed);
-                Attr(writer, "rawStr", Actor.RawStr); Attr(writer, "rawDex", Actor.RawDex); Attr(writer, "rawInt", Actor.RawInt);
-                Attr(writer, "str", Actor.Str); Attr(writer, "dex", Actor.Dex); Attr(writer, "int", Actor.Int);
-                Attr(writer, "hits", Actor.Hits); Attr(writer, "hitsMax", Actor.HitsMax);
-                Attr(writer, "stam", Actor.Stam); Attr(writer, "stamMax", Actor.StamMax);
-                Attr(writer, "mana", Actor.Mana); Attr(writer, "manaMax", Actor.ManaMax);
-                Attr(writer, "body", Actor.BodyValue); Attr(writer, "followers", Actor.Followers);
-                Attr(writer,"followersMax",Actor.FollowersMax);
-                BaseCreature mount=Actor.Mount as BaseCreature;
+                writer.WriteStartElement("character"); Attr(writer, "serial", subject.Serial.Value);
+                Attr(writer, "access", subject.AccessLevel); Attr(writer, "blessed", subject.Blessed);
+                Attr(writer, "rawStr", subject.RawStr); Attr(writer, "rawDex", subject.RawDex); Attr(writer, "rawInt", subject.RawInt);
+                Attr(writer, "str", subject.Str); Attr(writer, "dex", subject.Dex); Attr(writer, "int", subject.Int);
+                Attr(writer, "hits", subject.Hits); Attr(writer, "hitsMax", subject.HitsMax);
+                Attr(writer, "stam", subject.Stam); Attr(writer, "stamMax", subject.StamMax);
+                Attr(writer, "mana", subject.Mana); Attr(writer, "manaMax", subject.ManaMax);
+                Attr(writer,"karma",subject.Karma);Attr(writer,"tithing",subject.TithingPoints);Attr(writer,"statCap",subject.StatCap);
+                Attr(writer, "body", subject.BodyValue); Attr(writer, "followers", subject.Followers);
+                Attr(writer,"followersMax",subject.FollowersMax);
+                BaseCreature mount=subject.Mount as BaseCreature;
                 if(mount!=null){Attr(writer,"mountSerial",mount.Serial.Value);Attr(writer,"mountType",mount.GetType().FullName);Attr(writer,"mountHitsMax",mount.HitsMax);Attr(writer,"mountSlots",mount.ControlSlots);}
-                Attr(writer,"backpack",Actor.Backpack==null?0:Actor.Backpack.Serial.Value);
-                Attr(writer, "ancientDamage", ResearchSpell.DamagingSkill(Actor)); Attr(writer, "ancientCasting", ResearchSpell.CastingSkill(Actor));
-                Attr(writer, "x", Actor.X); Attr(writer, "y", Actor.Y); Attr(writer, "z", Actor.Z);
-                for (int i = 0; i < Actor.Skills.Length; ++i)
+                Attr(writer,"backpack",subject.Backpack==null?0:subject.Backpack.Serial.Value);
+                Attr(writer, "ancientDamage", ResearchSpell.DamagingSkill(subject)); Attr(writer, "ancientCasting", ResearchSpell.CastingSkill(subject));
+                Attr(writer, "x", subject.X); Attr(writer, "y", subject.Y); Attr(writer, "z", subject.Z);
+                for (int i = 0; i < subject.Skills.Length; ++i)
                 {
-                    Skill skill = Actor.Skills[i];
+                    Skill skill = subject.Skills[i];
                     if (skill.Base == 0 && skill.Value == 0) continue;
                     writer.WriteStartElement("skill"); Attr(writer, "name", skill.SkillName);
                     Attr(writer, "base", skill.Base); Attr(writer, "effective", skill.Value); Attr(writer, "cap", skill.Cap); writer.WriteEndElement();
                 }
-                foreach (Item item in Actor.Items)
+                foreach (Item item in subject.Items)
                 {
                     if (item.Layer == Layer.Backpack || item.Layer == Layer.Bank) continue;
                     writer.WriteStartElement("equipment"); Attr(writer, "serial", item.Serial.Value);
-                    Attr(writer, "type", item.GetType().FullName); Attr(writer, "layer", item.Layer); writer.WriteEndElement();
+                    Attr(writer, "type", item.GetType().FullName); Attr(writer, "layer", item.Layer);
+                    Spellbook book=item as Spellbook;if(book!=null)Attr(writer,"spellContent",book.Content);
+                    BaseWeapon weapon=item as BaseWeapon;if(weapon!=null){Attr(writer,"weaponSkill",weapon.Skill);Attr(writer,"primary",weapon.PrimaryAbility==null?"none":weapon.PrimaryAbility.GetType().Name);Attr(writer,"secondary",weapon.SecondaryAbility==null?"none":weapon.SecondaryAbility.GetType().Name);if(weapon.PrimaryAbility!=null){Attr(writer,"primaryRequired",weapon.PrimaryAbility.GetRequiredSkill(subject));Attr(writer,"primaryMana",weapon.PrimaryAbility.CalculateMana(subject));Attr(writer,"primarySkillEligible",weapon.PrimaryAbility.CheckSkills(subject));}}
+                    writer.WriteEndElement();
                 }
-                if (Actor.Backpack != null) Inventory(writer, Actor.Backpack);
-                foreach(Mobile mobile in Actor.Stabled)
+                if (subject.Backpack != null) Inventory(writer, subject.Backpack);
+                foreach(Mobile mobile in subject.Stabled)
                 {
                     BaseCreature pet=mobile as BaseCreature;if(pet==null)continue;
                     writer.WriteStartElement("savedCompanion");Attr(writer,"serial",pet.Serial.Value);Attr(writer,"type",pet.GetType().FullName);
-                    Attr(writer,"autoStabled",Actor.AutoStabled.Contains(pet));Attr(writer,"hitsMax",pet.HitsMax);Attr(writer,"slots",pet.ControlSlots);writer.WriteEndElement();
+                    Attr(writer,"autoStabled",subject.AutoStabled.Contains(pet));Attr(writer,"hitsMax",pet.HitsMax);Attr(writer,"slots",pet.ControlSlots);writer.WriteEndElement();
                 }
                 foreach(BaseCreature pet in SelectedPets)
                 {
@@ -285,7 +374,7 @@ namespace Server.TestOnly
             foreach (Item item in container.Items)
             {
                 writer.WriteStartElement("item"); Attr(writer, "serial", item.Serial.Value); Attr(writer, "type", item.GetType().FullName);
-                Attr(writer, "amount", item.Amount); Attr(writer, "graphic", item.ItemID); Attr(writer, "hue", item.Hue);
+                Attr(writer, "amount", item.Amount); Spellbook book=item as Spellbook;if(book!=null)Attr(writer,"spellContent",book.Content); Attr(writer, "graphic", item.ItemID); Attr(writer, "hue", item.Hue);
                 Container child = item as Container;
                 if (child != null) Inventory(writer, child);
                 if (item is ResearchBag || item is AncientSpellbook)
@@ -296,20 +385,40 @@ namespace Server.TestOnly
             }
         }
 
-        private static void Status()
+        private static void CheckStatusSerialization()
         {
-            string path = Path.Combine(Evidence, "archmage-state.xml");
+            // Exercise the actual writer with a child entry before clients can connect. No health or other capability is changed.
+            DamageEntry probe=new DamageEntry(Actor);
+            ArachnidOutbreakController previous=Controller;DateTime previousEnd=Ended;
+            ArachnidOutbreakController test=new ArachnidOutbreakController();
+            Actor.DamageEntries.Add(probe);Controller=test;Ended=DateTime.UtcNow;
+            try
+            {
+                Status("serializer-selfcheck.private.xml");
+                XmlDocument check=new XmlDocument();check.XmlResolver=null;check.Load(Path.Combine(Evidence,"serializer-selfcheck.private.xml"));
+                if(check.DocumentElement.SelectSingleNode("damageEntry")==null || !check.DocumentElement.HasAttribute("pendingGlands"))throw new Exception("Damage-entry/reward status serialization probe absent.");
+                File.WriteAllText(Path.Combine(Evidence,"serializer-selfcheck-passed.txt"),"Actual writer parsed with damage-entry child and terminal reward attributes; transient zero-damage metadata and disabled empty controller removed before clients; no health/skill/gear/supply changes.");
+            }
+            finally{Actor.DamageEntries.Remove(probe);Controller=previous;Ended=previousEnd;test.Delete();}
+        }
+
+        private static void Status(){Status("archmage-state.xml");}
+        private static void Status(string name)
+        {
+            string path = Path.Combine(Evidence, name);
             using (XmlWriter writer = XmlWriter.Create(path + ".tmp", new XmlWriterSettings { Indent = true }))
             {
                 writer.WriteStartElement("archmage"); Attr(writer, "state", State); Attr(writer, "failure", Failure);
                 Attr(writer,"fixtureInstance",FixtureInstance);Attr(writer,"serverPid",System.Diagnostics.Process.GetCurrentProcess().Id);
                 Attr(writer,"serverExe",Core.Assembly.Location);Attr(writer,"heartbeatUtc",DateTime.UtcNow.ToString("o"));
                 Attr(writer, "online", Actor != null && Actor.NetState != null); Attr(writer, "encounter", Started != DateTime.MinValue);
+                Attr(writer,"frontierSurvey",FrontierSurvey);Attr(writer,"frontierCase",WeakFrontier);Attr(writer,"clones",TestClones.Count);
+                if(TestedFrontier!=null){Attr(writer,"frontierId",TestedFrontier.Id);Attr(writer,"frontierX",TestedFrontier.Center.X);Attr(writer,"frontierY",TestedFrontier.Center.Y);Attr(writer,"frontierBirth",TestedFrontier.Birth);}
                 Attr(writer, "mode", Mode); Attr(writer, "blessed", Actor != null && Actor.Blessed);
                 Attr(writer, "seconds", Started == DateTime.MinValue ? 0 : ((Ended == DateTime.MinValue ? DateTime.UtcNow : Ended) - Started).TotalSeconds);
                 Attr(writer, "ownedDeaths", EnemyDeaths); Attr(writer, "playerDeaths", PlayerDeaths); Attr(writer, "bossKilled", BossKilled);
                 Attr(writer, "incoming", Incoming); Attr(writer, "outgoing", Outgoing); Attr(writer, "restored", Restored); Attr(writer, "movementRequests", MovementRequests);
-                Attr(writer,"outgoingDirect",OutgoingDirect);Attr(writer,"outgoingPets",OutgoingPets);Attr(writer,"outgoingOther",OutgoingOther);
+                Attr(writer,"outgoingDirect",OutgoingDirect);Attr(writer,"outgoingPets",OutgoingPets);Attr(writer,"outgoingOther",OutgoingOther);Attr(writer,"outgoingClones",OutgoingClones);Attr(writer,"unattributedOwnedLoss",UnattributedOwnedLoss);
                 Attr(writer,"petIncoming",PetIncoming);Attr(writer,"petRestored",PetRestored);
                 Attr(writer, "clearedBroods", Controller == null ? 0 : Controller.ClearedBroods);
                 Attr(writer, "phase", Controller == null ? String.Empty : Controller.Phase.ToString());
@@ -317,6 +426,8 @@ namespace Server.TestOnly
                 {
                     Attr(writer,"actor",Actor.Serial.Value);Attr(writer,"hits",Actor.Hits);Attr(writer,"hitsMax",Actor.HitsMax);
                     Attr(writer,"mana",Actor.Mana);Attr(writer,"stam",Actor.Stam);Attr(writer,"poisoned",Actor.Poisoned);
+                    Attr(writer,"poisonLevel",Actor.Poison==null?-1:Actor.Poison.Level);Attr(writer,"frozen",Actor.Frozen);Attr(writer,"paralyzed",Actor.Paralyzed);Attr(writer,"spell",Actor.Spell==null?"none":Actor.Spell.GetType().Name);
+                    Attr(writer,"currentAbility",WeaponAbility.GetCurrentAbility(Actor)==null?"none":WeaponAbility.GetCurrentAbility(Actor).GetType().Name);
                     Attr(writer,"x",Actor.X);Attr(writer,"y",Actor.Y);Attr(writer,"z",Actor.Z);
                 }
                 if (Ended != DateTime.MinValue && Controller != null)
@@ -340,6 +451,14 @@ namespace Server.TestOnly
                     Attr(writer, "newGroundGold", gold);
                     Attr(writer,"rewardCenterKnown",BossRewardCenterKnown);Attr(writer,"rewardX",BossRewardCenter.X);Attr(writer,"rewardY",BossRewardCenter.Y);
                 }
+                if(Controller!=null)
+                {
+                    ArachnidInfestationState colony=(ArachnidInfestationState)typeof(ArachnidOutbreakController).GetField("m_Infestation",Private).GetValue(Controller);
+                    if(colony!=null)foreach(ArachnidInfestationPatch patch in colony.Patches)
+                    {writer.WriteStartElement("patch");Attr(writer,"id",patch.Id);Attr(writer,"x",patch.Center.X);Attr(writer,"y",patch.Center.Y);Attr(writer,"tier",colony.Tier(patch));Attr(writer,"established",patch.Established);Attr(writer,"retired",patch.Retired);writer.WriteEndElement();}
+                }
+                if(Actor!=null)
+                    foreach(DamageEntry entry in Actor.DamageEntries){writer.WriteStartElement("damageEntry");Attr(writer,"source",entry.Damager==null?0:entry.Damager.Serial.Value);Attr(writer,"type",entry.Damager==null?"none":entry.Damager.GetType().Name);Attr(writer,"damage",entry.DamageGiven);writer.WriteEndElement();}
                 if (Placement != null)
                     for (int stage = 0; stage < 4; ++stage)
                     {
@@ -350,7 +469,17 @@ namespace Server.TestOnly
                 if (Controller != null)
                     foreach (Mobile mobile in (List<Mobile>)typeof(ArachnidOutbreakController).GetField("m_Creatures", Private).GetValue(Controller))
                         if (mobile != null && !mobile.Deleted && mobile.Alive)
-                        { writer.WriteStartElement("enemy"); Attr(writer, "serial", mobile.Serial.Value); Attr(writer, "type", mobile.GetType().Name); writer.WriteEndElement(); }
+                        {
+                            writer.WriteStartElement("enemy"); Attr(writer, "serial", mobile.Serial.Value); Attr(writer, "type", mobile.GetType().Name);
+                            Attr(writer,"x",mobile.X);Attr(writer,"y",mobile.Y);Attr(writer,"z",mobile.Z);Attr(writer,"hits",mobile.Hits);Attr(writer,"hitsMax",mobile.HitsMax);Attr(writer,"distance",Distance(mobile.Location,Actor.Location));Attr(writer,"combatant",mobile.Combatant==null?0:mobile.Combatant.Serial.Value);
+                            BaseCreature npc=mobile as BaseCreature;if(npc!=null){Attr(writer,"damageMin",npc.DamageMin);Attr(writer,"damageMax",npc.DamageMax);Attr(writer,"rangePerception",npc.RangePerception);Attr(writer,"aiRunning",npc.AIObject!=null && npc.AIObject.m_Timer.Running);}
+                            ArachnidInfestationCreature ranked=mobile as ArachnidInfestationCreature;if(ranked!=null){Attr(writer,"tier",ranked.Tier);Attr(writer,"guardian",ranked.Guardian);Attr(writer,"founder",ranked.Founder);Attr(writer,"patch",ranked.PatchId);}
+                            writer.WriteEndElement();
+                        }
+                foreach(CharacterClone clone in TestClones)
+                {
+                    writer.WriteStartElement("clone");Attr(writer,"serial",clone.Serial.Value);Attr(writer,"original",clone.Original.Serial.Value);Attr(writer,"alive",clone.Alive && !clone.Deleted);Attr(writer,"hits",clone.Hits);Attr(writer,"hitsMax",clone.HitsMax);Attr(writer,"combatant",clone.Combatant==null?0:clone.Combatant.Serial.Value);Attr(writer,"fightMode",clone.FightMode);Attr(writer,"team",clone.Team);writer.WriteEndElement();
+                }
                 foreach(BaseCreature pet in SelectedPets)
                     if(pet!=null && !pet.Deleted)
                     {
@@ -364,4 +493,13 @@ namespace Server.TestOnly
             if (File.Exists(path)) File.Replace(path + ".tmp", path, null); else File.Move(path + ".tmp", path);
         }
     }
+    public class FrontierProxyAlly : CharacterClone
+    {
+        public FrontierProxyAlly(Mobile source):base(source){}
+        public FrontierProxyAlly(Serial serial):base(serial){}
+        public override bool IsEnemy(Mobile mobile){return ArachnidArchmagePreparation.IsProxyTarget(mobile) && base.IsEnemy(mobile);}
+        public override void Serialize(GenericWriter writer){base.Serialize(writer);writer.Write(0);}
+        public override void Deserialize(GenericReader reader){base.Deserialize(reader);reader.ReadInt();}
+    }
+
 }

@@ -9,6 +9,15 @@ if (-not $acknowledged -and -not $FailedServer) { throw 'No no-save stop acknowl
 if ($StopObserver -and -not $FailedServer) { throw 'Observer stop requires explicit failed-server cleanup' }
 $prepared = Get-Content -LiteralPath (Join-Path $evidence 'prepared.json') -Raw | ConvertFrom-Json
 $allowed = @((Join-Path $copyRoot 'client\ClassicUO.exe'), (Join-Path $copyRoot 'shard\ConficturaServer.exe'))
+$protectionInputs = Join-Path $evidence 'protection-inputs.private.json'
+if (Test-Path -LiteralPath $protectionInputs) {
+    $protection = Get-Content -LiteralPath $protectionInputs -Raw | ConvertFrom-Json
+    $helperClient = Join-Path $copyRoot 'ally-client\ClassicUO.exe'
+    $expectedHelper = $protection.files.'ally-client/ClassicUO.exe'
+    if ($protection.actor_provenance -ne 'actual_saved_players' -or $protection.expected_clients -ne 2 -or -not $expectedHelper -or
+        (Get-FileHash -LiteralPath $helperClient -Algorithm SHA256).Hash.ToLowerInvariant() -ne $expectedHelper) { throw 'Actual saved helper provenance mismatch' }
+    $allowed += $helperClient
+}
 $cooperativeInputs = Join-Path $evidence 'cooperative-inputs.json'
 if (Test-Path -LiteralPath $cooperativeInputs) {
     $cooperative = Get-Content -LiteralPath $cooperativeInputs -Raw | ConvertFrom-Json
