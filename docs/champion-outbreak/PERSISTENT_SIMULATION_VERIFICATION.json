@@ -45,7 +45,7 @@
   },
   "no_world_or_listener": true,
   "candidate": "D:\\ConficturaUOTestTools\\infestation-persistent-components-20261031-006",
-  "status": "Finalresource-fair source compiled; seven suites pass; native007pending",
+  "status": "Bounded local functional acceptance complete; all owned copies closed; production activation disabled",
   "expanded_persistent_checks": 911,
   "expanded_proof": "D:/ConficturaUOTestTools/infestation-fairness-components-20261031-001",
   "pre_fix_reproduction": "D:/ConficturaUOTestTools/infestation-fairness-reproduction-20261031-001",
@@ -54,11 +54,22 @@
   "native_scope": {
     "native003": "candidate002;16admitted/compaction/connectedreturn;notresourcefairnesspass",
     "native005": "candidate004;18+establishednonretiredsinglecolony/all5ranks;75->212normalAI withbirths233unchanged;actualtownNPCdeaths;clonesrunning",
-    "native007": "candidate006;finalbody/resourcefairness;preparingactual16directorcase"
+    "native007": "candidate006;90samples15min/16actualdirectors;allrequestedterrain/routesgranted;maxstepage5.11s;someecologicalgrowthcausesunknown;return6->24/births26/174registry;town/frontier/respawn/conflicts/renderingrecorded",
+    "multiplayer": "Twoactualclients+savedpets16directors279samples;bothalive66moves79petdamageevents;3472protectedaliveAIobservations/0stops,0consecutiveprotectedidentity/backpackreplacements;767petonlyobservations/0stops;fiveabsenceshave typeddeaths"
   },
   "actual_clients": {
-    "Zanthus": "candidate004;473.54scomplete,originalmacro,no winningrequirement",
-    "Sargar": "candidate004;33.645sdriver-limiteddeathretained; corrected265.229scomplete withnormalpet/vet/finiteitems/nativewalking; no winningrequirement;goldquantityunassessedbecauseoldfixedsiteinspector"
+    "Zanthus": "candidate006;453.075scompleted;originalmacro unchanged;walkingadapterfixedforimmediatequeen;11068direct+698pet;15000gold/4glands/1skull",
+    "Sargar": "candidate006;103.723scompleted;1163direct+11070pet+3other;5of7catsdeadbonded;15000gold/4glands/1skull;earlierdeathandpolicyfailuresretained",
+    "representatives": "Four active saved-build frontier cases complete with attributed damage and finite policies; losses are observations, not balance acceptance",
+    "mixed": "147.265s loss;449direct+686clone; testallegiance/OmniAI/toolkit limitations retained"
   },
-  "storage_limit": "Syntheticvalueformat envelope excludesactualworldinventories/loadedshard/admission;notVPSproof"
+  "storage_limit": "Syntheticvalueformat envelope excludesactualworldinventories/loadedshard/admission;notVPSproof",
+  "final_ide_project_hygiene": true,
+  "project_runtime_sources": 6616,
+  "missing_unlisted_duplicate_includes": 0,
+  "final_all_owned_runtimes_closed": true,
+  "healing_timing_probe": "Actualsavedfighter/declared40injury;1500mscastvsprior1200mswait;4000mswait yields39typedselfheal,9mana/10tithing spent",
+  "complete_production_inputs_rematch": 6750,
+  "native_acceptance_manifest": "NATIVE_PERSISTENT_ACCEPTANCE.json",
+  "functional_tooling_commit": "0ab930fa"
 }

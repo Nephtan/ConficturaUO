@@ -1,6 +1,6 @@
 # Arachnid Outbreak prototype review
 
-October 31 current status: the persistent infestation supersedes the staged prototype below. Activation is disabled; acceptance continues. [PERSISTENT_SIMULATION.md](PERSISTENT_SIMULATION.md) records current behavior, serializers, evidence and open gates. The six-reservation approval and staged results below are historical, not active geography or infestation acceptance. Current core SHA: `8746b2340e5116ad3b980afb0c1aef4466d86a9d658b8dc022d74f04e7cbf31b`.
+October 31 current status: the persistent infestation supersedes the staged prototype below. Bounded actual-client, selected-clone and native multiplayer functional cases are complete; failed fixtures/losses and evidence limits are retained. All owned copied runtimes are closed and their saves preserved. Activation remains disabled. [PERSISTENT_SIMULATION.md](PERSISTENT_SIMULATION.md) and [NATIVE_PERSISTENT_ACCEPTANCE.json](NATIVE_PERSISTENT_ACCEPTANCE.json) record current behavior, serializers, outcomes and limits. The six-reservation approval and staged results below are historical, not active infestation geography. Current core SHA: `8746b2340e5116ad3b980afb0c1aef4466d86a9d658b8dc022d74f04e7cbf31b`.
 
 ## Historical staged prototype review
 
