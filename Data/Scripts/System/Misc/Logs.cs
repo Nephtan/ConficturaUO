@@ -918,7 +918,7 @@ namespace Server.Misc
 
                 PlayerMobile pm = (PlayerMobile)m;
 
-                string sKiller = mob.Name;
+                string sKiller = mob.Name ?? "an unnamed creature";
                 string[] eachWord = sKiller.Split('[');
                 int nLine = 1;
                 foreach (string eachWords in eachWord)

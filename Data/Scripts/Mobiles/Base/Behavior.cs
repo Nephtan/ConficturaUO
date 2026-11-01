@@ -6354,6 +6354,9 @@ namespace Server.Misc
 
         public static void DropReagent(Mobile player, BaseCreature monster)
         {
+            // Unnamed creatures still receive their type-based reagent drops.
+            string monsterName = monster.Name ?? String.Empty;
+
             SlayerEntry undead = SlayerGroup.GetEntryByName(SlayerName.Silver);
             SlayerEntry exorcism = SlayerGroup.GetEntryByName(SlayerName.Exorcism);
             SlayerEntry plants = SlayerGroup.GetEntryByName(SlayerName.WeedRuin);
@@ -6399,15 +6402,15 @@ namespace Server.Misc
             {
                 monster.PackItem(new SeaSalt(amount));
             }
-            if ((monster.Name).Contains("beetle"))
+            if (monsterName.Contains("beetle"))
             {
                 monster.PackItem(new BeetleShell(1));
             }
-            if ((monster.Name).Contains("werewolf") || (monster.Name).Contains("wolf man"))
+            if (monsterName.Contains("werewolf") || monsterName.Contains("wolf man"))
             {
                 monster.PackItem(new WerewolfClaw(Utility.RandomMinMax(1, 2)));
             }
-            if ((monster.Name).Contains("frog") || (monster.Name).Contains("toad"))
+            if (monsterName.Contains("frog") || monsterName.Contains("toad"))
             {
                 switch (Utility.RandomMinMax(0, 1))
                 {
@@ -6434,7 +6437,7 @@ namespace Server.Misc
                         break;
                 }
             }
-            if ((monster.Name).Contains("spider"))
+            if (monsterName.Contains("spider"))
             {
                 monster.PackItem(new SilverWidow(1));
             }
