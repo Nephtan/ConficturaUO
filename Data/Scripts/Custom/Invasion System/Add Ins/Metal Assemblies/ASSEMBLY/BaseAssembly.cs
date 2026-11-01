@@ -42,8 +42,7 @@ namespace Server.Mobiles
             set { m_Creator = value; }
         }
 
-        [Constructable]
-        public BaseAssembly()
+        protected BaseAssembly()
             : base(AIType.AI_Mage, FightMode.Closest, 10, 1, 0.7, 1.0)
         {
             ControlSlots = 3;
