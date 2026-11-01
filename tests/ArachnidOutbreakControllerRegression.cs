@@ -75,7 +75,7 @@ internal static class ArachnidOutbreakControllerRegression
             Check(Creatures(first).Count == 0 && Signs(first).Count == 0, "construction spawns nothing");
             Check(typeof(ArachnidOutbreakController).GetField("m_Timer", Private).GetValue(first) == null, "construction starts no timer");
             ArachnidOutbreakController second = new ArachnidOutbreakController();
-            try { Check(!first.TryEnable(out reason) && reason.Contains("ambiguous"), "duplicate controllers fail closed"); }
+            try { Check(!first.TryEnable(out reason) && !second.TryEnable(out reason) && reason.Contains("acceptance"), "multiple explicitly addressed directors retain the disabled delivery gate"); }
             finally { second.Delete(); }
         }
         finally { first.Delete(); }

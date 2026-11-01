@@ -281,6 +281,7 @@ namespace Server.Custom.Confictura.Champions
             m_Bards.Clear();
             m_Wounds.Clear();
             m_Poisons.Clear();
+            m_NestResistance.Clear(); m_BroodAttackers.Clear();
             foreach (Mobile mobile in m_Creatures.ToArray())
                 if (mobile != null && !mobile.Deleted && Owns(mobile, attempt))
                     mobile.Delete();
@@ -545,6 +546,9 @@ namespace Server.Custom.Confictura.Champions
                 || controller.m_Ledger.AttemptId != controller.AttemptId || e.Mobile == null || e.Mobile.Deleted)
                 return;
             int stage;
+            if (e.Kind == HealthChangeKind.Damage && e.NewHits < e.OldHits
+                && controller.m_Creatures.Contains(e.Mobile) && Owns(e.Mobile,controller.AttemptId))
+                controller.RecordInfestationAttacker(e.Mobile,e.Source == null ? null : e.Source.Player ? e.Source : e.Source.GetDamageMaster(e.Mobile));
             if (e.Kind == HealthChangeKind.Damage && e.NewHits < e.OldHits && controller.OwnedStage(e.Mobile, out stage))
             {
                 Mobile principal = e.Source == null ? null : e.Source.Player ? e.Source : e.Source.GetDamageMaster(e.Mobile);

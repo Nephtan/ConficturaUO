@@ -103,6 +103,15 @@ namespace Server.Custom.Confictura.Champions
 
     public class ArachnidOutbreakChampion : Mephitis, IArachnidOutbreakOwned, ISpreadingEncounterActor
     {
+        private BaseAI m_ShelterAI;
+        protected override BaseAI ForcedAI
+        {
+            get
+            {
+                if (m_ShelterAI == null || Object.ReferenceEquals(m_ShelterAI,AIObject)) m_ShelterAI = new ArachnidQueenShelterAI(this);
+                return m_ShelterAI;
+            }
+        }
         public const int ChampionHealth = 9000;
         public const int WebIntervalSeconds = 15;
         private DateTime m_NextWeb;

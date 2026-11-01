@@ -39,6 +39,7 @@ namespace Server.Custom.Confictura.Champions
     public sealed class ArachnidInfestationPatch
     {
         public int Id, Parent, Birth, Failures, Births;
+        public int ResponseBirths;
         public Point3D Center;
         public Mobile Guardian, Founder;
         public bool Established, Retired;
@@ -50,18 +51,19 @@ namespace Server.Custom.Confictura.Champions
 
         public void Serialize(GenericWriter writer)
         {
-            writer.Write(1);
+            writer.Write(2);
             writer.Write(Id); writer.Write(Parent); writer.Write(Birth); writer.Write(Failures); writer.Write(Births);
             writer.Write(Center); writer.Write(Guardian); writer.Write(Founder);
             writer.Write(Established); writer.Write(Retired); writer.Write(EstablishAfter); writer.Write(NextRefill);
             writer.Write(ExpansionMask); writer.Write(Initialized); writer.Write(Residents.Count);
             foreach (ArachnidInfestationResident resident in Residents) resident.Serialize(writer);
+            writer.Write(ResponseBirths);
         }
 
         public void Deserialize(GenericReader reader)
         {
             int version = reader.ReadInt();
-            if (version < 0 || version > 1) throw new InvalidOperationException("Unknown infestation patch format.");
+            if (version < 0 || version > 2) throw new InvalidOperationException("Unknown infestation patch format.");
             Id = reader.ReadInt(); Parent = reader.ReadInt(); Birth = reader.ReadInt(); Failures = reader.ReadInt(); Births = reader.ReadInt();
             Center = reader.ReadPoint3D(); Guardian = reader.ReadMobile(); Founder = reader.ReadMobile();
             Established = reader.ReadBool(); Retired = reader.ReadBool(); EstablishAfter = reader.ReadDateTime(); NextRefill = reader.ReadDateTime();
@@ -77,6 +79,8 @@ namespace Server.Custom.Confictura.Champions
                     slots |= 1 << resident.Slot; Residents.Add(resident);
                 }
             }
+            if (version >= 2) ResponseBirths = reader.ReadInt();
+            if (ResponseBirths < 0 || ResponseBirths > 9) throw new InvalidOperationException("Invalid local response budget.");
         }
     }
 
@@ -86,6 +90,8 @@ namespace Server.Custom.Confictura.Champions
         public const int MapColumns = 426, MapRows = 260, MaximumPatches = MapColumns * MapRows;
         public const int MaximumPopulation = 160, MaximumScenery = 240, PatchSpacing = 12;
         public Point3D Origin;
+        public Point3D QueenCenter;
+        public bool QueenCenterKnown;
         public int Epoch, Births, Cursor, RouteRequests, TerrainProbes;
         public DateTime Started, NextGrowth, LastTick;
         public List<ArachnidInfestationPatch> Patches = new List<ArachnidInfestationPatch>();
@@ -139,7 +145,7 @@ namespace Server.Custom.Confictura.Champions
 
         public int Tier(ArachnidInfestationPatch patch)
         {
-            return patch.Id == 0 ? 4 : Math.Min(4, Math.Max(0, (Epoch - patch.Birth) / 3));
+            return ArachnidTerritoryPolicy.TierAt(patch.Center,QueenCenterKnown ? QueenCenter : Origin);
         }
 
         public ArachnidInfestationPatch Find(int id)

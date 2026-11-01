@@ -147,6 +147,10 @@
     <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakCreatures.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakSite.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidInfestation.cs" />
+    <Compile Include="Custom\Champions\Outbreak\ArachnidTerritoryPolicy.cs" />
+    <Compile Include="Custom\Champions\Outbreak\ArachnidBroodResistance.cs" />
+    <Compile Include="Custom\Champions\Outbreak\ArachnidQueenShelter.cs" />
+    <Compile Include="Custom\Champions\Outbreak\QueenBroodMassPlanner.cs" />
     <Compile Include="Custom\Champions\Outbreak\SpreadingEncounterScheduler.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidInfestationActors.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidInfestationState.cs" />

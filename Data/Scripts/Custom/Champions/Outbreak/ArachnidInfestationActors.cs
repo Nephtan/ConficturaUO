@@ -23,6 +23,7 @@ namespace Server.Custom.Confictura.Champions
         public int PatchId { get { return m_Patch; } }
         public int Tier { get { return m_Tier; } }
         public bool Guardian { get { return m_Guardian; } }
+        public bool EggSac { get { return m_Guardian && m_Tier == 0 && CantWalk; } }
         public bool Founder { get { return m_Founder; } }
         public override bool HasBreath { get { return false; } }
         public override bool PlayerRangeSensitive { get { return false; } }
@@ -40,31 +41,43 @@ namespace Server.Custom.Confictura.Champions
         public void ApplyTier(int tier)
         {
             tier = Math.Max(0,Math.Min(4,tier));
-            double remaining = m_Tier < 0 ? 1.0 : HitsMax > 0 ? (double)Hits / HitsMax : 1.0;
-            double stamina = m_Tier < 0 ? 1.0 : StamMax > 0 ? (double)Stam/StamMax : 0.0;
-            double mana = m_Tier < 0 ? 1.0 : ManaMax > 0 ? (double)Mana/ManaMax : 0.0;
+            bool initial = m_Tier < 0;
+            int previousHits = Hits, previousStam = Stam, previousMana = Mana;
             m_Tier = tier;
+            bool egg = m_Guardian && tier == 0 && m_Controller != null && m_Controller.IsOutskirtsEgg(this)
+                && (initial || !SpreadingEncounterScheduler.Busy(this));
             int[] health = new int[] { 30,80,150,250,350 }, damage = new int[] { 2,6,10,16,22 };
-            Body = m_Guardian ? (tier == 4 ? 460 : 319) : tier == 0 ? (m_Kind == 0 ? 28 : 48) : tier == 1 ? (m_Kind == 0 ? 140 : 48)
+            Body = egg ? 51 : m_Guardian && tier > 0 ? (tier == 4 ? 460 : 319) : tier == 0 ? 28 : tier == 1 ? (m_Kind == 0 ? 140 : 48)
                 : tier == 2 ? (m_Kind == 0 ? 28 : 315) : tier == 3 ? (m_Kind == 0 ? 140 : 315) : (m_Kind == 0 ? 140 : 873);
-            Hue = 0;
-            Name = m_Founder ? "an arachnid brood founder" : m_Guardian ? "an arachnid nest guardian"
-                : tier == 0 ? "a frontier arachnid" : tier == 1 ? "a venom brood defender" : m_Kind == 0 ? "an arachnid brood sorcerer"
+            Hue = egg ? 0x481 : 0;
+            Name = egg ? "an arachnid egg sac" : m_Founder ? "an arachnid brood founder" : m_Guardian && tier > 0 ? "an arachnid nest guardian"
+                : tier == 0 ? "a frontier spider" : tier == 1 ? "a venom brood defender" : m_Kind == 0 ? "an arachnid brood sorcerer"
                 : tier == 3 ? "an arachnid brood hunter" : "an inner brood sentinel";
             SetStr(40+tier*40); SetDex(50+tier*8); SetInt(20+tier*40);
-            SetHits(health[tier]*(m_Guardian ? 4 : 1)); SetDamage(damage[tier],damage[tier]+(tier == 0 ? 6 : 8));
+            SetHits(egg ? 60 : health[tier]*(m_Guardian && tier > 0 ? 4 : 1));
+            SetDamage(egg ? 0 : damage[tier],egg ? 0 : damage[tier]+(tier == 0 ? 6 : 8));
+            CantWalk = egg;
+            Fame = egg ? 0 : 300; Karma = egg ? 0 : -5000;
             SetDamageType(ResistanceType.Physical,100);
             SetResistance(ResistanceType.Physical,10+tier*10);
             SetSkill(SkillName.FistFighting,30+tier*15); SetSkill(SkillName.Tactics,30+tier*15);
             SetSkill(SkillName.MagicResist,20+tier*15);
+            if (egg)
+            {
+                SetStr(1); SetDex(1); SetInt(1);
+                SetSkill(SkillName.FistFighting,0); SetSkill(SkillName.Tactics,0); SetSkill(SkillName.MagicResist,0);
+                SetResistance(ResistanceType.Physical,0);
+            }
             bool caster = !m_Guardian && !m_Founder && m_Kind == 0 && tier >= 2;
             AIType desired = caster ? AIType.AI_Mage : AIType.AI_Melee;
             if (AI != desired) ChangeAIType(desired);
             if (caster) { SetSkill(SkillName.Magery,50+tier*10); SetSkill(SkillName.Psychology,40+tier*10); }
-            FightMode = !m_Guardian && !caster && tier >= 3 ? FightMode.Weakest : FightMode.Closest;
-            ActiveSpeed = !m_Guardian && !caster && tier >= 3 ? 0.15 : 0.2;
-            Hits = Math.Max(1,(int)Math.Ceiling(HitsMax*remaining));
-            Stam = (int)Math.Floor(StamMax*stamina); Mana = (int)Math.Floor(ManaMax*mana);
+            FightMode = egg ? FightMode.None : !m_Guardian && !caster && tier >= 3 ? FightMode.Weakest : FightMode.Closest;
+            ActiveSpeed = tier == 0 ? 0.3 : !m_Guardian && !caster && tier >= 3 ? 0.15 : 0.2;
+            RangePerception = tier == 0 ? 6 : 10;
+            Hits = initial ? HitsMax : Math.Max(1,Math.Min(HitsMax,previousHits));
+            Stam = initial ? StamMax : Math.Min(StamMax,previousStam);
+            Mana = initial ? ManaMax : Math.Min(ManaMax,previousMana);
         }
 
         internal void Identify(Guid identity, byte slot, int kind)
@@ -82,8 +95,17 @@ namespace Server.Custom.Confictura.Champions
         public override bool IsEnemy(Mobile target)
         {
             if (target is IArachnidOutbreakOwned) return false;
-            return TownEnemy(this,target) || base.IsEnemy(target);
+            return FrontierReach(target) && (TownEnemy(this,target) || base.IsEnemy(target));
         }
+
+        private bool FrontierReach(Mobile target)
+        {
+            return m_Tier != 0 || Home == Point3D.Zero
+                || target != null && target.Map == Map && target.InRange(Home,24);
+        }
+
+        public override bool CanBeHarmful(Mobile target, bool message, bool ignoreOurBlessedness)
+        { return !EggSac && FrontierReach(target) && base.CanBeHarmful(target,message,ignoreOurBlessedness); }
 
         internal static void AcquireTownTarget(BaseCreature creature)
         {
@@ -107,17 +129,20 @@ namespace Server.Custom.Confictura.Champions
         {
             if (m_Controller == null || m_Controller.Deleted) { Delete(); return; }
             if (!m_Controller.KeepCreatureInBounds(this)) return;
+            // Weak frontier patrols defend their local patch; travel must not drag them across the world.
+            if (Combatant != null && !FrontierReach(Combatant)) { Combatant = null; FocusMob = null; }
+            if (FocusMob != null && !FrontierReach(FocusMob)) FocusMob = null;
             SpreadingEncounterScheduler.Track(this);
             if (DateTime.UtcNow >= m_NextTownScan)
             {
                 m_NextTownScan = DateTime.UtcNow.AddSeconds(2);
                 if (SpreadingEncounterScheduler.Interested(this) || SpreadingEncounterScheduler.Busy(this)) LastRelevant = DateTime.UtcNow;
-                AcquireTownTarget(this);
+                if (!EggSac && !(this is ArachnidBroodReinforcement)) AcquireTownTarget(this);
             }
             base.OnThink();
         }
 
-        public override void GenerateLoot() { AddLoot(m_Tier == 0 ? LootPack.Meager : m_Tier <= 2 ? LootPack.Average : LootPack.Rich); }
+        public override void GenerateLoot() { if (!EggSac) AddLoot(m_Tier == 0 ? LootPack.Meager : m_Tier <= 2 ? LootPack.Average : LootPack.Rich); }
         public override void OnDeath(Container corpse) { base.OnDeath(corpse); if (m_Controller != null) m_Controller.CreatureDied(this,corpse); }
         public override void OnAfterDelete() { SpreadingEncounterScheduler.Untrack(this); base.OnAfterDelete(); }
         public ArachnidInfestationCreature(Serial serial) : base(serial) { }

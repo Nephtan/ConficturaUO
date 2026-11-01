@@ -15,7 +15,7 @@ public static class PersistentInfestationRegression
     private static void Check(bool value,string message) { ++Checks; if (!value) throw new Exception(message); }
     private static object Field(object owner,string name) { return owner.GetType().GetField(name,Hidden).GetValue(owner); }
     private static object Call(object owner,string name,params object[] args)
-    { try { return owner.GetType().GetMethod(name,Hidden).Invoke(owner,args); } catch(TargetInvocationException error) { throw error.InnerException; } }
+    { try { return owner.GetType().InvokeMember(name,Hidden|BindingFlags.InvokeMethod,null,owner,args); } catch(TargetInvocationException error) { throw error.InnerException; } }
     private static object Shared(string name,params object[] args)
     { try { return typeof(SpreadingEncounterScheduler).GetMethod(name,BindingFlags.Static|BindingFlags.NonPublic).Invoke(null,args); } catch(TargetInvocationException error) { throw error.InnerException; } }
     private static void Track(Mobile actor,bool add)
@@ -35,9 +35,16 @@ public static class PersistentInfestationRegression
         foreach(ArachnidInfestationResident resident in patch.Residents)
         { ArachnidInfestationCreature actor = resident.Actor as ArachnidInfestationCreature; if(actor!=null)actor.LastRelevant=patch.LastInterest; }
     }
+    private static void ParkQueenForCompaction(ArachnidOutbreakController owner)
+    {
+        // Compaction fixtures deliberately isolate quiet survivors from queen protection.
+        foreach(Mobile actor in (List<Mobile>)Field(owner,"m_Creatures"))
+            if(actor is ArachnidOutbreakChampion)actor.MoveToWorld(new Point3D(4800,2600,0),Map.Sosaria);
+    }
     private static void SurvivorAndAdmission()
     {
         ArachnidOutbreakController owner=Start(); Mobile observer=new Mobile();observer.Player=true;
+        ParkQueenForCompaction(owner);
         List<Mobile> registryFixtures=new List<Mobile>();
         try
         {
@@ -88,11 +95,12 @@ public static class PersistentInfestationRegression
     private static void InteractionProtection()
     {
         ArachnidOutbreakController owner=Start();Mobile first=new Mobile();first.Player=true;Mobile second=new Mobile();second.Player=true;
+        ParkQueenForCompaction(owner);
         Hind pet=new Hind(),summon=new Hind();IDisposable sectorLease=null;
         try
         {
             ArachnidInfestationPatch patch=Root(owner);ArachnidInfestationCreature survivor=(ArachnidInfestationCreature)patch.Guardian;
-            Point3D far=new Point3D(4500,2800,0),east=new Point3D(patch.Center.X+55,patch.Center.Y,patch.Center.Z),west=new Point3D(patch.Center.X-55,patch.Center.Y,patch.Center.Z);
+            Point3D far=new Point3D(4500,2800,0),east=new Point3D(patch.Center.X+50,patch.Center.Y,patch.Center.Z),west=new Point3D(patch.Center.X-50,patch.Center.Y,patch.Center.Z);
             first.MoveToWorld(east,Map.Sosaria);second.MoveToWorld(west,Map.Sosaria);
             Check((bool)Shared("Interested",survivor),"combined player envelopes protect the colony before ordinary visible range");
             first.MoveToWorld(far,Map.Sosaria);Quiet(patch);
@@ -129,6 +137,7 @@ public static class PersistentInfestationRegression
         {
             ++Visits;if(TestAdmission){LastAdmission=(bool)Shared("AdmitActor",false);return;}
             if(WorkMode==3)return;
+            if(WorkMode==4){if((bool)Shared("AdmitStructuralActor"))++ActorGrants;return;}
             if(WorkMode==1){for(int i=0;i<10;++i)if((bool)Shared("AdmitActor",false))++ActorGrants;return;}
             if(WorkMode==2){for(int i=0;i<3;++i)if((bool)Shared("AdmitScenery",16))++SceneryGrants;return;}
             if((bool)Shared("Route"))++RouteGrants;
@@ -189,10 +198,10 @@ public static class PersistentInfestationRegression
         {
             ArachnidInfestationPatch patch=new ArachnidInfestationPatch();patch.Id=i;patch.Parent=i-1;patch.Birth=i;
             int row=i/5,column=i%5;if(row%2==1)column=4-column;
-            patch.Center=new Point3D(2514+column*12,2088+row*12,0);patch.Established=true;state.Add(patch);
+            patch.Center=new Point3D(2514+column*48,2088+row*48,0);patch.Established=true;state.Add(patch);
         }
         int ranks=0;foreach(ArachnidInfestationPatch patch in state.Patches)ranks|=1<<state.Tier(patch);
-        Check(ranks==31,"the maturity policy exposes five ranks across old interior and fresh frontier records");
+        Check(ranks==29,"queen distance exposes the lowest outskirts and three highest inner ranks independently of age");
         MemoryStream stream=new MemoryStream();BinaryFileWriter writer=new BinaryFileWriter(stream,true);state.Serialize(writer);writer.Write(887612);writer.Close();
         BinaryFileReader reader=new BinaryFileReader(new BinaryReader(new MemoryStream(stream.ToArray())));ArachnidInfestationState copy=new ArachnidInfestationState();copy.Deserialize(reader);
         Check(copy.Patches.Count==25 && copy.Births==901 && reader.ReadInt()==887612,"new value format accepts more than sixteen cells and four hundred births without losing its boundary");reader.Close();
@@ -228,6 +237,21 @@ public static class PersistentInfestationRegression
         List<ISpreadingEncounter>[] waiters=(List<ISpreadingEncounter>[])typeof(SpreadingEncounterScheduler).GetField("m_Waiters",BindingFlags.Static|BindingFlags.NonPublic).GetValue(null);
         foreach(List<ISpreadingEncounter> queue in waiters)Check(queue.Count==0,"unregister releases pending quota demand");
     }
+    private static void StructuralFairnessAboveTarget()
+    {
+        List<Mobile> fixtures=new List<Mobile>();List<WorkProbe> probes=new List<WorkProbe>();
+        try
+        {
+            for(int i=0;i<160;++i){Mobile actor=new Mobile();actor.MoveToWorld(new Point3D(5000,3000,0),Map.Sosaria);Track(actor,true);fixtures.Add(actor);}
+            WorkProbe denied=new WorkProbe();denied.WorkMode=1;probes.Add(denied);SpreadingEncounterScheduler.Register(denied);
+            for(int i=0;i<16;++i){WorkProbe structural=new WorkProbe();structural.WorkMode=4;probes.Add(structural);SpreadingEncounterScheduler.Register(structural);}
+            DateTime now=DateTime.UtcNow.AddHours(8);
+            for(int i=0;i<400;++i)Shared("Service",now.AddMilliseconds(i*250));
+            Check(denied.ActorGrants==0,"background admission remains denied at the target");
+            for(int i=1;i<probes.Count;++i)Check(probes[i].ActorGrants>0,"every structural director progresses despite capacity-denied competing demand");
+        }
+        finally{foreach(WorkProbe probe in probes)SpreadingEncounterScheduler.Unregister(probe);foreach(Mobile actor in fixtures){Track(actor,false);actor.Delete();}}
+    }
     public static int Main(string[] args)
     {
         try
@@ -236,7 +260,7 @@ public static class PersistentInfestationRegression
             typeof(World).GetField("m_Items",BindingFlags.Static|BindingFlags.NonPublic).SetValue(null,new Dictionary<Serial,Item>());
             typeof(World).GetField("m_Mobiles",BindingFlags.Static|BindingFlags.NonPublic).SetValue(null,new Dictionary<Serial,Mobile>());
             MapDefinitions.Configure();RaceDefinitions.Configure();PoisonImpl.Configure();Server.Movement.MovementImpl.Configure();Corpse.Initialize();ArachnidOutbreakController.Initialize();
-            SurvivorAndAdmission();MissingActorCannotReset();InteractionProtection();SharedWork();BootstrapAndInterest();FiniteGeographyAndVersions();AdmissionFairness();
+            SurvivorAndAdmission();MissingActorCannotReset();InteractionProtection();SharedWork();BootstrapAndInterest();FiniteGeographyAndVersions();AdmissionFairness();StructuralFairnessAboveTarget();
             Check(SpreadingEncounterScheduler.ActorCount==0 && SpreadingEncounterScheduler.SceneryCount==0,"owned teardown releases actor leases and scenery accounting");
             Console.WriteLine("PASS persistent infestation: "+Checks+" source-method checks; no saves/listener; synthetic scheduler/registry fixtures are not throughput or native gameplay evidence.");return 0;
         }

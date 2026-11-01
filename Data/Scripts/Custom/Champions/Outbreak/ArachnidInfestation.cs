@@ -62,8 +62,6 @@ namespace Server.Custom.Confictura.Champions
 
         private bool TryRandomInfestation(DateTime now)
         {
-            if (SpreadingEncounterScheduler.ActorCount >= SpreadingEncounterScheduler.ActorAdmissionTarget)
-                throw new SpreadingEncounterScheduler.Deferred();
             Mobile walker = new Mobile();
             try
             {
@@ -95,7 +93,7 @@ namespace Server.Custom.Confictura.Champions
         {
             Point3D point;
             if (!ArachnidInfestationTerrain.TryPoint(origin.X,origin.Y,out point) || !Map.Sosaria.CanSpawnMobile(point)
-                || !SpreadingEncounterScheduler.CanReserve(this,Map.Sosaria,point) || !SpreadingEncounterScheduler.AdmitActor(false)) return false;
+                || !SpreadingEncounterScheduler.CanReserve(this,Map.Sosaria,point) || !SpreadingEncounterScheduler.AdmitStructuralActor()) return false;
             ArachnidOutbreakPlacement placement = ArachnidInfestationTerrain.LootPlacement(point);
             if (!m_State.TryStartInfestation("infestation:"+point.X+":"+point.Y)) return false;
             SpreadingEncounterScheduler.Initialize();
@@ -140,7 +138,8 @@ namespace Server.Custom.Confictura.Champions
 
         private ArachnidInfestationCreature SpawnInfestationCreature(ArachnidInfestationPatch patch, bool guardian, bool founder, Point3D point)
         {
-            if (!SpreadingEncounterScheduler.AdmitActor(false)) return null;
+            if (!((guardian || founder) ? SpreadingEncounterScheduler.AdmitStructuralActor() : SpreadingEncounterScheduler.AdmitActor(SpreadingEncounterScheduler.PriorityAdmission)))
+            { return null; }
             ArachnidInfestationCreature creature = new ArachnidInfestationCreature(this,patch.Id,founder ? 0 : m_Infestation.Tier(patch),guardian,founder);
             creature.Home = patch.Center; creature.RangeHome = founder ? 0 : 7; creature.LastRelevant = DateTime.UtcNow;
             m_Creatures.Add(creature); creature.MoveToWorld(point,Map.Sosaria); SpreadingEncounterScheduler.Track(creature);
@@ -179,6 +178,17 @@ namespace Server.Custom.Confictura.Champions
         private void RecoverInfestation()
         {
             m_Infestation.RebuildIndex();
+            foreach (Mobile mobile in m_Creatures)
+            {
+                ArachnidOutbreakChampion queen = mobile as ArachnidOutbreakChampion;
+                if (queen != null && !queen.Deleted && queen.Alive) { UpdateQueenCenter(queen); break; }
+            }
+            foreach (Mobile mobile in m_Creatures)
+            {
+                ArachnidInfestationCreature actor = mobile as ArachnidInfestationCreature;
+                // Refresh saved frontier policy for residents and founders without replenishing resources.
+                if (actor != null && !actor.Deleted && actor.Alive && actor.Tier == 0 && Owns(actor,AttemptId)) actor.ApplyTier(0);
+            }
             foreach (ArachnidInfestationPatch patch in m_Infestation.Patches)
             {
                 if (!SpreadingEncounterScheduler.Reserve(this,Map.Sosaria,patch.Id,patch.Center)) throw new InvalidOperationException("Persisted infestation territories overlap.");
@@ -214,20 +224,32 @@ namespace Server.Custom.Confictura.Champions
             if (!ArachnidInfestationTerrain.TryPoint(patch.Center.X,patch.Center.Y,out ground,false)) { RetireInfestationBranch(id); return; }
             patch.LastInterest = now;
             HydrateInfestationPatch(patch,now);
+            if (SpreadingEncounterScheduler.PriorityAdmission) EstablishPopulation(patch,now);
             DecorateInfestationPatch(patch);
         }
 
         private void HydrateInfestationPatch(ArachnidInfestationPatch patch, DateTime now)
+        { HydrateInfestationPatch(patch,now,false); }
+
+        private void HydrateInfestationPatch(ArachnidInfestationPatch patch, DateTime now, bool structural)
         {
+            // Apply density migration before dormant records become visible actors and acquire protection.
+            if (!patch.Retired) PruneQuietSurplus(patch,now);
             for (int i = 0; i < patch.Residents.Count; ++i)
             {
                 ArachnidInfestationResident resident = patch.Residents[i];
+                if (structural && resident.Slot != 0) continue;
                 ArachnidInfestationCreature actor = resident.Actor as ArachnidInfestationCreature;
                 if (actor != null && (actor.Deleted || !actor.Alive))
                 { resident.Hits = 0; resident.Actor = null; resident.Inventory = null; patch.Residents[i] = resident; continue; }
                 if (actor != null && !actor.Deleted && actor.Alive)
-                { if (SpreadingEncounterScheduler.PriorityAdmission) actor.LastRelevant = now; continue; }
-                if (resident.Hits == 0 || !SpreadingEncounterScheduler.AdmitActor(true)) continue;
+                {
+                    int desired = m_Infestation.Tier(patch);
+                    if ((actor.Tier != desired || actor.EggSac != IsOutskirtsEgg(actor)) && (actor.Tier > desired || !SpreadingEncounterScheduler.Busy(actor)))
+                    { actor.ApplyTier(desired); patch.Residents[i] = Capture(actor); }
+                    if (SpreadingEncounterScheduler.PriorityAdmission) actor.LastRelevant = now; continue;
+                }
+                if (resident.Hits == 0 || !(structural ? SpreadingEncounterScheduler.AdmitStructuralActor() : SpreadingEncounterScheduler.AdmitActor(true))) continue;
                 Point3D point;
                 if (!ArachnidInfestationTerrain.TryPoint(resident.Position.X,resident.Position.Y,out point,false))
                     if (!FindInfestationPoint(patch.Center,7,out point)) continue;
@@ -236,6 +258,7 @@ namespace Server.Custom.Confictura.Champions
                 actor = new ArachnidInfestationCreature(this,patch.Id,resident.Tier,resident.Slot == 0,false);
                 actor.Identify(resident.Identity,resident.Slot,resident.Kind); actor.HitsMaxSeed = resident.MaximumHits;
                 actor.Hits = resident.Hits; actor.Stam = resident.Stam; actor.Mana = resident.Mana; actor.NextSpecial = resident.NextSpecial;
+                if (actor.Tier != m_Infestation.Tier(patch)) actor.ApplyTier(m_Infestation.Tier(patch));
                 actor.Home = patch.Center; actor.RangeHome = 7; actor.LastRelevant = now;
                 if (resident.Inventory != null && !resident.Inventory.Deleted)
                 { if (actor.Backpack != null) actor.Backpack.Delete(); actor.AddItem(resident.Inventory); }
@@ -248,6 +271,7 @@ namespace Server.Custom.Confictura.Champions
 
         private bool CompactInfestationPatch(ArachnidInfestationPatch patch, DateTime now)
         {
+            if (QueenProtectsPatch(patch)) return false;
             if (now-patch.LastInterest < TimeSpan.FromSeconds(SpreadingEncounterScheduler.QuietSeconds)
                 || m_PendingPatch != null && m_PendingPatch.Parent == patch.Id) return false;
             if (patch.Id == 0)
@@ -271,7 +295,7 @@ namespace Server.Custom.Confictura.Champions
                 if (actor == null || actor.Deleted || !actor.Alive) continue;
                 ArachnidInfestationResident resident = Capture(actor);
                 if (resident.Inventory != null) { actor.RemoveItem(resident.Inventory); resident.Inventory.Internalize(); }
-                resident.Actor = null; patch.Residents[i] = resident; m_Creatures.Remove(actor); actor.Delete();
+                resident.Actor = null; patch.Residents[i] = resident; m_Creatures.Remove(actor); m_BroodAttackers.Remove(actor); actor.Delete();
             }
             patch.Guardian = null;
             if (patch.Retired)
@@ -287,21 +311,24 @@ namespace Server.Custom.Confictura.Champions
 
         private void EstablishPopulation(ArachnidInfestationPatch patch, DateTime now)
         {
-            if (patch.Initialized)
+            if (patch.Retired) return;
+            if (patch.Initialized && NeedsGuardian(patch))
             {
                 bool survivor = false;
                 foreach (ArachnidInfestationResident resident in patch.Residents)
                     if (resident.Slot == 0 && resident.Hits > 0 && (resident.Actor == null || !resident.Actor.Deleted && resident.Actor.Alive)) survivor = true;
-                if (!survivor) { RetireInfestationBranch(patch.Id); return; }
+                if (!survivor && patch.Guardian != null) { RetireInfestationBranch(patch.Id); return; }
             }
             Point3D point;
-            if (!patch.Initialized && patch.Guardian == null && FindInfestationPoint(patch.Center,2,out point))
+            if (NeedsGuardian(patch) && patch.Guardian == null && FindInfestationPoint(patch.Center,2,out point))
             {
+                if (m_Infestation.Tier(patch) == 0 && !OpenEggGround(point)) return;
                 ArachnidInfestationCreature guardian = SpawnInfestationCreature(patch,true,false,point);
                 if (guardian == null) return;
                 guardian.Identify(guardian.Identity,0,guardian.Kind); patch.Guardian = guardian;
                 patch.Residents.Add(Capture(guardian)); patch.Initialized = true;
             }
+            if (!NeedsGuardian(patch)) patch.Initialized = true;
             if (!patch.Initialized) return;
             RefillInfestationPatch(patch,now); DecorateInfestationPatch(patch);
         }
@@ -319,9 +346,11 @@ namespace Server.Custom.Confictura.Champions
             {
                 ArachnidInfestationResident resident = patch.Residents[i]; slots |= 1 << resident.Slot;
                 ArachnidInfestationCreature actor = resident.Actor as ArachnidInfestationCreature;
-                if (actor != null && !actor.Deleted && actor.Alive && actor.Tier != tier) { actor.ApplyTier(tier); patch.Residents[i] = Capture(actor); }
+                if (actor != null && !actor.Deleted && actor.Alive && (actor.Tier > tier || !SpreadingEncounterScheduler.Busy(actor))
+                    && (actor.Tier != tier || actor.EggSac != IsOutskirtsEgg(actor))) { actor.ApplyTier(tier); patch.Residents[i] = Capture(actor); }
             }
-            int target = new int[] {5,7,9,11,13}[tier];
+            PruneQuietSurplus(patch,now);
+            int target = ArachnidTerritoryPolicy.PopulationTarget(patch,tier);
             if (patch.Residents.Count >= target) { patch.NextRefill = now.AddSeconds(30); return; }
             byte slot = 1; while ((slots & (1 << slot)) != 0 && slot < 13) ++slot;
             if (slot >= 13) return;
@@ -335,6 +364,17 @@ namespace Server.Custom.Confictura.Champions
             List<Item> existing = new List<Item>();
             foreach (Item item in m_Signs) { ArachnidInfestationWeb web = item as ArachnidInfestationWeb; if (web != null && !web.Deleted && web.PatchId == patch.Id) existing.Add(web); }
             int tier = Math.Min(3,m_Infestation.Tier(patch)), family = patch.Id%6;
+            if (tier == 0)
+            {
+                int sparseTarget = ArachnidTerritoryPolicy.HasEggSac(patch.Center) || ArachnidTerritoryPolicy.HasFrontierSpider(patch.Center) ? 1 : 0;
+                if (existing.Count == sparseTarget) return;
+                foreach (Item item in existing) item.Delete();
+                if (sparseTarget == 0 || !SpreadingEncounterScheduler.AdmitScenery(1)) return;
+                Point3D ground;
+                if (!ArachnidInfestationTerrain.TryPoint(patch.Center.X+3,patch.Center.Y+3,out ground,false)) return;
+                ArachnidInfestationWeb fringe = new ArachnidInfestationWeb(this,patch.Id,0x10D7);
+                fringe.MoveToWorld(ground,Map.Sosaria); m_Signs.Add(fringe); SpreadingEncounterScheduler.Track(fringe); return;
+            }
             int[] starts = new int[] {4280,4285,4290,4294,4298,4302}, sizes = new int[] {5,5,4,4,4,4};
             bool[] forwards = new bool[] {false,true,true,false,true,false};
             int target = 2; for (int shape = 0; shape < tier; ++shape) target += sizes[(family+shape)%6];
@@ -373,6 +413,8 @@ namespace Server.Custom.Confictura.Champions
         {
             ArachnidInfestationPatch patch = m_Infestation.Find(id); if (patch == null || patch.Retired) return;
             patch.Retired = true; m_Infestation.RemoveFrontier(id);
+            RemovePatchWebs(patch);
+            CancelNestResponse(patch.Id);
             // Established daughters are independent footholds. Existing combatants remain real.
             if (m_PendingPatch != null && m_PendingPatch.Parent == id) RetireInfestationBranch(m_PendingPatch.Id);
             if (m_PendingPatch == patch) { m_PendingPatch = null; m_FounderPath = null; }
@@ -399,16 +441,18 @@ namespace Server.Custom.Confictura.Champions
             if (creature != null)
             {
                 ArachnidInfestationPatch patch = m_Infestation.Find(creature.PatchId); if (patch == null) return;
+                RecordInfestationKill(creature,patch,DateTime.UtcNow);
                 for (int i = patch.Residents.Count-1; i >= 0; --i) if (patch.Residents[i].Identity == creature.Identity) patch.Residents.RemoveAt(i);
                 if (patch.Retired) return;
                 if (patch.Founder == creature && !patch.Established) { RetireInfestationBranch(patch.Id); return; }
-                if (patch.Guardian == creature)
+                if (patch.Guardian == creature && (creature.EggSac || m_Infestation.Tier(patch) > 0))
                 {
                     int milestone = InfestationMilestone();
                     if (milestone >= 0 && m_Ledger.Qualified(milestone).Count > 0)
                     { QueueStage(milestone); m_State.CompleteMilestone(milestone,DateTime.UtcNow); m_Wounds.Clear(); m_Poisons.Clear(); m_Bards.Clear(); }
                     RetireInfestationBranch(patch.Id);
                 }
+                else if (patch.Guardian == creature) patch.Guardian = null;
                 return;
             }
             ArachnidOutbreakChampion queen = mobile as ArachnidOutbreakChampion; if (queen == null) return;
@@ -422,8 +466,8 @@ namespace Server.Custom.Confictura.Champions
         internal void TrackInfestationQueen(ArachnidOutbreakChampion queen)
         {
             if (m_Infestation == null) return;
-            if (m_LiveSlots.ContainsKey(0) || SpreadingEncounterScheduler.Interested(queen) || SpreadingEncounterScheduler.Busy(queen)) SpreadingEncounterScheduler.Track(queen);
-            else SpreadingEncounterScheduler.Untrack(queen);
+            SpreadingEncounterScheduler.Track(queen);
+
         }
 
         private void TickInfestation(DateTime now)
@@ -436,8 +480,12 @@ namespace Server.Custom.Confictura.Champions
                 m_Creatures.RemoveAll(delegate(Mobile mobile) { return mobile == null || mobile.Deleted; });
                 m_Signs.RemoveAll(delegate(Item item) { return item == null || item.Deleted; });
                 bool queen = false;
-                foreach (Mobile mobile in m_Creatures) if (mobile is ArachnidOutbreakChampion && mobile.Alive) queen = true;
+                ArachnidOutbreakChampion livingQueen = null;
+                foreach (Mobile mobile in m_Creatures)
+                    if (mobile is ArachnidOutbreakChampion && mobile.Alive) { queen = true; livingQueen = (ArachnidOutbreakChampion)mobile; break; }
+                if (livingQueen != null) { UpdateQueenCenter(livingQueen); ServiceQueenShelter(livingQueen,now); }
                 if (!queen) { Abort(now,"Queen removed without a death outcome."); return; }
+                ServiceNestResponses(now);
                 for (int work = 0; work < 2 && m_LivePatches.Count > 0; ++work)
                 {
                     m_LiveCursor %= m_LivePatches.Count; ArachnidInfestationPatch patch = colony.Find(m_LivePatches[m_LiveCursor]);
@@ -481,19 +529,20 @@ namespace Server.Custom.Confictura.Champions
                     }
                     return;
                 }
-                if (now < colony.NextGrowth || colony.Frontiers.Count == 0 || SpreadingEncounterScheduler.ActorCount >= SpreadingEncounterScheduler.ActorAdmissionTarget) return;
+                if (now < colony.NextGrowth) { return; }
+                if (colony.Frontiers.Count == 0) { return; }
                 colony.NextGrowth = now.AddSeconds(2);
                 colony.FrontierCursor %= colony.Frontiers.Count;
                 ArachnidInfestationPatch source = colony.Find(colony.Frontiers[colony.FrontierCursor]); colony.FrontierCursor = (colony.FrontierCursor+1)%colony.Frontiers.Count;
-                HydrateInfestationPatch(source,now); EstablishPopulation(source,now);
-                if (!ValidInfestationReference(source.Guardian,source,false)) return;
+                HydrateInfestationPatch(source,now,true); EstablishPopulation(source,now);
+                if (source.Retired || !source.Established) return;
                 int direction = Utility.Random(4); int[] dx = new int[] {0,12,0,-12}, dy = new int[] {-12,0,12,0};
                 Point3D destination; int x = source.Center.X+dx[direction], y = source.Center.Y+dy[direction];
                 if (colony.Cell(x,y) != null)
                 { source.ExpansionMask |= (byte)(1 << direction); if (source.ExpansionMask == 15) colony.RemoveFrontier(source.Id); return; }
                 if (!ArachnidInfestationTerrain.TryPoint(x,y,out destination) || !SpreadingEncounterScheduler.CanReserve(this,Map.Sosaria,destination) || !SpreadingEncounterScheduler.Route()) return;
                 ++colony.RouteRequests;
-                if (!ArachnidInfestationTerrain.Connected(source.Guardian,source.Center,destination)) return;
+                if (!ArachnidInfestationTerrain.Connected(livingQueen,source.Center,destination)) return;
                 Point3D start; if (!FindInfestationPoint(source.Center,2,out start)) return;
                 ArachnidInfestationPatch child = new ArachnidInfestationPatch(); child.Id = colony.Patches.Count; child.Parent = source.Id; child.Center = destination;
                 child.Birth = colony.Epoch; child.LastInterest = now; child.Founder = SpawnInfestationCreature(child,false,true,start); if (child.Founder == null) return;

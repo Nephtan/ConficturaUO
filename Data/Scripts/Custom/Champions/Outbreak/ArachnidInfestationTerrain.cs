@@ -27,6 +27,8 @@ namespace Server.Custom.Confictura.Champions
             Map map = Map.Sosaria;
             if (x < 16 || x >= 5104 || y < 16 || y >= 3112) return false;
             point = new Point3D(x, y, map.GetAverageZ(x, y));
+            // Unflagged ground at the custom map's -127 void floor can otherwise pass CanFit.
+            if (point.Z <= -127) return false;
             Region region = Region.Find(point, map);
             if (region.IsPartOf(typeof(HouseRegion)) || region.IsPartOf(typeof(DungeonRegion))
                 || region.IsPartOf(typeof(SafeRegion)) || region.IsPartOf(typeof(ProtectedRegion))

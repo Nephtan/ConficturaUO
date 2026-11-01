@@ -169,7 +169,18 @@ namespace Server.Custom.Confictura.Champions
                 if (ActorCount >= ActorAdmissionTarget-origins*2) room = false;
             }
             if (!m_Working) return room;
+            // Capacity-denied background demand must not hold the shared birth queue
+            // ahead of structural growth, whose admission deliberately ignores that target.
+            if (!room) return false;
             if (!Permit(2,room && m_Births < ActorsPerSecond,m_OriginTurn)) return false;
+            ++m_Births;
+            return true;
+        }
+
+        internal static bool AdmitStructuralActor()
+        {
+            if (!m_Working || m_AdmissionDepth > 0) return true;
+            if (!Permit(2,m_Births < ActorsPerSecond,m_OriginTurn)) return false;
             ++m_Births;
             return true;
         }
