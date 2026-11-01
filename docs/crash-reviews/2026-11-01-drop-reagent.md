@@ -52,7 +52,7 @@ Atlantis mobiles, including one null name:
 | `BaseAssembly`, serial `411573` (`0x647B5`) | Atlantis `(4270,2619,-127)`, hidden, body 0, null name, unblessed, 1/1 health |
 | Triton, serial `107129` | Atlantis `(4254,2610,-127)`, named `Triton`, titled `the Cursed King`, 13,500/13,500 health |
 
-`BaseAssembly`'s constructable constructor does not assign a name. The natural
+`BaseAssembly`'s then-constructable constructor does not assign a name. The natural
 test setup did not create, rename, reveal, weaken, freeze or relocate either NPC. Its
 normal AI moved the assembly to `(4269,2620,-127)` before the lethal cast. This
 establishes a local historical-world reproduction; the supplied report alone
@@ -137,3 +137,81 @@ Deploy both `Behavior.cs` and `Logs.cs`, then restart under the normal shard
 procedure so runtime scripts compile. The tracked core executable needs no
 replacement. Deployment was not performed. Rollback is a focused source revert
 and restart; it requires no migration and restores the original crash risks.
+
+## Follow-up: prevent bare assembly creation
+
+`BaseAssembly` supplies shared upgrade and creator/crafting behavior for
+`IronDragon`, `MechGargoyle`, `MetalDaemon`, `Overseer` and `RunicGolemInvader`.
+The Runic Clockwork Assembly crafting item creates those completed subclasses,
+not the bare base. The package entered source history in `7c66fe38` on 2024-01-19.
+
+Matching-serializer inspection of the historical offline world recorded creation
+of serial `411573` on 2024-05-07 (stored server time, unspecified timezone). It has
+no creator, owner, crafting flag, spawner link, upgrades or XML attachments. No
+current source caller or inspected spawn entry creates the bare base. Direct
+staff Add was a viable creation route; an accidental bare spawn is an inference,
+not established attribution. Creation time does not establish placement time.
+Ordinary dungeon dormancy can set Hidden, so that flag is not evidence of staff
+concealment. This inventory does not establish current production state.
+
+The parameterless constructor is now `protected`, without `[Constructable]`.
+The class remains concrete and its public `BaseAssembly(Serial)` constructor,
+version-0 serialized data and death methods are unchanged. Its five subclasses
+retain their public constructable constructors. The earlier null-name fixes in
+`Behavior.cs` and `Logs.cs` remain unchanged. No existing object is automatically
+deleted, and no migration or core executable replacement is needed.
+
+This closes creation through the GameMaster Add menu/direct Add and the normal
+XMLSpawner creator. It changes no command registrations, access levels, map/range
+checks, timers or gameplay hooks. Source traces:
+
+- [BaseAssembly.cs](../../Data/Scripts/Custom/Invasion%20System/Add%20Ins/Metal%20Assemblies/ASSEMBLY/BaseAssembly.cs): protected parameterless constructor; public Serial constructor; unchanged Serialize/Deserialize.
+- [Runic Clockwork Assembly.cs](../../Data/Scripts/Custom/Invasion%20System/Add%20Ins/Metal%20Assemblies/Runic%20Clockwork%20Assembly.cs): concrete crafting creation and creator/control assignment.
+- [AddGump.cs](../../Data/Scripts/System/Gumps/AddGump.cs): `Match` requires public constructable constructors; `AddMenu` requires GameMaster.
+- [Commands.cs](../../Data/Scripts/System/Commands/Commands/Commands.cs): GameMaster `AddCommand` validates types, then targeting delegates to [Add.Invoke/BuildObjects](../../Data/Scripts/System/Commands/Add.cs).
+- [XmlSpawner2.cs](../../Data/Scripts/Custom/XMLSpawner/XmlSpawner2.cs): `CreateObject` filters public constructors by Constructable/Attachable requirements.
+- [World.cs](../../Data/System/Source/World.cs): saved type loading resolves the public Serial constructor independently of Constructable.
+
+Verification on 2026-11-01:
+
+| Evidence class | Result |
+| --- | --- |
+| Fresh isolated operational build and forced runtime script compile | Release/x86 core build and compile-only success; 47 existing death-crash regression assertions passed |
+| Disposable full-world startup | Forced `-service -nocache -compileonly` exited 0 with success milestone, followed by world load, initialization and listening on `127.0.0.1:54598` |
+| Save compatibility | Existing bare Atlantis serial loaded with its original null name, body 0, 1 HP and saved location; no deletion |
+| Production-method checks | Protected/unmarked parameterless constructor, retained public Serial constructor; XML creator rejects bare base; all five concrete types appear in Add search and construct through XML with names/bodies |
+| Actual local client, temporary GM actor | `[addmenu BaseAssembly` returned no results; `[add BaseAssembly` plus normal ground targeting returned `That type is not marked constructable.`; bare count remained one |
+| Preservation and teardown | 28 fixture assertions; all 20 copied saves, original/protected saves, profiles/settings and production/overlay/fixture hashes unchanged; both owned processes stopped and private port free |
+
+Build/component artifacts:
+`D:/ConficturaUO-main/output/drop-reagent-verification/ea6cdbe843a840049c475062dc40b32b`.
+Native artifacts:
+`D:/ConficturaUOTestTools/baseassembly-native-20261101-001/evidence/`, including
+`assembly-events.tsv`, both native screenshots, `assembly-verification.json`,
+process records and `teardown.json`. Fixture, verifier, reproduction instructions
+and scoped Resident feedback are in
+`D:/ConficturaUOTestTools/tools/baseassembly/`. These stay outside production's
+runtime tree. The initial PascalCase menu search was visually correct but omitted
+by the test observer's case-sensitive command filter; lowercase repetition
+provided the accepted native telemetry. No shard failure was observed.
+
+The disposable saved test actor received temporary GameMaster access, protection
+and safe travel after normal saved-login connection. Those setup properties were
+restored before forced no-save teardown. This proves staff construction behavior,
+not Player gameplay or graceful logout. Existing null-name death behavior was
+rechecked by component regression; the earlier natural Atlantis client evidence
+remains separately documented above.
+
+Tested `BaseAssembly.cs` SHA-256:
+`79B155BAC28832CF6D23C0D8C3A0B91E51CDA89E820DDC61F57275848250A11E`.
+`git diff --check`, local report-link checks and exact source comparison confirmed
+the constructor is the only production code edit and the Serial/save/death code
+is unchanged. No project-file or serialization-format change required an IDE
+project build. Preparation convenience-wrapper syntax was checked; the accepted
+run performed its equivalent preparation operations directly.
+
+Production deployment and deletion of the particular Atlantis object remain
+separate actions. Roll back this restriction by restoring the former public
+constructable parameterless constructor and recompiling scripts; preserve the
+independent null-name crash guards. Starting worktree was clean on `main` at
+`f15e98c24a89d6db11433f6e515013fd0169a2f5`; no unrelated changes were present.
