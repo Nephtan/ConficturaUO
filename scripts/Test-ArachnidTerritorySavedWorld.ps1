@@ -5,7 +5,13 @@ param(
     [string]$GameFiles='D:\ConficturaUOTestTools\shard\Data\Files',
     [int]$RetiredPatchId=-1,
     [ValidateRange(0,2147483647)][int]$MinimumResponseBirths=0,
-    [switch]$ExpectNoviceDead
+    [switch]$ExpectNoviceDead,
+    [ValidateRange(0,65535)][int]$ExpectedNoviceHits=90,
+    [ValidateRange(0,5104)][int]$OriginX=2514,
+    [ValidateRange(0,3112)][int]$OriginY=2088,
+    [ValidateRange(0,12)][int]$MinimumQueenBackupBirths=0,
+    [ValidateRange(0,100000)][int]$MinimumFrontierRecipients=0,
+    [switch]$AllowUnequippedNoviceDagger
 )
 $ErrorActionPreference='Stop'
 $savedRepository=Split-Path -Parent $PSScriptRoot
@@ -44,8 +50,13 @@ $savedExe=Join-Path $savedAttempt 'ArachnidSavedWorldRoundTrip.exe'
 & "$env:WINDIR\Microsoft.NET\Framework\v4.0.30319\csc.exe" /nologo /target:exe /platform:x86 "/out:$savedExe" "/reference:$savedBuild\ConficturaServer.exe" "/reference:$savedBuild\Data\Data.bin" /reference:System.Core.dll $savedTest *> (Join-Path $savedAttempt 'compile.log')
 if($LASTEXITCODE -ne 0){throw "Copied-save test compile failed; evidence $savedAttempt"}
 $savedLife=if($ExpectNoviceDead){'dead'}else{'alive'}
+$savedDagger=if($AllowUnequippedNoviceDagger){'carried'}else{'equipped'}
 Push-Location -LiteralPath $savedAttempt
-try { & $savedExe $GameFiles $RetiredPatchId $MinimumResponseBirths '-' $savedLife *> (Join-Path $savedAttempt 'load.log'); $savedExit=$LASTEXITCODE } finally {Pop-Location}
+try {
+    $ErrorActionPreference='Continue'
+    & $savedExe $GameFiles $RetiredPatchId $MinimumResponseBirths '-' $savedLife $ExpectedNoviceHits $OriginX $OriginY $MinimumQueenBackupBirths $MinimumFrontierRecipients $savedDagger *> (Join-Path $savedAttempt 'load.log')
+    $savedExit=$LASTEXITCODE
+} finally {$ErrorActionPreference='Stop';Pop-Location}
 @{exitCode=$savedExit;checkpoint=$savedCheckpoint;coreSHA256=(Get-FileHash -LiteralPath (Join-Path $savedBuild 'ConficturaServer.exe') -Algorithm SHA256).Hash;testSHA256=(Get-FileHash -LiteralPath $savedTest -Algorithm SHA256).Hash;scope='Offline native World.Load and explicit recovery; no global Initialize, listener, gameplay resume or save'} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $savedAttempt 'result.json') -Encoding UTF8
 Get-Content -LiteralPath (Join-Path $savedAttempt 'load.log') -Tail 6
 Write-Output "Copied-save verification evidence: $savedAttempt"

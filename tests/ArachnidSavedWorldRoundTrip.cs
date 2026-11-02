@@ -29,6 +29,8 @@ public static class ArachnidSavedWorldRoundTrip
             Check(File.Exists("Saves/Items/Items.bin"),"Actual saved world required");
             Check(typeof(Core).Assembly.GetType("Server.PreviewClock")==null,"Unmodified operational clock required");
             Core.Assembly=typeof(Core).Assembly;Core.Expansion=Expansion.SA;Core.DataDirectories.Add(args[0]);
+            // Offline failures must throw with the original cause, never offer to delete save objects.
+            typeof(Core).GetField("m_Service",BindingFlags.Static|BindingFlags.NonPublic).SetValue(null,true);
             ScriptCompiler.Assemblies=new Assembly[]{typeof(ArachnidOutbreakController).Assembly};
             MapDefinitions.Configure();RaceDefinitions.Configure();PoisonImpl.Configure();Server.Movement.MovementImpl.Configure();Corpse.Initialize();World.Load();
             ArachnidOutbreakController owner=null;ArachnidInfestationState colony=null;
@@ -36,7 +38,8 @@ public static class ArachnidSavedWorldRoundTrip
             {
                 ArachnidOutbreakController candidate=item as ArachnidOutbreakController;
                 if(candidate==null)continue;ArachnidInfestationState state=(ArachnidInfestationState)Get(candidate,"m_Infestation");
-                if(state!=null && state.Origin.X==2514 && state.Origin.Y==2088){Check(owner==null,"Staged checkpoint director must be unique");owner=candidate;colony=state;}
+                int originX=args.Length>6 ? Int32.Parse(args[6]) : 2514, originY=args.Length>7 ? Int32.Parse(args[7]) : 2088;
+                if(state!=null && state.Origin.X==originX && state.Origin.Y==originY){Check(owner==null,"Requested checkpoint director must be unique");owner=candidate;colony=state;}
             }
             Check(owner!=null && colony!=null,"Saved active infestation found");
             int retiredId=Int32.Parse(args[1]),minimumResponses=Int32.Parse(args[2]),responses=0;
@@ -45,9 +48,12 @@ public static class ArachnidSavedWorldRoundTrip
             Check(responses>=minimumResponses,"Actual response births survived positional save/load");
             PlayerMobile novice=World.FindMobile(203578) as PlayerMobile;
             bool expectDead=args.Length>4 && args[4]=="dead";
-            Check(novice!=null && (expectDead ? !novice.Alive && novice.Hits==0 : novice.Alive && novice.Hits==90),"Saved novice health and life state retained");
-            Item weapon=expectDead ? World.FindItem(1075032540) : novice.FindItemOnLayer(Layer.OneHanded);
-            Check(weapon is Dagger && weapon.Serial.Value==1075032540,"Actual starting dagger retained its identity; equipped for the live reclamation checkpoint");
+            int expectedNoviceHits=args.Length>5 ? Int32.Parse(args[5]) : 90;
+            Check(novice!=null && (expectDead ? !novice.Alive && novice.Hits==0 : novice.Alive && novice.Hits==expectedNoviceHits),"Saved novice health and life state retained");
+            bool carriedDagger=args.Length>10 && args[10]=="carried";
+            Item weapon=expectDead || carriedDagger ? World.FindItem(1075032540) : novice.FindItemOnLayer(Layer.OneHanded);
+            Check(weapon is Dagger && weapon.Serial.Value==1075032540,"Actual starting dagger retained its identity");
+            if(carriedDagger && !expectDead)Check(weapon.Parent==novice || novice.Backpack!=null && weapon.IsChildOf(novice.Backpack),"Dagger remains carried by the same actual novice without requiring prior client equipment");
             List<Before> actors=new List<Before>();
             foreach(Mobile mobile in (List<Mobile>)Get(owner,"m_Creatures"))
             {
@@ -56,8 +62,12 @@ public static class ArachnidSavedWorldRoundTrip
                 Before before=new Before();before.Actor=actor;before.Identity=actor.Identity;before.Hits=actor.Hits;before.Stam=actor.Stam;before.Mana=actor.Mana;before.Pack=actor.Backpack==null?0:actor.Backpack.Serial.Value;actors.Add(before);
             }
             int mobiles=World.Mobiles.Count,items=World.Items.Count;
+            int queenSpent=owner.QueenBackupSpent,paidRecipients=owner.FrontierRewardRecipients;
+            Check(queenSpent>=(args.Length>8 ? Int32.Parse(args[8]) : 0),"Requested actual queen backup expenditure survived load");
+            Check(paidRecipients>=(args.Length>9 ? Int32.Parse(args[9]) : 0),"Requested actual frontier-paid receipts survived load");
             owner.GetType().GetMethod("RecoverInfestation",Hidden).Invoke(owner,null);
             Check(World.Mobiles.Count==mobiles && World.Items.Count==items,"Recovery creates no replacement actors or inventory");
+            Check(owner.QueenBackupSpent==queenSpent && owner.FrontierRewardRecipients==paidRecipients,"Recovery refunds no queen births and resets no frontier-paid receipts");
             int frontier=0,founders=0,reinforcements=0;
             foreach(Before before in actors)
             {
@@ -78,7 +88,7 @@ public static class ArachnidSavedWorldRoundTrip
                 if(actor.Tier==0)
                 {
                     ++frontier;if(actor.Founder)++founders;
-                    Check(actor.ActiveSpeed==0.3 && actor.RangePerception==6,"Saved frontier/founder receives current travel policy");
+                    Check(actor.ActiveSpeed==0.3 && actor.RangePerception==owner.FrontierPerception,"Saved frontier/founder receives the saved controller travel policy");
                     Check(actor.EggSac || actor.Body.BodyID==28,"Frontier migration uses spider model");
                 }
             }
