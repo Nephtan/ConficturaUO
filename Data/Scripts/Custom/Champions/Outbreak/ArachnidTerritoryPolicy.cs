@@ -22,10 +22,16 @@ namespace Server.Custom.Confictura.Champions
         public static bool HasFrontierSpider(Point3D point)
         { return ((point.X / 12) + 2 * (point.Y / 12)) % 4 == 0; }
 
+        public static bool HasInnerNest(Point3D point, int innerPercent)
+        { return ((point.X/12*31+point.Y/12*17)%100+100)%100 < innerPercent; }
+
         public static int PopulationTarget(ArachnidInfestationPatch patch, int tier)
+        { return PopulationTarget(patch,tier,45); }
+
+        public static int PopulationTarget(ArachnidInfestationPatch patch, int tier, int innerPercent)
         {
             if (tier == 0) return (HasEggSac(patch.Center) ? 1 : 0) + (HasFrontierSpider(patch.Center) ? 1 : 0);
-            return tier == 2 ? 3 : tier == 3 ? 5 : 7;
+            return Math.Max(1,(tier == 2 ? 3 : tier == 3 ? 5 : 7)*innerPercent/100);
         }
     }
 
@@ -41,7 +47,7 @@ namespace Server.Custom.Confictura.Champions
         }
 
         private bool NeedsGuardian(ArachnidInfestationPatch patch)
-        { return m_Infestation.Tier(patch) > 0 || ArachnidTerritoryPolicy.HasEggSac(patch.Center); }
+        { return m_Infestation.Tier(patch) > 0 ? patch.Id==0 || ArachnidTerritoryPolicy.HasInnerNest(patch.Center,InnerPopulationPercent) : ArachnidTerritoryPolicy.HasEggSac(patch.Center); }
 
         private bool OpenEggGround(Point3D point)
         {
@@ -74,7 +80,7 @@ namespace Server.Custom.Confictura.Champions
         private bool PruneQuietSurplus(ArachnidInfestationPatch patch, DateTime now)
         {
             int tier = m_Infestation.Tier(patch);
-            int target = ArachnidTerritoryPolicy.PopulationTarget(patch,tier);
+            int target = ArachnidTerritoryPolicy.PopulationTarget(patch,tier,InnerPopulationPercent);
             if (patch.Residents.Count <= target) return false;
             // Migration is limited to genuinely quiet records; never erase a visible or engaged actor.
             foreach (ArachnidInfestationResident resident in patch.Residents)

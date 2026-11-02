@@ -52,6 +52,7 @@ namespace Server.Custom.Confictura.Champions
                 m_NextQueenWake = now.AddSeconds(2);
                 SpreadingEncounterScheduler.AdmitArea(queen.Map,queen.Location,18);
             }
+            if (QueenRetreating) return;
             ArachnidInfestationPatch current = m_Infestation.Find(m_QueenGoal);
             if (current != null && (current.Retired || !current.Established || LivingBroodWeight(current) == 0))
             { m_QueenGoal = -1; m_QueenPath = null; m_NextQueenPlan = now; }
@@ -152,15 +153,13 @@ namespace Server.Custom.Confictura.Champions
         private readonly ArachnidOutbreakChampion m_Queen;
         public ArachnidQueenShelterAI(ArachnidOutbreakChampion queen) : base(queen) { m_Queen = queen; }
         private bool Shelter()
-        { return m_Queen.Controller != null && m_Queen.Controller.Infestation && m_Queen.Controller.MoveQueenToShelter(m_Queen); }
+        { return m_Queen.Controller != null && m_Queen.Controller.Infestation && m_Queen.Controller.HandleQueenTactics(m_Queen); }
         public override bool DoActionWander() { return Shelter() || base.DoActionWander(); }
         public override bool DoActionGuard() { return Shelter() || base.DoActionGuard(); }
         public override bool DoActionFlee() { return Shelter() || base.DoActionFlee(); }
         public override bool DoActionCombat()
         {
             if (Shelter()) return true;
-            if (m_Queen.Controller != null && m_Queen.Controller.Infestation && m_Queen.Controller.QueenShelterPatch >= 0
-                && m_Queen.Combatant != null && !m_Queen.InRange(m_Queen.Combatant,3)) return true;
             return base.DoActionCombat();
         }
     }

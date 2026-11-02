@@ -207,6 +207,8 @@ internal static class ArachnidOutbreakControllerRegression
             // Deliberately contaminate the tracking lists: cleanup must still honor ownership.
             Creatures(controller).Add(unrelated);
             Signs(controller).Add(unrelatedItem);
+            typeof(ArachnidOutbreakController).GetField("m_QueenBackupSpent",Private).SetValue(controller,3);
+            ((List<Mobile>)typeof(ArachnidOutbreakController).GetField("m_FrontierRewarded",Private).GetValue(controller)).Add(unrelated);
             MemoryStream bytes = new MemoryStream();
             BinaryFileWriter writer = new BinaryFileWriter(bytes, true);
             controller.Serialize(writer);
@@ -216,6 +218,7 @@ internal static class ArachnidOutbreakControllerRegression
             BinaryFileReader reader = new BinaryFileReader(new BinaryReader(new MemoryStream(bytes.ToArray())));
             restored.Deserialize(reader);
             Check(reader.ReadInt() == 48161, "controller positional serializer ends at sentinel");
+            Check(restored.InnerPopulationPercent==45 && restored.ReplacementSeconds==30 && restored.QueenBackupSpent==3 && restored.FrontierRewardRecipients==1,"controller v4 retains tuning, spent queen births and paid frontier receipts");
             reader.Close();
             Check(restored.Phase == controller.Phase && restored.AttemptId == controller.AttemptId
                 && State(restored).LastActivity == State(controller).LastActivity, "controller preserves attempt and recovery clock");

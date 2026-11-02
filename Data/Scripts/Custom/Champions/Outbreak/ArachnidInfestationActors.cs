@@ -74,7 +74,7 @@ namespace Server.Custom.Confictura.Champions
             if (caster) { SetSkill(SkillName.Magery,50+tier*10); SetSkill(SkillName.Psychology,40+tier*10); }
             FightMode = egg ? FightMode.None : !m_Guardian && !caster && tier >= 3 ? FightMode.Weakest : FightMode.Closest;
             ActiveSpeed = tier == 0 ? 0.3 : !m_Guardian && !caster && tier >= 3 ? 0.15 : 0.2;
-            RangePerception = tier == 0 ? 6 : 10;
+            RangePerception = tier == 0 ? m_Controller == null ? 8 : m_Controller.FrontierPerception : 10;
             Hits = initial ? HitsMax : Math.Max(1,Math.Min(HitsMax,previousHits));
             Stam = initial ? StamMax : Math.Min(StamMax,previousStam);
             Mana = initial ? ManaMax : Math.Min(ManaMax,previousMana);
@@ -101,7 +101,7 @@ namespace Server.Custom.Confictura.Champions
         private bool FrontierReach(Mobile target)
         {
             return m_Tier != 0 || Home == Point3D.Zero
-                || target != null && target.Map == Map && target.InRange(Home,24);
+                || target != null && target.Map == Map && target.InRange(Home,m_Controller == null ? 24 : m_Controller.FrontierPursuit);
         }
 
         public override bool CanBeHarmful(Mobile target, bool message, bool ignoreOurBlessedness)

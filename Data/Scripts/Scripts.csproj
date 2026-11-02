@@ -148,8 +148,11 @@
     <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakSite.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidInfestation.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidTerritoryPolicy.cs" />
+    <Compile Include="Custom\Champions\Outbreak\ArachnidOutbreakTuning.cs" />
+    <Compile Include="Custom\Champions\Outbreak\ArachnidFrontierRewards.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidBroodResistance.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidQueenShelter.cs" />
+    <Compile Include="Custom\Champions\Outbreak\ArachnidQueenTactics.cs" />
     <Compile Include="Custom\Champions\Outbreak\QueenBroodMassPlanner.cs" />
     <Compile Include="Custom\Champions\Outbreak\SpreadingEncounterScheduler.cs" />
     <Compile Include="Custom\Champions\Outbreak\ArachnidInfestationActors.cs" />
@@ -668,6 +671,7 @@
     <Compile Include="Custom\PvPConsent\PKSword.cs" />
     <Compile Include="Custom\Progression\CharacterLevel\CharacterLevelCommands.cs" />
     <Compile Include="Custom\Progression\CharacterLevel\CharacterLevelService.cs" />
+    <Compile Include="Custom\Progression\CharacterLevel\CharacterCapabilityService.cs" />
     <Compile Include="Custom\PvE\RandomEncounters\Commands.cs" />
     <Compile Include="Custom\PvE\RandomEncounters\Definitions.cs" />
     <Compile Include="Custom\PvE\RandomEncounters\EncounterEngine.cs" />

@@ -89,6 +89,10 @@ namespace Server.Custom.Confictura
                 if (entry.Key != CharacterArchetype.Overall && entry.Value > 10)
                     from.SendMessage("{0}: {1}", entry.Key, entry.Value);
             }
+            CharacterCapabilityProfile capability=CharacterCapabilityService.Inspect(target);
+            from.SendMessage("Readiness evidence: training {0} (highest base {1:0.0}); roles {2}; attack {3} {4:0.0}.",capability.TrainingBand,capability.HighestBaseSkill,String.Join(", ",capability.Roles.ToArray()),capability.WeaponSkill,capability.WeaponSkillValue);
+            from.SendMessage("Carried bandages/heal/cure {0}/{1}/{2}; immortality items {3}; living nearby companions {4}, current combined health {5}.",capability.Bandages,capability.HealingPotions,capability.CurePotions,capability.DeathPreventionItems,capability.NearbyLivingCompanions,capability.NearbyCompanionHealth);
+            foreach (string uncertainty in capability.Uncertainty) from.SendMessage(uncertainty);
         }
 
         private class CharacterLevelTarget : Target

@@ -46,7 +46,7 @@ namespace Server.Custom.Confictura.Champions
                 controller.Restore();
         }
 
-        [Usage("ArachnidOutbreak <status|create|start|stop> [serial]")]
+        [Usage("ArachnidOutbreak <status|settings|create|start|stop> [serial]")]
         [Description("Inspect or control the separate arachnid outbreak director.")]
         private static void OnCommand(CommandEventArgs e)
         {
@@ -79,8 +79,10 @@ namespace Server.Custom.Confictura.Champions
                 controller.Stop();
                 from.SendMessage("Outbreak stopped; only this controller's owned entities were removed.");
             }
+            else if (action == "settings")
+                controller.SendTuning(from);
             else if (action != "status")
-                from.SendMessage("Usage: ArachnidOutbreak <status|create|start|stop> [serial]");
+                from.SendMessage("Usage: ArachnidOutbreak <status|settings|create|start|stop> [serial]");
             else
                 from.SendMessage("{0}: {1}; site={2}; cleared={3}; {4}", controller.Serial,
                     controller.Phase, controller.SiteId, controller.ClearedBroods, controller.Status);
@@ -282,6 +284,7 @@ namespace Server.Custom.Confictura.Champions
             m_Wounds.Clear();
             m_Poisons.Clear();
             m_NestResistance.Clear(); m_BroodAttackers.Clear();
+            ResetQueenTactics();
             foreach (Mobile mobile in m_Creatures.ToArray())
                 if (mobile != null && !mobile.Deleted && Owns(mobile, attempt))
                     mobile.Delete();
@@ -546,6 +549,7 @@ namespace Server.Custom.Confictura.Champions
                 || controller.m_Ledger.AttemptId != controller.AttemptId || e.Mobile == null || e.Mobile.Deleted)
                 return;
             int stage;
+            if (e.Mobile is ArachnidOutbreakChampion && controller.m_Creatures.Contains(e.Mobile) && Owns(e.Mobile,controller.AttemptId)) controller.RecordQueenPressure(e);
             if (e.Kind == HealthChangeKind.Damage && e.NewHits < e.OldHits
                 && controller.m_Creatures.Contains(e.Mobile) && Owns(e.Mobile,controller.AttemptId))
                 controller.RecordInfestationAttacker(e.Mobile,e.Source == null ? null : e.Source.Player ? e.Source : e.Source.GetDamageMaster(e.Mobile));
@@ -726,7 +730,7 @@ namespace Server.Custom.Confictura.Champions
         {
             CaptureInfestation();
             base.Serialize(writer);
-            writer.Write((int)3);
+            writer.Write((int)4);
             m_State.Serialize(writer);
             writer.Write(m_Creatures, true);
             writer.Write(m_Signs, true);
@@ -739,6 +743,9 @@ namespace Server.Custom.Confictura.Champions
             m_Wounds.Serialize(writer);
             writer.Write(m_Infestation != null);
             if (m_Infestation != null) m_Infestation.Serialize(writer);
+            m_Tuning.Serialize(writer);
+            writer.Write(m_QueenBackupSpent);
+            writer.Write(m_FrontierRewarded,true);
         }
         public override void Deserialize(GenericReader reader)
         {
@@ -761,6 +768,13 @@ namespace Server.Custom.Confictura.Champions
             {
                 m_Infestation = new ArachnidInfestationState();
                 m_Infestation.Deserialize(reader);
+            }
+            if (version >= 4)
+            {
+                m_Tuning.Deserialize(reader);
+                m_QueenBackupSpent=reader.ReadInt();
+                if (m_QueenBackupSpent<0 || m_QueenBackupSpent>12) throw new InvalidOperationException("Invalid queen backup expenditure.");
+                m_FrontierRewarded=reader.ReadStrongMobileList();
             }
         }
     }

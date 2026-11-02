@@ -35,7 +35,8 @@ namespace Server.Custom.Confictura.Champions
     {
         Glands,
         Skull,
-        Artifact
+        Artifact,
+        FrontierSupplies
     }
 
     // Independent world objects preserve earned items when an encounter is

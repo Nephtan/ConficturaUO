@@ -72,10 +72,10 @@ namespace Server.Custom.Confictura.Champions
             int wave = nest.ResponseBirths < 2 ? 1 : nest.ResponseBirths < 5 ? 2 : 3;
             int threshold = wave == 1 ? 3 : wave == 2 ? 6 : 10;
             if (response.Remaining != 0 || now < response.Cooldown || response.Kills.Count < threshold) return;
-            response.Wave = wave; response.Remaining = wave+1; response.Due = now.AddSeconds(10); ++BroodWarnings;
+            response.Wave = wave; response.Remaining = wave+1; response.Due = now.AddSeconds(LocalWarningSeconds); ++BroodWarnings;
             foreach (Mobile participant in response.Participants.Keys)
                 if (!participant.Deleted && participant.Alive && participant.Map == Map.Sosaria && participant.InRange(nest.Center,96))
-                    participant.SendMessage(0x35,"The nearby egg sacs stir. Stronger brood will defend this nest in ten seconds. Withdraw to avoid them.");
+                    participant.SendMessage(0x35,"The nearby egg sacs stir. Stronger brood will defend this nest in {0} seconds. Withdraw to avoid them.",LocalWarningSeconds);
         }
 
         private void ServiceNestResponses(DateTime now)
