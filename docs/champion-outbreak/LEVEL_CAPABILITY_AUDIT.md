@@ -49,6 +49,8 @@ The original novice, intermediate, Sargar and Zanthus remain separate reference 
 
 These are selected candidates and test requirements, not claimed completed native cases. Existing natural growth, client-driver fidelity, outcomes, resource use and any failures are recorded separately as the cycle proceeds.
 
+Readiness also includes hunger, thirst and access to actual owned food. The saved bard started at Hunger4 and lost health while waiting safely in town, despite strong bard training and hundreds of bandages. Native use of his own food and a bandage restored82/82 without any stat grant. The offline survey now exports food/drink traits; the current read-only capability profile does not yet flag nutrition. Treat that as a diagnostic limitation, not a reason to migrate canonical Level or weaken enemies globally. The novice also trained Swords30 but carried a Fencing dagger with Fencing0; nominal level alone misses that mismatch.
+
 ## Why this is useful without false precision
 
 Use the level/lane vector to find contrasting saved builds, then use actual readiness evidence to choose a fair activity and driver. Test a novice's ability to kill a few hostile frontier creatures and reclaim a cell; test a bard's support effect; test an archer with the ammunition actually available; test Zanthus actively against the queen. Compare observed pressure, control, resource costs and outcomes. Do not make every player fight the same core, or scale a shared overworld queen independently for each viewer from a lossy level number.
