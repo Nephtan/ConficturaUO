@@ -20,6 +20,8 @@ Authorized November 1, 2026. Work on `ChampRevamp` from `535ffaf2`; preserve loc
 
 ## Tracking
 
+Current consolidated evidence and remaining release checks are in [TERRITORY_POLISH_VERIFICATION.md](TERRITORY_POLISH_VERIFICATION.md). The chronological notes below retain earlier failures and intermediate states; they are not the latest acceptance summary. Production source and component tests are committed in `0019b067`.
+
 Baseline was clean. Current `main` crash fixes were merged into `ChampRevamp` in `666127fb`; `main` remains unchanged. The design brief is [TERRITORY_POLISH_DESIGN.md](TERRITORY_POLISH_DESIGN.md).
 
 Candidate source and component tests are implemented but not yet accepted. Evidence is under `D:/ConficturaUOTestTools/infestation-polish-20261101-001`. Operational Release/x86 core build, forced runtime script compile, project inventory (6,620 entries; no missing/unlisted/duplicate files), and the component suites passed on the refreshed candidate. IDE project build and final native/persistence gates remain pending.
@@ -29,3 +31,19 @@ First native trial uses 671 explicitly constructed connected cells, ordinary ser
 The novice passage case failed: repeated short straight-ahead path requests stalled near trees; two tier-zero frontier spiders damaged him and a normal `TigerRiding` delivered the killing blows. This is retained as a failed route test, not a passing outskirts-safety result. Initial nearby staging also allowed ordinary cross-character buffs, so subsequent manifests must record actual starting conditions. Source saves and personal profiles remain protected. No final demonstration has started.
 
 Add a separate natural-origin colony check: normal random search, founder walking and establishment under the ordinary clock, observed/exercised through a real client. Constructed geometry alone cannot pass natural-growth acceptance. All remaining gates stay open until measured, including novice reclamation, escalation/withdrawal, bystanders/pets/NPCs, actual save/reload, and full veteran toolkit combat.
+
+## November 1 development evidence update
+
+Evidence is private under `D:/ConficturaUOTestTools/infestation-polish-20261101-003`; earlier trials remain retained. These are development results, not final delivery acceptance.
+
+- The actual saved novice equipped his own dagger, destroyed egg sac1389 (patch322), then completed the outward/return travel route at90/90 health with zero case damage. A normal riding basilisk killed him later while idle; that separate outcome is retained.
+- The intermediate case failed to withdraw: a long client path request stalled, and an ordinary dragon killed him. No reinforcement damaged him. Subsequent terrain-guided short native path requests successfully carried Sargar through the same general region and out to2273,2051.
+- Saved Sargar and his seven saved CragCats triggered native warned waves of2/3/4 tier1/2/3 defenders at nest187. The nest reached its nine-birth allowance. Sargar withdrew at267/267; all seven cats survived, with some injured. Recorded outgoing damage13695 included8525 pet damage; player incoming31, responseDamage0. This does not imply pets took no reinforcement damage.
+- The queen took133 normal movement steps and recorded an interior arrival. A separate colony selected random origin2047,692 using the ordinary clock and established real walking founders with the shared actor count above1000. This is server evidence; real-client observation of that separate colony remains pending.
+- Zanthus's unchanged original macro performed maintenance, summoning, Ignite and control while advancing, then an observation-file sharing race escaped the wrapper and stopped it. His later death is not an uninterrupted combat-build result. The wrapper now retries shared observations; a fresh test remains required.
+- The bystander reached a point near the response nest through native movement and recorded zero response damage, but active-wave overlap was inadequate. Its gate remains open. The fixture now selects a partially used response nest rather than the first stale disturbance.
+- Two ordinary copied `World.Save` checkpoints were reloaded by the current candidate: actual reclamation1643 checks and persisted nine response births4238 checks. These tests use native `World.Load` and explicit policy recovery without global script initialization, listeners, resumed gameplay, or another save. Actor/inventory identities and finite resources were retained. Old-format sentinel tests remain separate evidence.
+
+Live viewing found former inner territory could remain crowded with downgraded weak brood. Dormant surplus was being hydrated before density pruning, immediately acquiring interaction protection. The candidate now applies quiet density migration before hydration; the focused regression and all ten component suites passed (`component-runs/60cf58c6a52d411a98e5b5b3fc33cdb7`). Visible or engaged survivors remain protected and are not made to disappear. Native migration/reentry appearance still needs acceptance.
+
+Latest forced runtime script compile is `compile-refresh/7e5ea9c914fb46018221c73efa539897`. The explicit source/project inventory remains6620 exact entries. IDE project builds passed separately; those results do not replace runtime script compilation. A fresh fourth copied-world trial uses current production scripts plus eight declared containment overlays and a guarded test fixture. No final guided demonstration has started; native full-macro, active-wave bystander, density reentry, natural-client, and NPC/guard/respawn gates remain open.
