@@ -31,8 +31,11 @@ namespace Server.Custom.Confictura.Champions
             Position = reader.ReadPoint3D(); Identity = new Guid(reader.ReadString()); bool live = reader.ReadBool();
             Actor = reader.ReadMobile(); Inventory = reader.ReadItem() as Container; NextSpecial = reader.ReadDateTime();
             if (live && Actor == null) Hits = 0;
-            if (Slot > 12 || Kind > 1 || Tier > 4 || Hits > MaximumHits || MaximumHits == 0 || Identity == Guid.Empty)
-                throw new InvalidOperationException("Invalid resident snapshot.");
+            // A live creature can briefly retain health above its current maximum after
+            // a stat/control effect ends. Preserve that snapshot; ordinary Hits assignment
+            // clamps any later dormant hydration. It is not a corrupt positional record.
+            if (Slot > 12 || Kind > 1 || Tier > 4 || MaximumHits == 0 || Identity == Guid.Empty)
+                throw new InvalidOperationException(String.Format("Invalid resident snapshot: slot={0}, kind={1}, tier={2}, hits={3}, max={4}, identity={5}.",Slot,Kind,Tier,Hits,MaximumHits,Identity));
         }
     }
 

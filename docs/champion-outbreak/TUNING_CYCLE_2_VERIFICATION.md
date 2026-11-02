@@ -25,6 +25,14 @@ Generation used population100 and replacement5. It predates the final refuge-lea
 
 Native matched comparisons, current-version resumed gameplay, additional saved-build cases and actual supply collection remain pending in this source-check checkpoint. Guard respawn, production release recovery and economic acceptance remain separate release gates.
 
+## Native-discovered resident recovery correction
+
+The first five-minute ordinary-clock control case exercised real queen engagement, retreat and finite guards. Reloading its later cleanup checkpoint failed on an existing version0 resident record with368 health and a current maximum of350. The positional data was intact; `ArachnidInfestationResident.Deserialize` incorrectly required health never to exceed the current maximum. The native world demonstrated that this is not a valid invariant for a live creature under changing effects. The correction accepts that health snapshot while preserving slot/kind/tier/identity/maximum validation and every serialized field/type/order. Dormant hydration still assigns through the ordinary `Mobile.Hits` setter, which clamps to the current maximum. It grants no healing and changes no global health behavior.
+
+Failed attempts remain under `D:/ConficturaUOTestTools/arachnid-saved-world-verification/905a4fe367b947d3a668be274d0b4bf1`, `7adf2454cf054a67bc135fa8c8e65c36` and `65a59fd56ab34b2a8a763a36cd861dd9`. The offline runner now suppresses destructive interactive recovery prompts and retains the original exception. The regression reproduces the368/350 record and checks its exact following sentinel.
+
+Corrected exact source forced runtime compilation and all ten component suites passed at `D:/ConficturaUOTestTools/infestation-tuning-20261102-001/verification/dc3c6be82eb74d3f89c838c939215630`. The actual previously rejected save then loaded and recovered:622 checks,35 patches,184 resident actors and six saved queen guards; finite expenditure survived. Evidence: `D:/ConficturaUOTestTools/arachnid-saved-world-verification/d3c6633cdd2c445fbf015f0da0e1cc43`. This checkpoint was saved after the300-second case boundary, so it includes ordinary continued world activity; its six guards must not be substituted for the three spent at the measured case boundary. Offline recovery is still distinct from globally initialized resumed gameplay.
+
 ## Source traces
 
 Implementation and positional serializer map: [settings](TUNING_CYCLE_2_SETTINGS.md). Source-method fixtures: `tests/ArachnidTerritoryRegression.cs`, `tests/ArachnidOutbreakControllerRegression.cs` and the eight existing regression suites listed above. Offline replay fixture and runner: `tests/ArachnidSavedWorldRoundTrip.cs`, `scripts/Test-ArachnidTerritorySavedWorld.ps1`. No test fixture is under the production runtime script tree.

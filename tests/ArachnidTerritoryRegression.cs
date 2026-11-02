@@ -37,6 +37,13 @@ internal static class ArachnidTerritoryRegression
     }
     private static void Serialization()
     {
+        ArachnidInfestationResident overshoot=new ArachnidInfestationResident();overshoot.Identity=Guid.NewGuid();overshoot.Slot=4;overshoot.Tier=4;
+        overshoot.Hits=368;overshoot.MaximumHits=350;
+        MemoryStream overshootStream=new MemoryStream();BinaryFileWriter overshootWriter=new BinaryFileWriter(overshootStream,true);
+        overshoot.Serialize(overshootWriter);overshootWriter.Write(781257);overshootWriter.Close();
+        BinaryFileReader overshootReader=new BinaryFileReader(new BinaryReader(new MemoryStream(overshootStream.ToArray())));
+        ArachnidInfestationResident overshootRestored=new ArachnidInfestationResident();overshootRestored.Deserialize(overshootReader);
+        Check(overshootRestored.Hits==368 && overshootRestored.MaximumHits==350 && overshootRestored.Identity==overshoot.Identity && overshootReader.ReadInt()==781257,"native observed health overshoot remains a valid version0 resident record without shifting the serializer boundary");overshootReader.Close();
         for(int version=0;version<=2;++version)
         {
             MemoryStream stream=new MemoryStream();BinaryFileWriter writer=new BinaryFileWriter(stream,true);
