@@ -23,7 +23,7 @@ A fresh colony began at a random ordinary-search origin2522,1240 at2026-11-02T04
 
 Generation used population100 and replacement5. It predates the final refuge-leash/retreat-commit correction and queen-only health-hook fast guard. Every comparison arm must therefore load the same latest candidate source. Applying declared initial comparison settings to copied state is a harness intervention, not live administrator retuning or proof that production activation/recovery is enabled. This young colony is not a seven-day infestation and has no established weak outskirts; separate frontier fixtures must be labeled.
 
-Native exploratory comparisons and actual claim collection are recorded below. Current-version globally initialized resumed combat, guard respawn, production release recovery and economic acceptance remain separate gates.
+Native exploratory comparisons, actual claim collection and current-version globally initialized copied-world resumed combat are recorded below. Guard respawn, production release recovery and economic acceptance remain separate gates.
 
 ## Ordinary-clock native comparison
 
@@ -66,12 +66,26 @@ Four frontier supply recipients, retired patch436, five response births/defender
 
 ## Remaining acceptance and design questions
 
-- Verify a native globally initialized resume from the actual current-version combat save, without resetting the six spent queen guards. The prepared `arms/control-recovery` copy has forced runtime compilation evidence, but preparation alone is not a resumed-play pass.
+- The copied current-version combat save now has a globally initialized native resume and a new saved-world replay, detailed below. Production activation/restore is still a separate gate because the private resume bridge deliberately preserves a disabled-production attempt.
 - Interrupt an actual warned queen rally source through native attacks and observe cancellation. Do not substitute direct fixture damage, deletion or component checks.
 - Verify full ordinary outward escape and meaningful bard support after the repaired driver. New harness code requires a fresh prepared driver/heartbeat before staging and labels driver errors invalid; test-only safe parking occurs after the measured endpoint and must never count as ordinary escape.
 - The infestation branch of `KeepCreatureInBounds` permits ordinary pursuit beyond occupied territory. A tier0 spider's home pursuit bound is not a guarantee that every inner-tier actor stays inside the300×300 core. Clarify and test the policy for strong pursuers, queen migration and uninvolved travel before release.
 - Useful early rewards cannot repair a starting weapon/skill mismatch or make a poor, unprepared novice ready for the core. Evaluate clear starter equipment/training guidance separately from artifact inflation.
 - Validate civic guard recovery, production activation/restore behavior, longer natural growth, varied origins/terrain, several simultaneous players and long-term loot supply. Production remains disabled; no push or deployment occurred.
+
+## Native current-version resume and cleanup follow-through
+
+After the user's direct approval of routine test cleanups, frontier-04 saved and closed with20 retained files at `arms/frontier-04/checkpoints/safe-preflight-close-01`. A single prepared `arms/control-recovery` world then loaded the actual later control-02 combat checkpoint. It preserved population100/replacement5 and six spent queen guards, using the documented test-only resume bridge and ordinary clock. The resumed queen and existing brood ran ordinary AI; this is stronger evidence than offline `World.Load`, while remaining separate from production activation approval.
+
+The saved veteran's previous fight location was unsafe for an unprepared login. The fixture logged an explicit relocation to his separately retained original precombat position,345,3614,27, without restoring health or resources. His normal original macro then prepared him. The novice's safe-intro failure sentinel exercised the actual driver exception path; the server recorded `driver-failure-held-novice.txt`, rejected a staging command with `Fresh prepared client driver required; errors prohibit staging`, and retained caseId0, original position and90HP. This proves exception containment and admission rejection in safe intro. The field stale-heartbeat/error rescue branches remain unexercised native paths.
+
+Zanthus's actual case ran from23:07:02.7015063Z to23:08:03.0381625Z on2026-11-02: approximately60.34 seconds. Native spell/control actions caused16,082 credited damage, including33 to the queen; cumulative incoming health loss was392. The pre-parking endpoint manifest recorded him alive at258/300HP and286 mana. The queen withdrew and her spent backup remained6. No victory was required or forced. These results verify resumed combat and preserved expenditure; they are not another density comparison or a full escape test. The terminal fixture logged its measured endpoint before returning him to the original safe location. Later status regeneration must not replace the pre-parking endpoint.
+
+Actual before/after combat inventory manifests showed no changes in carried item counts. This does not establish hidden charge use or cost-free casting. Evidence: `arms/control-recovery/natural/evidence/veteran-before-veteran-combat.private.xml`, `veteran-after-veteran-combat.private.xml`, `combat-inventory-deltas.json`, `veteran-bound-result.json`, `case-events.tsv`, `health.tsv` and `client-veteran.jsonl` under the private tuning root. Since all six queen births were already spent, this recovered encounter could not supply a new rally interruption test without resetting the very expenditure being verified; that acceptance gap remains open.
+
+Cleanup retained another ordinary20-file save at `arms/control-recovery/checkpoints/native-recovery-close-01`, then closed only the two owned copied clients/server and signaled the recorder. The recorder ended normally; clients/server were forcibly closed after save, not gracefully shut down. The new checkpoint passed581 offline load/recovery checks with39 patches,174 resident actors, one surviving saved defender and the minimum six spent queen births still satisfied. Evidence: `D:/ConficturaUOTestTools/arachnid-saved-world-verification/fe4e68127bcd49608ed2e016609dbf7f`. One living defender does not imply only one birth was spent.
+
+Final identity-checked process/listener inspection found no owned cycle clients, servers or recorder helpers, and neither test port57913 nor57914 listening. Original20 save hashes and three source profile hashes remain the preservation checks. The user's standing cleanup approval applies to routine owned test runs; demonstrations stay open until the user requests their cleanup.
 
 ## Native-discovered resident recovery correction
 

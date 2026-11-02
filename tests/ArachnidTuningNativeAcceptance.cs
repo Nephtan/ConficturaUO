@@ -121,10 +121,25 @@ namespace Server.TestOnly
                     if(previous != null) for(int slot=0;slot<previous.Length;++slot)if(previous[slot] == actor){previous[slot] = null;break;}
                     Account account = new Account(role.GetAttribute("username"),role.GetAttribute("password")); account[0] = actor;
                     actor.Combatant = null; actor.Warmode = false;
+                    string safeIntro=Path.Combine(Evidence,"declared-safe-intro.xml");
+                    if(File.Exists(safeIntro))
+                    {
+                        XmlDocument safe=new XmlDocument();safe.XmlResolver=null;safe.Load(safeIntro);
+                        XmlElement point=(XmlElement)safe.SelectSingleNode("points/point[@serial='"+actor.Serial.Value+"']");
+                        if(point!=null)
+                        {
+                            Map map=actor.Map==Map.Internal ? actor.LogoutMap : actor.Map;
+                            if(map==null || map==Map.Internal)throw new Exception("Safe intro requires the saved actor's real map");
+                            Point3D location=new Point3D(Int32.Parse(point.GetAttribute("x")),Int32.Parse(point.GetAttribute("y")),Int32.Parse(point.GetAttribute("z")));
+                            session.SafeMap=map;session.SafePoint=location;
+                            if(actor.Map==Map.Internal)actor.LogoutLocation=location;else actor.MoveToWorld(location,map);
+                            File.AppendAllText(Path.Combine(Evidence,"safe-intro-interventions.tsv"),DateTime.UtcNow.ToString("o")+"\t"+session.Role+"\t"+location+"\tdeclared original precombat location; no health/resource grant\n");
+                        }
+                    }
                     Sessions.Add(session.Role,session); Manifest(session,"intro");
                 }
                 State = "intro-ready";
-                File.WriteAllText(Path.Combine(Evidence,"intro-ready.txt"),"Actual saved builds retain their separate saved locations; no encounter or client macro started; ordinary clock.");
+                File.WriteAllText(Path.Combine(Evidence,"intro-ready.txt"),"Actual saved builds retain resources; optional original precombat safe-location relocation is logged separately. No case or macro started; ordinary clock.");
             }
             catch(Exception error){Failure=error.ToString();State="failed";}
             Status();
