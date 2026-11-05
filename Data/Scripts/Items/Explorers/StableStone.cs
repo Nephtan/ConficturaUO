@@ -1,3 +1,4 @@
+using Server.Custom.Confictura.Stabling;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -120,104 +121,25 @@ namespace Server.Items
 
         public void BeginStable(Mobile from)
         {
-            if (Deleted || !from.CheckAlive())
+            if (Deleted || from == null || !from.CheckAlive())
                 return;
-
-            if (this.Movable)
+            if (Movable || from.Skills[SkillName.Camping].Base < 100)
             {
-                from.SendMessage("This must be locked down in a house to use!");
+                from.SendMessage("Lock this post down in your home and reach grandmaster Camping to use it.");
+                return;
             }
-            else if (from.Skills[SkillName.Camping].Base < 100)
-            {
-                from.SendMessage("Only grandmasters in camping may stable pets at home!");
-            }
-            else if (from.Stabled.Count >= Server.Mobiles.AnimalTrainer.GetMaxStabled(from))
-            {
-                from.SendMessage(
-                    "You can't stable that! You have too many pets stabled, you have reached your max amount"
-                );
-            }
-            else
-            {
-                from.SendMessage(
-                    "The hitching post requires 30 gold per pet for each real world week for maintenance!"
-                );
-                from.SendMessage("the gold is automatically withdrawn from your bank account");
-                from.SendMessage("Target the animal you wish to stable!");
-                from.Target = new StableTarget(this);
-            }
+            from.SendMessage(StableService.Terms);
+            from.SendMessage("You are using {0} of {1} normal stable slots.", from.Stabled.Count, AnimalTrainer.GetMaxStabled(from));
+            from.Target = new StableTarget(this);
         }
 
         public void EndStable(Mobile from, BaseCreature pet)
         {
-            if (Deleted || !from.CheckAlive())
+            if (Deleted || from == null || !from.CheckAlive() || from.Map != Map || !from.InRange(this, 14))
                 return;
-
-            if (!pet.Controlled || pet.ControlMaster != from)
-            {
-                from.SendMessage("That is not your pet!");
-            }
-            else if (pet.IsDeadPet)
-            {
-                from.SendMessage("That pet is dead and cannot be stabled!");
-            }
-            else if (pet.Summoned)
-            {
-                from.SendMessage("You can not stable summoned creatures");
-            }
-            else if (pet.Body.IsHuman)
-            {
-                from.SendMessage("That is not your pet!");
-            }
-            else if (
-                (pet is PackLlama || pet is PackHorse || pet is Beetle)
-                && (pet.Backpack != null && pet.Backpack.Items.Count > 0)
-            )
-            {
-                from.SendMessage("You need to unload the pack animal before you can stable it!");
-            }
-            else if (
-                pet.Combatant != null
-                && pet.InRange(pet.Combatant, 12)
-                && pet.Map == pet.Combatant.Map
-            )
-            {
-                from.SendMessage(
-                    "Your pet seems to be busy at the moment, try again when its not!"
-                );
-            }
-            else if (from.Stabled.Count >= Server.Mobiles.AnimalTrainer.GetMaxStabled(from))
-            {
-                from.SendMessage("You have too many pets in the stables!");
-            }
-            else
-            {
-                Container bank = from.BankBox;
-
-                if (bank != null && bank.ConsumeTotal(typeof(Gold), 30))
-                {
-                    pet.Language = null;
-                    pet.ControlTarget = null;
-                    pet.ControlOrder = OrderType.Stay;
-                    pet.Internalize();
-
-                    pet.SetControlMaster(null);
-                    pet.SummonMaster = null;
-
-                    pet.IsStabled = true;
-                    from.Stabled.Add(pet);
-                    from.SendMessage(
-                        "Your pet is stabled. You may recover it by saying 'claim'. In one real world week,"
-                    );
-                    from.SendMessage(
-                        "if your pet is not claimed by then, it will vanish if it is not claimed!"
-                    );
-                }
-                else
-                {
-                    from.SendMessage("You lack The necessary bank funds to do this!");
-                }
-            }
+            if (Movable || from.Skills[SkillName.Camping].Base < 100)
+                return;
+            StableService.StableManually(from, pet, AnimalTrainer.GetMaxStabled(from), null);
         }
 
         private class ClaimListGump : Gump
@@ -342,12 +264,14 @@ namespace Server.Items
 
                 if (pet == null || pet.Deleted)
                 {
-                    pet.IsStabled = false;
+                    if (pet != null)
+                        pet.IsStabled = false;
                     from.Stabled.RemoveAt(i);
                     --i;
                     continue;
                 }
 
+                StableService.ShowAccount(from, pet);
                 list.Add(pet);
             }
 
@@ -363,37 +287,10 @@ namespace Server.Items
 
         public void EndClaimList(Mobile from, BaseCreature pet)
         {
-            if (
-                pet == null
-                || pet.Deleted
-                || from.Map != this.Map
-                || !from.Stabled.Contains(pet)
-                || !from.CheckAlive()
-            )
+            if (Deleted || from == null || pet == null || pet.Deleted || !from.CheckAlive()
+                || from.Map != Map || !from.InRange(this, 14) || !from.Stabled.Contains(pet))
                 return;
-
-            if ((from.Followers + pet.ControlSlots) <= from.FollowersMax)
-            {
-                pet.SetControlMaster(from);
-
-                if (pet.Summoned)
-                    pet.SummonMaster = from;
-
-                pet.ControlTarget = from;
-                pet.ControlOrder = OrderType.Follow;
-
-                pet.MoveToWorld(from.Location, from.Map);
-
-                pet.IsStabled = false;
-                from.Stabled.Remove(pet);
-                from.SendMessage("Here you go...");
-            }
-            else
-            {
-                from.SendMessage(
-                    "That Pet remained in the stables because you have too many followers"
-                );
-            }
+            StableService.TryReturn(from, pet, true);
         }
 
         public override bool HandlesOnSpeech
@@ -448,54 +345,9 @@ namespace Server.Items
 
         public void Claim(Mobile from, string petName)
         {
-            if (Deleted || !from.CheckAlive())
+            if (Deleted || from == null || from.Map != Map || !from.InRange(this, 14))
                 return;
-
-            bool claimed = false;
-            int stabled = 0;
-
-            bool claimByName = (petName != null);
-
-            for (int i = 0; i < from.Stabled.Count; ++i)
-            {
-                BaseCreature pet = from.Stabled[i] as BaseCreature;
-
-                if (pet == null || pet.Deleted)
-                {
-                    pet.IsStabled = false;
-                    from.Stabled.RemoveAt(i);
-                    --i;
-                    continue;
-                }
-
-                ++stabled;
-
-                if (claimByName && !Insensitive.Equals(pet.Name, petName))
-                    continue;
-
-                if (CanClaim(from, pet))
-                {
-                    DoClaim(from, pet);
-
-                    from.Stabled.RemoveAt(i);
-                    --i;
-
-                    claimed = true;
-                }
-                else
-                {
-                    from.SendMessage(
-                        "That pet remained in the stables because you have too many followers"
-                    );
-                }
-            }
-
-            if (claimed)
-                from.SendMessage("Here you go...");
-            else if (stabled == 0)
-                from.SendMessage("But I have no animals stabled with me at the moment!");
-            else if (claimByName)
-                BeginClaimList(from);
+            StableService.Claim(from, petName);
         }
 
         public bool CanClaim(Mobile from, BaseCreature pet)
@@ -503,24 +355,7 @@ namespace Server.Items
             return ((from.Followers + pet.ControlSlots) <= from.FollowersMax);
         }
 
-        private void DoClaim(Mobile from, BaseCreature pet)
-        {
-            pet.SetControlMaster(from);
 
-            if (pet.Summoned)
-                pet.SummonMaster = from;
-
-            pet.Language = null;
-            pet.ControlTarget = from;
-            pet.ControlOrder = OrderType.Follow;
-
-            pet.MoveToWorld(from.Location, from.Map);
-
-            pet.IsStabled = false;
-
-            if (Core.SE)
-                pet.Loyalty = BaseCreature.MaxLoyalty; // Wonderfully Happy
-        }
 
         public override void Serialize(GenericWriter writer)
         {

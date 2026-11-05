@@ -1,22 +1,26 @@
-# NPC Animal Trainer Stable/Claim
+# Pet stabling, safe logout, and weekly billing
 
-## Scope
+This is the canonical description of animal trainer stabling, automatic shelter, and stable billing. Source behavior is described here; deployment must be confirmed separately.
 
-This page documents the RunUO pet stable and claim behavior handled by `Server.Mobiles.AnimalTrainer`.
-It covers animal trainer speech keywords, context-menu entries, the claim-list `Gump`, stable-slot math, stable/claim state changes, related no-mount helper methods, and persistence.
+## Player behavior
 
-The compiled system is a `BaseVendor` `Mobile` implementation. It is not a player command system, does not register `[Command]` handlers, does not use packet handlers or EventSink hooks, and does not use XMLSpawner attachments.
+- Each new stay has seven free real days. After that, each stabled pet costs **30 gold per week**, plus **one gold per stone of pack cargo**.
+- Cargo is the recursive weight of a carrier's `StrongBackpack` contents, excluding the carrying backpack itself. The weekly rate is fixed for that stay.
+- Loaded pack animals are accepted by manual stables. Existing manual eligibility and capacity checks still apply.
+- Instant logout shelters eligible controlled followers even when normal stable capacity is full. This includes public areas, qualifying homes, and bedroll logout. Existing follower coverage has no distance requirement.
+- Summons retain their existing cleanup rules. Ridden mounts retain the existing rider lifecycle.
+- Automatic returns respect follower capacity and ghost state. A blocked return stays pending for a later login or explicit claim.
+- The billing timer withdraws bank gold and bank checks. Explicit retrieval can also use backpack gold; an insufficient combined balance is left untouched.
+- Unpaid pets and cargo stay sheltered indefinitely. They are never released, sold, or deleted for unpaid fees. Retrieval requires settling outstanding fees.
+- There is no upfront payment. Retrieving a pet ends its stay; stabling it again begins a new seven-day grace period.
+- Pets already stabled when this feature is first loaded receive seven free days from adoption, with no retroactive debt.
+- Weekly billing includes empty auto-stabled pets and mounts temporarily sheltered by no-mount areas.
 
-## Core Scripts
+## Commands and interfaces
 
-| Script | Role |
-| --- | --- |
-| `Data/Scripts/Mobiles/Civilized/Vendors/AnimalTrainer.cs` | Main trainer `Mobile`, speech handling, context menu entries, `ClaimListGump`, slot formula, stable/claim mutations, mount helper methods, and serializer. |
-| `Data/Scripts/Mobiles/Civilized/Vendors/GypsyAnimalTrainer.cs` | `AnimalTrainer` subclass with gypsy title/outfit differences; inherits stable and claim behavior. |
-| `Data/System/Source/Mobile.cs` | Owns and serializes each player's `Stabled` mobile list. |
-| `Data/Scripts/Mobiles/Base/BaseCreature.cs` | Provides `IsStabled`, pet control fields, loyalty, summon state, and delete-timer interaction. |
-| `Data/Scripts/Mobiles/Base/PlayerMobile.cs` | Uses `AnimalTrainer.GetMaxStabled()` for automatic pet stabling and auto-claim paths. |
-| `Data/Scripts/System/Misc/Settings.cs` | Supplies `MyServerSettings.ExtraStableSlots()`, clamped from `0` through `20`. |
+Animal trainers and shepherds retain speech keywords `stable` (keyword `0x0008`) and `claim` (`0x0009`), including `claim <pet name>`. Context menus and existing claim gumps remain available. Stable stones and city stables also use the shared service. Summoning balls settle outstanding stable fees before retrieving a stabled pet or consuming a charge.
+
+Claim-list pet buttons use ID `i + 1`; responses convert to `ButtonID - 1` and bounds-check before delegating retrieval. Existing bonding-status displays remain unchanged. Stable interactions report the weekly rate, next billing deadline in UTC, and outstanding fees. Trainer/manual retrieval validates the actor, ownership list, range/map, alive state, follower capacity, and payment. No new staff command is introduced.
 
 ## Mobile Definition
 
@@ -105,226 +109,50 @@ The cast truncates fractional values toward zero. For example, a skill from `100
 
 The final value adds `MyServerSettings.ExtraStableSlots()`. That setting returns `S_Stables` clamped to the range `0..20`. There is no final cap after the individual skill bonuses and extra-slot setting are added.
 
-## Stable Flow
+## Ownership and capacity
 
-`BeginStable(Mobile from)` aborts when the trainer is deleted or `from.CheckAlive()` fails.
+`AnimalTrainer.GetMaxStabled()` retains its skill-based formula: Taming, Druidism, Veterinary and Herding, including skill bonuses and the configured extra slots. City stables retain their existing manual capacity formula.
 
-The trainer reports:
+Protected automatic shelter can exceed that capacity. These pets remain in the owner's existing `Stabled` list and count toward subsequent manual capacity checks. Protection is not unlimited active follower capacity.
 
-```text
-You are currently using <from.Stabled.Count> out of <GetMaxStabled(from)> stable slots.
-```
+The service internalizes a pet before clearing its control master, records the owner on the stable list, marks it stabled, and preserves its contents. Automatic returns are registered after master removal because `BaseCreature.RemoveFollowers()` also removes automatic-return entries. Repeated protection does not duplicate pets or reset a stay.
 
-It then requires at least 30 gold in either the caller's backpack or bank box. A bank box is found with `FindBankNoCreate()`, so this check does not create a missing bank box.
+## Runtime hooks and guards
 
-| Funds state | Result |
+| Entry point | Trigger and behavior |
 | --- | --- |
-| Backpack lacks 30 gold and bank is missing or lacks 30 gold | Trainer says cliloc `1042556`: not enough gold. |
-| Backpack or bank has at least 30 gold | Caller receives cliloc `1042558`, and `from.Target` becomes a new `StableTarget`. |
+| `PlayerMobile.OnDisconnected()` | Captures effective instant logout and shelters pets before other disconnect subscribers, including save-on-disconnect. |
+| `PlayerMobile.OnLogout()` / `AutoStablePets()` | Idempotent fallback; delayed logout retains its capacity and loaded-carrier exclusions. Snapshots followers and validates current ownership/deleted state. |
+| `PlayerMobile.CheckPets()` | Startup recovery checks offline players with active followers without comparing unrelated automatic-stable counts. Uses captured protection or saved region/home eligibility. |
+| `PlayerMobile.ClaimAutoStabledPets()` | Login attempts pending returns. Null/deleted entries are cleaned safely; unpaid, ghost and follower-limited returns remain pending. |
+| `StableService.Initialize()` | Adopts existing stable records and starts a five-minute billing timer. |
+| `StableService.TryReturn()` | Shared payment/ownership/movement guard for automatic return, manual claim, mount restoration and summoning. |
 
-`StableTarget` accepts only a `BaseCreature` target. Targeting the caller says cliloc `502672`; targeting anything else says cliloc `1048053`.
+Failures are logged with owner/pet serials. A failed pet operation does not prevent the remaining pets from being processed. A partially internalized pet retains its stable ownership record; a failed return keeps already paid fees paid.
 
-`EndStable(Mobile from, BaseCreature pet)` applies the stable gates in this order:
+## Billing and persistence
 
-| Gate | Failure response |
-| --- | --- |
-| Trainer deleted or caller not alive | Return silently. |
-| `pet.Body.IsHuman` | Cliloc `502672`: trainer is not an inn. |
-| `!pet.Controlled` | Cliloc `1048053`: cannot stable that. |
-| `pet.ControlMaster != from` | Cliloc `1042562`: caller does not own that pet. |
-| `pet.IsDeadPet` | Cliloc `1049668`: living pets only. |
-| `pet.Summoned` | Cliloc `502673`: cannot stable summoned creatures. |
-| `PackLlama`, `PackHorse`, or `Beetle` with non-empty backpack | Cliloc `1042563`: unload the pet. |
-| `pet.Combatant != null`, combatant within 12 tiles, and same map | Cliloc `1042564`: pet is busy. |
-| `from.Stabled.Count >= GetMaxStabled(from)` | Cliloc `1042565`: too many pets in the stables. |
-| Backpack and bank fail to consume 30 gold at final payment time | Cliloc `502677`: not enough bank funds. |
+Deadlines use UTC. Billing accrues every elapsed whole seven-day boundary, including downtime, and collection is retried without duplicating invoices. Merely opening a claim menu displays billing without withdrawing gold. Recurring collection uses bank funds only. City-origin stays credit their original city's treasury while it remains valid; otherwise payments are a gold sink.
 
-On success, payment is consumed from the backpack first and then from the bank if backpack payment fails. The pet is then changed as follows:
+`PlayerMobile` version **38** prefixes the unchanged version-37 payload with:
 
-| Field/action | New value |
-| --- | --- |
-| `Language` | `null` |
-| `ControlTarget` | `null` |
-| `ControlOrder` | `OrderType.Stay` |
-| Location | `Internalize()` moves the pet off-world. |
-| `ControlMaster` | `null` via `SetControlMaster(null)` |
-| `SummonMaster` | `null` |
-| `IsStabled` | `true` |
-| `Loyalty` | `BaseCreature.MaxLoyalty` when `Core.SE` is true |
-| Owner list | Pet is appended to `from.Stabled`. |
+1. Captured instant-logout protection flag.
+2. Billing-record count.
+3. Each inline billing record: version `0`, pet mobile reference, weekly rate (`int`), next UTC deadline (`DateTime` ticks), outstanding balance (`long`), optional city item reference.
 
-The trainer then says cliloc `1049677` on AOS cores, or `502679` otherwise, and sends the updated stable-slot usage message.
+Version 37 and older reads retain their original order. Missing billing records are adopted with seven days of grace. Creature serializers, namespaces and type identities are unchanged. The normal `Mobile.Stabled` and `PlayerMobile.AutoStabled` lists remain authoritative for ownership and pending return.
 
-## Claim-List Gump
+Before deployment, back up the full saves. Rollback requires compatible code **and** the pre-update save backup; old code must not load version-38 player records.
 
-`BeginClaimList(Mobile from)` aborts when the trainer is deleted or the caller is not alive. It scans `from.Stabled`, removes invalid entries, and builds a `List<BaseCreature>` for valid pets.
+## Source traces
 
-If the list is non-empty, the caller receives `ClaimListGump`. If it is empty, the trainer says cliloc `502671`: no animals stabled.
+- [StableService.cs](../../Data/Scripts/Custom/PetStabling/StableService.cs): intake, cargo rate, billing records, reconciliation, timer, atomic insufficient-funds checks, shared return and claim handling.
+- [PlayerMobile.cs](../../Data/Scripts/Mobiles/Base/PlayerMobile.cs): disconnect/logout/login hooks, startup recovery, automatic lists, version 38.
+- [AnimalTrainer.cs](../../Data/Scripts/Mobiles/Civilized/Vendors/AnimalTrainer.cs): trainer interfaces, normal capacity, no-mount shelter/restoration.
+- [Shepherd.cs](../../Data/Scripts/Mobiles/Civilized/Vendors/Shepherd.cs), [StableStone.cs](../../Data/Scripts/Items/Explorers/StableStone.cs), [CityStableStone.cs](../../Data/Scripts/Custom/Government%20System/Items/Stones/CityStableStone.cs): alternate stable entry and retrieval paths.
+- [BallOfSummoning.cs](../../Data/Scripts/Items/Special/Solen%20Items/BallOfSummoning.cs): paid retrieval before charge consumption.
+- [BaseCreature.cs](../../Data/Scripts/Mobiles/Base/BaseCreature.cs): control/follower callbacks, stable flags, loyalty and deletion timers.
+- [Talk.cs](../../Data/Scripts/System/Misc/Talk.cs): player-facing stable explanation.
+- [StableRegression.cs](../../tests/StableRegression.cs), [StableWorldRoundtrip.cs](../../tests/StableWorldRoundtrip.cs), [Test-Stabling.ps1](../../scripts/Test-Stabling.ps1): production-method, serializer and isolated verification.
 
-`ClaimListGump` is built at `(25, 25)`, plays sound `0x0EB`, uses `PlayerSettings.GetGumpHue(from)`, and renders each pet with a button and a bonding-status suffix.
-
-| Pet bonding state | Display text |
-| --- | --- |
-| `pet.IsBonded == true` | `Bonded` |
-| `pet.BondingBegin == DateTime.MinValue` | `not bonding` |
-| `BondingBegin + BondingDelay` is in the future | `<days> days, <hours> hours and <minutes> minutes until it bonds` |
-| Bonding delay has elapsed | `Ready to bond!` |
-
-Clicking a pet button calls `EndClaimList(m_From, m_List[index])`. The gump path validates:
-
-| Gate | Behavior |
-| --- | --- |
-| Pet is null/deleted | Return silently. |
-| Caller map does not match trainer map | Return silently. |
-| Caller's `Stabled` list does not contain the pet | Return silently. |
-| Caller is not alive | Return silently. |
-| Caller is not within 14 tiles of the trainer | Caller receives cliloc `500446`: too far away. |
-| Caller lacks follower slots | Trainer says cliloc `1049612` with pet name. |
-| Caller has follower slots | `DoClaim()` runs, then the pet is removed from `from.Stabled`. |
-
-## Speech Claim Flow
-
-`Claim(Mobile from)` delegates to `Claim(from, null)`.
-
-`Claim(Mobile from, string petName)` aborts when the trainer is deleted or the caller is not alive. It then iterates `from.Stabled`.
-
-| Step | Behavior |
-| --- | --- |
-| Invalid pet entry | Removes the entry from `from.Stabled` after attempting to clear `IsStabled`. |
-| `petName != null` and `Insensitive.Equals(pet.Name, petName)` is false | Skips that pet. |
-| `CanClaim(from, pet)` is true | Calls `DoClaim()`, removes the pet from `from.Stabled`, and marks the claim as successful. |
-| `CanClaim(from, pet)` is false | Trainer says cliloc `1049612`: pet remained in stables because of follower limit. |
-
-After the loop:
-
-| Final state | Response |
-| --- | --- |
-| At least one pet was claimed | Trainer says cliloc `1042559`: here you go. |
-| No valid stabled pets were counted | Trainer says cliloc `502671`: no animals stabled. |
-| A name was requested but no matching/claimable pet was claimed | Opens the claim-list gump. |
-
-`CanClaim(Mobile from, BaseCreature pet)` returns:
-
-```text
-from.Followers + pet.ControlSlots <= from.FollowersMax
-```
-
-`DoClaim(Mobile from, BaseCreature pet)` changes the pet as follows:
-
-| Field/action | New value |
-| --- | --- |
-| `ControlMaster` | Caller, via `SetControlMaster(from)` |
-| `SummonMaster` | Caller only if `pet.Summoned` is true |
-| `Language` | `null` |
-| `ControlTarget` | Caller |
-| `ControlOrder` | `OrderType.Follow` |
-| Location | `MoveToWorld(from.Location, from.Map)` |
-| `IsStabled` | `false` |
-| `Loyalty` | `BaseCreature.MaxLoyalty` when `Core.SE` is true |
-
-## No-Mount Region Helpers
-
-`AnimalTrainer` also contains static helpers used by movement and mount handling outside the direct trainer NPC flow.
-
-| Helper | Behavior |
-| --- | --- |
-| `DismountPlayer(Mobile m)` | Clears claim-list mount markers, moves ethereal mounts to owner state, or internalizes a `BaseMount`, clears its control master, marks it stabled, sets `Language = "mount"`, and appends it to `m.Stabled`. |
-| `IsBeingFast(Mobile from)` | Returns true for mounted players, light speed footwear, Syth `SythSpeed`, Jedi `Celerity`, Mystic `WindRunner`, or Shinobi `CheetahPaws`. |
-| `CleanClaimList(Mobile from)` | Clears stale `"mount"` language markers from stabled pets and attempts to remove invalid entries. |
-| `GetLastMounted(Mobile from)` | Searches `from.Stabled` for a pet marked `Language == "mount"` and, if follower slots allow, restores it to the player and mounts it. If no physical mount is restored, it scans world items for `EtherealMount` items owned by the player and assigns their rider/owner fields. |
-| `CanGetLastMounted(Mobile from, BaseCreature pet)` | Uses the same follower-slot formula as `CanClaim()`. |
-| `IsNoMountRegion(Mobile m, Region reg)` | Blocks mounts in several named regions and in most protected/cave/dungeon/public-style regions outside `"the Port"`. |
-| `AllowMagicSpeed(Mobile m, Region reg)` | Allows speed effects in `"the Port"`, `ProtectedRegion`, `PublicRegion`, `UmbraRegion`, and `CaveRegion`. |
-
-## Persistence
-
-| Type | Version | Serialized fields after version |
-| --- | --- | --- |
-| `AnimalTrainer` | `0` | None. |
-| `GypsyAnimalTrainer` | `0` | None beyond inherited `AnimalTrainer` data. |
-| `Mobile` | Core mobile versioned format | Writes the `m_Stabled` strong mobile list. |
-| `BaseCreature` | Core creature versioned format | Persists `IsStabled` through normal creature state; when `IsStabled` is true, setting the property stops the creature delete timer. |
-| `PlayerMobile` | Core player versioned format | Also persists `m_AutoStabled` for automatic no-mount-zone stabling. |
-
-`AnimalTrainer` has no custom stable ledger of its own. Stabled pets belong to the player's `Mobile.Stabled` list, not to an individual trainer instance.
-
-## Admin Commands
-
-No in-game admin or player commands are registered by this system.
-
-Use normal RunUO construction for trainer placement:
-
-| Command surface | Result |
-| --- | --- |
-| `[add AnimalTrainer` | Creates the standard animal trainer vendor. |
-| `[add GypsyAnimalTrainer` | Creates the gypsy subclass that inherits the same stable and claim behavior. |
-
-## Known Issues
-
-| Issue | Impact |
-| --- | --- |
-| Several stabled-list cleanup paths dereference `pet.IsStabled` inside `if (pet == null || pet.Deleted)` blocks. | If `from.Stabled` ever contains a null or non-`BaseCreature` entry, `CleanClaimList()`, `GetLastMounted()`, `BeginClaimList()`, or `Claim()` can throw instead of removing the invalid entry. |
-| `Claim(Mobile, string)` has no explicit trainer map/range check. | The gump claim path requires same map and 14-tile range, but direct speech claim relies only on the engine's speech delivery range before moving pets to the caller. |
-| `EndStable()` has no explicit trainer map/range check after target selection. | A player can begin the stable target from speech range and complete the target without the stable method verifying that the player is still near the trainer. |
-| `DismountPlayer()` appends physical mounts to `m.Stabled` without checking `GetMaxStabled()` or charging the 30-gold stable fee. | No-mount-region handling can exceed normal stable slot limits and bypass the paid trainer stable flow. |
-| The stable success text says the trainer will sell the pet after one real-world week, but no expiration or sale-off logic was found in the traced stable code. | Stabled creatures are stored on `Mobile.Stabled`, and cleanup tasks explicitly skip internal-map creatures when `IsStabled` is true, so the weekly warning appears stale or incomplete. |
-| `IsNoMountRegion()` computes a `world` string and never uses it. | Harmless runtime waste, but it suggests the region helper was partially edited or left with dead logic. |
-
-## Source Trace
-
-POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
-
-- Canonical status: Canonical.
-- Queue rows: PBN-0053; PBN-0120.
-- Backlog rows: RB-06656; RB-06657.
-- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
-
-### Source Files Reviewed
-
-- Data/Scripts/Mobiles/Civilized/Vendors/AnimalTrainer.cs (CurrentFile)
-- Data/Scripts/Mobiles/Civilized/Vendors/GypsyAnimalTrainer.cs (CurrentFile)
-- Data/System/Source/Mobile.cs (CurrentFile)
-- Data/Scripts/Mobiles/Base/BaseCreature.cs (CurrentFile)
-- Data/Scripts/Mobiles/Base/PlayerMobile.cs (CurrentFile)
-- Data/Scripts/System/Misc/Settings.cs (CurrentFile)
-
-### Runtime Evidence
-
-- Hook summary: Event=14; Gump=10; Initialize=2; Login=1; Logout=1; Movement=6; Speech=13; Timer=27; WorldLoad=1.
-- Data/Scripts/Mobiles/Base/BaseCreature.cs:L487 Timer CustomTimerSubclass access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/BaseCreature.cs:L914 Timer Timer.DelayCall access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/BaseCreature.cs:L950 Timer Timer.DelayCall access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/BaseCreature.cs:L5879 Timer Timer.DelayCall access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8605 Speech OnSpeech access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8609 Speech OnSpeech access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8612 Speech OnSpeech access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8790 Movement OnMovement access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8792 Movement OnMovement access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8800 Movement OnMovement access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/BaseCreature.cs:L11300 Timer Timer.DelayCall access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/BaseCreature.cs:L12194 Timer CustomTimerSubclass access=GlobalOrInternal
-- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
-
-### Serialization Evidence
-
-- Serialized rows matched: 5.
-- Data/Scripts/Mobiles/Base/BaseCreature.cs:Server.Mobiles.BaseCreature version=19 serialize=L6507 deserialize=L6665 alignment=TypeMismatch:#30:Write=bool/Read=Double;#32:Write=DeltaTime/Read=Bool;#33:Write=int/Read=DeltaTime;#37:Write=int/Read=Mobile;#53:Write=bool/Read=StrongMobileList;#55:Write=DateTime/Read=Bool;#57:Write=bool/Read=DateTime;#61:Write=bool/Read=StrongMobileList;#62:Write=int/Read=Bool
-- Data/Scripts/Mobiles/Base/PlayerMobile.cs:Server.Mobiles.PlayerMobile version=37 serialize=L5042 deserialize=L4577 alignment=CountMismatch:Writes=120;Reads=119
-- Data/Scripts/Mobiles/Civilized/Vendors/AnimalTrainer.cs:Server.Mobiles.AnimalTrainer version=0 serialize=L926 deserialize=L933 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Mobiles/Civilized/Vendors/GypsyAnimalTrainer.cs:Server.Mobiles.GypsyAnimalTrainer version=0 serialize=L66 deserialize=L73 alignment=AlignedByCountAndKnownTypes
-- Data/System/Source/Mobile.cs:Server.Mobile version=35 serialize=L6183 deserialize=L5700 alignment=CountMismatch:Writes=98;Reads=104
-
-### Project And Runtime Coverage
-
-- Data/Scripts/Mobiles/Base/BaseCreature.cs=Keep
-- Data/Scripts/Mobiles/Base/BaseCreature.cs=Keep
-- Data/Scripts/Mobiles/Base/PlayerMobile.cs=Keep
-- Data/Scripts/Mobiles/Base/PlayerMobile.cs=Keep
-- Data/Scripts/Mobiles/Civilized/Vendors/AnimalTrainer.cs=Keep
-- Data/Scripts/Mobiles/Civilized/Vendors/AnimalTrainer.cs=Keep
-- Data/Scripts/Mobiles/Civilized/Vendors/GypsyAnimalTrainer.cs=Keep
-- Data/Scripts/Mobiles/Civilized/Vendors/GypsyAnimalTrainer.cs=Keep
-- Data/Scripts/System/Misc/Settings.cs=Keep
-- Data/Scripts/System/Misc/Settings.cs=Keep
-
-No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.
+Run `scripts/Test-Stabling.ps1` from the repository root. Record actual component, copied-world and startup results separately; source inspection and project builds alone do not establish deployed player behavior.

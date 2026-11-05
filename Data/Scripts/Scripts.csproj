@@ -149,6 +149,7 @@
     <Compile Include="Custom\ChangeSeason\ChangeSeason.cs" />
     <Compile Include="Custom\Character Swap\CharacterSwap.cs" />
     <Compile Include="Custom\ClearDeckCommand\ClearDeckCommand.cs" />
+    <Compile Include="Custom\PetStabling\StableService.cs" />
     <Compile Include="Custom\PvE\CloneOfflinePlayerCharacters\CloneOfflinePlayerCharacters.cs" />
     <Compile Include="Custom\PvE\CloneOfflinePlayerCharacters\BackpackClone.cs" />
     <Compile Include="Custom\PvE\CloneOfflinePlayerCharacters\CharacterClone.cs" />
