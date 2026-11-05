@@ -47,6 +47,43 @@ namespace Server.Items
             get { return m_Created; }
         }
 
+        public static bool IsSafeCamp(Mobile from)
+        {
+            return from != null && !from.Deleted && from.Alive
+                && from.Map != null && from.Map != Map.Internal
+                && !from.Criminal && from.Combatant == null
+                && from.Aggressors.Count == 0 && from.Aggressed.Count == 0
+                && Kindling.CampAllowed(from) && !Server.Misc.Worlds.IsOnBoat(from)
+                && !Kindling.EnemiesNearby(from);
+        }
+
+        public static bool CanLogout(Mobile from)
+        {
+            if (!IsSafeCamp(from))
+                return false;
+
+            // Recheck the live bed at disconnect, rather than leaving a sticky logout flag.
+            IPooledEnumerable beds = from.GetItemsInRange(3);
+            try
+            {
+                foreach (Item item in beds)
+                {
+                    BedrolledOut bed = item as BedrolledOut;
+                    if (bed != null && !bed.Deleted && bed.Parent == null
+                        && bed.Owner == from && bed.Map == from.Map
+                        && Math.Abs(bed.Z - from.Z) <= 16
+                        && DateTime.Now < bed.Created + TimeSpan.FromSeconds(100.0)
+                        && from.InLOS(bed))
+                        return true;
+                }
+            }
+            finally
+            {
+                beds.Free();
+            }
+            return false;
+        }
+
         private void OnTick()
         {
             DateTime now = DateTime.Now;
@@ -81,6 +118,9 @@ namespace Server.Items
 
         public void RollUp()
         {
+            if (Deleted)
+                return;
+
             if (m_Owner != null)
             {
                 Container cont = m_Owner.Backpack;

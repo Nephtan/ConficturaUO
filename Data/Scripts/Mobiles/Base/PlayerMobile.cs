@@ -6091,7 +6091,7 @@ namespace Server.Mobiles
 
         public override TimeSpan GetLogoutDelay()
         {
-            if (BedrollLogout)
+            if (BedrollLogout || BedrolledOut.CanLogout(this))
                 return TimeSpan.Zero;
 
             return base.GetLogoutDelay();

@@ -16,6 +16,12 @@ This is the canonical description of animal trainer stabling, automatic shelter,
 - Pets already stabled when this feature is first loaded receive seven free days from adoption, with no retroactive debt.
 - Weekly billing includes empty auto-stabled pets and mounts temporarily sheltered by no-mount areas.
 
+### Bedroll logout
+
+Successfully laying out a bedroll makes instant logout available immediately while the owner is within three paces of that live bed. The existing bed lasts 100 seconds and the ten-minute placement cooldown still applies. The owner must be alive, on the same world map, within 16 units of height, and have line of sight to the bed. Camping must be allowed, away from boats and nearby hostile creatures, with no criminal status, combatant, or recent incoming/outgoing aggression. No campfire is required by this bedroll workflow.
+
+Walking out of range, rolling up or deleting the bed, expiration, or unsafe conditions revoke bedroll instant logout. Returning to the still-active safe camp restores eligibility. The disconnect handler checks this live eligibility before sheltering pets; no persistent bedroll grant is set. A successful instant bedroll logout therefore protects loaded followers beyond normal stable capacity. A failed placement or cooldown rejection grants no protection. Existing laid-out beds roll up on world loading; they do not carry a logout grant across a restart.
+
 ## Commands and interfaces
 
 Animal trainers and shepherds retain speech keywords `stable` (keyword `0x0008`) and `claim` (`0x0009`), including `claim <pet name>`. Context menus and existing claim gumps remain available. Stable stones and city stables also use the shared service. Summoning balls settle outstanding stable fees before retrieving a stabled pet or consuming a charge.
@@ -148,6 +154,7 @@ Before deployment, back up the full saves. Rollback requires compatible code **a
 
 - [StableService.cs](../../Data/Scripts/Custom/PetStabling/StableService.cs): intake, cargo rate, billing records, reconciliation, timer, atomic insufficient-funds checks, shared return and claim handling.
 - [PlayerMobile.cs](../../Data/Scripts/Mobiles/Base/PlayerMobile.cs): disconnect/logout/login hooks, startup recovery, automatic lists, version 38.
+- [Bedroll.cs](../../Data/Scripts/Items/Explorers/Bedroll.cs): Player double-click, Camping check, placement, cooldown and nearby owned-bed guard. [BedrolledOut.cs](../../Data/Scripts/Items/Explorers/BedrolledOut.cs): `IsSafeCamp`, `CanLogout`, 100-second lifetime, roll-up and unchanged version-0 serializer. [Kindling.cs](../../Data/Scripts/Items/Explorers/Kindling.cs): shared camping region and hostile-creature rules.
 - [AnimalTrainer.cs](../../Data/Scripts/Mobiles/Civilized/Vendors/AnimalTrainer.cs): trainer interfaces, normal capacity, no-mount shelter/restoration.
 - [Shepherd.cs](../../Data/Scripts/Mobiles/Civilized/Vendors/Shepherd.cs), [StableStone.cs](../../Data/Scripts/Items/Explorers/StableStone.cs), [CityStableStone.cs](../../Data/Scripts/Custom/Government%20System/Items/Stones/CityStableStone.cs): alternate stable entry and retrieval paths.
 - [BallOfSummoning.cs](../../Data/Scripts/Items/Special/Solen%20Items/BallOfSummoning.cs): paid retrieval before charge consumption.
@@ -156,3 +163,5 @@ Before deployment, back up the full saves. Rollback requires compatible code **a
 - [StableRegression.cs](../../tests/StableRegression.cs), [StableWorldRoundtrip.cs](../../tests/StableWorldRoundtrip.cs), [Test-Stabling.ps1](../../scripts/Test-Stabling.ps1): production-method, serializer and isolated verification.
 
 Run `scripts/Test-Stabling.ps1` from the repository root. Record actual component, copied-world and startup results separately; source inspection and project builds alone do not establish deployed player behavior.
+
+See [bedroll logout verification](../verification/2026-11-05-bedroll-logout.md) for the isolated native Player acceptance and its evidence limits.

@@ -393,6 +393,108 @@ internal static class StableRegression
             && StableService.FindAccount(old, horse).NextBillUtc > DateTime.UtcNow.AddDays(6), "legacy stabled pets receive grace without retroactive debt");
     }
 
+    private static void TestBedrollLogout()
+    {
+        Actor owner = Player();
+        Point3D camp = new Point3D(2540, 2110, s_Map.GetAverageZ(2540, 2110));
+        owner.MoveToWorld(camp, s_Map);
+        owner.Skills.Camping.Cap = 125;
+        owner.Skills.Camping.Base = 125;
+        SkillCheck.Initialize();
+        Check(owner.GetLogoutDelay() != TimeSpan.Zero, "ordinary wilderness logout is delayed");
+        Bedroll roll = new Bedroll();
+        roll.MoveToWorld(camp, s_Map);
+        roll.OnDoubleClick(owner);
+        BedrolledOut bed = null;
+        foreach (Item item in World.Items.Values)
+            if (item is BedrolledOut && ((BedrolledOut)item).Owner == owner && !item.Deleted)
+                bed = (BedrolledOut)item;
+        Check(roll.Deleted && bed != null, "real bedroll double-click successfully creates camp");
+        Check(!owner.BedrollLogout && owner.GetLogoutDelay() == TimeSpan.Zero,
+            "real live bed grants instant logout without fixture flag");
+        Bedroll spare = new Bedroll();
+        owner.AddToBackpack(spare);
+        owner.Bedroll = DateTime.MinValue;
+        spare.OnDoubleClick(owner);
+        Check(!spare.Deleted, "backpack bedroll detects already placed bed at player location");
+        Actor other = Player();
+        other.MoveToWorld(camp, s_Map);
+        Check(!BedrolledOut.CanLogout(other), "another player cannot use the owner's camp");
+        owner.MoveToWorld(new Point3D(camp.X + 4, camp.Y, camp.Z), s_Map);
+        Check(owner.GetLogoutDelay() != TimeSpan.Zero, "walking beyond three paces revokes instant logout");
+        owner.MoveToWorld(camp, s_Map);
+        Check(BedrolledOut.CanLogout(owner), "returning to an active safe camp restores eligibility");
+        owner.Criminal = true;
+        Check(!BedrolledOut.CanLogout(owner), "criminal cannot escape through bedroll logout");
+        owner.Criminal = false;
+        owner.Combatant = other;
+        Check(!BedrolledOut.CanLogout(owner), "active combat revokes instant logout synchronously");
+        owner.Combatant = null;
+        AggressorInfo aggression = AggressorInfo.Create(other, owner, false);
+        owner.Aggressors.Add(aggression);
+        Check(!BedrolledOut.CanLogout(owner), "recent incoming aggression blocks logout after combatant clears");
+        owner.Aggressors.Clear();
+        owner.Aggressed.Add(aggression);
+        Check(!BedrolledOut.CanLogout(owner), "recent outgoing aggression blocks logout");
+        owner.Aggressed.Clear();
+        aggression.Free();
+        owner.Dead = true;
+        Check(!BedrolledOut.CanLogout(owner), "ghost cannot use a camp");
+        owner.Dead = false;
+        bed.Owner = other;
+        Check(!BedrolledOut.CanLogout(owner), "ownership changes revoke eligibility");
+        bed.Owner = owner;
+        owner.Internalize();
+        Check(!BedrolledOut.CanLogout(owner), "internalized player cannot use a world camp");
+        owner.MoveToWorld(camp, s_Map);
+        owner.AddToBackpack(bed);
+        Check(!BedrolledOut.CanLogout(owner), "contained bed grants no logout protection");
+        bed.MoveToWorld(camp, s_Map);
+        typeof(BedrolledOut).GetField("m_Created", Hidden).SetValue(bed, DateTime.Now.AddSeconds(-99));
+        Check(BedrolledOut.CanLogout(owner), "camp remains eligible before the 100 second boundary");
+        typeof(BedrolledOut).GetField("m_Created", Hidden).SetValue(bed, DateTime.Now.AddSeconds(-100));
+        Check(owner.GetLogoutDelay() != TimeSpan.Zero, "expired camp blocks logout before timer cleanup");
+        bed.RollUp();
+        int count = owner.Backpack.FindItemsByType(typeof(Bedroll)).Length;
+        bed.RollUp();
+        Check(owner.Backpack.FindItemsByType(typeof(Bedroll)).Length == count,
+            "repeated roll-up returns only one item");
+        Check(!BedrolledOut.CanLogout(owner), "rolled-up bed immediately revokes protection");
+        bed = new BedrolledOut(owner);
+        bed.MoveToWorld(camp, s_Map);
+        Orc enemy = new Orc();
+        enemy.MoveToWorld(new Point3D(camp.X + 2, camp.Y, camp.Z), s_Map);
+        Check(!BedrolledOut.CanLogout(owner), "nearby hostile creature blocks safe camp");
+        enemy.Delete();
+        bed.MoveToWorld(new Point3D(camp.X, camp.Y, camp.Z + 100), s_Map);
+        Check(!BedrolledOut.CanLogout(owner), "inaccessible bed on another elevation grants no protection");
+        bed.MoveToWorld(camp, s_Map);
+        int capacity = AnimalTrainer.GetMaxStabled(owner);
+        for (int i = 0; i < capacity; ++i)
+            Stable(owner, Pet<PackHorse>(owner));
+        PackHorse first = Pet<PackHorse>(owner);
+        PackHorse second = Pet<PackHorse>(owner);
+        Bag cargo = new Bag();
+        cargo.DropItem(new Gold(137));
+        first.Backpack.DropItem(cargo);
+        second.Backpack.DropItem(new IronIngot(20));
+        owner.OnDisconnected();
+        Check(!owner.BedrollLogout && first.IsStabled && second.IsStabled
+            && first.Map == Map.Internal && second.Map == Map.Internal
+            && owner.AutoStabled.Contains(first) && owner.AutoStabled.Contains(second)
+            && owner.Stabled.Count == capacity + 2,
+            "real camp disconnect protects multiple loaded followers beyond stable capacity");
+        owner.ClaimAutoStabledPets();
+        Check(first.ControlMaster == owner && second.ControlMaster == owner
+            && cargo.Parent == first.Backpack && cargo.FindItemByType(typeof(Gold)).Amount == 137
+            && second.Backpack.FindItemByType(typeof(IronIngot)).Amount == 20,
+            "real camp followers return with their cargo intact");
+        bed.Delete();
+        Check(!BedrolledOut.CanLogout(owner), "deleted bed grants no protection");
+        other.Delete();
+        owner.Delete();
+    }
+
     public static int Main(string[] args)
     {
         try
@@ -408,6 +510,7 @@ internal static class StableRegression
             typeof(World).GetField("m_Items", Hidden).SetValue(null, new Dictionary<Serial, Item>());
             s_Map = Map.Sosaria;
             MultiComponentList.PostHSFormat = true;
+            TestBedrollLogout();
             TestProtection();
             TestBilling();
             TestEntrypoints();
