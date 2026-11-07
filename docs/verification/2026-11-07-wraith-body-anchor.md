@@ -38,6 +38,8 @@ Local evidence is under `D:/ConficturaUOTestTools/body-anchor-native-20261107-10
 
 ## Prepare the client update
 
+The combined client release also repairs seven gypsy shelf bodies. Use the newer command to package both fixes together. [Player body survey and combined asset](2026-11-07-player-body-survey.md)
+
 From the repository root, with Python 3.11 or later, run the repair against a matching client asset set. Use an existing staging directory and a new output path. The script checks both input hashes, accepts either affected variant, and verifies the output before publishing it to the staging path. It refuses an existing destination. [Repair script](../../scripts/Repair-SpiritAnimation.py)
 
 ```powershell
