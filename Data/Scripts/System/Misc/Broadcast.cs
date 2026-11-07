@@ -45,7 +45,11 @@ namespace Server
                 m.Hue = m.Hue - 32768;
             }
 
-            m.SetRace();
+            // The client uses the ghost body to recognize death and render its ghost view.
+            if (m.Alive)
+                m.SetRace();
+            else if (m.AccessLevel == AccessLevel.Player)
+                m.Hidden = false;
 
             if (m.BankBox.FindItemByType(typeof(CharacterDatabase)) != null)
             {
@@ -158,7 +162,7 @@ namespace Server
 
             LoggingFunctions.LogAccess(m, "login");
 
-            if (m.Region.GetLogoutDelay(m) == TimeSpan.Zero && !m.Poisoned)
+            if (m.Alive && m.Region.GetLogoutDelay(m) == TimeSpan.Zero && !m.Poisoned)
             {
                 m.Hits = 1000;
                 m.Stam = 1000;
@@ -238,6 +242,9 @@ namespace Server
                 return;
 
             Mobile m = args.Mobile;
+            if (m.AccessLevel == AccessLevel.Player)
+                m.Hidden = false;
+
             GhostHelper.OnGhostWalking(m);
         }
     }

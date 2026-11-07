@@ -159,7 +159,7 @@ namespace Server.Gumps
                         );
                         from.Combatant = null;
                         from.Warmode = false;
-                        from.Hidden = true;
+                        GateMoon.ApplyTravelConcealment(from);
                         from.MoveToWorld(incomingCity.MoongateLocation, incomingCity.Map);
                         Effects.PlaySound(incomingCity.MoongateLocation, incomingCity.Map, 0x1FE);
                     }
