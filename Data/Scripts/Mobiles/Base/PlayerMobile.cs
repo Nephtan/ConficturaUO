@@ -2661,17 +2661,11 @@ namespace Server.Mobiles
                     )
                     {
                         Item shoes = this.FindItemOnLayer(Layer.Shoes);
-                        if (
-                            (
-                                shoes is BootsofHermes
-                                || shoes is Artifact_BootsofHermes
-                                || shoes is Artifact_SprintersSandals
-                                || (shoes is HikingBoots && RaceID > 0)
-                            )
-                            && shoes.Weight < 5.0
-                        )
+                        bool suppressFootwear = AnimalTrainer.IsSpeedFootwear(this, shoes)
+                            && shoes.Weight < 5.0;
+
+                        if (suppressFootwear)
                         {
-                            this.Send(SpeedControl.Disable);
                             shoes.Weight = 5.0;
                             if (!(shoes is HikingBoots))
                             {
@@ -2685,6 +2679,9 @@ namespace Server.Mobiles
                         Server.Spells.Syth.SythSpeed.RemoveEffect(this);
                         Server.Spells.Jedi.Celerity.RemoveEffect(this);
                         Server.Spells.Shinobi.CheetahPaws.RemoveEffect(this);
+
+                        if (suppressFootwear)
+                            AnimalTrainer.RefreshMovementSpeed(this);
                     }
                     Server.Misc.HenchmanFunctions.DismountHenchman(this);
                 }
@@ -2692,25 +2689,10 @@ namespace Server.Mobiles
             else if (speedAble && !mountAble && !Mounted && Alive)
             {
                 Item shoes = this.FindItemOnLayer(Layer.Shoes);
-                if (shoes is BootsofHermes && shoes.Weight > 3.0)
+                if (AnimalTrainer.IsSpeedFootwear(this, shoes) && shoes.Weight > 3.0)
                 {
                     shoes.Weight = 3.0;
-                    this.Send(SpeedControl.MountSpeed);
-                }
-                else if (shoes is Artifact_BootsofHermes && shoes.Weight > 3.0)
-                {
-                    shoes.Weight = 3.0;
-                    this.Send(SpeedControl.MountSpeed);
-                }
-                else if (shoes is Artifact_SprintersSandals && shoes.Weight > 3.0)
-                {
-                    shoes.Weight = 3.0;
-                    this.Send(SpeedControl.MountSpeed);
-                }
-                else if (shoes is HikingBoots && shoes.Weight > 3.0 && RaceID > 0)
-                {
-                    shoes.Weight = 3.0;
-                    this.Send(SpeedControl.MountSpeed);
+                    AnimalTrainer.RefreshMovementSpeed(this);
                 }
             }
             else if (mountAble && !Mounted && Alive)
@@ -2718,25 +2700,10 @@ namespace Server.Mobiles
                 Server.Mobiles.AnimalTrainer.GetLastMounted(this);
 
                 Item shoes = this.FindItemOnLayer(Layer.Shoes);
-                if (shoes is BootsofHermes && shoes.Weight > 3.0)
+                if (AnimalTrainer.IsSpeedFootwear(this, shoes) && shoes.Weight > 3.0)
                 {
                     shoes.Weight = 3.0;
-                    this.Send(SpeedControl.MountSpeed);
-                }
-                else if (shoes is Artifact_BootsofHermes && shoes.Weight > 3.0)
-                {
-                    shoes.Weight = 3.0;
-                    this.Send(SpeedControl.MountSpeed);
-                }
-                else if (shoes is Artifact_SprintersSandals && shoes.Weight > 3.0)
-                {
-                    shoes.Weight = 3.0;
-                    this.Send(SpeedControl.MountSpeed);
-                }
-                else if (shoes is HikingBoots && shoes.Weight > 3.0 && RaceID > 0)
-                {
-                    shoes.Weight = 3.0;
-                    this.Send(SpeedControl.MountSpeed);
+                    AnimalTrainer.RefreshMovementSpeed(this);
                 }
 
                 if (this.Mount != null)

@@ -289,7 +289,7 @@ namespace Server.Mobiles
 
             m_Table[from] = null;
 
-            from.Send(SpeedControl.Disable);
+            AnimalTrainer.RefreshMovementSpeed(from);
         }
 
         public static bool UnderCacophonicAttack(Mobile from)

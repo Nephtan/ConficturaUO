@@ -169,51 +169,27 @@ namespace Server
                 m.Mana = 1000;
             } // FULLY REST UP ON LOGIN
 
-            if (m.FindItemOnLayer(Layer.Shoes) != null)
+            Item shoes = m.FindItemOnLayer(Layer.Shoes);
+            Region region = Region.Find(m.Location, m.Map);
+            bool noMounts = MyServerSettings.NoMountsInCertainRegions()
+                && AnimalTrainer.IsNoMountRegion(m, region);
+
+            if (AnimalTrainer.IsSpeedFootwear(m, shoes))
             {
-                Item shoes = m.FindItemOnLayer(Layer.Shoes);
-                if (
-                    shoes is BootsofHermes
-                    || shoes is Artifact_BootsofHermes
-                    || shoes is Artifact_SprintersSandals
-                    || (shoes is HikingBoots && m.RaceID > 0)
-                )
-                {
-                    if (
-                        Server.Misc.MyServerSettings.NoMountsInCertainRegions()
-                        && Server.Mobiles.AnimalTrainer.IsNoMountRegion(
-                            m,
-                            Region.Find(m.Location, m.Map)
-                        )
-                    )
-                    {
-                        m.Send(SpeedControl.Disable);
-                        shoes.Weight = 5.0;
-                        if (!(shoes is HikingBoots))
-                        {
-                            m.SendMessage("These shoes seem to have their magic diminished here.");
-                        }
-                    }
-                    else
-                    {
-                        m.Send(SpeedControl.MountSpeed);
-                        shoes.Weight = 3.0;
-                    }
-                }
+                shoes.Weight = noMounts ? 5.0 : 3.0;
+                if (noMounts && !(shoes is HikingBoots))
+                    m.SendMessage("These shoes seem to have their magic diminished here.");
             }
 
-            if (
-                Server.Misc.MyServerSettings.NoMountsInCertainRegions()
-                && Server.Mobiles.AnimalTrainer.IsNoMountRegion(m, Region.Find(m.Location, m.Map))
-                && !Server.Mobiles.AnimalTrainer.AllowMagicSpeed(m, Region.Find(m.Location, m.Map))
-            )
+            if (noMounts && !AnimalTrainer.AllowMagicSpeed(m, region))
             {
-                m.Send(SpeedControl.Disable);
                 Server.Spells.Mystic.WindRunner.RemoveEffect(m);
                 Server.Spells.Syth.SythSpeed.RemoveEffect(m);
                 Server.Spells.Jedi.Celerity.RemoveEffect(m);
                 Server.Spells.Shinobi.CheetahPaws.RemoveEffect(m);
             }
+
+            AnimalTrainer.RefreshMovementSpeed(m);
         }
 
         private static void World_Leave(DisconnectedEventArgs args)

@@ -439,36 +439,46 @@ namespace Server.Mobiles
 
         public static bool IsBeingFast(Mobile from)
         {
-            if (from is PlayerMobile)
+            return from is PlayerMobile
+                && (from.Mounted || HasActiveSpeedFootwear(from) || HasSpeedSpell(from));
+        }
+
+        internal static bool IsSpeedFootwear(Mobile from, Item shoes)
+        {
+            return shoes is BootsofHermes
+                || shoes is Artifact_BootsofHermes
+                || shoes is Artifact_SprintersSandals
+                || (shoes is HikingBoots && from.RaceID > 0);
+        }
+
+        private static bool HasActiveSpeedFootwear(Mobile from)
+        {
+            Item shoes = from.FindItemOnLayer(Layer.Shoes);
+            return IsSpeedFootwear(from, shoes) && shoes.Weight < 5.0;
+        }
+
+        private static bool HasSpeedSpell(Mobile from)
+        {
+            return Spells.Syth.SythSpeed.UnderEffect(from)
+                || Spells.Jedi.Celerity.UnderEffect(from)
+                || Spells.Mystic.WindRunner.UnderEffect(from)
+                || Spells.Shinobi.CheetahPaws.UnderEffect(from);
+        }
+
+        internal static void RefreshMovementSpeed(Mobile from, bool? footwearBoost = null)
+        {
+            // The client has one speed mode shared by every boost and forced walking.
+            if (Ilhenir.UnderCacophonicAttack(from))
             {
-                if (from.Mounted)
-                    return true;
-
-                Item shoes = from.FindItemOnLayer(Layer.Shoes);
-                if (
-                    (
-                        shoes is BootsofHermes
-                        || shoes is Artifact_BootsofHermes
-                        || shoes is Artifact_SprintersSandals
-                        || (shoes is HikingBoots && from.RaceID > 0)
-                    )
-                    && shoes.Weight < 5.0
-                )
-                    return true;
-
-                if (Spells.Syth.SythSpeed.UnderEffect((PlayerMobile)from))
-                    return true;
-
-                if (Spells.Jedi.Celerity.UnderEffect((PlayerMobile)from))
-                    return true;
-
-                if (Spells.Mystic.WindRunner.UnderEffect((PlayerMobile)from))
-                    return true;
-
-                if (Spells.Shinobi.CheetahPaws.UnderEffect((PlayerMobile)from))
-                    return true;
+                from.Send(SpeedControl.WalkSpeed);
+                return;
             }
-            return false;
+
+            Spells.Ninjitsu.AnimalFormContext form = Spells.Ninjitsu.AnimalForm.GetContext(from);
+            bool boosted = (form != null && form.SpeedBoost)
+                || (footwearBoost ?? HasActiveSpeedFootwear(from))
+                || HasSpeedSpell(from);
+            from.Send(boosted ? SpeedControl.MountSpeed : SpeedControl.Disable);
         }
 
         public static void CleanClaimList(Mobile from)

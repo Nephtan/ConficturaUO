@@ -12,25 +12,6 @@ namespace Server.Spells.Ninjitsu
 {
     public class AnimalForm : NinjaSpell
     {
-        public static void Initialize()
-        {
-            EventSink.Login += new LoginEventHandler(OnLogin);
-        }
-
-        public static void OnLogin(LoginEventArgs e)
-        {
-            if (e == null)
-                return;
-
-            Mobile mobile = e.Mobile;
-            if (mobile == null || mobile.Deleted)
-                return;
-
-            AnimalFormContext context = AnimalForm.GetContext(mobile);
-            if (context != null && context.SpeedBoost)
-                mobile.Send(SpeedControl.MountSpeed);
-        }
-
         private static SpellInfo m_Info = new SpellInfo("Animal Form", null, -1, 9002);
 
         public override TimeSpan CastDelayBase
@@ -220,9 +201,6 @@ namespace Server.Spells.Ninjitsu
 
             m.HueMod = entry.HueMod;
 
-            if (entry.SpeedBoost)
-                m.Send(SpeedControl.MountSpeed);
-
             SkillMod mod = null;
 
             if (entry.StealthBonus)
@@ -248,6 +226,9 @@ namespace Server.Spells.Ninjitsu
                 m,
                 new AnimalFormContext(timer, mod, entry.SpeedBoost, entry.Type, stealingMod)
             );
+            if (entry.SpeedBoost)
+                AnimalTrainer.RefreshMovementSpeed(m);
+
             m.CheckStatTimers();
             return MorphResult.Success;
         }
@@ -275,7 +256,7 @@ namespace Server.Spells.Ninjitsu
             m_Table.Remove(m);
 
             if (context.SpeedBoost)
-                m.Send(SpeedControl.Disable);
+                AnimalTrainer.RefreshMovementSpeed(m);
 
             SkillMod mod = context.Mod;
 

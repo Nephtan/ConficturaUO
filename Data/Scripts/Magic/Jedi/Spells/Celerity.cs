@@ -60,8 +60,11 @@ namespace Server.Spells.Jedi
 
         public static void RemoveEffect(Mobile m)
         {
-            m.Send(SpeedControl.Disable);
+            if (!UnderEffect(m))
+                return;
+
             TableJediRunning.Remove(m);
+            AnimalTrainer.RefreshMovementSpeed(m);
             m.EndAction(typeof(Celerity));
             BuffInfo.RemoveBuff(m, BuffIcon.Celerity);
         }
@@ -99,7 +102,7 @@ namespace Server.Spells.Jedi
                     TotalTime = 600;
                 }
                 TableJediRunning[Caster] = SpeedControl.MountSpeed;
-                Caster.Send(SpeedControl.MountSpeed);
+                AnimalTrainer.RefreshMovementSpeed(Caster);
                 new InternalTimer(Caster, TimeSpan.FromSeconds(TotalTime)).Start();
                 BuffInfo.RemoveBuff(Caster, BuffIcon.Celerity);
                 BuffInfo.AddBuff(
