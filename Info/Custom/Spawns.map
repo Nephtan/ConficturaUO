@@ -92,3 +92,95 @@
 *|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 300 Hits 300 DamageMax 140 DamageMin 110 Coins 1000 CoinType jewels||||||4442|2569|-127|7|5|1|8|0|1|7|0|0|0|0|0
 *|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4457|2547|-127|7|5|4|8|0|1|20|0|0|0|0|0
 *|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4462|2676|-127|7|5|4|8|0|1|5|0|0|0|0|0
+
+# Atlantis replacements for former XML item controllers
+*|DDJewels setafter Amount 1000||||||4251|2606|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4252|2616|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4256|2603|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4257|2616|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4259|2603|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4291|2563|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4291|2569|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4298|2570|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4299|2594|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4312|2536|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4336|2606|-127|7|5|12|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4346|2546|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4403|2579|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4408|2600|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4418|2570|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4432|2576|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4440|2594|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4464|2640|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4465|2602|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4475|2620|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4303|2645|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4313|2619|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4316|2602|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4329|2593|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest||||||4330|2625|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4330|2649|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4331|2640|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4338|2538|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4338|2570|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4340|2629|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4356|2577|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4356|2643|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4357|2611|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4370|2618|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4372|2555|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4374|2604|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4385|2635|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4402|2609|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4403|2635|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4435|2619|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4436|2601|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4436|2644|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4449|2620|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4460|2618|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4471|2617|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4475|2604|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4319|2560|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4319|2561|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4319|2562|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4319|2563|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4319|2564|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4319|2565|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4319|2566|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4346|2632|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4347|2632|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4348|2632|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4351|2620|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4351|2621|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4351|2622|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4394|2615|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4395|2615|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4396|2615|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4397|2615|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4398|2615|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4466|2599|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4467|2599|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|HoardPiles setafter Hue 583 Name "Atlantian Treasure"||||||4251|2617|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|HoardPiles setafter Hue 583 Name "Atlantian Treasure"||||||4255|2603|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|HoardPiles setafter Hue 583 Name "Atlantian Treasure"||||||4291|2643|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|HoardPiles setafter Hue 583 Name "Atlantian Treasure"||||||4299|2587|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|HoardPiles setafter Hue 583 Name "Atlantian Treasure"||||||4299|2627|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|HoardPiles setafter Hue 583 Name "Atlantian Treasure"||||||4322|2555|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|HoardPiles setafter Hue 583 Name "Atlantian Treasure"||||||4390|2602|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|HoardPiles setafter Hue 583 Name "Atlantian Treasure"||||||4451|2570|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|LevelNorseHelm setafter Name "Atlantian Helmet" Hue 583 PhysicalBonus 50 ColdBonus 50 IntRequirement 50||||||4283|2590|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|LevelNorseHelm setafter Name "Atlantian Helmet" Hue 583 PhysicalBonus 50 ColdBonus 50 IntRequirement 50||||||4311|2631|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|LevelNorseHelm setafter Name "Atlantian Helmet" Hue 583 PhysicalBonus 50 ColdBonus 50 IntRequirement 50||||||4331|2521|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|LevelSpear setafter Name "Atlantian Spear" Hue 583 MaxDamage 45 MinDamage 40 MaxRange 2||||||4254|2616|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|LevelSpear setafter Name "Atlantian Spear" Hue 583 MaxDamage 45 MinDamage 40 MaxRange 2||||||4312|2632|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|LevelSpear setafter Name "Atlantian Spear" Hue 583 MaxDamage 45 MinDamage 40 MaxRange 2||||||4332|2522|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|LevelVirtueShield setafter Name "Atlantian Shield" IntRequirement 50 Hue 583 PhysicalBonus 50 ColdBonus 50||||||4251|2614|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|LevelVirtueShield setafter Name "Atlantian Shield" IntRequirement 50 Hue 583 PhysicalBonus 50 ColdBonus 50||||||4285|2632|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|StealBase setafter Hue 583||||||4246|2617|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|StealBase setafter Hue 583||||||4247|2605|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|StealBase setafter Hue 583||||||4291|2576|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|StealBase setafter Hue 583||||||4291|2637|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|StealBase setafter Hue 583||||||4312|2527|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|StealBase setafter Hue 583||||||4331|2617|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|StealBase setafter Hue 583||||||4356|2528|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|StealBase setafter Hue 583||||||4375|2608|-127|7|5|60|0|0|1|1|0|0|0|0|0
