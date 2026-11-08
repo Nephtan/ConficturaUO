@@ -4,7 +4,7 @@
 #
 # Special Villains-----------------------------------------------------------------------
 #
-*|Jormungandr||||||1|1|10|2|90|120|7000|3|99999|1|0|0|0|0|0
+*|Jormungandr||||||0|0|-5|2|90|120|7000|3|99999|1|0|0|0|0|0
 *|Exodus||||||5964|636|0|2|90|120|7000|3|99999|1|0|0|0|0|0
 *|BottleDragon||||||6669|460|0|2|90|120|5|3|99999|1|0|0|0|0|0
 *|EnergyHydra||||||5605|3830|-2|2|90|120|20|3|99999|1|0|0|0|0|0
@@ -13302,7 +13302,7 @@
 *|arcanegem:bronzeingot:ironingot:chainlightningscroll:manavampirescroll:massdispelscroll:unknownscroll:manapotion||||||4591|3169|0|2|5|10|-1|4|1|7|0|0|0|0|0
 *|earthquakescroll:energyvortexscroll:gatetravelscroll:paralyzefieldscroll:firefieldscroll:potionofwisdom:archcurescroll:magictalisman:runebook:recallrune||||||4667|3168|0|2|5|10|-1|4|1|9|0|0|0|0|0
 *|advancedmagerystudybook:bluebook:bookofbushido:brownbook:learnreagentsbook:learnmetalbook:lorebook:myninjabook:redbook:runebook:songbook:blankscroll:recallrune:unknownwand||||||4605|3163|0|2|5|10|-1|4|1|9|0|0|0|0|0
-*|cosmicgargoyle||||||4767|3176|0|2|300|360|-1|0|1|1|0|0|0|0|0
+*|cosmicgargoyle||||||4767|3172|0|2|300|360|-1|0|1|1|0|0|0|0|0
 *|cosmicgargoyle||||||4745|3162|15|2|300|360|-1|0|1|1|0|0|0|0|0
 *|cosmicgargoyle||||||4739|3162|15|2|300|360|-1|0|1|1|0|0|0|0|0
 *|spacejunk:spacechest:spacecrate||||||4881|3167|0|2|5|10|-1|4|1|2|0|0|0|0|0
@@ -13577,7 +13577,7 @@
 *|ManaGolem||||||5996|2342|0|2|720|0s|5|5|800006|1|0|0|0|0|0
 *|ManaGolem||||||6017|2372|0|2|720|0s|5|5|800003|1|0|0|0|0|0
 *|StormGiant||||||5948|2283|0|2|5|30|5|5|800019|1|0|0|0|0|0
-*|DioSMonster||||||6018|2293|0|2|60|120|5|5|800005|1|0|0|0|0|0
+*|DioSMonster||||||6017|2295|0|2|60|120|5|5|800005|1|0|0|0|0|0
 *|Vampire||||||6071|2381|0|2|5|30|5|5|800017|1|0|0|0|0|0
 *|ManaGolem||||||6017|2335|0|2|720|0s|5|5|800004|1|0|0|0|0|0
 *|Spirit||||||6080|2368|0|2|5|30|5|5|800016|1|0|0|0|0|0
