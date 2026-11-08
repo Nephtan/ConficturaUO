@@ -81,4 +81,30 @@ namespace Server.Custom.Confictura
             reader.ReadInt();
         }
     }
+
+    public class AlternateDecorationSecretDungeonDoor : SecretDungeonDoor
+    {
+        [Constructable]
+        public AlternateDecorationSecretDungeonDoor(DoorFacing facing)
+            : base(facing)
+        {
+        }
+
+        public AlternateDecorationSecretDungeonDoor(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write(0);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            reader.ReadInt();
+        }
+    }
 }
