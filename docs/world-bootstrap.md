@@ -26,6 +26,10 @@ this repository.
    authored packages and examples. The loader uses each definition's facet
    and coordinates and replaces matching GUIDs.
 
+   For Sosaria's six cemetery nest controllers, run
+   `[XmlLoad UndeadNests-Sosaria.xml` on the fresh local world.
+   [Cemetery spawn definitions](../Spawns/UndeadNests-Sosaria.xml)
+
 Sosaria and Atlantis are separate server facets. Both use file index 1, so
 an edit to the index-1 MUL statics appears at the same coordinates on both.
 Facet-specific scenery and functional placements belong in the appropriate
