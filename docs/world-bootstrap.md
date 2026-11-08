@@ -36,7 +36,11 @@ Atlantis creature replacements use `setafter` to retain their saved XML
 overrides after regional adjustments. The optional `localspawn` keyword
 follows the creature type. It uses the configured spawn footprint and
 sets each creature's home to its spawn point, with the walking range
-measured from that point. When upgrading a copied save,
+measured from that point. Use `bounds <minX> <minY> <maxX> <maxY>` after
+`localspawn` to specify inclusive coordinates for a rectangular area.
+In the first spawn slot, `refillone` immediately after `localspawn` limits
+each timer tick to filling one vacancy across the configured slots.
+When upgrading a copied save,
 verify and retire each replaced XML controller by identity before testing
 the rebuild. [Custom spawn definitions](../Info/Custom/Spawns.map)
 

@@ -117,6 +117,18 @@ namespace Server.Items
             UpdateEntityHealth();
         }
 
+        public override void OnAfterSpawn()
+        {
+            base.OnAfterSpawn();
+            UpdateEntityPosition();
+        }
+
+        private void UpdateEntityPosition()
+        {
+            if (m_Entity != null && !m_Entity.Deleted)
+                m_Entity.MoveToWorld(Location, Map);
+        }
+
         // Cleanup logic to ensure spawned creatures and the combat entity are properly removed when the nest is deleted.
         public override void OnDelete()
         {
@@ -232,9 +244,7 @@ namespace Server.Items
         // Attempts to spawn a new creature based on the nest's configuration.
         public void DoSpawn()
         {
-            // Ensure the combat entity is positioned at the nest's location, if it exists.
-            if (this.m_Entity != null)
-                this.m_Entity.MoveToWorld(this.Location, this.Map);
+            UpdateEntityPosition();
 
             // Check conditions: spawn list exists and current count is below max allowed.
             if (this.m_Spawn != null && this.Count() < this.m_MaxCount)
@@ -295,6 +305,18 @@ namespace Server.Items
             m_RangeHome = reader.ReadInt();
             m_LootLevel = reader.ReadInt();
             m_Entity = reader.ReadMobile();
+
+            Timer.DelayCall(TimeSpan.Zero, ResumeTimers);
+        }
+
+        private void ResumeTimers()
+        {
+            if (Deleted)
+                return;
+
+            UpdateEntityPosition();
+            new InternalTimer(this).Start();
+            new RegenTimer(this).Start();
         }
 
         // RegenTimer handles periodic regeneration of the nest's hit points.

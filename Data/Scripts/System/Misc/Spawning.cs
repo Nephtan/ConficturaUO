@@ -2127,6 +2127,10 @@ namespace Server.Mobiles
                     return;
                 }
             }
+            else if (m_CreaturesName.Count > 0 && RefillsOne(m_CreaturesName[0]))
+            {
+                RefillOne();
+            }
             else
             {
                 Spawn();
@@ -2136,6 +2140,28 @@ namespace Server.Mobiles
                 SpawnD();
                 SpawnE();
             }
+        }
+
+        private void RefillOne()
+        {
+            Defrag();
+
+            List<Action> available = new List<Action>(6);
+            if (!IsFull && CreaturesNameCount > 0)
+                available.Add(Spawn);
+            if (!IsFulla && CreaturesNameCountA > 0)
+                available.Add(SpawnA);
+            if (!IsFullb && CreaturesNameCountB > 0)
+                available.Add(SpawnB);
+            if (!IsFullc && CreaturesNameCountC > 0)
+                available.Add(SpawnC);
+            if (!IsFulld && CreaturesNameCountD > 0)
+                available.Add(SpawnD);
+            if (!IsFulle && CreaturesNameCountE > 0)
+                available.Add(SpawnE);
+
+            if (available.Count > 0)
+                available[Utility.Random(available.Count)]();
         }
 
         public static void Reconfigure(PremiumSpawner spawner, bool respawn)
@@ -2773,14 +2799,64 @@ namespace Server.Mobiles
                 && UsesLocalPlacement(CommandSystem.Split(specification));
         }
 
+        private static bool RefillsOne(string[] args)
+        {
+            return args.Length > 2 && UsesLocalPlacement(args) && Insensitive.Equals(args[2], "refillone");
+        }
+
+        private static bool RefillsOne(string specification)
+        {
+            return specification.IndexOf("refillone", StringComparison.OrdinalIgnoreCase) >= 0
+                && RefillsOne(CommandSystem.Split(specification));
+        }
+
+        private static bool HasBounds(string[] args, int index)
+        {
+            return args.Length > index && Insensitive.Equals(args[index], "bounds");
+        }
+
+        private static bool TryReadBounds(string[] args, int index, out Point2D first, out Point2D last)
+        {
+            first = Point2D.Zero;
+            last = Point2D.Zero;
+
+            int x1, y1, x2, y2;
+            if (args.Length < index + 5
+                || !Int32.TryParse(args[index + 1], out x1)
+                || !Int32.TryParse(args[index + 2], out y1)
+                || !Int32.TryParse(args[index + 3], out x2)
+                || !Int32.TryParse(args[index + 4], out y2)
+                || x1 < 0 || y1 < 0 || x1 > x2 || y1 > y2
+                || x2 > UInt16.MaxValue || y2 > UInt16.MaxValue)
+                return false;
+
+            first = new Point2D(x1, y1);
+            last = new Point2D(x2, y2);
+            return true;
+        }
+
         public static IEntity Build(string[] args)
         {
             string name = args[0];
 
-            bool localPlacement = UsesLocalPlacement(args);
-            Add.FixArgs(ref args);
-            if (localPlacement)
+            if (UsesLocalPlacement(args))
+            {
+                int start = RefillsOne(args) ? 3 : 2;
+                if (HasBounds(args, start))
+                {
+                    Point2D first, last;
+                    if (!TryReadBounds(args, start, out first, out last))
+                        return null;
+                    start += 5;
+                }
+                string[] constructorArgs = new string[args.Length - start];
+                Array.Copy(args, start, constructorArgs, 0, constructorArgs.Length);
+                args = constructorArgs;
+            }
+            else
+            {
                 Add.FixArgs(ref args);
+            }
 
             string[] propertyArgs = args;
             int propertyStart = args.Length;
@@ -2996,7 +3072,7 @@ namespace Server.Mobiles
 
                 bool localPlacement = UsesLocalPlacement(specification);
                 Point3D loc = localPlacement
-                    ? GetLocalSpawnPosition(m)
+                    ? GetLocalSpawnPosition(m, specification)
                     : (m is BaseVendor ? Location : GetSpawnPosition());
 
                 bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
@@ -3132,23 +3208,7 @@ namespace Server.Mobiles
 
                 m_Creatures.Add(item);
 
-                Point3D loc = GetSpawnPosition();
-
-                item.OnBeforeSpawn(loc, map);
-                InvalidateProperties();
-
-                item.MoveToWorld(loc, map);
-                Server.Mobiles.PremiumSpawner.SpreadItems(item);
-
-                if (Region.Find(this.Location, this.Map) != Region.Find(item.Location, item.Map))
-                {
-                    item.Delete();
-                    Defrag();
-                    return;
-                } // REMOVE IF NOT IN SAME REGION
-
-                if (item != null)
-                    CompleteSpawn(item, specification);
+                PlaceSpawnedItem(item, map, specification);
             }
         }
 
@@ -3256,7 +3316,7 @@ namespace Server.Mobiles
 
                 bool localPlacement = UsesLocalPlacement(specification);
                 Point3D loc = localPlacement
-                    ? GetLocalSpawnPosition(m)
+                    ? GetLocalSpawnPosition(m, specification)
                     : (m is BaseVendor ? Location : GetSpawnPosition());
 
                 bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
@@ -3376,23 +3436,7 @@ namespace Server.Mobiles
 
                 m_CreaturesA.Add(item);
 
-                Point3D loc = GetSpawnPosition();
-
-                item.OnBeforeSpawn(loc, map);
-                InvalidateProperties();
-
-                item.MoveToWorld(loc, map);
-                Server.Mobiles.PremiumSpawner.SpreadItems(item);
-
-                if (Region.Find(this.Location, this.Map) != Region.Find(item.Location, item.Map))
-                {
-                    item.Delete();
-                    Defrag();
-                    return;
-                } // REMOVE IF NOT IN SAME REGION
-
-                if (item != null)
-                    CompleteSpawn(item, specification);
+                PlaceSpawnedItem(item, map, specification);
             }
         }
 
@@ -3500,7 +3544,7 @@ namespace Server.Mobiles
 
                 bool localPlacement = UsesLocalPlacement(specification);
                 Point3D loc = localPlacement
-                    ? GetLocalSpawnPosition(m)
+                    ? GetLocalSpawnPosition(m, specification)
                     : (m is BaseVendor ? Location : GetSpawnPosition());
 
                 bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
@@ -3620,23 +3664,7 @@ namespace Server.Mobiles
 
                 m_CreaturesB.Add(item);
 
-                Point3D loc = GetSpawnPosition();
-
-                item.OnBeforeSpawn(loc, map);
-                InvalidateProperties();
-
-                item.MoveToWorld(loc, map);
-                Server.Mobiles.PremiumSpawner.SpreadItems(item);
-
-                if (Region.Find(this.Location, this.Map) != Region.Find(item.Location, item.Map))
-                {
-                    item.Delete();
-                    Defrag();
-                    return;
-                } // REMOVE IF NOT IN SAME REGION
-
-                if (item != null)
-                    CompleteSpawn(item, specification);
+                PlaceSpawnedItem(item, map, specification);
             }
         }
 
@@ -3744,7 +3772,7 @@ namespace Server.Mobiles
 
                 bool localPlacement = UsesLocalPlacement(specification);
                 Point3D loc = localPlacement
-                    ? GetLocalSpawnPosition(m)
+                    ? GetLocalSpawnPosition(m, specification)
                     : (m is BaseVendor ? Location : GetSpawnPosition());
 
                 bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
@@ -3864,23 +3892,7 @@ namespace Server.Mobiles
 
                 m_CreaturesC.Add(item);
 
-                Point3D loc = GetSpawnPosition();
-
-                item.OnBeforeSpawn(loc, map);
-                InvalidateProperties();
-
-                item.MoveToWorld(loc, map);
-                Server.Mobiles.PremiumSpawner.SpreadItems(item);
-
-                if (Region.Find(this.Location, this.Map) != Region.Find(item.Location, item.Map))
-                {
-                    item.Delete();
-                    Defrag();
-                    return;
-                } // REMOVE IF NOT IN SAME REGION
-
-                if (item != null)
-                    CompleteSpawn(item, specification);
+                PlaceSpawnedItem(item, map, specification);
             }
         }
 
@@ -3988,7 +4000,7 @@ namespace Server.Mobiles
 
                 bool localPlacement = UsesLocalPlacement(specification);
                 Point3D loc = localPlacement
-                    ? GetLocalSpawnPosition(m)
+                    ? GetLocalSpawnPosition(m, specification)
                     : (m is BaseVendor ? Location : GetSpawnPosition());
 
                 bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
@@ -4108,23 +4120,7 @@ namespace Server.Mobiles
 
                 m_CreaturesD.Add(item);
 
-                Point3D loc = GetSpawnPosition();
-
-                item.OnBeforeSpawn(loc, map);
-                InvalidateProperties();
-
-                item.MoveToWorld(loc, map);
-                Server.Mobiles.PremiumSpawner.SpreadItems(item);
-
-                if (Region.Find(this.Location, this.Map) != Region.Find(item.Location, item.Map))
-                {
-                    item.Delete();
-                    Defrag();
-                    return;
-                } // REMOVE IF NOT IN SAME REGION
-
-                if (item != null)
-                    CompleteSpawn(item, specification);
+                PlaceSpawnedItem(item, map, specification);
             }
         }
 
@@ -4232,7 +4228,7 @@ namespace Server.Mobiles
 
                 bool localPlacement = UsesLocalPlacement(specification);
                 Point3D loc = localPlacement
-                    ? GetLocalSpawnPosition(m)
+                    ? GetLocalSpawnPosition(m, specification)
                     : (m is BaseVendor ? Location : GetSpawnPosition());
 
                 bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
@@ -4352,38 +4348,51 @@ namespace Server.Mobiles
 
                 m_CreaturesE.Add(item);
 
-                Point3D loc = GetSpawnPosition();
+                PlaceSpawnedItem(item, map, specification);
+            }
+        }
 
-                item.OnBeforeSpawn(loc, map);
-                InvalidateProperties();
+        private void PlaceSpawnedItem(Item item, Map map, string specification)
+        {
+            bool localPlacement = UsesLocalPlacement(specification);
+            Point3D loc = localPlacement
+                ? GetLocalSpawnPosition(null, specification)
+                : GetSpawnPosition();
 
-                item.MoveToWorld(loc, map);
+            item.OnBeforeSpawn(loc, map);
+            InvalidateProperties();
+
+            item.MoveToWorld(loc, map);
+            if (!localPlacement)
+            {
                 Server.Mobiles.PremiumSpawner.SpreadItems(item);
 
-                if (Region.Find(this.Location, this.Map) != Region.Find(item.Location, item.Map))
+                if (Region.Find(Location, Map) != Region.Find(item.Location, item.Map))
                 {
                     item.Delete();
                     Defrag();
                     return;
-                } // REMOVE IF NOT IN SAME REGION
-
-                if (item != null)
-                    CompleteSpawn(item, specification);
+                }
             }
+
+            if (item != null)
+                CompleteSpawn(item, specification);
         }
 
-        private Point3D GetLocalSpawnPosition(Mobile mobile)
+        private Point3D GetLocalSpawnPosition(Mobile mobile, string specification)
         {
-            // The encounter footprint and the creature's roaming range are independent.
+            string[] args = CommandSystem.Split(specification);
+            int index = RefillsOne(args) ? 3 : 2;
+            int range = Math.Max(0, m_HomeRange);
+            Point2D first = new Point2D(X - range, Y - range);
+            Point2D last = new Point2D(X + range, Y + range);
+            if (HasBounds(args, index) && !TryReadBounds(args, index, out first, out last))
+                return Location;
+
             for (int i = 0; i < 10; i++)
             {
-                int x = X;
-                int y = Y;
-                if (m_HomeRange > 0)
-                {
-                    x += Utility.RandomMinMax(-m_HomeRange, m_HomeRange);
-                    y += Utility.RandomMinMax(-m_HomeRange, m_HomeRange);
-                }
+                int x = first.X == last.X ? first.X : Utility.RandomMinMax(first.X, last.X);
+                int y = first.Y == last.Y ? first.Y : Utility.RandomMinMax(first.Y, last.Y);
 
                 if (x < 0 || y < 0 || x >= Map.Width || y >= Map.Height || (x == 0 && y == 0))
                     continue;
@@ -8848,7 +8857,7 @@ INDEX:
     1. PREMIUM SPAWNER INSTALATION
     2. PART I - Main Menu
     3. PART II - Writing a Map File (Basics)
-    4. PART III - using Maps "In-Game" (Básics)
+    4. PART III - using Maps "In-Game" (BÃ¡sics)
     5. PART IV - Writing a Map File (Advanced)
     6. PART V - using Maps "In-Game" (Advanced)
     7. PART VI - Edition Options
@@ -9051,7 +9060,7 @@ WalkingRange|HomeRange|SpawnID|Count1|Count2|Count3|Count4|Count5|Count6
 
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-PART III - using Maps "In-Game" (Básics)
+PART III - using Maps "In-Game" (BÃ¡sics)
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     This is simple, are just a commands list to be used in game for
