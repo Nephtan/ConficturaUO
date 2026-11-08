@@ -30,6 +30,14 @@ this repository.
    `[XmlLoad UndeadNests-Sosaria.xml` on the fresh local world.
    [Cemetery spawn definitions](../Spawns/UndeadNests-Sosaria.xml)
 
+   For the nine champion controllers and nine monitors, run
+   `[XmlLoad RWChamp.xml` followed by `[XmlLoad RWChamp_Monitors.xml` on the
+   fresh world. These imports start the authored champion sequence. On an
+   existing world, verify the saved controller identities and encounter state
+   before importing either package.
+   [Champion controllers](../Spawns/RWChamp.xml) ·
+   [Champion monitors](../Spawns/RWChamp_Monitors.xml)
+
 PremiumSpawner entries support `set` for construction-time properties and
 `setafter` for properties that must follow the normal spawn hook. The
 Atlantis creature replacements use `setafter` to retain their saved XML
