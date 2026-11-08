@@ -38,6 +38,31 @@ this repository.
    [Champion controllers](../Spawns/RWChamp.xml) ·
    [Champion monitors](../Spawns/RWChamp_Monitors.xml)
 
+6. On the fresh world, initialize the three fixed Sosaria Unholy Terror
+   champion encounters once. Run these commands as the local owner. Set
+   each radius after its controller is in place so the spawn area centers
+   on the correct coordinates.
+
+   ```text
+   [go Sosaria
+   [go 2168 361 15
+   [Self Add ChampionSpawn set Type UnholyTerror
+   [Global Set SpawnRadius 15 Active true where ChampionSpawn Map = Sosaria X = 2168 Y = 361 Z = 15
+   [go 2513 950 16
+   [Self Add ChampionSpawn set Type UnholyTerror
+   [Global Set SpawnRadius 50 Active true where ChampionSpawn Map = Sosaria X = 2513 Y = 950 Z = 16
+   [go 5720 2348 15
+   [Self Add ChampionSpawn set Type UnholyTerror
+   [Global Set SpawnRadius 25 Active true where ChampionSpawn Map = Sosaria X = 5720 Y = 2348 Z = 15
+   [go 5717 2348 0
+   [save
+   ```
+
+   The encounters start at the first wave. Each controller builds its linked
+   platform, altar, and idol. Subsequent rebuilds keep the controllers and
+   their encounter state. Existing saves retain their fixed controllers.
+   [Champion controller](../Data/Scripts/Custom/Champions/System/CannedEvil/ChampionSpawn.cs)
+
 PremiumSpawner entries support `set` for construction-time properties and
 `setafter` for properties that must follow the normal spawn hook. The
 Atlantis creature replacements use `setafter` to retain their saved XML
