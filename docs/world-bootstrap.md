@@ -1,0 +1,43 @@
+# Build a fresh local world
+
+Use a separate checkout or server directory for a new local world. Keep its
+generated saves and backups outside version control. The public inputs are
+the map assets, decoration and spawn definitions, and runtime scripts in
+this repository.
+
+1. Build the Release x86 server from the [server project](../Data/System/Source/Server.csproj).
+   Put the executable in the local server directory alongside the checked-in
+   `Data`, `Info`, and `Spawns` directories.
+2. For a private local shard, bind the [listener](../Data/Scripts/System/Misc/SocketOptions.cs)
+   to loopback and configure a local-only port before starting. Keep external
+   integrations disabled in the local copy. Start the server interactively
+   with `-nocache` so it compiles scripts and can prompt for a local owner
+   account when there are no accounts.
+3. Point ClassicUO at the local listener and use a client asset directory
+   with the same map and static files as the server. Keep each
+   `staidxN.mul` with its matching `staticsN.mul`.
+4. Sign in as the local owner and run `[buildworld` on the empty world.
+   Wait for the command to finish, then save with `[save`. This generates
+   the checked-in decorations, PremiumSpawner placements, and
+   script-generated content. It also works through the supplemental files
+   in [Info/Custom](../Info/Custom).
+5. Load any explicitly selected XMLSpawner package separately with
+   `[XmlLoad <filename>`. The [Spawns directory](../Spawns) contains both
+   authored packages and examples. The loader uses each definition's facet
+   and coordinates and replaces matching GUIDs.
+
+Sosaria and Atlantis are separate server facets. Both use file index 1, so
+an edit to the index-1 MUL statics appears at the same coordinates on both.
+Facet-specific scenery and functional placements belong in the appropriate
+facet's configuration. Umber Veil's main locations are on Sosaria.
+[Map definitions](../Data/Scripts/System/Misc/MapDefinitions.cs) ·
+[Staff destinations](../Data/System/XML/go.xml)
+
+For an existing world, rehearse the rebuild on a disposable copy first.
+`[buildworld` removes every PremiumSpawner and sweeps decorations marked
+with weight `-2` before regeneration. Saved-only and moved placements can
+disappear or return at older coordinates. When adopting updated static
+assets on an existing world, compare the frozen tiles with the dynamic
+items at the same coordinates and retire only the verified duplicate
+scenery on a copy before rollout.
+[Rebuild and decoration implementation](../Data/Scripts/System/Misc/Build.cs)
