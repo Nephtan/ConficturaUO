@@ -217,3 +217,23 @@
 *|ratmannest localspawn refillone bounds 0 0 5120 3128|lizardmannest localspawn bounds 0 0 5120 3128|||||2514|1531|0|2|120|240|5|0|1|4|4|0|0|0|0
 *|Vintner localspawn||||||2449|898|2|2|5|10|3|1|1|1|0|0|0|0|0
 *|atlas localspawn:blackbartroberts localspawn:nero localspawn:abysscrawler localspawn:twoface localspawn:fallenangel localspawn:forestgiant localspawn:garuda localspawn:spiderqueen localspawn:stitches localspawn:unspeakable localspawn:treasuregoblin localspawn:ImmortalGenie localspawn:GrumpyEarthSpirit localspawn:dragonhydra localspawn:fireangel localspawn:managolem localspawn:oldmanwillow localspawn:scientist localspawn:plaguegod localspawn:lovecraftian localspawn:deepone localspawn:atlantian localspawn:atlantianparagon localspawn:skinwalker localspawn:crusader localspawn:skyspirit localspawn:olympus localspawn:assassin localspawn:cosmicgargoyle localspawn:PrimevalRunicDragon localspawn:cursedadventurer localspawn:voidwraith localspawn:darkunicorn localspawn:xdryad localspawn:reddeath localspawn:PrimevalAbysmalDragon localspawn:PrimevalRoyalDragon localspawn:PrimevalSilverDragon localspawn:HeadlessOne localspawn:Rattlebones localspawn:Honorguard localspawn:hydra localspawn:energyhydra localspawn:RoyalSphinx localspawn||||||3462|800|0|2|60|120|5|0|1|1|0|0|0|0|0
+
+# Staff event staging
+# HandS - Shalza Moonspire
+*|XmlQuestNPC localspawn setafter Name "Shalza Moonspire" Female True TalkText hello||||||5138|3003|0|2|5|10|0|0|1|1|0|0|0|0|0
+# HandS - Brother Bob
+*|XmlQuestNPC localspawn setafter Name "Brother Bob" TalkText hey||||||5138|3005|0|2|5|10|0|0|1|1|0|0|0|0|0
+# HandS-Ed Forestmight
+*|XmlQuestNPC localspawn setafter Name "Ed Forestmight" TalkText greetings||||||5138|3001|0|2|5|10|0|0|1|1|0|0|0|0|0
+# HandS-UndeadInformant
+*|StaffUndeadInformant localspawn||||||5145|3005|0|2|5|10|0|0|1|1|0|0|0|0|0
+# HandS-Gypsy
+*|StaffEventQuestNpc localspawn MadameEva||||||5141|3005|0|2|5|10|0|0|1|1|0|0|0|0|0
+# HandS-Katara
+*|StaffEventQuestNpc localspawn Katara||||||5143|3005|0|2|5|10|0|0|1|1|0|0|0|0|0
+# 01-RatsRent
+*|StaffEventQuestNpc localspawn Silas||||||5130|3019|0|2|5|10|0|0|1|1|0|0|0|0|0
+# Arena Spawner
+*|Goat localspawn:Moose localspawn:Brigand localspawn:Skeleton localspawn:Lizardman localspawn:Ogre localspawn:EarthElemental localspawn:Cyclops localspawn:Giant localspawn:TitanLithos localspawn||||||5141|2958|0|2|5|10|5|5|1|0|0|0|0|0|0
+# Discord
+*|TownHerald localspawn||||||5148|3027|0|2|5|10|0|0|1|0|0|0|0|0|0
