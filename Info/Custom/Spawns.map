@@ -184,3 +184,29 @@
 *|StealBase setafter Hue 583||||||4331|2617|-127|7|5|60|0|0|1|1|0|0|0|0|0
 *|StealBase setafter Hue 583||||||4356|2528|-127|7|5|60|0|0|1|1|0|0|0|0|0
 *|StealBase setafter Hue 583||||||4375|2608|-127|7|5|60|0|0|1|1|0|0|0|0|0
+
+# Atlantis mobile encounters with separate spawn and roaming ranges
+*|DeepSeaGiant localspawn setafter Name "Maw of Atlantis" HitsMaxSeed 4000 DamageMax 200 DamageMin 100 Coins 20000 CoinType jewels Title (-null-)||||||4330|2659|-127|7|5|60|5|1|1|1|0|0|0|0|0
+*|DemonOfTheSea localspawn setafter Name "Spawn of Ktulu" Title (-null-) HitsMaxSeed 2000 Hits 2000 DamageMax 300 DamageMin 100 Coins 10000 CoinType jewels||||||4329|2532|-127|7|5|10|8|1|1|1|0|0|0|0|0
+*|DemonOfTheSea localspawn setafter Name "Spawn of Ktulu" Title (-null-) HitsMaxSeed 2000 Hits 2000 DamageMax 300 DamageMin 100 Coins 10000 CoinType jewels||||||4348|2676|-127|7|5|10|8|0|1|1|0|0|0|0|0
+*|EyeOfTheDeep localspawn setafter Name "Eye of Ktulu" HitsMaxSeed 500 Hits 500 DamageMax 300 Coins 1 CoinType jewels||||||4312|2593|-127|7|5|60|5|0|1|1|0|0|0|0|0
+*|EyeOfTheDeep localspawn setafter Name "Eye of Ktulu" HitsMaxSeed 500 Hits 500 DamageMax 300 Coins 1 CoinType jewels||||||4347|2577|-127|7|5|60|5|0|1|1|0|0|0|0|0
+*|EyeOfTheDeep localspawn setafter Name "Eye of Ktulu" HitsMaxSeed 500 Hits 500 DamageMax 300 Coins 1 CoinType jewels||||||4347|2643|-127|7|5|60|5|0|1|1|0|0|0|0|0
+*|EyeOfTheDeep localspawn setafter Name "Eye of Ktulu" HitsMaxSeed 500 Hits 500 DamageMax 300 Coins 1 CoinType jewels||||||4409|2610|-127|7|5|1440|5|1|1|1|0|0|0|0|0
+*|EyeOfTheDeep localspawn setafter Name "Eye of Ktulu" HitsMaxSeed 500 Hits 500 DamageMax 300 Coins 1 CoinType jewels||||||4458|2563|-127|7|5|60|5|0|1|1|0|0|0|0|0
+*|Leviathan localspawn setafter DamageMax 220||||||4259|2644|-127|7|5|10|5|5|1|1|0|0|0|0|0
+*|Locathah localspawn setafter Name "Mad Atlantian" HitsMaxSeed 700 Hits 700 DamageMax 270 DamageMin 200 RangePerception 1||||||4328|2688|-127|7|5|10|1|0|1|1|0|0|0|0|0
+*|Locathah localspawn setafter Name "Mad Atlantian" HitsMaxSeed 700 Hits 700 DamageMax 270 DamageMin 200 RangePerception 1||||||4440|2552|-127|7|5|10|1|0|1|1|0|0|0|0|0
+*|Locathah localspawn setafter Name "Mad Atlantian" HitsMaxSeed 700 Hits 700 DamageMax 270 DamageMin 200 RangePerception 1||||||4456|2571|-127|7|5|10|1|1|1|1|0|0|0|0|0
+*|Lurker localspawn setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 250 DamageMin 120 Coins 1000 CoinType jewels BaseSoundID 0||||||4449|2638|-127|7|5|1|8|5|1|5|0|0|0|0|0
+*|Lurker localspawn setafter Name "Cursed Atlantian" HitsMaxSeed 300 Hits 300 DamageMax 140 DamageMin 110 Coins 1000 CoinType jewels||||||4451|2585|-127|7|5|1|8|5|1|13|0|0|0|0|0
+*|NeptarWizard localspawn setafter Name "Atlantian Occultist" Title (-null-) HitsMaxSeed 700 Hits 700 CoinType jewels Coins 1000||||||4390|2591|-127|7|5|1440|5|0|1|1|0|0|0|0|0
+*|NeptarWizard localspawn setafter Name "Atlantian Occultist" Title (-null-) HitsMaxSeed 700 Hits 700 CoinType jewels Coins 1000||||||4419|2596|-127|7|5|1440|5|0|1|1|0|0|0|0|0
+*|SeaDragon localspawn setafter DamageMax 150 DamageMin 120 HitsMaxSeed 500 Hits 500 CoinType jewels||||||4260|2572|-127|7|5|60|10|5|1|1|0|0|0|0|0
+*|SeaGiant localspawn setafter HitsMaxSeed 1200||||||4249|2639|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Serpyn localspawn setafter Name "Royal Guard" DamageMax 310 DamageMin 300 CoinType jewels||||||4276|2608|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|Serpyn localspawn setafter Name "Royal Guard" DamageMax 310 DamageMin 300 CoinType jewels||||||4276|2613|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|Serpyn localspawn setafter Name "Royal Guard" DamageMax 310 DamageMin 300 CoinType jewels||||||4320|2561|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|Serpyn localspawn setafter Name "Royal Guard" DamageMax 310 DamageMin 300 CoinType jewels||||||4320|2565|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|SerpynChampion localspawn setafter Name "Atlantian Commander" HitsMaxSeed 1000 DamageMax 200 DamageMin 199 MagicDamageAbsorb 100 Coins 2000 CoinType jewels||||||4284|2587|-127|7|5|420|1|0|1|1|0|0|0|0|0
+*|SerpynChampion localspawn setafter Name "Atlantian Commander" HitsMaxSeed 1000 DamageMax 200 DamageMin 199 MagicDamageAbsorb 100 Coins 2000 CoinType jewels||||||4292|2566|-127|7|5|420|1|0|1|1|0|0|0|0|0

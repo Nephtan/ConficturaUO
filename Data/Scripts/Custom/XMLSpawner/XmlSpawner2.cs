@@ -13118,9 +13118,23 @@ namespace Server.Mobiles
             Mobile mob
         )
         {
-            Map map = this.Map;
+            return CanFit(Map, x, y, z, height, checkBlocksFit, checkMobiles, requireSurface, mob, DebugThis);
+        }
 
-            if (DebugThis)
+        private static bool CanFit(
+            Map map,
+            int x,
+            int y,
+            int z,
+            int height,
+            bool checkBlocksFit,
+            bool checkMobiles,
+            bool requireSurface,
+            Mobile mob,
+            bool debug
+        )
+        {
+            if (debug)
             {
                 Console.WriteLine("CanFit mob {0}, map={1}", mob, map);
             }
@@ -13141,7 +13155,7 @@ namespace Server.Mobiles
                 canswim = mob.CanSwim;
                 cantwalk = mob.CantWalk;
             }
-            if (DebugThis)
+            if (debug)
             {
                 Console.WriteLine(
                     "fitting mob {0} checkmob={1} swim={2} walk={3}",
@@ -13163,7 +13177,7 @@ namespace Server.Mobiles
             map.GetAverageZ(x, y, ref lowZ, ref avgZ, ref topZ);
             TileFlag landFlags = TileData.LandTable[lt.ID & TileData.MaxLandValue].Flags;
 
-            if (DebugThis)
+            if (debug)
             {
                 Console.WriteLine(
                     "landtile at {0},{1},{2} lowZ={3} avgZ={4} topZ={5}",
@@ -13195,7 +13209,7 @@ namespace Server.Mobiles
             else if (!impassable && z == avgZ && !lt.Ignored)
                 hasSurface = true;
 
-            if (DebugThis)
+            if (debug)
             {
                 Console.WriteLine(
                     "landtile at {0},{1},{2} wet={3} impassable={4} hassurface={5}",
@@ -13238,7 +13252,7 @@ namespace Server.Mobiles
                 else if (surface && !impassable && z == (staticTiles[i].Z + id.CalcHeight))
                     hasSurface = true;
             }
-            if (DebugThis)
+            if (debug)
             {
                 Console.WriteLine("statics hassurface={0}", hasSurface);
             }
@@ -13286,7 +13300,7 @@ namespace Server.Mobiles
                 }
             }
 
-            if (DebugThis)
+            if (debug)
             {
                 Console.WriteLine("items hassurface={0}", hasSurface);
             }
@@ -13307,7 +13321,7 @@ namespace Server.Mobiles
                 }
             }
 
-            if (DebugThis)
+            if (debug)
             {
                 Console.WriteLine(
                     "return requiresurface={0} hassurface={1}",
@@ -13321,14 +13335,19 @@ namespace Server.Mobiles
 
         public bool CanSpawnMobile(int x, int y, int z, Mobile mob)
         {
-            if (DebugThis)
+            return CanSpawnMobile(Map, x, y, z, mob, DebugThis);
+        }
+
+        internal static bool CanSpawnMobile(Map map, int x, int y, int z, Mobile mob, bool debug)
+        {
+            if (debug)
             {
                 Console.WriteLine("CanSpawnMobile mob {0}", mob);
             }
-            if (!Region.Find(new Point3D(x, y, z), this.Map).AllowSpawn())
+            if (!Region.Find(new Point3D(x, y, z), map).AllowSpawn())
                 return false;
 
-            return CanFit(x, y, z, 16, false, true, true, mob);
+            return CanFit(map, x, y, z, 16, false, true, true, mob, debug);
         }
 
         public bool HasRegionPoints(Region r)

@@ -33,7 +33,10 @@ this repository.
 PremiumSpawner entries support `set` for construction-time properties and
 `setafter` for properties that must follow the normal spawn hook. The
 Atlantis creature replacements use `setafter` to retain their saved XML
-overrides after regional adjustments. When upgrading a copied save,
+overrides after regional adjustments. The optional `localspawn` keyword
+follows the creature type. It uses the configured spawn footprint and
+sets each creature's home to its spawn point, with the walking range
+measured from that point. When upgrading a copied save,
 verify and retire each replaced XML controller by identity before testing
 the rebuild. [Custom spawn definitions](../Info/Custom/Spawns.map)
 

@@ -2762,11 +2762,25 @@ namespace Server.Mobiles
             return null;
         }
 
+        private static bool UsesLocalPlacement(string[] args)
+        {
+            return args.Length > 1 && Insensitive.Equals(args[1], "localspawn");
+        }
+
+        private static bool UsesLocalPlacement(string specification)
+        {
+            return specification.IndexOf("localspawn", StringComparison.OrdinalIgnoreCase) >= 0
+                && UsesLocalPlacement(CommandSystem.Split(specification));
+        }
+
         public static IEntity Build(string[] args)
         {
             string name = args[0];
 
+            bool localPlacement = UsesLocalPlacement(args);
             Add.FixArgs(ref args);
+            if (localPlacement)
+                Add.FixArgs(ref args);
 
             string[] propertyArgs = args;
             int propertyStart = args.Length;
@@ -2980,7 +2994,10 @@ namespace Server.Mobiles
 
                 m_Creatures.Add(m);
 
-                Point3D loc = (m is BaseVendor ? this.Location : GetSpawnPosition());
+                bool localPlacement = UsesLocalPlacement(specification);
+                Point3D loc = localPlacement
+                    ? GetLocalSpawnPosition(m)
+                    : (m is BaseVendor ? Location : GetSpawnPosition());
 
                 bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
                 if (!safari && m is Mastadon)
@@ -3042,16 +3059,16 @@ namespace Server.Mobiles
                 if (m == null)
                     return;
 
-                if (
+                if (!localPlacement && (
                     m is WanderingHealer
                     || m is Adventurers
                     || m is Jedi
                     || (m is YoungDragon && Utility.RandomMinMax(1, 10) > 3)
-                )
+                ))
                 {
                     loc = GetSpawnPosition();
                 }
-                else if (m is Syth && SpawnID == 9999)
+                else if (!localPlacement && m is Syth && SpawnID == 9999)
                 {
                     loc = GetSpawnSpotLandDungeon();
                 }
@@ -3060,7 +3077,8 @@ namespace Server.Mobiles
                 InvalidateProperties();
 
                 m.MoveToWorld(loc, map);
-                Server.Mobiles.PremiumSpawner.SpreadOut(m);
+                if (!localPlacement)
+                    Server.Mobiles.PremiumSpawner.SpreadOut(m);
 
                 if (m is BaseCreature)
                 {
@@ -3076,11 +3094,12 @@ namespace Server.Mobiles
                     if (m_Team > 0)
                         c.Team = m_Team;
 
-                    c.Home = this.Location;
+                    c.Home = localPlacement ? m.Location : Location;
 
-                    Server.Misc.MorphingTime.SetGender(m);
+                    if (!localPlacement)
+                        Server.Misc.MorphingTime.SetGender(m);
 
-                    if (Region.Find(this.Location, this.Map) != Region.Find(m.Location, m.Map))
+                    if (!localPlacement && Region.Find(Location, Map) != Region.Find(m.Location, m.Map))
                     {
                         m.Delete();
                         Defrag();
@@ -3088,6 +3107,7 @@ namespace Server.Mobiles
                     } // REMOVE IF NOT IN SAME REGION
 
                     if (
+                        !localPlacement &&
                         (
                             this.Count
                             + this.CountA
@@ -3234,7 +3254,10 @@ namespace Server.Mobiles
 
                 m_CreaturesA.Add(m);
 
-                Point3D loc = (m is BaseVendor ? this.Location : GetSpawnPosition());
+                bool localPlacement = UsesLocalPlacement(specification);
+                Point3D loc = localPlacement
+                    ? GetLocalSpawnPosition(m)
+                    : (m is BaseVendor ? Location : GetSpawnPosition());
 
                 bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
                 if (!safari && m is Mastadon)
@@ -3296,16 +3319,16 @@ namespace Server.Mobiles
                 if (m == null)
                     return;
 
-                if (
+                if (!localPlacement && (
                     m is WanderingHealer
                     || m is Adventurers
                     || m is Jedi
                     || (m is YoungDragon && Utility.RandomMinMax(1, 10) > 3)
-                )
+                ))
                 {
                     loc = GetSpawnPosition();
                 }
-                else if (m is Syth && SpawnID == 9999)
+                else if (!localPlacement && m is Syth && SpawnID == 9999)
                 {
                     loc = GetSpawnSpotLandDungeon();
                 }
@@ -3314,7 +3337,8 @@ namespace Server.Mobiles
                 InvalidateProperties();
 
                 m.MoveToWorld(loc, map);
-                Server.Mobiles.PremiumSpawner.SpreadOut(m);
+                if (!localPlacement)
+                    Server.Mobiles.PremiumSpawner.SpreadOut(m);
 
                 if (m is BaseCreature)
                 {
@@ -3330,11 +3354,12 @@ namespace Server.Mobiles
                     if (m_Team > 0)
                         c.Team = m_Team;
 
-                    c.Home = this.Location;
+                    c.Home = localPlacement ? m.Location : Location;
 
-                    Server.Misc.MorphingTime.SetGender(m);
+                    if (!localPlacement)
+                        Server.Misc.MorphingTime.SetGender(m);
 
-                    if (Region.Find(this.Location, this.Map) != Region.Find(m.Location, m.Map))
+                    if (!localPlacement && Region.Find(Location, Map) != Region.Find(m.Location, m.Map))
                     {
                         m.Delete();
                         Defrag();
@@ -3473,7 +3498,10 @@ namespace Server.Mobiles
 
                 m_CreaturesB.Add(m);
 
-                Point3D loc = (m is BaseVendor ? this.Location : GetSpawnPosition());
+                bool localPlacement = UsesLocalPlacement(specification);
+                Point3D loc = localPlacement
+                    ? GetLocalSpawnPosition(m)
+                    : (m is BaseVendor ? Location : GetSpawnPosition());
 
                 bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
                 if (!safari && m is Mastadon)
@@ -3535,16 +3563,16 @@ namespace Server.Mobiles
                 if (m == null)
                     return;
 
-                if (
+                if (!localPlacement && (
                     m is WanderingHealer
                     || m is Adventurers
                     || m is Jedi
                     || (m is YoungDragon && Utility.RandomMinMax(1, 10) > 3)
-                )
+                ))
                 {
                     loc = GetSpawnPosition();
                 }
-                else if (m is Syth && SpawnID == 9999)
+                else if (!localPlacement && m is Syth && SpawnID == 9999)
                 {
                     loc = GetSpawnSpotLandDungeon();
                 }
@@ -3553,7 +3581,8 @@ namespace Server.Mobiles
                 InvalidateProperties();
 
                 m.MoveToWorld(loc, map);
-                Server.Mobiles.PremiumSpawner.SpreadOut(m);
+                if (!localPlacement)
+                    Server.Mobiles.PremiumSpawner.SpreadOut(m);
 
                 if (m is BaseCreature)
                 {
@@ -3569,11 +3598,12 @@ namespace Server.Mobiles
                     if (m_Team > 0)
                         c.Team = m_Team;
 
-                    c.Home = this.Location;
+                    c.Home = localPlacement ? m.Location : Location;
 
-                    Server.Misc.MorphingTime.SetGender(m);
+                    if (!localPlacement)
+                        Server.Misc.MorphingTime.SetGender(m);
 
-                    if (Region.Find(this.Location, this.Map) != Region.Find(m.Location, m.Map))
+                    if (!localPlacement && Region.Find(Location, Map) != Region.Find(m.Location, m.Map))
                     {
                         m.Delete();
                         Defrag();
@@ -3712,7 +3742,10 @@ namespace Server.Mobiles
 
                 m_CreaturesC.Add(m);
 
-                Point3D loc = (m is BaseVendor ? this.Location : GetSpawnPosition());
+                bool localPlacement = UsesLocalPlacement(specification);
+                Point3D loc = localPlacement
+                    ? GetLocalSpawnPosition(m)
+                    : (m is BaseVendor ? Location : GetSpawnPosition());
 
                 bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
                 if (!safari && m is Mastadon)
@@ -3774,16 +3807,16 @@ namespace Server.Mobiles
                 if (m == null)
                     return;
 
-                if (
+                if (!localPlacement && (
                     m is WanderingHealer
                     || m is Adventurers
                     || m is Jedi
                     || (m is YoungDragon && Utility.RandomMinMax(1, 10) > 3)
-                )
+                ))
                 {
                     loc = GetSpawnPosition();
                 }
-                else if (m is Syth && SpawnID == 9999)
+                else if (!localPlacement && m is Syth && SpawnID == 9999)
                 {
                     loc = GetSpawnSpotLandDungeon();
                 }
@@ -3792,7 +3825,8 @@ namespace Server.Mobiles
                 InvalidateProperties();
 
                 m.MoveToWorld(loc, map);
-                Server.Mobiles.PremiumSpawner.SpreadOut(m);
+                if (!localPlacement)
+                    Server.Mobiles.PremiumSpawner.SpreadOut(m);
 
                 if (m is BaseCreature)
                 {
@@ -3808,11 +3842,12 @@ namespace Server.Mobiles
                     if (m_Team > 0)
                         c.Team = m_Team;
 
-                    c.Home = this.Location;
+                    c.Home = localPlacement ? m.Location : Location;
 
-                    Server.Misc.MorphingTime.SetGender(m);
+                    if (!localPlacement)
+                        Server.Misc.MorphingTime.SetGender(m);
 
-                    if (Region.Find(this.Location, this.Map) != Region.Find(m.Location, m.Map))
+                    if (!localPlacement && Region.Find(Location, Map) != Region.Find(m.Location, m.Map))
                     {
                         m.Delete();
                         Defrag();
@@ -3951,7 +3986,10 @@ namespace Server.Mobiles
 
                 m_CreaturesD.Add(m);
 
-                Point3D loc = (m is BaseVendor ? this.Location : GetSpawnPosition());
+                bool localPlacement = UsesLocalPlacement(specification);
+                Point3D loc = localPlacement
+                    ? GetLocalSpawnPosition(m)
+                    : (m is BaseVendor ? Location : GetSpawnPosition());
 
                 bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
                 if (!safari && m is Mastadon)
@@ -4013,16 +4051,16 @@ namespace Server.Mobiles
                 if (m == null)
                     return;
 
-                if (
+                if (!localPlacement && (
                     m is WanderingHealer
                     || m is Adventurers
                     || m is Jedi
                     || (m is YoungDragon && Utility.RandomMinMax(1, 10) > 3)
-                )
+                ))
                 {
                     loc = GetSpawnPosition();
                 }
-                else if (m is Syth && SpawnID == 9999)
+                else if (!localPlacement && m is Syth && SpawnID == 9999)
                 {
                     loc = GetSpawnSpotLandDungeon();
                 }
@@ -4031,7 +4069,8 @@ namespace Server.Mobiles
                 InvalidateProperties();
 
                 m.MoveToWorld(loc, map);
-                Server.Mobiles.PremiumSpawner.SpreadOut(m);
+                if (!localPlacement)
+                    Server.Mobiles.PremiumSpawner.SpreadOut(m);
 
                 if (m is BaseCreature)
                 {
@@ -4047,11 +4086,12 @@ namespace Server.Mobiles
                     if (m_Team > 0)
                         c.Team = m_Team;
 
-                    c.Home = this.Location;
+                    c.Home = localPlacement ? m.Location : Location;
 
-                    Server.Misc.MorphingTime.SetGender(m);
+                    if (!localPlacement)
+                        Server.Misc.MorphingTime.SetGender(m);
 
-                    if (Region.Find(this.Location, this.Map) != Region.Find(m.Location, m.Map))
+                    if (!localPlacement && Region.Find(Location, Map) != Region.Find(m.Location, m.Map))
                     {
                         m.Delete();
                         Defrag();
@@ -4190,7 +4230,10 @@ namespace Server.Mobiles
 
                 m_CreaturesE.Add(m);
 
-                Point3D loc = (m is BaseVendor ? this.Location : GetSpawnPosition());
+                bool localPlacement = UsesLocalPlacement(specification);
+                Point3D loc = localPlacement
+                    ? GetLocalSpawnPosition(m)
+                    : (m is BaseVendor ? Location : GetSpawnPosition());
 
                 bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
                 if (!safari && m is Mastadon)
@@ -4252,16 +4295,16 @@ namespace Server.Mobiles
                 if (m == null)
                     return;
 
-                if (
+                if (!localPlacement && (
                     m is WanderingHealer
                     || m is Adventurers
                     || m is Jedi
                     || (m is YoungDragon && Utility.RandomMinMax(1, 10) > 3)
-                )
+                ))
                 {
                     loc = GetSpawnPosition();
                 }
-                else if (m is Syth && SpawnID == 9999)
+                else if (!localPlacement && m is Syth && SpawnID == 9999)
                 {
                     loc = GetSpawnSpotLandDungeon();
                 }
@@ -4270,7 +4313,8 @@ namespace Server.Mobiles
                 InvalidateProperties();
 
                 m.MoveToWorld(loc, map);
-                Server.Mobiles.PremiumSpawner.SpreadOut(m);
+                if (!localPlacement)
+                    Server.Mobiles.PremiumSpawner.SpreadOut(m);
 
                 if (m is BaseCreature)
                 {
@@ -4286,11 +4330,12 @@ namespace Server.Mobiles
                     if (m_Team > 0)
                         c.Team = m_Team;
 
-                    c.Home = this.Location;
+                    c.Home = localPlacement ? m.Location : Location;
 
-                    Server.Misc.MorphingTime.SetGender(m);
+                    if (!localPlacement)
+                        Server.Misc.MorphingTime.SetGender(m);
 
-                    if (Region.Find(this.Location, this.Map) != Region.Find(m.Location, m.Map))
+                    if (!localPlacement && Region.Find(Location, Map) != Region.Find(m.Location, m.Map))
                     {
                         m.Delete();
                         Defrag();
@@ -4325,6 +4370,33 @@ namespace Server.Mobiles
                 if (item != null)
                     CompleteSpawn(item, specification);
             }
+        }
+
+        private Point3D GetLocalSpawnPosition(Mobile mobile)
+        {
+            // The encounter footprint and the creature's roaming range are independent.
+            for (int i = 0; i < 10; i++)
+            {
+                int x = X;
+                int y = Y;
+                if (m_HomeRange > 0)
+                {
+                    x += Utility.RandomMinMax(-m_HomeRange, m_HomeRange);
+                    y += Utility.RandomMinMax(-m_HomeRange, m_HomeRange);
+                }
+
+                if (x < 0 || y < 0 || x >= Map.Width || y >= Map.Height || (x == 0 && y == 0))
+                    continue;
+
+                if (XmlSpawner.CanSpawnMobile(Map, x, y, Z, mobile, false))
+                    return new Point3D(x, y, Z);
+
+                int z = Map.GetAverageZ(x, y);
+                if (z != Z && XmlSpawner.CanSpawnMobile(Map, x, y, z, mobile, false))
+                    return new Point3D(x, y, z);
+            }
+
+            return Location;
         }
 
         public Point3D GetSpawnPosition()
