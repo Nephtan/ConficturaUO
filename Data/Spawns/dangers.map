@@ -13242,11 +13242,11 @@
 *|goblin||||||6064|1618|0|2|5|600|-1|11|1|30|0|0|0|0|0
 *|goblinranger||||||6063|1615|0|2|5|10|-1|4|1|2|0|0|0|0|0
 *|urukkai||||||6067|1508|0|2|5|10|-1|4|1|2|0|0|0|0|0
-*|dungeonchest||||||6064|1615|0|2|5|10|-1|11|1|17|0|0|0|0|0
+*|dungeonchest||||||6064|1615|0|2|5|10|-1|11|1|4|0|0|0|0|0
 *|mushroomtrap||||||6060|1573|0|2|5|10|-1|22|1|22|0|0|0|0|0
 *|urukkai||||||6063|1539|0|2|5|10|-1|4|1|1|0|0|0|0|0
 *|urukkai||||||6058|1524|0|2|5|10|-1|4|1|2|0|0|0|0|0
-*|twoface||||||6061|1479|0|2|1200|0s|-1|1|1|1|0|0|0|0|0
+*|twoface||||||6061|1479|0|2|1200|1440|-1|1|1|1|0|0|0|0|0
 *|koboldchief||||||6054|1618|0|2|60|0s|-1|0|1|1|0|0|0|0|0
 #
 # ForgottenLibrary-----------------------------------------------------------------------
@@ -13291,7 +13291,7 @@
 *|unspeakable:forgotten:treasuregoblin:hiddentrap:mushroomtrap||||||4667|3213|0|2|5|10|-1|4|1|1|0|0|0|0|0
 *|unknownscroll:blankscroll:spellbook:tanbook:unknownscroll:dungeonchest:lorebook||||||4550|3167|20|2|5|10|-1|3|1|5|0|0|0|0|0
 *|hiddentrap||||||4547|3185|0|2|5|10|-1|4|1|15|0|0|0|0|0
-*|scientist||||||4931|3166|20|2|120|180|-1|4|1|1|0|0|0|0|0
+*|scientist||||||4931|3166|20|2|120|180|-1|4|1|2|0|0|0|0|0
 *|pixieskull:hiddentrap:mushroomtrap:poolofacid:unknownscroll:bones:noxcrystal:manowar:firecolumntrap:gastrap||||||4696|3181|0|2|5|10|-1|22|1|33|0|0|0|0|0
 *|advancedmagerystudybook:bluebook:bookofbushido:brownbook:learnreagentsbook:learnmetalbook:lorebook:myninjabook:redbook:runebook:songbook:blankscroll:recallrune:unknownwand||||||4624|3237|0|2|5|10|-1|4|1|9|0|0|0|0|0
 *|rattlebones||||||4546|3244|0|2|5|10|-1|4|1|1|0|0|0|0|0
@@ -13328,7 +13328,7 @@
 *|mazeminotaur||||||5671|914|0|1|5|60|-1|6|1|1|0|0|0|0|0
 *|mazeminotaur||||||5667|969|0|1|5|10|-1|4|1|1|0|0|0|0|0
 *|mazeminotaur||||||5651|964|0|1|5|60|-1|6|1|1|0|0|0|0|0
-*|hiddentrap:mushroomtrap:dungeonchest:decorock:poolofacid:hiddenchest:polishedskull:pixieskull:bones:plantherbalism_mushroom:unknownscroll:blankscroll:unfinishedbarrel:pentagramaddon:magictalisman||||||5687|940|0|1|5|10|-1|44|1|33|0|0|0|0|0
+*|hiddentrap:mushroomtrap:dungeonchest:decorock:poolofacid:hiddenchest:polishedskull:pixieskull:bones:plantherbalism_mushroom:unknownscroll:blankscroll:unfinishedbarrel:magictalisman||||||5687|940|0|1|5|10|-1|44|1|33|0|0|0|0|0
 *|atlas||||||5688|931|0|1|120|1320|-1|4|1|1|0|0|0|0|0
 *|mazeminotaur:treasuregoblin||||||5728|935|0|1|5|60|-1|6|1|1|0|0|0|0|0
 #
@@ -13350,7 +13350,7 @@
 *|truevirtue||||||5687|715|0|1|300|600|-1|4|1|1|0|0|0|0|0
 *|lorebook:bookofchivalry:bookofknowledge:unknownscroll:IDwand:recallrune:coloringbook:blankscroll:playershandbook:dungeonmastersguide:monstermanual:resurrectionscroll:summonreward||||||5737|709|0|1|5|10|-1|4|1|4|0|0|0|0|0
 *|olympus||||||5731|815|0|1|300|600|-1|1|1|1|0|0|0|0|0
-*|runesbase:stealbase:magicpool:hoardpiles:fancystonechest:gildedstonechest:virtuestonechest||||||5687|706|0|1|55|60|-1|0|1|1|0|0|0|0|0
+*|stealbase:magicpool:hoardpiles:fancystonechest:gildedstonechest||||||5687|706|0|1|55|60|-1|0|1|1|0|0|0|0|0
 *|crusader||||||5676|789|0|1|5|10|-1|4|1|1|0|0|0|0|0
 *|magicpool||||||5658|705|0|1|5|10|-1|0|1|1|0|0|0|0|0
 *|lorebook:learngranitebook:learnmetalbook:learnmiscbook:learnreagentsbook:learnscalesbook:learnstealingbook:learntitles:learntraps:learnwoodbook:bookofknowledge:bookguidetoadventure:mychivalrybook:myspellbook:mynecromancerspellbook||||||5700|785|0|1|5|10|-1|7|1|15|0|0|0|0|0
@@ -13390,7 +13390,7 @@
 *|seawitch||||||4452|2626|-127|7|55|60|-1|4|1|2|0|0|0|0|0
 *|seawitch||||||4444|2669|-127|7|55|60|-1|4|1|2|0|0|0|0|0
 *|seawitch||||||4295|2655|-127|7|55|60|-1|4|1|2|0|0|0|0|0
-*|manowar||||||4231|2608|-127|7|5|10|-1|7|1|11|0|0|0|0|0
+*|manowar||||||4231|2608|-127|7|5|10|7|7|1|11|0|0|0|0|0
 *|seawitch||||||4462|2679|-127|7|55|60|-1|4|1|2|0|0|0|0|0
 *|seawitch||||||4409|2611|-127|7|55|60|-1|4|1|2|0|0|0|0|0
 *|seawitch||||||4395|2629|-127|7|55|60|-1|4|1|2|0|0|0|0|0
@@ -13401,7 +13401,7 @@
 *|atlantian||||||4379|2645|-127|7|5|60|-1|11|1|3|0|0|0|0|0
 *|atlantian||||||4323|2611|-127|7|5|60|-1|11|1|3|0|0|0|0|0
 *|atlantian||||||4331|2529|-127|7|5|60|-1|11|1|3|0|0|0|0|0
-*|crystaltoken:stealbase:runesbase:dungeonchest:magictalisman:unspeakable:atlantianparagon:bagofholding:recallrune:crystals:largecrystal:powercrystal:mooncrystal:karancrystal:hardcrystals||||||4442|2582|-127|7|5|7|-1|0|1|1|0|0|0|0|0
+*|crystaltoken:stealbase:dungeonchest:magictalisman:unspeakable:atlantianparagon:bagofholding:recallrune:crystals:largecrystal:powercrystal:mooncrystal:karancrystal:hardcrystals||||||4442|2582|-127|7|5|7|-1|0|1|1|0|0|0|0|0
 *|atlantian||||||4392|2562|-127|7|5|60|-1|11|1|3|0|0|0|0|0
 *|deepone||||||4316|2547|-127|7|30|60|-1|4|1|2|0|0|0|0|0
 *|killertile||||||4312|2610|-127|7|1|5|-1|0|1|1|0|0|0|0|0
@@ -13477,14 +13477,14 @@
 *|killertile||||||4394|3204|1|2|5|10|-1|0|1|1|0|0|0|0|0
 *|killertile||||||4219|3204|1|2|5|10|-1|0|1|1|0|0|0|0|0
 *|killertile||||||4298|3192|0|2|5|10|-1|0|1|1|0|0|0|0|0
-*|recallrune:runebag:runebook:arcanegem:levelruneblade:legendarybushidostudybook:powercrystal:DJ_SE_Bushido:DJ_SE_Fencing:DJ_SE_Swords:magictalisman:runesbase:stealbase:bagofholding||||||4429|3201|0|2|5|10|-1|4|1|4|0|0|0|0|0
+*|recallrune:runebag:runebook:arcanegem:levelruneblade:legendarybushidostudybook:powercrystal:DJ_SE_Bushido:DJ_SE_Fencing:DJ_SE_Swords:magictalisman:bagofholding:blankscroll||||||4429|3201|0|2|5|10|-1|4|1|3|0|0|0|0|0
 *|killertile||||||4393|3195|1|2|5|10|-1|0|1|1|0|0|0|0|0
 *|killertile||||||4437|3201|1|2|5|10|-1|0|1|1|0|0|0|0|0
 #
 # BlackPyramid-----------------------------------------------------------------------
 #
 *|PlagueGod||||||2241|1579|0|3|30|60|1|1|800142|1|0|0|0|0|0
-*|DarkDragonAvatar||||||2233|1529|0|3|30|60|1|1|800141|1|0|0|0|0|0
+stopped|DarkDragonAvatar||||||2233|1529|0|3|30|60|1|1|800141|1|0|0|0|0|0
 *|FallenAngel||||||2262|1552|0|3|30|60|1|1|800139|1|0|0|0|0|0
 *|Lovecraftian||||||2290|1527|0|3|30|60|1|1|800140|1|0|0|0|0|0
 *|VoidWraith||||||2262|1560|0|3|30|60|11|35|800138|50|0|0|0|0|0
@@ -13511,7 +13511,7 @@
 *|RottingCorpse||||||6051|2374|0|2|5|30|5|5|800086|1|0|0|0|0|0
 *|TitanPyros||||||6040|2307|0|2|5|30|5|5|800092|1|0|0|0|0|0
 *|SecurityDroid||||||6073|2331|0|2|5|30|5|5|800074|1|0|0|0|0|0
-*|TimeLord||||||6030|2272|1|2|5|30|5|5|800068|1|0|0|0|0|0
+*|scientist||||||6030|2272|1|2|5|30|5|5|800068|1|0|0|0|0|0
 *|FireElemental||||||6040|2320|0|2|5|30|5|5|800070|1|0|0|0|0|0
 *|MountainGiant||||||6040|2277|0|2|5|30|5|5|800066|1|0|0|0|0|0
 *|UndeadDruid||||||6038|2376|0|2|5|30|5|5|800052|1|0|0|0|0|0
@@ -13583,7 +13583,7 @@
 *|Spirit||||||6080|2368|0|2|5|30|5|5|800016|1|0|0|0|0|0
 *|GargoyleBones||||||6050|2401|0|2|5|30|5|5|800015|1|0|0|0|0|0
 *|Beholder||||||5948|2299|0|2|5|30|5|5|800084|1|0|0|0|0|0
-*|recallrune:runebag:runebook:arcanegem:levelruneblade:legendarybushidostudybook:powercrystal:DJ_SE_Bushido:DJ_SE_Fencing:DJ_SE_Swords:magictalisman:runesbase:stealbase:bagofholding||||||6029|2284|0|2|5|10|-1|3|1|3|0|0|0|0|0
+*|recallrune:runebook:arcanegem:levelruneblade:legendarybushidostudybook:powercrystal:DJ_SE_Bushido:DJ_SE_Fencing:DJ_SE_Swords:magictalisman:stealbase:bagofholding||||||6029|2284|0|2|5|10|-1|3|1|2|0|0|0|0|0
 *|killertile||||||6020|2391|0|2|5|10|-1|0|1|1|0|0|0|0|0
 *|killertile||||||6016|2391|0|2|5|10|-1|0|1|1|0|0|0|0|0
 *|scientist||||||6018|2275|0|2|55|60|-1|4|1|1|0|0|0|0|0
