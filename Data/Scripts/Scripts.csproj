@@ -471,6 +471,7 @@
     <Compile Include="Custom\Mobiles\Civilized\GraveRobber.cs" />
     <Compile Include="Custom\Mobiles\Civilized\Malachi.cs" />
     <Compile Include="Custom\Mobiles\Civilized\RangerOfTheBritainMilitia.cs" />
+    <Compile Include="Custom\Mobiles\Civilized\RatRentSpawner.cs" />
     <Compile Include="Custom\Mobiles\Civilized\StaffEventQuestNpc.cs" />
     <Compile Include="Custom\Mobiles\Constructs\CursedAdventurer.cs" />
     <Compile Include="Custom\Mobiles\Constructs\DiosMonster.cs" />
