@@ -59,8 +59,10 @@ this repository.
    ```
 
    The encounters start at the first wave. Each controller builds its linked
-   platform, altar, and idol. Subsequent rebuilds keep the controllers and
-   their encounter state. Existing saves retain their fixed controllers.
+   platform, altar, and idol. Existing saves retain their fixed controllers
+   and skip this step. During an active champion wave, the rebuild can delete
+   wave creatures and count their removal as kills. Repeated rebuilds can
+   advance the encounter.
    [Champion controller](../Data/Scripts/Custom/Champions/System/CannedEvil/ChampionSpawn.cs)
 
 PremiumSpawner entries support `set` for construction-time properties and
