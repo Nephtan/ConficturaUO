@@ -6982,7 +6982,7 @@ namespace Server
                         }
 
                         op.WriteLine(
-                            "*|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}|{11}|{12}|{13}|{14}|{15}|{16}|{17}|{18}|{19}|{20}",
+                            "{21}|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}|{11}|{12}|{13}|{14}|{15}|{16}|{17}|{18}|{19}|{20}",
                             towrite,
                             towriteA,
                             towriteB,
@@ -7003,7 +7003,8 @@ namespace Server
                             itemsave2.CountB,
                             itemsave2.CountC,
                             itemsave2.CountD,
-                            itemsave2.CountE
+                            itemsave2.CountE,
+                            itemsave2.Running ? "*" : "stopped"
                         );
                     }
                 }
@@ -7066,9 +7067,14 @@ namespace Server
                             //Comment Line
                             case "##":
                                 break;
-                            //Place By class
+                            // Place by class, with an optional stopped controller.
                             case "*":
+                            case "stopped":
+                                if (split.Length < 22)
+                                    break;
+
                                 PlaceNPC(
+                                    split[0] == "*",
                                     split[2].Split(':'),
                                     split[3].Split(':'),
                                     split[4].Split(':'),
@@ -7148,6 +7154,40 @@ namespace Server
         }
 
         public static void PlaceNPC(
+            string[] fakespawnsA,
+            string[] fakespawnsB,
+            string[] fakespawnsC,
+            string[] fakespawnsD,
+            string[] fakespawnsE,
+            string sx,
+            string sy,
+            string sz,
+            string sm,
+            string smintime,
+            string smaxtime,
+            string swalkingrange,
+            string shomerange,
+            string sspawnid,
+            string snpccount,
+            string sfakecountA,
+            string sfakecountB,
+            string sfakecountC,
+            string sfakecountD,
+            string sfakecountE,
+            params string[] types
+        )
+        {
+            PlaceNPC(
+                true,
+                fakespawnsA, fakespawnsB, fakespawnsC, fakespawnsD, fakespawnsE,
+                sx, sy, sz, sm, smintime, smaxtime, swalkingrange, shomerange, sspawnid,
+                snpccount, sfakecountA, sfakecountB, sfakecountC, sfakecountD, sfakecountE,
+                types
+            );
+        }
+
+        private static void PlaceNPC(
+            bool running,
             string[] fakespawnsA,
             string[] fakespawnsB,
             string[] fakespawnsC,
@@ -7266,7 +7306,8 @@ namespace Server
                         fakecountB,
                         fakecountC,
                         fakecountD,
-                        fakecountE
+                        fakecountE,
+                        running
                     );
                     MakeSpawner(
                         types,
@@ -7289,7 +7330,8 @@ namespace Server
                         fakecountB,
                         fakecountC,
                         fakecountD,
-                        fakecountE
+                        fakecountE,
+                        running
                     );
                     break;
                 case 1: //Lodor
@@ -7314,7 +7356,8 @@ namespace Server
                         fakecountB,
                         fakecountC,
                         fakecountD,
-                        fakecountE
+                        fakecountE,
+                        running
                     );
                     break;
                 case 2: //Sosaria
@@ -7339,7 +7382,8 @@ namespace Server
                         fakecountB,
                         fakecountC,
                         fakecountD,
-                        fakecountE
+                        fakecountE,
+                        running
                     );
                     break;
                 case 3: //Underworld
@@ -7364,7 +7408,8 @@ namespace Server
                         fakecountB,
                         fakecountC,
                         fakecountD,
-                        fakecountE
+                        fakecountE,
+                        running
                     );
                     break;
                 case 4: //SerpentIsland
@@ -7389,7 +7434,8 @@ namespace Server
                         fakecountB,
                         fakecountC,
                         fakecountD,
-                        fakecountE
+                        fakecountE,
+                        running
                     );
                     break;
                 case 5: //IslesDread
@@ -7414,7 +7460,8 @@ namespace Server
                         fakecountB,
                         fakecountC,
                         fakecountD,
-                        fakecountE
+                        fakecountE,
+                        running
                     );
                     break;
                 case 6: //SavagedEmpire
@@ -7439,7 +7486,8 @@ namespace Server
                         fakecountB,
                         fakecountC,
                         fakecountD,
-                        fakecountE
+                        fakecountE,
+                        running
                     );
                     break;
                 case 7: //Atlantis
@@ -7464,7 +7512,8 @@ namespace Server
                         fakecountB,
                         fakecountC,
                         fakecountD,
-                        fakecountE
+                        fakecountE,
+                        running
                     );
                     break;
                 default:
@@ -7494,7 +7543,8 @@ namespace Server
             int fakecountB,
             int fakecountC,
             int fakecountD,
-            int fakecountE
+            int fakecountE,
+            bool running
         )
         {
             if (types.Length == 0)
@@ -7545,7 +7595,11 @@ namespace Server
 
             spawner.MoveToWorld(new Point3D(x, y, z), map);
 
-            if (spawner.SpawnID == 9999)
+            if (!running)
+            {
+                spawner.Stop();
+            }
+            else if (spawner.SpawnID == 9999)
             {
                 spawner.MinDelay = TimeSpan.FromSeconds(1.0);
                 spawner.MaxDelay = TimeSpan.FromSeconds(1.0);

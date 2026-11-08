@@ -237,3 +237,7 @@
 *|Goat localspawn:Moose localspawn:Brigand localspawn:Skeleton localspawn:Lizardman localspawn:Ogre localspawn:EarthElemental localspawn:Cyclops localspawn:Giant localspawn:TitanLithos localspawn||||||5141|2958|0|2|5|10|5|5|1|0|0|0|0|0|0
 # Discord
 *|TownHerald localspawn||||||5148|3027|0|2|5|10|0|0|1|0|0|0|0|0|0
+
+# Hide and Seek event entrances. Enable and respawn the controller when the event opens.
+stopped|Teleporter localspawn setafter Visible True ItemID 3546 MapDest Sosaria PointDest "(2925, 1063, 1)" Name "Hide and Seek Event Portal"||||||5142|3019|0|2|5|10|0|0|1|1|0|0|0|0|0
+stopped|Teleporter localspawn setafter Visible True ItemID 3546 MapDest Sosaria PointDest "(2908, 1051, 1)" Name "Hide and Seek Event Portal"||||||3441|3424|0|2|5|10|0|0|1|1|0|0|0|0|0
