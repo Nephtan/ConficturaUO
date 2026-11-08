@@ -2768,76 +2768,28 @@ namespace Server.Mobiles
 
             Add.FixArgs(ref args);
 
-            string[,] props = null;
+            string[] propertyArgs = args;
+            int propertyStart = args.Length;
 
             for (int i = 0; i < args.Length; ++i)
             {
-                if (Insensitive.Equals(args[i], "set"))
+                bool setBeforeSpawn = Insensitive.Equals(args[i], "set");
+                if (!setBeforeSpawn && !Insensitive.Equals(args[i], "setafter"))
+                    continue;
+
+                if (args.Length - i > 2)
                 {
-                    int remains = args.Length - i - 1;
-
-                    if (remains >= 2)
-                    {
-                        props = new string[remains / 2, 2];
-
-                        remains /= 2;
-
-                        for (int j = 0; j < remains; ++j)
-                        {
-                            props[j, 0] = args[i + (j * 2) + 1];
-                            props[j, 1] = args[i + (j * 2) + 2];
-                        }
-
-                        Add.FixSetString(ref args, i);
-                    }
-
-                    break;
+                    if (setBeforeSpawn)
+                        propertyStart = i + 1;
+                    Add.FixSetString(ref args, i);
                 }
+                break;
             }
 
             Type type = ScriptCompiler.FindTypeByName(name);
 
             if (!Add.IsEntity(type))
-            {
                 return null;
-            }
-
-            PropertyInfo[] realProps = null;
-
-            if (props != null)
-            {
-                realProps = new PropertyInfo[props.GetLength(0)];
-
-                PropertyInfo[] allProps = type.GetProperties(
-                    BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public
-                );
-
-                for (int i = 0; i < realProps.Length; ++i)
-                {
-                    PropertyInfo thisProp = null;
-
-                    string propName = props[i, 0];
-
-                    for (int j = 0; thisProp == null && j < allProps.Length; ++j)
-                    {
-                        if (Insensitive.Equals(propName, allProps[j].Name))
-                            thisProp = allProps[j];
-                    }
-
-                    if (thisProp != null)
-                    {
-                        CPA attr = Properties.GetCPA(thisProp);
-
-                        if (
-                            attr != null
-                            && AccessLevel.GameMaster >= attr.WriteLevel
-                            && thisProp.CanWrite
-                            && !attr.ReadOnly
-                        )
-                            realProps[i] = thisProp;
-                    }
-                }
-            }
 
             ConstructorInfo[] ctors = type.GetConstructors();
 
@@ -2859,26 +2811,71 @@ namespace Server.Mobiles
 
                     object built = ctor.Invoke(paramValues);
 
-                    if (built != null && realProps != null)
-                    {
-                        for (int j = 0; j < realProps.Length; ++j)
-                        {
-                            if (realProps[j] == null)
-                                continue;
-
-                            string result = Properties.InternalSetValue(
-                                built,
-                                realProps[j],
-                                props[j, 1]
-                            );
-                        }
-                    }
+                    if (built != null && propertyStart < propertyArgs.Length)
+                        ApplySpawnProperties(built, propertyArgs, propertyStart);
 
                     return (IEntity)built;
                 }
             }
 
             return null;
+        }
+
+        private static void ApplySpawnProperties(object entity, string[] args, int start)
+        {
+            PropertyInfo[] properties = entity.GetType().GetProperties(
+                BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public
+            );
+
+            for (int i = start; i + 1 < args.Length; i += 2)
+            {
+                foreach (PropertyInfo property in properties)
+                {
+                    if (!Insensitive.Equals(args[i], property.Name))
+                        continue;
+
+                    CPA access = Properties.GetCPA(property);
+                    if (access != null && AccessLevel.GameMaster >= access.WriteLevel
+                        && property.CanWrite && !access.ReadOnly)
+                        Properties.InternalSetValue(entity, property, args[i + 1]);
+                    break;
+                }
+            }
+        }
+
+        private static void CompleteSpawn(IEntity entity, string specification)
+        {
+            Mobile mobile = entity as Mobile;
+            if (mobile != null)
+            {
+                mobile.OnAfterSpawn();
+                if (mobile.Deleted)
+                    return;
+            }
+            else
+            {
+                Item item = (Item)entity;
+                item.OnAfterSpawn();
+                if (item.Deleted)
+                    return;
+            }
+
+            if (specification.IndexOf("setafter", StringComparison.OrdinalIgnoreCase) < 0)
+                return;
+
+            string[] args = CommandSystem.Split(specification);
+            for (int i = 1; i < args.Length; ++i)
+            {
+                if (Insensitive.Equals(args[i], "set"))
+                    return;
+                if (!Insensitive.Equals(args[i], "setafter"))
+                    continue;
+
+                // Some legacy XML spawns apply their overrides after regional spawn adjustments.
+                if (entity.GetType() == ScriptCompiler.FindTypeByName(args[0]))
+                    ApplySpawnProperties(entity, args, i + 1);
+                return;
+            }
         }
 
         public void Spawn(int index)
@@ -2899,6 +2896,7 @@ namespace Server.Mobiles
             if (m_Creatures.Count >= m_Count)
                 return;
 
+            string specification = m_CreaturesName[index];
             IEntity ent = CreateSpawnedObject(index);
 
             if (ent is Mobile)
@@ -3105,7 +3103,7 @@ namespace Server.Mobiles
                     }
 
                     if (m != null)
-                        m.OnAfterSpawn();
+                        CompleteSpawn(m, specification);
                 }
             }
             else if (ent is Item)
@@ -3130,7 +3128,7 @@ namespace Server.Mobiles
                 } // REMOVE IF NOT IN SAME REGION
 
                 if (item != null)
-                    item.OnAfterSpawn();
+                    CompleteSpawn(item, specification);
             }
         }
 
@@ -3152,6 +3150,7 @@ namespace Server.Mobiles
             if (m_CreaturesA.Count >= m_CountA)
                 return;
 
+            string specification = m_CreaturesNameA[index];
             IEntity ent = CreateSpawnedObjectA(index);
 
             if (ent is Mobile)
@@ -3343,7 +3342,7 @@ namespace Server.Mobiles
                     } // REMOVE IF NOT IN SAME REGION
 
                     if (m != null)
-                        m.OnAfterSpawn();
+                        CompleteSpawn(m, specification);
                 }
             }
             else if (ent is Item)
@@ -3368,7 +3367,7 @@ namespace Server.Mobiles
                 } // REMOVE IF NOT IN SAME REGION
 
                 if (item != null)
-                    item.OnAfterSpawn();
+                    CompleteSpawn(item, specification);
             }
         }
 
@@ -3390,6 +3389,7 @@ namespace Server.Mobiles
             if (m_CreaturesB.Count >= m_CountB)
                 return;
 
+            string specification = m_CreaturesNameB[index];
             IEntity ent = CreateSpawnedObjectB(index);
 
             if (ent is Mobile)
@@ -3581,7 +3581,7 @@ namespace Server.Mobiles
                     } // REMOVE IF NOT IN SAME REGION
 
                     if (m != null)
-                        m.OnAfterSpawn();
+                        CompleteSpawn(m, specification);
                 }
             }
             else if (ent is Item)
@@ -3606,7 +3606,7 @@ namespace Server.Mobiles
                 } // REMOVE IF NOT IN SAME REGION
 
                 if (item != null)
-                    item.OnAfterSpawn();
+                    CompleteSpawn(item, specification);
             }
         }
 
@@ -3628,6 +3628,7 @@ namespace Server.Mobiles
             if (m_CreaturesC.Count >= m_CountC)
                 return;
 
+            string specification = m_CreaturesNameC[index];
             IEntity ent = CreateSpawnedObjectC(index);
 
             if (ent is Mobile)
@@ -3819,7 +3820,7 @@ namespace Server.Mobiles
                     } // REMOVE IF NOT IN SAME REGION
 
                     if (m != null)
-                        m.OnAfterSpawn();
+                        CompleteSpawn(m, specification);
                 }
             }
             else if (ent is Item)
@@ -3844,7 +3845,7 @@ namespace Server.Mobiles
                 } // REMOVE IF NOT IN SAME REGION
 
                 if (item != null)
-                    item.OnAfterSpawn();
+                    CompleteSpawn(item, specification);
             }
         }
 
@@ -3866,6 +3867,7 @@ namespace Server.Mobiles
             if (m_CreaturesD.Count >= m_CountD)
                 return;
 
+            string specification = m_CreaturesNameD[index];
             IEntity ent = CreateSpawnedObjectD(index);
 
             if (ent is Mobile)
@@ -4057,7 +4059,7 @@ namespace Server.Mobiles
                     } // REMOVE IF NOT IN SAME REGION
 
                     if (m != null)
-                        m.OnAfterSpawn();
+                        CompleteSpawn(m, specification);
                 }
             }
             else if (ent is Item)
@@ -4082,7 +4084,7 @@ namespace Server.Mobiles
                 } // REMOVE IF NOT IN SAME REGION
 
                 if (item != null)
-                    item.OnAfterSpawn();
+                    CompleteSpawn(item, specification);
             }
         }
 
@@ -4104,6 +4106,7 @@ namespace Server.Mobiles
             if (m_CreaturesE.Count >= m_CountE)
                 return;
 
+            string specification = m_CreaturesNameE[index];
             IEntity ent = CreateSpawnedObjectE(index);
 
             if (ent is Mobile)
@@ -4295,7 +4298,7 @@ namespace Server.Mobiles
                     } // REMOVE IF NOT IN SAME REGION
 
                     if (m != null)
-                        m.OnAfterSpawn();
+                        CompleteSpawn(m, specification);
                 }
             }
             else if (ent is Item)
@@ -4320,7 +4323,7 @@ namespace Server.Mobiles
                 } // REMOVE IF NOT IN SAME REGION
 
                 if (item != null)
-                    item.OnAfterSpawn();
+                    CompleteSpawn(item, specification);
             }
         }
 

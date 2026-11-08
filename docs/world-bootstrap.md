@@ -30,6 +30,13 @@ this repository.
    `[XmlLoad UndeadNests-Sosaria.xml` on the fresh local world.
    [Cemetery spawn definitions](../Spawns/UndeadNests-Sosaria.xml)
 
+PremiumSpawner entries support `set` for construction-time properties and
+`setafter` for properties that must follow the normal spawn hook. The
+Atlantis creature replacements use `setafter` to retain their saved XML
+overrides after regional adjustments. When upgrading a copied save,
+verify and retire each replaced XML controller by identity before testing
+the rebuild. [Custom spawn definitions](../Info/Custom/Spawns.map)
+
 Sosaria and Atlantis are separate server facets. Both use file index 1, so
 an edit to the index-1 MUL statics appears at the same coordinates on both.
 Facet-specific scenery and functional placements belong in the appropriate
