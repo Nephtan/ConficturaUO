@@ -69,6 +69,17 @@ facet's configuration. Umber Veil's main locations are on Sosaria.
 [Map definitions](../Data/Scripts/System/Misc/MapDefinitions.cs) ·
 [Staff destinations](../Data/System/XML/go.xml)
 
+The stock runtime omits four authored settlement fixtures during bootstrap.
+These are the lower-floor Leatherworker placements at Xardok's Castle and
+Fort of Tenebrae, the Kuldara quest board, and the Cimmeran Hold training
+dummy assembly. [Settlement generation](../Data/Scripts/Mobiles/Civilized/Citizens/WorkingSpots.cs)
+
+Use one generation pass for a fresh local world. A second stock rebuild can
+keep old roaming return portals alongside the new returns. A queued chest
+callback can create an unmapped chest after its source spawner is deleted.
+[Roaming portals](../Data/Scripts/Items/Doors/StrangePortal.cs) ·
+[Dungeon chest callbacks](../Data/Scripts/Items/Containers/DungeonChest.cs)
+
 For an existing world, rehearse the rebuild on a disposable copy first.
 `[buildworld` removes every PremiumSpawner and sweeps decorations marked
 with weight `-2` before regeneration. Saved-only and moved placements can
