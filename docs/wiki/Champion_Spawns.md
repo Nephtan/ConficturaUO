@@ -63,7 +63,7 @@ The champion spawn system is implemented by `Server.Engines.CannedEvil.ChampionS
 
 `Spawns/RWChamp.xml` defines nine named areas across six physical maps: Sosaria, Lodoria, Underworld, Serpent Island, Isles of Dread, the Savaged Empire, Ambrosia, Umber Veil, and the Bottle World of Kuldar. The last three share `Map.Sosaria`. Atlantis is also covered by the reward fix if a champion is placed there, but has no entry in that XML.
 
-The XML applies `SpawnRadius = 50` and `RestartDelay = 24:00:00`, overriding constructor defaults. Its outer spawners use 1200-1440 minute delays and companion monitor spawners, so the checked-in configuration is not proof of nine successful live spawns every calendar day. The `StarRoomGate` travel condition remains unchanged; it is separate from loot.
+The XML sets `SpawnRadius = 50`. The runtime parses the authored `24:00:00` restart delay as 24 days. Each companion monitor clears its paired controller's inactive encounter from the matching slot. The outer XML controller then uses its own 1,200–1,440 minute schedule to pick a new location. The `StarRoomGate` travel condition applies separately from loot. [Roaming controller definitions](../../Spawns/RWChamp.xml) · [Cleanup recipes](../../Spawns/RWChamp_Monitors.xml)
 
 The staff planning document [Champion spawn ideas](../CHAMPION_SPAWN_IDEAS.md) separates the implemented parity fix from proposed reward and encounter additions.
 

@@ -31,9 +31,10 @@ this repository.
 
    For the nine champion controllers and nine monitors, run
    `[XmlLoad RWChamp.xml` followed by `[XmlLoad RWChamp_Monitors.xml` on the
-   fresh world. These imports start the authored champion sequence. On an
-   existing world, verify the saved controller identities and encounter state
-   before importing either package.
+   fresh world. Each monitor clears an inactive encounter from the matching
+   slot so its paired controller can choose a location on the next scheduled
+   spawn. On an existing world, verify the saved controller identities and
+   encounter state before importing either package.
    [Champion controllers](../Spawns/RWChamp.xml) ·
    [Champion monitors](../Spawns/RWChamp_Monitors.xml)
 
