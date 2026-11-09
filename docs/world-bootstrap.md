@@ -21,9 +21,8 @@ this repository.
    the checked-in decorations, PremiumSpawner placements, and
    script-generated content. It also works through the supplemental files
    in [Info/Custom](../Info/Custom).
-5. Load any explicitly selected XMLSpawner package separately with
-   `[XmlLoad <filename>`. The [Spawns directory](../Spawns) contains both
-   authored packages and examples. The loader uses each definition's facet
+5. Load the three world XMLSpawner packages below by filename. These are the
+   cemetery and champion packages. The loader uses each definition's facet
    and coordinates and replaces matching GUIDs.
 
    For Sosaria's six cemetery nest controllers, run
@@ -38,7 +37,14 @@ this repository.
    [Champion controllers](../Spawns/RWChamp.xml) ·
    [Champion monitors](../Spawns/RWChamp_Monitors.xml)
 
-6. After the selected XML imports complete, save the generated world with
+   Use the three file commands above when bootstrapping. A directory import
+   recursively reads the example XML files too. The extensionless
+   `Spawns/allxmlspawners` is a historical export whose placements overlap
+   extensively with the current PremiumSpawner world. Loading it explicitly
+   can also replace the six cemetery controllers by GUID.
+   [XML loader](../Data/Scripts/Custom/XMLSpawner/XmlSpawner2.cs)
+
+6. After the three XML imports complete, save the generated world with
    `[save`.
 
 PremiumSpawner entries support `set` for construction-time properties and
