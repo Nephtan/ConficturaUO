@@ -400,6 +400,65 @@ namespace Server.Items
         }
     }
 
+    public class OddAtlantianStatue : StatueGygaxAddon
+    {
+        [Constructable]
+        public OddAtlantianStatue()
+        {
+            AddonComponent statue = Components[0];
+            statue.ItemID = 0x53A9;
+            statue.Light = LightType.Circle300;
+            statue.Name = "Odd Atlantian Statue";
+        }
+
+        public OddAtlantianStatue(Serial serial)
+            : base(serial) { }
+
+        public override void OnAfterSpawn()
+        {
+            base.OnAfterSpawn();
+
+            if (Map != Map.Atlantis || Weight != -2)
+                return;
+
+            bool occupied = false;
+            IPooledEnumerable items = Map.GetItemsInRange(Location, 0);
+            try
+            {
+                foreach (Item item in items)
+                {
+                    if (item != this && item is StatueGygaxAddon && item.Location == Location)
+                    {
+                        occupied = true;
+                        break;
+                    }
+                }
+            }
+            finally
+            {
+                items.Free();
+            }
+
+            // Keep the existing assembly and its current light state through the decoration sweep.
+            if (occupied)
+                Delete();
+            else
+                Weight = 1;
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write(0); // Version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            int version = reader.ReadInt();
+        }
+    }
+
     public class StatueGygaxAddonDeed : BaseAddonDeed
     {
         public int RelicGoldValue;
