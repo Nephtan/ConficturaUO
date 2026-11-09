@@ -126,6 +126,34 @@ namespace Server.Items
             AddComponent(new LocalizedAddonComponent(0x3124, 1076269), 0, 0, 0);
         }
 
+        public override void OnAfterSpawn()
+        {
+            base.OnAfterSpawn();
+
+            if (Weight != -2)
+                return;
+
+            // Preserve a saved assembly and its fruit count at this decoration anchor.
+            IPooledEnumerable items = Map.GetItemsInRange(Location, 0);
+            try
+            {
+                foreach (Item item in items)
+                {
+                    if (item != this && item is AppleTreeAddon && item.Location == Location)
+                    {
+                        Delete();
+                        return;
+                    }
+                }
+            }
+            finally
+            {
+                items.Free();
+            }
+
+            Weight = 1;
+        }
+
         public AppleTreeAddon(Serial serial)
             : base(serial) { }
 
