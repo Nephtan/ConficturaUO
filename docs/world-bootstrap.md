@@ -38,12 +38,15 @@ this repository.
    [Champion controllers](../Spawns/RWChamp.xml) ·
    [Champion monitors](../Spawns/RWChamp_Monitors.xml)
 
-   Use the three file commands above when bootstrapping. A directory import
-   recursively reads the example XML files too. The extensionless
-   `Spawns/allxmlspawners` is a historical export whose placements overlap
-   extensively with the current PremiumSpawner world. Loading it explicitly
-   can also replace the six cemetery controllers by GUID.
-   [XML loader](../Data/Scripts/Custom/XMLSpawner/XmlSpawner2.cs)
+   Use the three file commands above when bootstrapping. The checked-in
+   [Spawns directory](../Spawns) contains these three world packages.
+   The optional [vendor examples](../Data/Scripts/Custom/XMLSpawner/XmlExtras/Spawns)
+   have their own directory. The loader reads subdirectories during a
+   directory import, so keep examples and local archives outside `Spawns`.
+   If an older local checkout still has `Spawns/allxmlspawners`, keep it out
+   of the active import directory. Its historical placements overlap with
+   current PremiumSpawners, and loading it can replace the cemetery
+   controllers by GUID. [XML loader](../Data/Scripts/Custom/XMLSpawner/XmlSpawner2.cs)
 
 6. After the three XML imports complete, save the generated world with
    `[save`.
