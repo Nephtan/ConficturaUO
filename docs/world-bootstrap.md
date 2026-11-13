@@ -81,6 +81,11 @@ These are the lower-floor Leatherworker placements at Xardok's Castle and
 Fort of Tenebrae, the Kuldara quest board, and the Cimmeran Hold training
 dummy assembly. [Settlement generation](../Data/Scripts/Mobiles/Civilized/Citizens/WorkingSpots.cs)
 
+With the default persistent blackjack setting, the stock decorator preserves
+existing tables and omits all nine authored tables on an empty save.
+[Shard settings](../Info/settings.xml) ·
+[Decoration implementation](../Data/Scripts/System/Misc/Build.cs)
+
 Use one generation pass for a fresh local world. A second stock rebuild can
 keep old roaming return portals alongside the new returns. A queued chest
 callback can create an unmapped chest after its source spawner is deleted.
