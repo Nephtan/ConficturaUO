@@ -6,8 +6,12 @@ the map assets, decoration and spawn definitions, and runtime scripts in
 this repository.
 
 1. Build the Release x86 server from the [server project](../Data/System/Source/Server.csproj).
-   Put the executable in the local server directory alongside the checked-in
-   `Data`, `Info`, and `Spawns` directories.
+   Put `ConficturaServer.exe` in the local server directory alongside the
+   checked-in `Data`, `Info`, and `Spawns` directories. Keep the root
+   `ConficturaServer.exe.config`, `OrbServerSDK.dll`,
+   `UOArchitectInterface.dll`, `zlib32.dll`, and `zlib64.dll` alongside it.
+   The [runtime compiler assembly list](../Data/System/CFG/Assemblies.cfg)
+   includes the two managed DLLs.
 2. For a private local shard, bind the [listener](../Data/Scripts/System/Misc/SocketOptions.cs)
    to loopback and configure a local-only port before starting. Keep external
    integrations disabled in the local copy. Start the server interactively
