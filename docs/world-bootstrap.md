@@ -5,9 +5,12 @@ generated saves and backups outside version control. The public inputs are
 the map assets, decoration and spawn definitions, and runtime scripts in
 this repository.
 
-1. Build the Release x86 server from the [server project](../Data/System/Source/Server.csproj).
-   Put `ConficturaServer.exe` in the local server directory alongside the
-   checked-in `Data`, `Info`, and `Spawns` directories. Keep the root
+1. Use the checked-in Release x86 `ConficturaServer.exe` with the
+   checked-in `Data`, `Info`, and `Spawns` directories. If you build the
+   [server project](../Data/System/Source/Server.csproj) yourself, enable
+   the large-address-aware flag on the resulting x86 executable, for example
+   with `editbin /LARGEADDRESSAWARE ConficturaServer.exe` from a Visual Studio
+   developer prompt. Keep the root
    `ConficturaServer.exe.config`, `OrbServerSDK.dll`,
    `UOArchitectInterface.dll`, `zlib32.dll`, and `zlib64.dll` alongside it.
    The [runtime compiler assembly list](../Data/System/CFG/Assemblies.cfg)
@@ -76,31 +79,18 @@ facet's configuration. Umber Veil's main locations are on Sosaria.
 [Map definitions](../Data/Scripts/System/Misc/MapDefinitions.cs) ·
 [Staff destinations](../Data/System/XML/go.xml)
 
-The stock runtime omits four authored settlement fixtures during bootstrap.
-These are the lower-floor Leatherworker placements at Xardok's Castle and
-Fort of Tenebrae, the Kuldara quest board, and the Cimmeran Hold training
-dummy assembly. [Settlement generation](../Data/Scripts/Mobiles/Civilized/Citizens/WorkingSpots.cs)
-
-With the default persistent blackjack setting, the stock decorator preserves
-existing tables and omits all nine authored tables on an empty save.
-[Shard settings](../Info/settings.xml) ·
-[Decoration implementation](../Data/Scripts/System/Misc/Build.cs)
-
-Use one generation pass for a fresh local world. A second stock rebuild can
-keep old roaming return portals alongside the new returns. A queued chest
-callback can create an unmapped chest after its source spawner is deleted.
-[Roaming portals](../Data/Scripts/Items/Doors/StrangePortal.cs) ·
-[Dungeon chest callbacks](../Data/Scripts/Items/Containers/DungeonChest.cs)
-
 For an existing world, rehearse the rebuild on a disposable copy first.
-`[buildworld` removes every PremiumSpawner and sweeps decorations marked
-with weight `-2` before regeneration. Saved-only and moved placements can
+`[buildworld` replaces ordinary PremiumSpawners and sweeps world-root
+decorations marked with weight `-2` before regeneration. It guards retained
+and civic-owned controllers, contained items, and the active champion and
+cemetery defenders it can identify. Saved-only and moved placements can
 disappear or return at older coordinates. When adopting updated static
 assets on an existing world, compare the frozen tiles with the dynamic
 items at the same coordinates and retire only the verified duplicate
 scenery on a copy before rollout.
 [Rebuild and decoration implementation](../Data/Scripts/System/Misc/Build.cs)
 
-During an active champion wave, the rebuild can delete wave creatures and
-count their removal as kills. Repeated rebuilds can advance the encounter.
-[Champion controller](../Data/Scripts/Custom/Champions/System/CannedEvil/ChampionSpawn.cs)
+Compare active encounter and linked-return identities before and after the
+rebuild and allow the normal map and spawn timers to settle after reload.
+[Champion controller](../Data/Scripts/Custom/Champions/System/CannedEvil/ChampionSpawn.cs) ·
+[Roaming portals](../Data/Scripts/Items/Doors/StrangePortal.cs)
