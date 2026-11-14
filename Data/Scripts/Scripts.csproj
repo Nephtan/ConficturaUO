@@ -642,6 +642,7 @@
     <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddStairGump.cs" />
     <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddWallGump.cs" />
     <Compile Include="Custom\StaffTools\StaticGumpTool\StaticGump%28Alternative%29.cs" />
+    <Compile Include="Custom\StaffTools\WorldXmlCutover.cs" />
     <Compile Include="Custom\PandorasGiftBox\PandorasGiftBox.cs" />
     <Compile Include="Custom\Player Range Sensitive Mod\setdeactivation.cs" />
     <Compile Include="Custom\Point Command [2.0]\Point.cs" />
