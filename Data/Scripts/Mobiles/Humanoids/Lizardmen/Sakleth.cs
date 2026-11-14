@@ -82,6 +82,7 @@ namespace Server.Mobiles
             }
             else
             {
+                weapon.Delete();
                 weapon = new WarMace();
                 weapon.Name = "sakkhra mace";
                 weapon.Hue = 0x972;

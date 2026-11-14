@@ -1141,6 +1141,8 @@ namespace Server.Mobiles
     [CorpseName("target")]
     public class ShrineCritter : BaseCreature
     {
+        private Timer m_ExpiryTimer;
+
         [Constructable]
         public ShrineCritter()
             : base(AIType.AI_Animal, FightMode.Aggressor, 10, 1, 0.2, 0.4)
@@ -1150,7 +1152,7 @@ namespace Server.Mobiles
             BaseSoundID = 0;
             Hidden = true;
             CantWalk = true;
-            Timer.DelayCall(TimeSpan.FromMinutes(10.0), new TimerCallback(Delete));
+            m_ExpiryTimer = Timer.DelayCall(TimeSpan.FromMinutes(10.0), Delete);
 
             SetSkill(SkillName.Hiding, 500.0);
             SetSkill(SkillName.Stealth, 500.0);
@@ -1159,6 +1161,17 @@ namespace Server.Mobiles
         public override bool DeleteCorpseOnDeath
         {
             get { return true; }
+        }
+
+        public override void OnAfterDelete()
+        {
+            if (m_ExpiryTimer != null)
+            {
+                m_ExpiryTimer.Stop();
+                m_ExpiryTimer = null;
+            }
+
+            base.OnAfterDelete();
         }
 
         public ShrineCritter(Serial serial)
@@ -1174,7 +1187,7 @@ namespace Server.Mobiles
         {
             base.Deserialize(reader);
             int version = reader.ReadInt();
-            Timer.DelayCall(TimeSpan.FromSeconds(1.0), new TimerCallback(Delete));
+            m_ExpiryTimer = Timer.DelayCall(TimeSpan.FromSeconds(1.0), Delete);
         }
     }
 }

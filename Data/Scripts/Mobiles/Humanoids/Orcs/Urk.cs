@@ -89,7 +89,8 @@ namespace Server.Mobiles
                 AddItem(bonegloves);
             }
 
-            Item weapon = new BattleAxe();
+            Item unusedWeapon = new BattleAxe();
+            Item weapon = unusedWeapon;
 
             switch (Utility.Random(28))
             {
@@ -206,6 +207,9 @@ namespace Server.Mobiles
                     weapon.Name = "war mace";
                     break;
             }
+
+            if (weapon != unusedWeapon)
+                unusedWeapon.Delete();
 
             weapon.Name = "urkish " + weapon.Name;
             weapon.Hue = 0x7D1;

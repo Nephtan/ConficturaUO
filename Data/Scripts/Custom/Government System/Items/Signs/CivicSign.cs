@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Server;
 using Server.Gumps;
+using Server.Mobiles;
 
 namespace Server.Items
 {
@@ -16,6 +17,16 @@ namespace Server.Items
         {
             get { return m_LandlordRemove; }
             set { m_LandlordRemove = value; }
+        }
+
+        internal CityLandLord ActiveMarketKeeper
+        {
+            get
+            {
+                CityLandLord keeper = m_LandlordRemove as CityLandLord;
+                return !Deleted && m_Type == CivicSignType.Market && keeper != null && !keeper.Deleted
+                    && keeper.Alive && keeper.Sign == this && keeper.Stone == m_Stone ? keeper : null;
+            }
         }
 
         public ArrayList toDelete

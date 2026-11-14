@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Server;
 using Server.Items;
 using Server.Mobiles;
@@ -24,6 +24,11 @@ namespace Server.Regions
         public CityLandLord LandLord
         {
             get { return m_LandLord; }
+        }
+
+        internal void BindMarketKeeper(CityLandLord keeper)
+        {
+            m_LandLord = keeper;
         }
 
         public static string PickRegionName() //Dissallows duplicate region names

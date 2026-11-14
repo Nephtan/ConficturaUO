@@ -2268,15 +2268,6 @@ namespace Server.Items
 
                 pm.City.HasTavern = true;
 
-                PremiumSpawner spwn = new PremiumSpawner("Barkeeper");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 3;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
-
                 BaseDoor d1 = new StrongWoodDoor(DoorFacing.WestCW);
                 BaseDoor d2 = new StrongWoodDoor(DoorFacing.EastCCW);
 
@@ -2286,12 +2277,12 @@ namespace Server.Items
                 d1.MoveToWorld(new Point3D(p.X - 5, p.Y - 1, p.Z + 7), from.Map);
                 d2.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
 
-                spwn.MoveToWorld(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
-                spwn.Respawn();
+                CivicBarkeeperSlot barkeeper = new CivicBarkeeperSlot();
+                barkeeper.Place(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
 
                 sign.toDelete.Add(d1);
                 sign.toDelete.Add(d2);
-                sign.toDelete.Add(spwn);
+                sign.toDelete.Add(barkeeper);
                 sign.toDelete.Add(building);
 
                 sign.Type = CivicSignType.Tavern;
@@ -2321,15 +2312,6 @@ namespace Server.Items
 
                 pm.City.HasTavern = true;
 
-                PremiumSpawner spwn = new PremiumSpawner("Barkeeper");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 3;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
-
                 BaseDoor d1 = new StrongWoodDoor(DoorFacing.WestCW);
                 BaseDoor d2 = new StrongWoodDoor(DoorFacing.EastCCW);
 
@@ -2339,12 +2321,12 @@ namespace Server.Items
                 d1.MoveToWorld(new Point3D(p.X - 5, p.Y - 1, p.Z + 7), from.Map);
                 d2.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
 
-                spwn.MoveToWorld(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
-                spwn.Respawn();
+                CivicBarkeeperSlot barkeeper = new CivicBarkeeperSlot();
+                barkeeper.Place(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
 
                 sign.toDelete.Add(d1);
                 sign.toDelete.Add(d2);
-                sign.toDelete.Add(spwn);
+                sign.toDelete.Add(barkeeper);
                 sign.toDelete.Add(building);
 
                 sign.Type = CivicSignType.Tavern;
@@ -2374,15 +2356,6 @@ namespace Server.Items
 
                 pm.City.HasTavern = true;
 
-                PremiumSpawner spwn = new PremiumSpawner("Barkeeper");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 3;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
-
                 BaseDoor d1 = new StrongWoodDoor(DoorFacing.WestCW);
                 BaseDoor d2 = new StrongWoodDoor(DoorFacing.EastCCW);
 
@@ -2392,12 +2365,12 @@ namespace Server.Items
                 d1.MoveToWorld(new Point3D(p.X - 5, p.Y - 1, p.Z + 7), from.Map);
                 d2.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
 
-                spwn.MoveToWorld(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
-                spwn.Respawn();
+                CivicBarkeeperSlot barkeeper = new CivicBarkeeperSlot();
+                barkeeper.Place(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
 
                 sign.toDelete.Add(d1);
                 sign.toDelete.Add(d2);
-                sign.toDelete.Add(spwn);
+                sign.toDelete.Add(barkeeper);
                 sign.toDelete.Add(building);
 
                 sign.Type = CivicSignType.Tavern;
@@ -2427,15 +2400,6 @@ namespace Server.Items
 
                 pm.City.HasTavern = true;
 
-                PremiumSpawner spwn = new PremiumSpawner("Barkeeper");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 3;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
-
                 BaseDoor d1 = new StrongWoodDoor(DoorFacing.WestCW);
                 BaseDoor d2 = new StrongWoodDoor(DoorFacing.EastCCW);
 
@@ -2445,12 +2409,12 @@ namespace Server.Items
                 d1.MoveToWorld(new Point3D(p.X - 5, p.Y - 1, p.Z + 7), from.Map);
                 d2.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
 
-                spwn.MoveToWorld(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
-                spwn.Respawn();
+                CivicBarkeeperSlot barkeeper = new CivicBarkeeperSlot();
+                barkeeper.Place(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
 
                 sign.toDelete.Add(d1);
                 sign.toDelete.Add(d2);
-                sign.toDelete.Add(spwn);
+                sign.toDelete.Add(barkeeper);
                 sign.toDelete.Add(building);
 
                 sign.Type = CivicSignType.Tavern;
@@ -2480,15 +2444,6 @@ namespace Server.Items
 
                 pm.City.HasTavern = true;
 
-                PremiumSpawner spwn = new PremiumSpawner("Barkeeper");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 3;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
-
                 BaseDoor d1 = new StrongWoodDoor(DoorFacing.WestCW);
                 BaseDoor d2 = new StrongWoodDoor(DoorFacing.EastCCW);
 
@@ -2498,12 +2453,12 @@ namespace Server.Items
                 d1.MoveToWorld(new Point3D(p.X - 5, p.Y - 1, p.Z + 7), from.Map);
                 d2.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
 
-                spwn.MoveToWorld(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
-                spwn.Respawn();
+                CivicBarkeeperSlot barkeeper = new CivicBarkeeperSlot();
+                barkeeper.Place(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
 
                 sign.toDelete.Add(d1);
                 sign.toDelete.Add(d2);
-                sign.toDelete.Add(spwn);
+                sign.toDelete.Add(barkeeper);
                 sign.toDelete.Add(building);
 
                 sign.Type = CivicSignType.Tavern;
@@ -2533,15 +2488,6 @@ namespace Server.Items
 
                 pm.City.HasTavern = true;
 
-                PremiumSpawner spwn = new PremiumSpawner("Barkeeper");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 3;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
-
                 BaseDoor d1 = new StrongWoodDoor(DoorFacing.WestCW);
                 BaseDoor d2 = new StrongWoodDoor(DoorFacing.EastCCW);
 
@@ -2551,12 +2497,12 @@ namespace Server.Items
                 d1.MoveToWorld(new Point3D(p.X - 5, p.Y - 1, p.Z + 7), from.Map);
                 d2.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
 
-                spwn.MoveToWorld(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
-                spwn.Respawn();
+                CivicBarkeeperSlot barkeeper = new CivicBarkeeperSlot();
+                barkeeper.Place(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
 
                 sign.toDelete.Add(d1);
                 sign.toDelete.Add(d2);
-                sign.toDelete.Add(spwn);
+                sign.toDelete.Add(barkeeper);
                 sign.toDelete.Add(building);
 
                 sign.Type = CivicSignType.Tavern;
@@ -2586,15 +2532,6 @@ namespace Server.Items
 
                 pm.City.HasTavern = true;
 
-                PremiumSpawner spwn = new PremiumSpawner("Barkeeper");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 3;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
-
                 BaseDoor d1 = new StrongWoodDoor(DoorFacing.WestCW);
                 BaseDoor d2 = new StrongWoodDoor(DoorFacing.EastCCW);
 
@@ -2604,12 +2541,12 @@ namespace Server.Items
                 d1.MoveToWorld(new Point3D(p.X - 5, p.Y - 1, p.Z + 7), from.Map);
                 d2.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
 
-                spwn.MoveToWorld(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
-                spwn.Respawn();
+                CivicBarkeeperSlot barkeeper = new CivicBarkeeperSlot();
+                barkeeper.Place(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
 
                 sign.toDelete.Add(d1);
                 sign.toDelete.Add(d2);
-                sign.toDelete.Add(spwn);
+                sign.toDelete.Add(barkeeper);
                 sign.toDelete.Add(building);
 
                 sign.Type = CivicSignType.Tavern;
@@ -2639,15 +2576,6 @@ namespace Server.Items
 
                 pm.City.HasTavern = true;
 
-                PremiumSpawner spwn = new PremiumSpawner("Barkeeper");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 3;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
-
                 BaseDoor d1 = new StrongWoodDoor(DoorFacing.WestCW);
                 BaseDoor d2 = new StrongWoodDoor(DoorFacing.EastCCW);
 
@@ -2657,12 +2585,12 @@ namespace Server.Items
                 d1.MoveToWorld(new Point3D(p.X - 5, p.Y - 1, p.Z + 7), from.Map);
                 d2.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
 
-                spwn.MoveToWorld(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
-                spwn.Respawn();
+                CivicBarkeeperSlot barkeeper = new CivicBarkeeperSlot();
+                barkeeper.Place(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
 
                 sign.toDelete.Add(d1);
                 sign.toDelete.Add(d2);
-                sign.toDelete.Add(spwn);
+                sign.toDelete.Add(barkeeper);
                 sign.toDelete.Add(building);
 
                 sign.Type = CivicSignType.Tavern;
@@ -2692,25 +2620,16 @@ namespace Server.Items
 
                 pm.City.HasMoongate = true;
 
-                PremiumSpawner spwn = new PremiumSpawner("PublicMoongate");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 0;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
+                PublicMoongate gate = new PublicMoongate();
+                gate.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
 
-                spwn.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
-                spwn.Respawn();
-
-                sign.toDelete.Add(spwn);
+                sign.toDelete.Add(gate);
                 sign.toDelete.Add(building);
 
                 sign.Type = CivicSignType.Moongate;
 
                 pm.City.toDelete.Add(sign);
-                pm.City.MoongateLocation = spwn.Location;
+                pm.City.MoongateLocation = gate.Location;
 
                 sign.Name = "City Moongate";
                 sign.MoveToWorld(new Point3D(p.X - 3, p.Y, p.Z - 6), from.Map);
@@ -2734,25 +2653,16 @@ namespace Server.Items
 
                 pm.City.HasMoongate = true;
 
-                PremiumSpawner spwn = new PremiumSpawner("PublicMoongate");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 0;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
+                PublicMoongate gate = new PublicMoongate();
+                gate.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
 
-                spwn.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
-                spwn.Respawn();
-
-                sign.toDelete.Add(spwn);
+                sign.toDelete.Add(gate);
                 sign.toDelete.Add(building);
 
                 sign.Type = CivicSignType.Moongate;
 
                 pm.City.toDelete.Add(sign);
-                pm.City.MoongateLocation = spwn.Location;
+                pm.City.MoongateLocation = gate.Location;
 
                 sign.Name = "City Moongate";
                 sign.MoveToWorld(new Point3D(p.X - 3, p.Y, p.Z - 6), from.Map);
@@ -2776,25 +2686,16 @@ namespace Server.Items
 
                 pm.City.HasMoongate = true;
 
-                PremiumSpawner spwn = new PremiumSpawner("PublicMoongate");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 0;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
+                PublicMoongate gate = new PublicMoongate();
+                gate.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
 
-                spwn.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
-                spwn.Respawn();
-
-                sign.toDelete.Add(spwn);
+                sign.toDelete.Add(gate);
                 sign.toDelete.Add(building);
 
                 sign.Type = CivicSignType.Moongate;
 
                 pm.City.toDelete.Add(sign);
-                pm.City.MoongateLocation = spwn.Location;
+                pm.City.MoongateLocation = gate.Location;
 
                 sign.Name = "City Moongate";
                 sign.MoveToWorld(new Point3D(p.X - 3, p.Y, p.Z - 6), from.Map);
@@ -2818,25 +2719,16 @@ namespace Server.Items
 
                 pm.City.HasMoongate = true;
 
-                PremiumSpawner spwn = new PremiumSpawner("PublicMoongate");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 0;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
+                PublicMoongate gate = new PublicMoongate();
+                gate.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
 
-                spwn.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
-                spwn.Respawn();
-
-                sign.toDelete.Add(spwn);
+                sign.toDelete.Add(gate);
                 sign.toDelete.Add(building);
 
                 sign.Type = CivicSignType.Moongate;
 
                 pm.City.toDelete.Add(sign);
-                pm.City.MoongateLocation = spwn.Location;
+                pm.City.MoongateLocation = gate.Location;
 
                 sign.Name = "City Moongate";
                 sign.MoveToWorld(new Point3D(p.X - 3, p.Y, p.Z - 6), from.Map);
@@ -2860,25 +2752,16 @@ namespace Server.Items
 
                 pm.City.HasMoongate = true;
 
-                PremiumSpawner spwn = new PremiumSpawner("PublicMoongate");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 0;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
+                PublicMoongate gate = new PublicMoongate();
+                gate.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
 
-                spwn.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
-                spwn.Respawn();
-
-                sign.toDelete.Add(spwn);
+                sign.toDelete.Add(gate);
                 sign.toDelete.Add(building);
 
                 sign.Type = CivicSignType.Moongate;
 
                 pm.City.toDelete.Add(sign);
-                pm.City.MoongateLocation = spwn.Location;
+                pm.City.MoongateLocation = gate.Location;
 
                 sign.ItemID = 3026;
                 sign.Name = "City Moongate";
@@ -2903,25 +2786,16 @@ namespace Server.Items
 
                 pm.City.HasMoongate = true;
 
-                PremiumSpawner spwn = new PremiumSpawner("PublicMoongate");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 0;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
+                PublicMoongate gate = new PublicMoongate();
+                gate.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
 
-                spwn.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
-                spwn.Respawn();
-
-                sign.toDelete.Add(spwn);
+                sign.toDelete.Add(gate);
                 sign.toDelete.Add(building);
 
                 sign.Type = CivicSignType.Moongate;
 
                 pm.City.toDelete.Add(sign);
-                pm.City.MoongateLocation = spwn.Location;
+                pm.City.MoongateLocation = gate.Location;
 
                 sign.Name = "City Moongate";
                 sign.MoveToWorld(new Point3D(p.X - 3, p.Y, p.Z - 6), from.Map);
@@ -3115,46 +2989,10 @@ namespace Server.Items
                 Point3D end = new Point3D(center.X + 6, center.Y + 6, center.Z);
                 Rectangle2D box = new Rectangle2D(start, end);
                 Rectangle3D[] area = PlayerGovernmentSystem.FormatRegion(box);
-                PremiumSpawner spwn = new PremiumSpawner("CityLandLord");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 5;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
-                spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
-                spwn.Respawn();
-                CityLandLord lord = null;
-                IPooledEnumerable spawnerMobiles = spwn.GetMobilesInRange(0);
-
-                try
-                {
-                    foreach (Mobile m in spawnerMobiles)
-                    {
-                        if (m is CityLandLord)
-                        {
-                            lord = (CityLandLord)m;
-                            lord.Initialize(pm.City, area, sign, p, from.Map);
-                            break;
-                        }
-                    }
-                }
-                finally
-                {
-                    spawnerMobiles.Free();
-                }
-
-                //Remove List
-                ArrayList toDelete = new ArrayList();
-
                 sign.Stone = pm.City;
-                sign.toDelete = toDelete;
                 sign.Stone.HasMarket = true;
-
+                sign.toDelete = new ArrayList();
                 sign.toDelete.Add(building);
-                sign.toDelete.Add(spwn);
-                sign.LandlordRemove = lord;
 
                 sign.Type = CivicSignType.Market;
 
@@ -3163,6 +3001,7 @@ namespace Server.Items
                 sign.ItemID = 3026;
                 sign.Name = "City Market";
                 sign.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
+                CivicMarketKeeperSlot.Create(sign, area, new Point3D(p.X - 4, p.Y, p.Z), from.Map);
             }
             else if (Type == CivicStrutureType.FieldstoneMarket)
             {
@@ -3179,46 +3018,10 @@ namespace Server.Items
                 Point3D end = new Point3D(center.X + 6, center.Y + 6, center.Z);
                 Rectangle2D box = new Rectangle2D(start, end);
                 Rectangle3D[] area = PlayerGovernmentSystem.FormatRegion(box);
-                PremiumSpawner spwn = new PremiumSpawner("CityLandLord");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 5;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
-                spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
-                spwn.Respawn();
-                CityLandLord lord = null;
-                IPooledEnumerable spawnerMobiles = spwn.GetMobilesInRange(0);
-
-                try
-                {
-                    foreach (Mobile m in spawnerMobiles)
-                    {
-                        if (m is CityLandLord)
-                        {
-                            lord = (CityLandLord)m;
-                            lord.Initialize(pm.City, area, sign, p, from.Map);
-                            break;
-                        }
-                    }
-                }
-                finally
-                {
-                    spawnerMobiles.Free();
-                }
-
-                //Remove List
-                ArrayList toDelete = new ArrayList();
-
                 sign.Stone = pm.City;
-                sign.toDelete = toDelete;
                 sign.Stone.HasMarket = true;
-
+                sign.toDelete = new ArrayList();
                 sign.toDelete.Add(building);
-                sign.toDelete.Add(spwn);
-                sign.LandlordRemove = lord;
 
                 sign.Type = CivicSignType.Market;
 
@@ -3227,6 +3030,7 @@ namespace Server.Items
                 sign.ItemID = 3026;
                 sign.Name = "City Market";
                 sign.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
+                CivicMarketKeeperSlot.Create(sign, area, new Point3D(p.X - 4, p.Y, p.Z), from.Map);
             }
             else if (Type == CivicStrutureType.SandstoneMarket)
             {
@@ -3243,46 +3047,10 @@ namespace Server.Items
                 Point3D end = new Point3D(center.X + 6, center.Y + 6, center.Z);
                 Rectangle2D box = new Rectangle2D(start, end);
                 Rectangle3D[] area = PlayerGovernmentSystem.FormatRegion(box);
-                PremiumSpawner spwn = new PremiumSpawner("CityLandLord");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 5;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
-                spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
-                spwn.Respawn();
-                CityLandLord lord = null;
-                IPooledEnumerable spawnerMobiles = spwn.GetMobilesInRange(0);
-
-                try
-                {
-                    foreach (Mobile m in spawnerMobiles)
-                    {
-                        if (m is CityLandLord)
-                        {
-                            lord = (CityLandLord)m;
-                            lord.Initialize(pm.City, area, sign, p, from.Map);
-                            break;
-                        }
-                    }
-                }
-                finally
-                {
-                    spawnerMobiles.Free();
-                }
-
-                //Remove List
-                ArrayList toDelete = new ArrayList();
-
                 sign.Stone = pm.City;
-                sign.toDelete = toDelete;
                 sign.Stone.HasMarket = true;
-
+                sign.toDelete = new ArrayList();
                 sign.toDelete.Add(building);
-                sign.toDelete.Add(spwn);
-                sign.LandlordRemove = lord;
 
                 sign.Type = CivicSignType.Market;
 
@@ -3291,6 +3059,7 @@ namespace Server.Items
                 sign.ItemID = 3026;
                 sign.Name = "City Market";
                 sign.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
+                CivicMarketKeeperSlot.Create(sign, area, new Point3D(p.X - 4, p.Y, p.Z), from.Map);
             }
             else if (Type == CivicStrutureType.MarbleMarket)
             {
@@ -3307,46 +3076,10 @@ namespace Server.Items
                 Point3D end = new Point3D(center.X + 6, center.Y + 6, center.Z);
                 Rectangle2D box = new Rectangle2D(start, end);
                 Rectangle3D[] area = PlayerGovernmentSystem.FormatRegion(box);
-                PremiumSpawner spwn = new PremiumSpawner("CityLandLord");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 5;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
-                spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
-                spwn.Respawn();
-                CityLandLord lord = null;
-                IPooledEnumerable spawnerMobiles = spwn.GetMobilesInRange(0);
-
-                try
-                {
-                    foreach (Mobile m in spawnerMobiles)
-                    {
-                        if (m is CityLandLord)
-                        {
-                            lord = (CityLandLord)m;
-                            lord.Initialize(pm.City, area, sign, p, from.Map);
-                            break;
-                        }
-                    }
-                }
-                finally
-                {
-                    spawnerMobiles.Free();
-                }
-
-                //Remove List
-                ArrayList toDelete = new ArrayList();
-
                 sign.Stone = pm.City;
-                sign.toDelete = toDelete;
                 sign.Stone.HasMarket = true;
-
+                sign.toDelete = new ArrayList();
                 sign.toDelete.Add(building);
-                sign.toDelete.Add(spwn);
-                sign.LandlordRemove = lord;
 
                 sign.Type = CivicSignType.Market;
 
@@ -3355,6 +3088,7 @@ namespace Server.Items
                 sign.ItemID = 3026;
                 sign.Name = "City Market";
                 sign.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
+                CivicMarketKeeperSlot.Create(sign, area, new Point3D(p.X - 4, p.Y, p.Z), from.Map);
             }
             else if (Type == CivicStrutureType.NecroMarket)
             {
@@ -3371,46 +3105,10 @@ namespace Server.Items
                 Point3D end = new Point3D(center.X + 6, center.Y + 6, center.Z);
                 Rectangle2D box = new Rectangle2D(start, end);
                 Rectangle3D[] area = PlayerGovernmentSystem.FormatRegion(box);
-                PremiumSpawner spwn = new PremiumSpawner("CityLandLord");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 5;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
-                spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
-                spwn.Respawn();
-                CityLandLord lord = null;
-                IPooledEnumerable spawnerMobiles = spwn.GetMobilesInRange(0);
-
-                try
-                {
-                    foreach (Mobile m in spawnerMobiles)
-                    {
-                        if (m is CityLandLord)
-                        {
-                            lord = (CityLandLord)m;
-                            lord.Initialize(pm.City, area, sign, p, from.Map);
-                            break;
-                        }
-                    }
-                }
-                finally
-                {
-                    spawnerMobiles.Free();
-                }
-
-                //Remove List
-                ArrayList toDelete = new ArrayList();
-
                 sign.Stone = pm.City;
-                sign.toDelete = toDelete;
                 sign.Stone.HasMarket = true;
-
+                sign.toDelete = new ArrayList();
                 sign.toDelete.Add(building);
-                sign.toDelete.Add(spwn);
-                sign.LandlordRemove = lord;
 
                 sign.Type = CivicSignType.Market;
 
@@ -3419,6 +3117,7 @@ namespace Server.Items
                 sign.ItemID = 3026;
                 sign.Name = "City Market";
                 sign.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
+                CivicMarketKeeperSlot.Create(sign, area, new Point3D(p.X - 4, p.Y, p.Z), from.Map);
             }
             else if (Type == CivicStrutureType.WoodMarket)
             {
@@ -3435,46 +3134,10 @@ namespace Server.Items
                 Point3D end = new Point3D(center.X + 6, center.Y + 6, center.Z);
                 Rectangle2D box = new Rectangle2D(start, end);
                 Rectangle3D[] area = PlayerGovernmentSystem.FormatRegion(box);
-                PremiumSpawner spwn = new PremiumSpawner("CityLandLord");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 5;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
-                spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
-                spwn.Respawn();
-                CityLandLord lord = null;
-                IPooledEnumerable spawnerMobiles = spwn.GetMobilesInRange(0);
-
-                try
-                {
-                    foreach (Mobile m in spawnerMobiles)
-                    {
-                        if (m is CityLandLord)
-                        {
-                            lord = (CityLandLord)m;
-                            lord.Initialize(pm.City, area, sign, p, from.Map);
-                            break;
-                        }
-                    }
-                }
-                finally
-                {
-                    spawnerMobiles.Free();
-                }
-
-                //Remove List
-                ArrayList toDelete = new ArrayList();
-
                 sign.Stone = pm.City;
-                sign.toDelete = toDelete;
                 sign.Stone.HasMarket = true;
-
+                sign.toDelete = new ArrayList();
                 sign.toDelete.Add(building);
-                sign.toDelete.Add(spwn);
-                sign.LandlordRemove = lord;
 
                 sign.Type = CivicSignType.Market;
 
@@ -3483,6 +3146,7 @@ namespace Server.Items
                 sign.ItemID = 3026;
                 sign.Name = "City Market";
                 sign.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
+                CivicMarketKeeperSlot.Create(sign, area, new Point3D(p.X - 4, p.Y, p.Z), from.Map);
             }
             else if (Type == CivicStrutureType.StoneMarket)
             {
@@ -3499,46 +3163,10 @@ namespace Server.Items
                 Point3D end = new Point3D(center.X + 6, center.Y + 6, center.Z);
                 Rectangle2D box = new Rectangle2D(start, end);
                 Rectangle3D[] area = PlayerGovernmentSystem.FormatRegion(box);
-                PremiumSpawner spwn = new PremiumSpawner("CityLandLord");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 5;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
-                spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
-                spwn.Respawn();
-                CityLandLord lord = null;
-                IPooledEnumerable spawnerMobiles = spwn.GetMobilesInRange(0);
-
-                try
-                {
-                    foreach (Mobile m in spawnerMobiles)
-                    {
-                        if (m is CityLandLord)
-                        {
-                            lord = (CityLandLord)m;
-                            lord.Initialize(pm.City, area, sign, p, from.Map);
-                            break;
-                        }
-                    }
-                }
-                finally
-                {
-                    spawnerMobiles.Free();
-                }
-
-                //Remove List
-                ArrayList toDelete = new ArrayList();
-
                 sign.Stone = pm.City;
-                sign.toDelete = toDelete;
                 sign.Stone.HasMarket = true;
-
+                sign.toDelete = new ArrayList();
                 sign.toDelete.Add(building);
-                sign.toDelete.Add(spwn);
-                sign.LandlordRemove = lord;
 
                 sign.Type = CivicSignType.Market;
 
@@ -3547,6 +3175,7 @@ namespace Server.Items
                 sign.ItemID = 3026;
                 sign.Name = "City Market";
                 sign.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
+                CivicMarketKeeperSlot.Create(sign, area, new Point3D(p.X - 4, p.Y, p.Z), from.Map);
             }
             else if (Type == CivicStrutureType.PlasterMarket)
             {
@@ -3563,46 +3192,10 @@ namespace Server.Items
                 Point3D end = new Point3D(center.X + 6, center.Y + 6, center.Z);
                 Rectangle2D box = new Rectangle2D(start, end);
                 Rectangle3D[] area = PlayerGovernmentSystem.FormatRegion(box);
-                PremiumSpawner spwn = new PremiumSpawner("CityLandLord");
-                spwn.Count = 1;
-                spwn.Running = true;
-                spwn.HomeRange = 5;
-                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-                spwn.Visible = false;
-                spwn.Movable = false;
-                spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
-                spwn.Respawn();
-                CityLandLord lord = null;
-                IPooledEnumerable spawnerMobiles = spwn.GetMobilesInRange(0);
-
-                try
-                {
-                    foreach (Mobile m in spawnerMobiles)
-                    {
-                        if (m is CityLandLord)
-                        {
-                            lord = (CityLandLord)m;
-                            lord.Initialize(pm.City, area, sign, p, from.Map);
-                            break;
-                        }
-                    }
-                }
-                finally
-                {
-                    spawnerMobiles.Free();
-                }
-
-                //Remove List
-                ArrayList toDelete = new ArrayList();
-
                 sign.Stone = pm.City;
-                sign.toDelete = toDelete;
                 sign.Stone.HasMarket = true;
-
+                sign.toDelete = new ArrayList();
                 sign.toDelete.Add(building);
-                sign.toDelete.Add(spwn);
-                sign.LandlordRemove = lord;
 
                 sign.Type = CivicSignType.Market;
 
@@ -3611,6 +3204,7 @@ namespace Server.Items
                 sign.ItemID = 3026;
                 sign.Name = "City Market";
                 sign.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
+                CivicMarketKeeperSlot.Create(sign, area, new Point3D(p.X - 4, p.Y, p.Z), from.Map);
             }
 
             this.Delete();

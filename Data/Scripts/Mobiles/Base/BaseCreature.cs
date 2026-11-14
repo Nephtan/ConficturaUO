@@ -5186,7 +5186,8 @@ namespace Server.Mobiles
 
                     if (DressUpAs < 3)
                     {
-                        BaseWeapon weapon = new BattleAxe();
+                        BaseWeapon fallbackWeapon = new BattleAxe();
+                        BaseWeapon weapon = fallbackWeapon;
 
                         switch (Utility.Random(28))
                         {
@@ -5304,6 +5305,9 @@ namespace Server.Mobiles
                                 weapon.Name = "war mace";
                                 break;
                         }
+
+                        if (weapon != fallbackWeapon)
+                            fallbackWeapon.Delete();
 
                         weapon.Name = "orcish " + weapon.Name;
                         weapon.Hue = 0x97D;
@@ -9693,6 +9697,7 @@ namespace Server.Mobiles
             }
             else
             {
+                reg.Delete();
                 Item wizreg = Loot.RandomSecretReagent();
                 UnknownReagent myreg = (UnknownReagent)wizreg;
                 if (Server.Misc.Worlds.IsOnSpaceship(this.Location, this.Map))

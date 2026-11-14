@@ -1,5 +1,6 @@
 using System; // Line 1
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using Server;
 using Server.Items;
@@ -12,6 +13,8 @@ namespace Server.Items
     // Defines a MonsterNest item, which acts as a spawner for creatures within the game.
     public class MonsterNest : Item
     {
+        private Timer m_SpawnTimer;
+        private Timer m_RegenTimer;
         // Fields to hold the nest's configuration.
         public string m_NestSpawnType; // Specifies the type of creature to spawn.
         public int m_MaxCount; // The maximum number of creatures the nest can spawn.
@@ -92,11 +95,40 @@ namespace Server.Items
             RespawnTime = TimeSpan.FromSeconds(15.0); // Set the default respawn time for creatures.
 
             // Start the timers for spawning creatures and regenerating health.
-            new InternalTimer(this).Start();
-            new RegenTimer(this).Start();
+            StartSpawnTimer();
+            StartRegenTimer();
 
             // Spawn entity to represent the nest in combat.
             Movable = false; // Ensure the nest cannot be moved.
+        }
+
+        private void StartSpawnTimer()
+        {
+            m_SpawnTimer = new InternalTimer(this);
+            m_SpawnTimer.Start();
+        }
+
+        private void StartRegenTimer()
+        {
+            m_RegenTimer = new RegenTimer(this);
+            m_RegenTimer.Start();
+        }
+
+        public override void OnAfterDelete()
+        {
+            if (m_SpawnTimer != null)
+            {
+                m_SpawnTimer.Stop();
+                m_SpawnTimer = null;
+            }
+
+            if (m_RegenTimer != null)
+            {
+                m_RegenTimer.Stop();
+                m_RegenTimer = null;
+            }
+
+            base.OnAfterDelete();
         }
 
         public void UpdateEntityHealth()
@@ -199,6 +231,18 @@ namespace Server.Items
                 this.m_Entity.Delete();
 
             this.Delete(); // Finally, delete the nest itself from the world.
+        }
+
+        internal void CollectLivingDefenders(Dictionary<Mobile, bool> defenders)
+        {
+            if (m_Spawn == null)
+                return;
+
+            foreach (Mobile defender in m_Spawn)
+            {
+                if (defender != null && !defender.Deleted && defender.Alive && defender.Map == Map)
+                    defenders[defender] = true;
+            }
         }
 
         // Counts the number of alive monsters spawned by the nest.
@@ -315,8 +359,8 @@ namespace Server.Items
                 return;
 
             UpdateEntityPosition();
-            new InternalTimer(this).Start();
-            new RegenTimer(this).Start();
+            StartSpawnTimer();
+            StartRegenTimer();
         }
 
         // RegenTimer handles periodic regeneration of the nest's hit points.
@@ -340,7 +384,7 @@ namespace Server.Items
                     if (nest.Hits > nest.HitsMax)
                         nest.Hits = nest.HitsMax;
 
-                    new RegenTimer(nest).Start(); // Restart the timer for continuous regeneration.
+                    nest.StartRegenTimer(); // Restart the timer for continuous regeneration.
                 }
             }
         }
@@ -361,7 +405,8 @@ namespace Server.Items
                 if (nest != null && !nest.Deleted)
                 {
                     nest.DoSpawn(); // Attempt to spawn a creature.
-                    new InternalTimer(nest).Start(); // Restart the timer to continue spawning.
+                    if (!nest.Deleted)
+                        nest.StartSpawnTimer(); // Restart the timer to continue spawning.
                 }
             }
         }

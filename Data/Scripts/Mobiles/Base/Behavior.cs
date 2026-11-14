@@ -4337,7 +4337,8 @@ namespace Server.Misc
                     m.AddItem(new Cloak(Utility.RandomNeutralHue()));
                 }
 
-                Item cloth1 = new FancyShirt();
+                Item fallbackFancyShirt = new FancyShirt();
+                Item cloth1 = fallbackFancyShirt;
                 switch (Utility.RandomMinMax(0, 6))
                 {
                     case 0:
@@ -4359,12 +4360,15 @@ namespace Server.Misc
                         cloth1 = new WizardShirt();
                         break;
                 }
+                if (cloth1 != fallbackFancyShirt)
+                    fallbackFancyShirt.Delete();
                 cloth1.Hue = clothHue;
                 m.AddItem(cloth1);
 
                 if ((m.Body == 0x191 || m.Body == 606) && Utility.RandomBool())
                 {
-                    Item cloth2 = new Skirt();
+                    Item fallbackSkirt = new Skirt();
+                    Item cloth2 = fallbackSkirt;
                     switch (Utility.RandomMinMax(0, 2))
                     {
                         case 0:
@@ -4374,12 +4378,15 @@ namespace Server.Misc
                             cloth2 = new RoyalLongSkirt();
                             break;
                     }
+                    if (cloth2 != fallbackSkirt)
+                        fallbackSkirt.Delete();
                     cloth2.Hue = pantsHue;
                     m.AddItem(cloth2);
                 }
                 else
                 {
-                    Item cloth2 = new ShortPants();
+                    Item fallbackShortPants = new ShortPants();
+                    Item cloth2 = fallbackShortPants;
                     switch (Utility.RandomMinMax(0, 3))
                     {
                         case 0:
@@ -4392,6 +4399,8 @@ namespace Server.Misc
                             cloth2 = new PiratePants();
                             break;
                     }
+                    if (cloth2 != fallbackShortPants)
+                        fallbackShortPants.Delete();
                     cloth2.Hue = pantsHue;
                     m.AddItem(cloth2);
                 }
@@ -5776,6 +5785,9 @@ namespace Server.Misc
                         }
                         break;
                 }
+
+                if (shield.Parent == null)
+                    shield.Delete();
 
                 Robe robe = new Robe();
                 robe.Name = "black guard robe";

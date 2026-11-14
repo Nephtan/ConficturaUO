@@ -12,6 +12,7 @@ namespace Server.Items
         public abstract Item Fruit { get; }
 
         private int m_Fruits;
+        private Timer m_RespawnTimer;
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int Fruits
@@ -29,7 +30,7 @@ namespace Server.Items
         public BaseFruitTreeAddon()
             : base()
         {
-            Timer.DelayCall(TimeSpan.FromMinutes(5), new TimerCallback(Respawn));
+            m_RespawnTimer = Timer.DelayCall(TimeSpan.FromMinutes(5), Respawn);
         }
 
         public BaseFruitTreeAddon(Serial serial)
@@ -90,10 +91,7 @@ namespace Server.Items
                         else
                         {
                             if (--m_Fruits == 0)
-                                Timer.DelayCall(
-                                    TimeSpan.FromMinutes(30),
-                                    new TimerCallback(Respawn)
-                                );
+                                m_RespawnTimer = Timer.DelayCall(TimeSpan.FromMinutes(30), Respawn);
 
                             from.SendLocalizedMessage(501016); // You pick some fruit and put it in your backpack.
                         }
@@ -108,8 +106,23 @@ namespace Server.Items
                 from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
         }
 
+        public override void OnAfterDelete()
+        {
+            if (m_RespawnTimer != null)
+            {
+                m_RespawnTimer.Stop();
+                m_RespawnTimer = null;
+            }
+
+            base.OnAfterDelete();
+        }
+
         private void Respawn()
         {
+            m_RespawnTimer = null;
+            if (Deleted)
+                return;
+
             m_Fruits = Utility.RandomMinMax(1, 4);
         }
 

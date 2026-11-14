@@ -1825,6 +1825,66 @@ namespace Server.Mobiles
             return s.Split(null, 2)[0];
         }
 
+        internal BaseVendor GetSingleCivicVendor()
+        {
+            if (Deleted || Parent != null || m_CreaturesName.Count != 1
+                || m_CreaturesNameA.Count != 0 || m_CreaturesNameB.Count != 0 || m_CreaturesNameC.Count != 0
+                || m_CreaturesNameD.Count != 0 || m_CreaturesNameE.Count != 0
+                || m_Creatures.Count != 1 || m_CreaturesA.Count != 0 || m_CreaturesB.Count != 0
+                || m_CreaturesC.Count != 0 || m_CreaturesD.Count != 0 || m_CreaturesE.Count != 0)
+                return null;
+
+            BaseVendor vendor = m_Creatures[0] as BaseVendor;
+            if (vendor == null || vendor.Deleted || !vendor.Alive || vendor.Spawner != null
+                || vendor.Map != Map || vendor.Location != Location
+                || (vendor.SpawnerID != 0 && vendor.SpawnerID != Serial.Value)
+                || m_CreaturesName[0] != vendor.GetType().Name)
+                return null;
+
+            return vendor;
+        }
+
+        internal void ReleaseCivicVendor(BaseVendor vendor)
+        {
+            if (vendor == null || GetSingleCivicVendor() != vendor)
+                throw new InvalidOperationException("The civic vendor is no longer owned by this spawner.");
+
+            m_Creatures.RemoveAt(0);
+            vendor.SpawnerID = 0;
+            InvalidateProperties();
+        }
+
+        internal void CollectLivingChildren(Dictionary<Mobile, bool> children)
+        {
+            CollectLivingChildren(m_Creatures, children);
+            CollectLivingChildren(m_CreaturesA, children);
+            CollectLivingChildren(m_CreaturesB, children);
+            CollectLivingChildren(m_CreaturesC, children);
+            CollectLivingChildren(m_CreaturesD, children);
+            CollectLivingChildren(m_CreaturesE, children);
+        }
+
+        private static void CollectLivingChildren(List<IEntity> tracked, Dictionary<Mobile, bool> children)
+        {
+            foreach (IEntity entity in tracked)
+            {
+                BaseCreature child = entity as BaseCreature;
+                if (child != null && !child.Deleted && child.Alive)
+                    children[child] = true;
+            }
+        }
+
+        private bool HasLostItem(Item item)
+        {
+            if (item.Deleted)
+                return true;
+
+            if (this is RetainedPremiumSpawner)
+                return item.Parent != Parent || (Parent == null && ItemFlags.GetTaken(item));
+
+            return item.Parent != null;
+        }
+
         public void Defrag()
         {
             bool removed = false;
@@ -1837,7 +1897,7 @@ namespace Server.Mobiles
                 {
                     Item item = (Item)e;
 
-                    if (item.Deleted || item.Parent != null)
+                    if (HasLostItem(item))
                     {
                         m_Creatures.RemoveAt(i);
                         --i;
@@ -1882,7 +1942,7 @@ namespace Server.Mobiles
                 {
                     Item item = (Item)e;
 
-                    if (item.Deleted || item.Parent != null)
+                    if (HasLostItem(item))
                     {
                         m_CreaturesA.RemoveAt(i);
                         --i;
@@ -1927,7 +1987,7 @@ namespace Server.Mobiles
                 {
                     Item item = (Item)e;
 
-                    if (item.Deleted || item.Parent != null)
+                    if (HasLostItem(item))
                     {
                         m_CreaturesB.RemoveAt(i);
                         --i;
@@ -1972,7 +2032,7 @@ namespace Server.Mobiles
                 {
                     Item item = (Item)e;
 
-                    if (item.Deleted || item.Parent != null)
+                    if (HasLostItem(item))
                     {
                         m_CreaturesC.RemoveAt(i);
                         --i;
@@ -2017,7 +2077,7 @@ namespace Server.Mobiles
                 {
                     Item item = (Item)e;
 
-                    if (item.Deleted || item.Parent != null)
+                    if (HasLostItem(item))
                     {
                         m_CreaturesD.RemoveAt(i);
                         --i;
@@ -2062,7 +2122,7 @@ namespace Server.Mobiles
                 {
                     Item item = (Item)e;
 
-                    if (item.Deleted || item.Parent != null)
+                    if (HasLostItem(item))
                     {
                         m_CreaturesE.RemoveAt(i);
                         --i;
@@ -2545,6 +2605,9 @@ namespace Server.Mobiles
 
         public void Respawn() // remove all creatures and spawn all again
         {
+            if (this is RetainedPremiumSpawner)
+                Start();
+
             RemoveCreatures();
             RemoveCreaturesA();
             RemoveCreaturesB();
@@ -2977,7 +3040,7 @@ namespace Server.Mobiles
                 || map == Map.Internal
                 || CreaturesNameCount == 0
                 || index >= CreaturesNameCount
-                || Parent != null
+                || (Parent != null && !CanSpawnIntoContainer(m_CreaturesName[index]))
             )
                 return;
 
@@ -3221,7 +3284,7 @@ namespace Server.Mobiles
                 || map == Map.Internal
                 || CreaturesNameCountA == 0
                 || index >= CreaturesNameCountA
-                || Parent != null
+                || (Parent != null && !CanSpawnIntoContainer(m_CreaturesNameA[index]))
             )
                 return;
 
@@ -3449,7 +3512,7 @@ namespace Server.Mobiles
                 || map == Map.Internal
                 || CreaturesNameCountB == 0
                 || index >= CreaturesNameCountB
-                || Parent != null
+                || (Parent != null && !CanSpawnIntoContainer(m_CreaturesNameB[index]))
             )
                 return;
 
@@ -3677,7 +3740,7 @@ namespace Server.Mobiles
                 || map == Map.Internal
                 || CreaturesNameCountC == 0
                 || index >= CreaturesNameCountC
-                || Parent != null
+                || (Parent != null && !CanSpawnIntoContainer(m_CreaturesNameC[index]))
             )
                 return;
 
@@ -3905,7 +3968,7 @@ namespace Server.Mobiles
                 || map == Map.Internal
                 || CreaturesNameCountD == 0
                 || index >= CreaturesNameCountD
-                || Parent != null
+                || (Parent != null && !CanSpawnIntoContainer(m_CreaturesNameD[index]))
             )
                 return;
 
@@ -4133,7 +4196,7 @@ namespace Server.Mobiles
                 || map == Map.Internal
                 || CreaturesNameCountE == 0
                 || index >= CreaturesNameCountE
-                || Parent != null
+                || (Parent != null && !CanSpawnIntoContainer(m_CreaturesNameE[index]))
             )
                 return;
 
@@ -4352,8 +4415,32 @@ namespace Server.Mobiles
             }
         }
 
+        private bool CanSpawnIntoContainer(string specification)
+        {
+            return this is RetainedPremiumSpawner && Parent is Container
+                && typeof(Item).IsAssignableFrom(ScriptCompiler.FindTypeByName(ParseType(specification)));
+        }
+
         private void PlaceSpawnedItem(Item item, Map map, string specification)
         {
+            Container container = this is RetainedPremiumSpawner ? Parent as Container : null;
+            if (container != null)
+            {
+                item.OnBeforeSpawn(Location, map);
+                item.Location = Location;
+                if (m_HomeRange > 0)
+                    container.DropItem(item);
+                else
+                    container.AddItem(item);
+                ItemFlags.SetTaken(item, false);
+                CompleteSpawn(item, specification);
+                InvalidateProperties();
+                return;
+            }
+
+            if (this is RetainedPremiumSpawner)
+                ItemFlags.SetTaken(item, false);
+
             bool localPlacement = UsesLocalPlacement(specification);
             Point3D loc = localPlacement
                 ? GetLocalSpawnPosition(null, specification)
@@ -5558,6 +5645,31 @@ namespace Server.Commands
                     )
                 );
             }
+        }
+    }
+}
+
+namespace Server.Mobiles
+{
+    public sealed class RetainedPremiumSpawner : PremiumSpawner
+    {
+        [Constructable(AccessLevel.Administrator)]
+        public RetainedPremiumSpawner(string recipe)
+            : base(recipe) { }
+
+        public RetainedPremiumSpawner(Serial serial)
+            : base(serial) { }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((int)0);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            reader.ReadInt();
         }
     }
 }

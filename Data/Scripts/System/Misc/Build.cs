@@ -6,6 +6,7 @@ using Server;
 using Server.Accounting;
 using Server.Commands;
 using Server.Commands.Generic;
+using Server.Engines.CannedEvil;
 using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
@@ -36039,7 +36040,7 @@ namespace Server.Commands
             ArrayList targets = new ArrayList();
             foreach (Item it in World.Items.Values)
             {
-                if (it.Weight == -2)
+                if (it.Parent == null && it.Weight == -2)
                 {
                     if (MyServerSettings.PersistentBlackjack() && it is CEOBlackJack)
                     {
@@ -86873,8 +86874,58 @@ namespace Server.Scripts.Commands
             int DungeonHomesDecorated = 0;
 
             ArrayList targets = new ArrayList();
+            Dictionary<Mobile, bool> protectedMobiles = new Dictionary<Mobile, bool>();
+            Dictionary<PremiumSpawner, bool> civicSpawners = new Dictionary<PremiumSpawner, bool>();
             foreach (Item item in World.Items.Values)
-                if (
+            {
+                CivicSign sign = item as CivicSign;
+                if (sign == null || sign.Stone == null || sign.Stone.Deleted || sign.toDelete == null
+                    || sign.Stone.toDelete == null || !sign.Stone.toDelete.Contains(sign))
+                    continue;
+
+                foreach (Item owned in sign.toDelete)
+                {
+                    CivicBarkeeperSlot slot = owned as CivicBarkeeperSlot;
+                    if (slot != null && !slot.Deleted && slot.Barkeeper != null && !slot.Barkeeper.Deleted)
+                        protectedMobiles[slot.Barkeeper] = true;
+
+                    CivicMarketVendorSlot marketVendor = owned as CivicMarketVendorSlot;
+                    if (marketVendor != null && !marketVendor.Deleted && marketVendor.Sign == sign
+                        && marketVendor.Vendor != null && !marketVendor.Vendor.Deleted)
+                        protectedMobiles[marketVendor.Vendor] = true;
+
+                    PremiumSpawner spawner = owned as PremiumSpawner;
+                    if (spawner != null && !spawner.Deleted)
+                        civicSpawners[spawner] = true;
+                }
+
+                CityLandLord landlord = sign.LandlordRemove as CityLandLord;
+                if (landlord != null && !landlord.Deleted && landlord.Sign == sign)
+                {
+                    protectedMobiles[landlord] = true;
+                    foreach (PremiumSpawner vendor in landlord.VendorSpawners)
+                    {
+                        if (vendor != null && !vendor.Deleted)
+                            civicSpawners[vendor] = true;
+                    }
+                }
+            }
+            foreach (Item item in World.Items.Values)
+            {
+                ChampionSpawn champion = item as ChampionSpawn;
+                if (champion != null)
+                    champion.CollectOwnedMobiles(protectedMobiles);
+
+                UndeadNest nest = item as UndeadNest;
+                if (nest != null && !nest.Deleted && nest.Parent == null && nest.Spawner is XmlSpawner)
+                    nest.CollectLivingDefenders(protectedMobiles);
+
+                PremiumSpawner retained = item as PremiumSpawner;
+                if (retained != null && (retained is RetainedPremiumSpawner || civicSpawners.ContainsKey(retained)))
+                {
+                    retained.CollectLivingChildren(protectedMobiles);
+                }
+                else if (
                     item is PremiumSpawner
                     || item is BrewCauldron
                     || item is PotionCauldron
@@ -86887,6 +86938,7 @@ namespace Server.Scripts.Commands
                 {
                     DungeonHomesDecorated++;
                 }
+            }
             for (int i = 0; i < targets.Count; ++i)
             {
                 Item item = (Item)targets[i];
@@ -86895,7 +86947,7 @@ namespace Server.Scripts.Commands
 
             ArrayList beings = new ArrayList();
             foreach (Mobile being in World.Mobiles.Values)
-                if (being is BaseCreature)
+                if (being is BaseCreature && !protectedMobiles.ContainsKey(being))
                 {
                     BaseCreature bc = (BaseCreature)being;
 

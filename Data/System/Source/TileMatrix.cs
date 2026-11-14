@@ -192,6 +192,41 @@ namespace Server
             m_Patch = new TileMatrixPatch(this, mapID);
         }
 
+        // Call on the world thread between operations that read map tiles.
+        public static int ClearUnpatchedCaches()
+        {
+            int removed = 0;
+            foreach (TileMatrix matrix in m_Instances)
+            {
+                for (int x = 0; x < matrix.m_BlockWidth; x++)
+                {
+                    removed += ClearUnpatchedColumn(matrix.m_LandTiles[x], matrix.m_LandPatches[x]);
+                    removed += ClearUnpatchedColumn(matrix.m_StaticTiles[x], matrix.m_StaticPatches[x]);
+                }
+            }
+
+            return removed;
+        }
+
+        private static int ClearUnpatchedColumn<T>(T[] blocks, int[] patches)
+            where T : class
+        {
+            if (blocks == null)
+                return 0;
+
+            int removed = 0;
+            for (int y = 0; y < blocks.Length; y++)
+            {
+                if (blocks[y] != null && (patches == null || (patches[y >> 5] & (1 << (y & 31))) == 0))
+                {
+                    blocks[y] = null;
+                    removed++;
+                }
+            }
+
+            return removed;
+        }
+
         public StaticTile[][][] EmptyStaticBlock
         {
             get { return m_EmptyStaticBlock; }
