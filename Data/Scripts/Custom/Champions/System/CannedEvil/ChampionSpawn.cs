@@ -486,14 +486,7 @@ namespace Server.Engines.CannedEvil
                         m_Platform.Hue = 0x497;
 
                     if (m_Altar != null)
-                    {
                         m_Altar.Hue = 0;
-
-                        if (!Core.ML || Map == Map.Lodor)
-                        {
-                            new StarRoomGate(true, m_Altar.Location, m_Altar.Map);
-                        }
-                    }
 
                     m_Champion = null;
                     Stop();
