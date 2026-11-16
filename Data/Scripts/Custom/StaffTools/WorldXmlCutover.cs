@@ -191,12 +191,24 @@ namespace Server.Custom.Confictura
                 String.Join("|", expected.Types)));
             XmlSpawner.SpawnObject[] slots = source.SpawnObjects;
             for (int index = 0; index < slots.Length; index++)
-                foreach (object value in slots[index].SpawnedObjects)
+            {
+                XmlSpawner.SpawnObject slot = slots[index];
+                if (slot.SpawnedObjects.Count == 0)
+                    continue;
+
+                // The verified recipe and the manifest must both authorize the runtime type.
+                Type recipeType = SpawnerType.GetType(BaseXmlSpawner.ParseObjectType(slot.TypeName.TrimStart('*')));
+                foreach (object value in slot.SpawnedObjects)
                 {
                     IEntity child = value as IEntity;
-                    Require(child != null && !IsDeleted(child) && child.Map == source.Map
-                        && Array.IndexOf(expected.Types, child.GetType().FullName) >= 0 && !plan.Children.ContainsKey(child),
-                        "Unexpected direct child at " + guid + " (slot " + index + ").");
+                    string at = guid + " (slot " + index + ")";
+                    Require(child != null, "Invalid tracked entry at " + at + ": " + (value == null ? "null" : value.GetType().Name));
+                    Type actualType = child.GetType();
+                    string identity = actualType.Name + " " + child.Serial;
+                    Require(actualType == recipeType && Array.IndexOf(expected.Types, actualType.FullName) >= 0,
+                        "Unapproved child at " + at + ": " + identity + ". Recipe type: " + (recipeType == null ? "unresolved" : recipeType.Name) + ".");
+                    Require(!IsDeleted(child) && child.Map == source.Map && !plan.Children.ContainsKey(child),
+                        "Child is deleted, on another facet, or tracked twice at " + at + ": " + identity + ".");
 
                     Item item = child as Item;
                     if (item != null)
@@ -212,6 +224,7 @@ namespace Server.Custom.Confictura
                     plan.Children.Add(child, guid);
                     RecordEntity(plan, "child", guid, child, index);
                 }
+            }
         }
 
         private static void InspectItem(Item item, XmlSpawner source, Plan plan)
@@ -219,9 +232,12 @@ namespace Server.Custom.Confictura
             string guid = source.UniqueId;
             Require(IsPublicRoot(item) && AttachmentCount(item) == 0 && item.Spawner == source,
                 "Protected item child at " + guid + ": " + item.Serial);
-            if (source.Map == Map.Atlantis && source.Location == new Point3D(4408, 2600, -127) && item is DDJewels)
+            if (item is DDJewels)
                 Require(item.Amount == 1000 && item.ItemID == 0xEF0 && item.Hue == 0 && item.Name == "jewels",
-                    "The Atlantis treasure stack differs from the replacement recipe.");
+                    "The Atlantis treasure stack differs from the replacement recipe at " + guid + ": " + item.Serial);
+            if (item is HoardPiles)
+                Require(item.Hue == 583 && item.Name == "Atlantian Treasure",
+                    "The Atlantis hoard differs from the replacement recipe at " + guid + ": " + item.Serial);
 
             MonsterNest nest = item as MonsterNest;
             if (nest != null)
