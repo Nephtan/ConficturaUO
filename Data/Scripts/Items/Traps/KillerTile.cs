@@ -22,6 +22,12 @@ namespace Server.Items
 
         public override bool OnMoveOver(Mobile m)
         {
+            ApplyEffect(m, Name);
+            return true;
+        }
+
+        internal static void ApplyEffect(Mobile m, string cause)
+        {
             if (m is PlayerMobile && Spells.Research.ResearchAirWalk.UnderEffect(m))
             {
                 Point3D air = new Point3D((m.X + 1), (m.Y + 1), (m.Z + 5));
@@ -47,9 +53,8 @@ namespace Server.Items
             )
             {
                 m.LocalOverheadMessage(MessageType.Emote, 0xB1F, true, "You made a fatal mistake!");
-                LoggingFunctions.ApplyFatalEnvironmentalDamage(m, this.Name);
+                LoggingFunctions.ApplyFatalEnvironmentalDamage(m, cause);
             }
-            return true;
         }
 
         public override void Serialize(GenericWriter writer)

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
@@ -21,6 +21,7 @@ namespace Server.Mobiles
         private int m_RenewalPrice;
         private CityManagementStone m_Stone;
         private Mobile m_Landlord;
+        private CivicSign m_Market;
 
         private int m_RentalGold;
 
@@ -44,6 +45,9 @@ namespace Server.Mobiles
             m_RenterRenew = false;
             m_Stone = stone;
             m_Landlord = landlord;
+            CityLandLord keeper = landlord as CityLandLord;
+            if (keeper != null)
+                BindLegacyMarket(keeper, keeper.Sign);
 
             m_RentalGold = rentalGold;
 
@@ -121,7 +125,14 @@ namespace Server.Mobiles
         [CommandProperty(AccessLevel.GameMaster)]
         public Mobile Landlord
         {
-            get { return m_Landlord; }
+            get { return m_Market == null ? m_Landlord : m_Market.ActiveMarketKeeper; }
+        }
+
+        internal void BindLegacyMarket(CityLandLord keeper, CivicSign market)
+        {
+            if (!Deleted && m_Market == null && m_Landlord == keeper && market != null
+                && market.Stone == m_Stone && market.ActiveMarketKeeper == keeper)
+                m_Market = market;
         }
 
         public static bool IsLegitmateVendor(Mobile from, Mobile m)
@@ -155,7 +166,7 @@ namespace Server.Mobiles
 
         public bool IsLandlord(Mobile m)
         {
-            if (m == Landlord)
+            if (m != null && m == Landlord)
                 return true;
             else
                 return false;
@@ -261,7 +272,7 @@ namespace Server.Mobiles
         {
             base.Serialize(writer);
 
-            writer.WriteEncodedInt(0); // version
+            writer.WriteEncodedInt(1); // version
 
             writer.Write((Item)m_Stone);
             writer.Write((Mobile)m_Landlord);
@@ -275,6 +286,7 @@ namespace Server.Mobiles
             writer.Write((int)m_RentalGold);
 
             writer.WriteDeltaTime((DateTime)m_RentalExpireTime);
+            writer.Write(m_Market);
         }
 
         public override void Deserialize(GenericReader reader)
@@ -299,6 +311,8 @@ namespace Server.Mobiles
             m_RentalGold = reader.ReadInt();
 
             m_RentalExpireTime = reader.ReadDeltaTime();
+            if (version >= 1)
+                m_Market = reader.ReadItem() as CivicSign;
 
             TimeSpan delay = m_RentalExpireTime - DateTime.Now;
             delay = GovernmentTestingMode.Adjust(delay);

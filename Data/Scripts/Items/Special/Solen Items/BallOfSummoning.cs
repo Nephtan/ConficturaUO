@@ -1,3 +1,4 @@
+using Server.Custom.Confictura.Stabling;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -313,23 +314,18 @@ namespace Server.Items
         {
             BaseCreature pet = this.Pet;
 
-            Charges--;
-
+            if (pet == null || pet.Deleted)
+                return;
             if (pet.IsStabled)
             {
-                pet.SetControlMaster(from);
-
-                if (pet.Summoned)
-                    pet.SummonMaster = from;
-
-                pet.ControlTarget = from;
-                pet.ControlOrder = OrderType.Follow;
-
-                pet.IsStabled = false;
-                from.Stabled.Remove(pet);
+                if (!StableService.TryReturn(from, pet, true))
+                    return;
             }
-
-            pet.MoveToWorld(from.Location, from.Map);
+            else
+            {
+                pet.MoveToWorld(from.Location, from.Map);
+            }
+            Charges--;
 
             MessageHelper.SendLocalizedMessageTo(this, from, 1054128, 0x43); // The Crystal Ball fills with a green mist. Your pet has been summoned.
 

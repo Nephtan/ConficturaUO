@@ -4,11 +4,14 @@ using Server.Items;
 using Server.Misc;
 using Server.Network;
 using Server.Spells;
+using Server.Spells.Jedi;
 
 namespace Server.Items
 {
     public class JediSpellbook : Spellbook
     {
+        internal const int PowerCount = 10;
+
         public Mobile owner;
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -88,6 +91,34 @@ namespace Server.Items
             Light = LightType.Circle225;
         }
 
+        internal bool IsUsableByOwner(Mobile from)
+        {
+            if (from == null || from.Deleted || Deleted || owner != from)
+                return false;
+
+            Container pack = from.Backpack;
+            return Parent == from || (pack != null && Parent == pack);
+        }
+
+        private bool TryUseQuickBar(Mobile from, int spell)
+        {
+            if (from == null || from.Deleted || spell < BookOffset || spell >= BookOffset + PowerCount)
+                return false;
+
+            if (!IsUsableByOwner(from))
+            {
+                from.SendMessage("You must carry your datacron directly in your backpack or equip it.");
+                return false;
+            }
+
+            if (HasSpell(spell))
+                JediSpell.CastSpell(from, spell);
+            else
+                from.SendLocalizedMessage(500015); // You do not have that spell!
+
+            return GetPlayerInfo.isJedi(from, true);
+        }
+
         public override void OnDoubleClick(Mobile from)
         {
             if (from == null || from.Deleted || Deleted)
@@ -95,13 +126,11 @@ namespace Server.Items
                 return;
             }
 
-            Container pack = from.Backpack;
-
             if (owner != from)
             {
                 from.SendMessage("This device seems strange to you.");
             }
-            else if (Parent == from || (pack != null && Parent == pack))
+            else if (IsUsableByOwner(from))
             {
                 from.SendSound(0x54D);
                 from.CloseGump(typeof(JediSpellbookGump));
@@ -398,7 +427,7 @@ namespace Server.Items
 
         public class PowerRow : Gump
         {
-            private JediSpellbook mBook;
+            private readonly JediSpellbook mBook;
 
             public PowerRow(Mobile from, JediSpellbook book)
                 : base(25, 25)
@@ -417,7 +446,7 @@ namespace Server.Items
                 int r = 57;
 
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(r, 0, button, button, icon, GumpButtonType.Reply, 0);
@@ -425,7 +454,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(r, 0, button, button, icon, GumpButtonType.Reply, 0);
@@ -433,7 +462,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(r, 0, button, button, icon, GumpButtonType.Reply, 0);
@@ -441,7 +470,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(r, 0, button, button, icon, GumpButtonType.Reply, 0);
@@ -449,7 +478,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(r, 0, button, button, icon, GumpButtonType.Reply, 0);
@@ -457,7 +486,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(r, 0, button, button, icon, GumpButtonType.Reply, 0);
@@ -465,7 +494,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(r, 0, button, button, icon, GumpButtonType.Reply, 0);
@@ -473,7 +502,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(r, 0, button, button, icon, GumpButtonType.Reply, 0);
@@ -481,7 +510,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(r, 0, button, button, icon, GumpButtonType.Reply, 0);
@@ -489,7 +518,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(r, 0, button, button, icon, GumpButtonType.Reply, 0);
@@ -501,9 +530,7 @@ namespace Server.Items
             public override void OnResponse(NetState state, RelayInfo info)
             {
                 Mobile from = state.Mobile;
-                Server.Spells.Jedi.JediSpell.CastSpell(from, info.ButtonID);
-                from.CloseGump(typeof(PowerRow));
-                if (Server.Misc.GetPlayerInfo.isJedi(from, true))
+                if (mBook.TryUseQuickBar(from, info.ButtonID))
                 {
                     from.SendGump(new PowerRow(from, mBook));
                 }
@@ -512,7 +539,7 @@ namespace Server.Items
 
         public class PowerColumn : Gump
         {
-            private JediSpellbook mBook;
+            private readonly JediSpellbook mBook;
 
             public PowerColumn(Mobile from, JediSpellbook book)
                 : base(25, 25)
@@ -531,7 +558,7 @@ namespace Server.Items
                 int r = 53;
 
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(2, r, button, button, icon, GumpButtonType.Reply, 0);
@@ -548,7 +575,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(2, r, button, button, icon, GumpButtonType.Reply, 0);
@@ -565,7 +592,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(2, r, button, button, icon, GumpButtonType.Reply, 0);
@@ -582,7 +609,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(2, r, button, button, icon, GumpButtonType.Reply, 0);
@@ -599,7 +626,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(2, r, button, button, icon, GumpButtonType.Reply, 0);
@@ -616,7 +643,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(2, r, button, button, icon, GumpButtonType.Reply, 0);
@@ -633,7 +660,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(2, r, button, button, icon, GumpButtonType.Reply, 0);
@@ -650,7 +677,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(2, r, button, button, icon, GumpButtonType.Reply, 0);
@@ -667,7 +694,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(2, r, button, button, icon, GumpButtonType.Reply, 0);
@@ -684,7 +711,7 @@ namespace Server.Items
                     r = r + 50;
                 }
                 icon++;
-                if (HasSpell(from, icon))
+                if (book.HasSpell(icon))
                 {
                     button = (Int32.Parse(Server.Spells.Jedi.JediSpell.SpellInfo(icon, 11)));
                     AddButton(2, r, button, button, icon, GumpButtonType.Reply, 0);
@@ -705,9 +732,7 @@ namespace Server.Items
             public override void OnResponse(NetState state, RelayInfo info)
             {
                 Mobile from = state.Mobile;
-                Server.Spells.Jedi.JediSpell.CastSpell(from, info.ButtonID);
-                from.CloseGump(typeof(PowerColumn));
-                if (Server.Misc.GetPlayerInfo.isJedi(from, true))
+                if (mBook.TryUseQuickBar(from, info.ButtonID))
                 {
                     from.SendGump(new PowerColumn(from, mBook));
                 }

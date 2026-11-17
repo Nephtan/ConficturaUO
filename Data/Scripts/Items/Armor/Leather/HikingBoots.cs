@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Network;
 
 namespace Server.Items
 {
@@ -26,13 +25,13 @@ namespace Server.Items
                     )
                 )
                 {
-                    from.Send(SpeedControl.Disable);
+                    Server.Mobiles.AnimalTrainer.RefreshMovementSpeed(from, false);
                     Weight = 5.0;
                 }
                 else
                 {
                     Weight = 3.0;
-                    from.Send(SpeedControl.MountSpeed);
+                    Server.Mobiles.AnimalTrainer.RefreshMovementSpeed(from, true);
                 }
             }
             return base.OnEquip(from);
@@ -45,7 +44,7 @@ namespace Server.Items
                 Mobile from = (Mobile)parent;
                 if (from.RaceID > 0)
                 {
-                    from.Send(SpeedControl.Disable);
+                    Server.Mobiles.AnimalTrainer.RefreshMovementSpeed(from);
                 }
             }
             base.OnRemoved(parent);

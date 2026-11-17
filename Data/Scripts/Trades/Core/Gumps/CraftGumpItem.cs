@@ -110,10 +110,7 @@ namespace Server.Engines.Craft
             // through instead of being truncated after four entries.
             for (int pageIndex = 0; pageIndex < totalPages; pageIndex++)
             {
-                if (pageIndex == 0)
-                    AddPage(0);
-                else
-                    AddPage(pageIndex);
+                AddPage(pageIndex + 1);
 
                 BuildPage(
                     pageIndex,
@@ -273,10 +270,10 @@ namespace Server.Engines.Craft
             if (totalPages > 1)
             {
                 if (pageIndex > 0)
-                    AddButton(170, 277, 4014, 4016, 0, GumpButtonType.Page, pageIndex - 1);
+                    AddButton(170, 277, 4014, 4016, 0, GumpButtonType.Page, pageIndex);
 
                 if (pageIndex < totalPages - 1)
-                    AddButton(480, 277, 4005, 4007, 0, GumpButtonType.Page, pageIndex + 1);
+                    AddButton(480, 277, 4005, 4007, 0, GumpButtonType.Page, pageIndex + 2);
 
                 // Let crafters know which materials page they are viewing.
                 AddLabel(
@@ -308,7 +305,7 @@ namespace Server.Engines.Craft
 
             if (needsRecipe)
             {
-                AddButton(270, 387, 4005, 4007, 0, GumpButtonType.Page, pageIndex);
+                AddButton(270, 387, 4005, 4007, 0, GumpButtonType.Page, pageIndex + 1);
                 AddHtmlLocalized(305, 390, 150, 18, 1044151, GreyLabelColor, false, false); // MAKE NOW
             }
             else

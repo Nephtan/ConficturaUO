@@ -747,6 +747,17 @@ namespace Server.Items
 
         public virtual void AddComponents() { }
 
+        public override void OnAfterDelete()
+        {
+            if (m_DecayTimer != null)
+            {
+                m_DecayTimer.Stop();
+                m_DecayTimer = null;
+            }
+
+            base.OnAfterDelete();
+        }
+
         public virtual void RefreshDecay(bool setDecayTime)
         {
             if (Deleted)

@@ -384,35 +384,27 @@ namespace Server.Items
                 possibleSkills = m_PossibleBardSkills;
             }
 
-            int count = possibleSkills.Length;
-
-            SkillName sk,
-                check;
-            double bonus;
-            bool found;
-
-            do
+            SkillName[] occupied = new SkillName[5];
+            int occupiedCount = 0;
+            for (int slot = 0; slot < 5; ++slot)
             {
-                found = false;
-                sk = possibleSkills[Utility.Random(count)];
+                SkillName existing;
+                double bonus;
+                if (attrs.GetValues(slot, out existing, out bonus))
+                    occupied[occupiedCount++] = existing;
+            }
 
-                for (int i = 0; !found && i < 5; ++i)
-                {
-                    if (
-                        attrs.GetValues(i, out check, out bonus)
-                        && (
-                            (check == sk)
-                            || (check == SkillName.Necromancy && check == SkillName.Elementalism)
-                            || (check == SkillName.Magery && check == SkillName.Elementalism)
-                            || (check == SkillName.Elementalism && check == SkillName.Magery)
-                            || (check == SkillName.Elementalism && check == SkillName.Necromancy)
-                        )
-                    )
-                        found = true;
-                }
-            } while (found);
+            SkillName[] available = new SkillName[possibleSkills.Length];
+            int count = 0;
+            for (int i = 0; i < possibleSkills.Length; ++i)
+            {
+                SkillName candidate = possibleSkills[i];
+                if (Array.IndexOf(occupied, candidate, 0, occupiedCount) < 0)
+                    available[count++] = candidate;
+            }
 
-            attrs.SetValues(index, sk, Scale(min, max, low, high));
+            if (count > 0)
+                attrs.SetValues(index, available[Utility.Random(count)], Scale(min, max, low, high));
         }
 
         private static void ApplyResistance(

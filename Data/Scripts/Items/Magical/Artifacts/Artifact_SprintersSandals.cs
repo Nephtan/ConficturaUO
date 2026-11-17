@@ -1,6 +1,5 @@
 using System;
 using Server.Items;
-using Server.Network;
 using Server.Targeting;
 
 namespace Server.Items
@@ -27,14 +26,14 @@ namespace Server.Items
                 )
             )
             {
-                from.Send(SpeedControl.Disable);
+                Server.Mobiles.AnimalTrainer.RefreshMovementSpeed(from, false);
                 Weight = 5.0;
                 from.SendMessage("These shoes seem to have their magic diminished here.");
             }
             else
             {
                 Weight = 3.0;
-                from.Send(SpeedControl.MountSpeed);
+                Server.Mobiles.AnimalTrainer.RefreshMovementSpeed(from, true);
             }
 
             return base.OnEquip(from);
@@ -45,7 +44,7 @@ namespace Server.Items
             if (parent is Mobile)
             {
                 Mobile from = (Mobile)parent;
-                from.Send(SpeedControl.Disable);
+                Server.Mobiles.AnimalTrainer.RefreshMovementSpeed(from);
             }
             base.OnRemoved(parent);
         }

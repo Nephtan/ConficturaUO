@@ -20,3 +20,317 @@
 #
 # Data\Scripts\System\Misc\Spawning.cs
 #
+
+# Sosaria replacements for former XML creature controllers
+*|Brewer||||||3698|3496|0|2|5|10|2|0|1|1|0|0|0|0|0
+*|JuiceMaker||||||3085|2600|5|2|5|10|3|0|1|1|0|0|0|0|0
+
+# Atlantis replacements for former XML creature controllers
+*|DeepSeaGiant setafter Name "Maw of Atlantis" HitsMaxSeed 4000 DamageMax 200 DamageMin 100 Coins 20000 CoinType jewels Title (-null-)||||||4351|2540|-127|7|5|60|5|0|1|1|0|0|0|0|0
+*|DeepSeaGiant setafter Name "Maw of Atlantis" HitsMaxSeed 5000 DamageMax 120 DamageMin 100 Coins 20000 CoinType jewels Title (-null-) Hits 5000||||||4363|2561|-127|7|5|60|5|0|1|1|0|0|0|0|0
+*|DeepSeaGiant setafter Name "Maw of Atlantis" HitsMaxSeed 4000 DamageMax 200 DamageMin 100 Coins 20000 CoinType jewels Title (-null-)||||||4404|2542|-127|7|5|60|5|0|1|1|0|0|0|0|0
+*|DeepSeaGiant setafter Name "Maw of Atlantis" HitsMaxSeed 4000 DamageMax 200 DamageMin 100 Coins 20000 CoinType jewels Title (-null-)||||||4414|2539|-127|7|5|60|5|0|1|1|0|0|0|0|0
+*|DeepSeaGiant setafter Name "Maw of Atlantis" HitsMaxSeed 4000 DamageMax 200 DamageMin 100 Coins 20000 CoinType jewels Title (-null-)||||||4449|2562|-127|7|5|60|5|0|1|1|0|0|0|0|0
+*|Jellyfish setafter CantWalk False||||||4232|2594|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Jellyfish setafter DamageMax 200 DamageMin 100||||||4233|2602|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Jellyfish setafter CantWalk False||||||4240|2590|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Jellyfish setafter DamageMax 300 DamageMin 100||||||4242|2632|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Jellyfish setafter DamageMax 300 DamageMin 100||||||4258|2583|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Jellyfish setafter DamageMax 300 DamageMin 100||||||4260|2558|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Jellyfish setafter DamageMax 300 DamageMin 100||||||4352|2513|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Jellyfish setafter DamageMax 300 DamageMin 100||||||4364|2512|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Jellyfish setafter DamageMax 300 DamageMin 100||||||4379|2518|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Jellyfish setafter DamageMax 300 DamageMin 100||||||4410|2519|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Jellyfish setafter DamageMax 300 DamageMin 100||||||4473|2574|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Jellyfish setafter DamageMax 300 DamageMin 100||||||4478|2538|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Jellyfish setafter DamageMax 300 DamageMin 100||||||4479|2557|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Jellyfish setafter DamageMax 300 DamageMin 100||||||4483|2538|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Jellyfish setafter DamageMax 300 DamageMin 100||||||4486|2593|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Jellyfish setafter DamageMax 300 DamageMin 100||||||4488|2532|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Jellyfish setafter DamageMax 300 DamageMin 100||||||4493|2602|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|SeaGhost setafter Name "Atlantian Ghost" DamageMax 200 DamageMin 150 PhysicalResistanceSeed 500 CoinType jewels||||||4233|2629|-127|7|5|10|1|0|1|1|0|0|0|0|0
+*|SeaGhost setafter Name "Atlantian Ghost" DamageMax 200 DamageMin 150 PhysicalResistanceSeed 500 CoinType jewels||||||4275|2672|-127|7|5|10|1|0|1|1|0|0|0|0|0
+*|SeaGhost setafter Name "Atlantian Ghost" DamageMax 200 DamageMin 150 PhysicalResistanceSeed 500 CoinType jewels||||||4290|2534|-127|7|5|10|1|0|1|1|0|0|0|0|0
+*|SeaGhost setafter Name "Atlantian Ghost" DamageMax 200 DamageMin 150 PhysicalResistanceSeed 500 CoinType jewels||||||4296|2694|-127|7|5|10|1|0|1|1|0|0|0|0|0
+*|SeaGhost setafter Name "Atlantian Ghost" DamageMax 200 DamageMin 150 PhysicalResistanceSeed 500 CoinType jewels||||||4431|2677|-127|7|5|10|1|0|1|1|0|0|0|0|0
+*|SeaGhost setafter Name "Atlantian Ghost" DamageMax 200 DamageMin 150 PhysicalResistanceSeed 500 CoinType jewels||||||4436|2581|-127|7|5|10|1|0|1|1|0|0|0|0|0
+*|SeaGhost setafter Name "Atlantian Ghost" DamageMax 200 DamageMin 150 PhysicalResistanceSeed 500 CoinType jewels||||||4495|2629|-127|7|5|10|1|0|1|1|0|0|0|0|0
+*|WaterNaga setafter Name "Sea Witch" HitsMaxSeed 100 Hits 100 DamageMax 120 DamageMin 70 CoinType jewels Coins 200||||||4344|2587|-127|7|5|5|2|0|1|2|0|0|0|0|0
+*|WaterNaga setafter Name "Sea Witch" Hits 400 DamageMax 120 DamageMin 70 CoinType jewels Coins 200||||||4354|2634|-127|7|5|5|2|0|1|2|0|0|0|0|0
+*|WaterNaga setafter Name "Sea Witch" Hits 400 DamageMax 120 DamageMin 70 CoinType jewels Coins 200||||||4363|2541|-127|7|5|5|2|0|1|2|0|0|0|0|0
+*|WaterNaga setafter Name "Sea Witch" Hits 400 DamageMax 120 DamageMin 70 CoinType jewels Coins 200||||||4368|2598|-127|7|5|5|2|0|1|2|0|0|0|0|0
+*|WaterNaga setafter Name "Sea Witch" Hits 400 DamageMax 120 DamageMin 70 CoinType jewels Coins 200||||||4414|2642|-127|7|5|5|2|0|1|2|0|0|0|0|0
+*|WaterNaga setafter Name "Sea Witch" Hits 400 DamageMax 120 DamageMin 70 CoinType jewels Coins 200||||||4422|2574|-127|7|5|5|2|0|1|2|0|0|0|0|0
+*|dagon setafter Name "Deep One" HitsMaxSeed 1000 Hits 1000 DamageMax 220 DamageMin 190 Coins 1000 CoinType jewels Title (-null-)||||||4308|2582|-127|7|5|5|5|0|1|2|0|0|0|0|0
+*|dagon setafter Name "Deep One" HitsMaxSeed 1000 Hits 1000 DamageMax 220 DamageMin 190 Coins 1000 CoinType jewels Title (-null-)||||||4318|2547|-127|7|5|5|5|0|1|2|0|0|0|0|0
+*|dagon setafter Name "Deep One" HitsMaxSeed 1000 Hits 1000 DamageMax 220 DamageMin 190 Coins 1000 CoinType jewels Title (-null-)||||||4379|2565|-127|7|5|5|5|0|1|2|0|0|0|0|0
+*|dagon setafter Name "Deep One" HitsMaxSeed 1000 Hits 1000 DamageMax 220 DamageMin 190 Coins 1000 CoinType jewels Title (-null-)||||||4379|2643|-127|7|5|5|5|0|1|2|0|0|0|0|0
+*|dagon setafter Name "Deep One" HitsMaxSeed 1000 Hits 1000 DamageMax 220 DamageMin 190 Coins 1000 CoinType jewels Title (-null-)||||||4395|2563|-127|7|5|5|5|0|1|2|0|0|0|0|0
+*|dagon setafter Name "Deep One" HitsMaxSeed 1000 Hits 1000 DamageMax 220 DamageMin 190 Coins 1000 CoinType jewels Title (-null-)||||||4428|2595|-127|7|5|5|5|0|1|2|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 300 Hits 300 DamageMax 140 DamageMin 110 Coins 1000 CoinType jewels||||||4331|2672|-127|7|5|1|8|0|1|7|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 300 Hits 300 DamageMax 140 DamageMin 110 Coins 1000 CoinType jewels||||||4332|2597|-127|7|5|1|8|0|1|7|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4337|2587|-127|7|5|4|8|0|1|5|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4340|2618|-127|7|5|4|8|0|1|5|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4341|2563|-127|7|5|4|8|0|1|5|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4344|2602|-127|7|5|4|8|0|1|5|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4347|2549|-127|7|5|4|8|0|1|5|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4349|2563|-127|7|5|4|8|0|1|2|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4363|2579|-127|7|5|4|8|0|1|3|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4378|2535|-127|7|5|4|8|0|1|5|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4379|2576|-127|7|5|4|8|0|1|5|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4379|2676|-127|7|5|4|8|0|1|5|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4381|2546|-127|7|5|4|8|0|1|5|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4415|2548|-127|7|5|4|8|0|1|5|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 300 Hits 300 DamageMax 140 DamageMin 110 Coins 1000 CoinType jewels||||||4415|2595|-127|7|5|1|8|0|1|7|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels BaseSoundID 0||||||4419|2611|-127|7|5|4|8|0|1|12|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4420|2645|-127|7|5|4|8|0|1|5|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4426|2638|-127|7|5|4|8|0|1|5|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4426|2659|-127|7|5|4|8|0|1|5|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4427|2626|-127|7|5|4|8|0|1|5|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4429|2541|-127|7|5|4|8|0|1|5|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4429|2563|-127|7|5|4|8|0|1|20|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 300 Hits 300 DamageMax 140 DamageMin 110 Coins 1000 CoinType jewels||||||4442|2569|-127|7|5|1|8|0|1|7|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4457|2547|-127|7|5|4|8|0|1|20|0|0|0|0|0
+*|lurker setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 180 DamageMin 150 Coins 1000 CoinType jewels||||||4462|2676|-127|7|5|4|8|0|1|5|0|0|0|0|0
+
+# Atlantis replacements for former XML item controllers
+*|DDJewels setafter Amount 1000||||||4251|2606|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4252|2616|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4256|2603|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4257|2616|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4259|2603|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4291|2563|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4291|2569|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4298|2570|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4299|2594|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4312|2536|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4336|2606|-127|7|5|12|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4346|2546|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4403|2579|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4408|2600|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4418|2570|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4432|2576|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4440|2594|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4464|2640|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4465|2602|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|DDJewels setafter Amount 1000||||||4475|2620|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4303|2645|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4313|2619|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4316|2602|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4329|2593|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest||||||4330|2625|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4330|2649|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4331|2640|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4338|2538|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4338|2570|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4340|2629|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4356|2577|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4356|2643|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4357|2611|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4370|2618|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4372|2555|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4374|2604|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4385|2635|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4402|2609|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4403|2635|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4435|2619|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4436|2601|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4436|2644|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4449|2620|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4460|2618|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4471|2617|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|DungeonChest setafter Hue 583||||||4475|2604|-127|7|5|10|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4319|2560|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4319|2561|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4319|2562|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4319|2563|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4319|2564|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4319|2565|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4319|2566|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4346|2632|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4347|2632|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4348|2632|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4351|2620|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4351|2621|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4351|2622|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4394|2615|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4395|2615|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4396|2615|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4397|2615|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4398|2615|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4466|2599|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|GasTrap setafter Poison Lethal Visible False||||||4467|2599|-127|7|5|1|0|0|1|1|0|0|0|0|0
+*|HoardPiles setafter Hue 583 Name "Atlantian Treasure"||||||4251|2617|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|HoardPiles setafter Hue 583 Name "Atlantian Treasure"||||||4255|2603|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|HoardPiles setafter Hue 583 Name "Atlantian Treasure"||||||4291|2643|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|HoardPiles setafter Hue 583 Name "Atlantian Treasure"||||||4299|2587|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|HoardPiles setafter Hue 583 Name "Atlantian Treasure"||||||4299|2627|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|HoardPiles setafter Hue 583 Name "Atlantian Treasure"||||||4322|2555|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|HoardPiles setafter Hue 583 Name "Atlantian Treasure"||||||4390|2602|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|HoardPiles setafter Hue 583 Name "Atlantian Treasure"||||||4451|2570|-127|7|5|1440|0|0|1|1|0|0|0|0|0
+*|LevelNorseHelm setafter Name "Atlantian Helmet" Hue 583 PhysicalBonus 50 ColdBonus 50 IntRequirement 50||||||4283|2590|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|LevelNorseHelm setafter Name "Atlantian Helmet" Hue 583 PhysicalBonus 50 ColdBonus 50 IntRequirement 50||||||4311|2631|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|LevelNorseHelm setafter Name "Atlantian Helmet" Hue 583 PhysicalBonus 50 ColdBonus 50 IntRequirement 50||||||4331|2521|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|LevelSpear setafter Name "Atlantian Spear" Hue 583 MaxDamage 45 MinDamage 40 MaxRange 2||||||4254|2616|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|LevelSpear setafter Name "Atlantian Spear" Hue 583 MaxDamage 45 MinDamage 40 MaxRange 2||||||4312|2632|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|LevelSpear setafter Name "Atlantian Spear" Hue 583 MaxDamage 45 MinDamage 40 MaxRange 2||||||4332|2522|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|LevelVirtueShield setafter Name "Atlantian Shield" IntRequirement 50 Hue 583 PhysicalBonus 50 ColdBonus 50||||||4251|2614|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|LevelVirtueShield setafter Name "Atlantian Shield" IntRequirement 50 Hue 583 PhysicalBonus 50 ColdBonus 50||||||4285|2632|-127|7|5|50|0|0|1|1|0|0|0|0|0
+*|StealBase setafter Hue 583||||||4246|2617|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|StealBase setafter Hue 583||||||4247|2605|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|StealBase setafter Hue 583||||||4291|2576|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|StealBase setafter Hue 583||||||4291|2637|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|StealBase setafter Hue 583||||||4312|2527|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|StealBase setafter Hue 583||||||4331|2617|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|StealBase setafter Hue 583||||||4356|2528|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|StealBase setafter Hue 583||||||4375|2608|-127|7|5|60|0|0|1|1|0|0|0|0|0
+
+# Atlantis mobile encounters with separate spawn and roaming ranges
+*|DeepSeaGiant localspawn setafter Name "Maw of Atlantis" HitsMaxSeed 4000 DamageMax 200 DamageMin 100 Coins 20000 CoinType jewels Title (-null-)||||||4330|2659|-127|7|5|60|5|1|1|1|0|0|0|0|0
+*|DemonOfTheSea localspawn setafter Name "Spawn of Ktulu" Title (-null-) HitsMaxSeed 2000 Hits 2000 DamageMax 300 DamageMin 100 Coins 10000 CoinType jewels||||||4329|2532|-127|7|5|10|8|1|1|1|0|0|0|0|0
+*|DemonOfTheSea localspawn setafter Name "Spawn of Ktulu" Title (-null-) HitsMaxSeed 2000 Hits 2000 DamageMax 300 DamageMin 100 Coins 10000 CoinType jewels||||||4348|2676|-127|7|5|10|8|0|1|1|0|0|0|0|0
+*|EyeOfTheDeep localspawn setafter Name "Eye of Ktulu" HitsMaxSeed 500 Hits 500 DamageMax 300 Coins 1 CoinType jewels||||||4312|2593|-127|7|5|60|5|0|1|1|0|0|0|0|0
+*|EyeOfTheDeep localspawn setafter Name "Eye of Ktulu" HitsMaxSeed 500 Hits 500 DamageMax 300 Coins 1 CoinType jewels||||||4347|2577|-127|7|5|60|5|0|1|1|0|0|0|0|0
+*|EyeOfTheDeep localspawn setafter Name "Eye of Ktulu" HitsMaxSeed 500 Hits 500 DamageMax 300 Coins 1 CoinType jewels||||||4347|2643|-127|7|5|60|5|0|1|1|0|0|0|0|0
+*|EyeOfTheDeep localspawn setafter Name "Eye of Ktulu" HitsMaxSeed 500 Hits 500 DamageMax 300 Coins 1 CoinType jewels||||||4409|2610|-127|7|5|1440|5|1|1|1|0|0|0|0|0
+*|EyeOfTheDeep localspawn setafter Name "Eye of Ktulu" HitsMaxSeed 500 Hits 500 DamageMax 300 Coins 1 CoinType jewels||||||4458|2563|-127|7|5|60|5|0|1|1|0|0|0|0|0
+*|Leviathan localspawn setafter DamageMax 220||||||4259|2644|-127|7|5|10|5|5|1|1|0|0|0|0|0
+*|Locathah localspawn setafter Name "Mad Atlantian" HitsMaxSeed 700 Hits 700 DamageMax 270 DamageMin 200 RangePerception 1||||||4328|2688|-127|7|5|10|1|0|1|1|0|0|0|0|0
+*|Locathah localspawn setafter Name "Mad Atlantian" HitsMaxSeed 700 Hits 700 DamageMax 270 DamageMin 200 RangePerception 1||||||4440|2552|-127|7|5|10|1|0|1|1|0|0|0|0|0
+*|Locathah localspawn setafter Name "Mad Atlantian" HitsMaxSeed 700 Hits 700 DamageMax 270 DamageMin 200 RangePerception 1||||||4456|2571|-127|7|5|10|1|1|1|1|0|0|0|0|0
+*|Lurker localspawn setafter Name "Cursed Atlantian" HitsMaxSeed 400 Hits 400 DamageMax 250 DamageMin 120 Coins 1000 CoinType jewels BaseSoundID 0||||||4449|2638|-127|7|5|1|8|5|1|5|0|0|0|0|0
+*|Lurker localspawn setafter Name "Cursed Atlantian" HitsMaxSeed 300 Hits 300 DamageMax 140 DamageMin 110 Coins 1000 CoinType jewels||||||4451|2585|-127|7|5|1|8|5|1|13|0|0|0|0|0
+*|NeptarWizard localspawn setafter Name "Atlantian Occultist" Title (-null-) HitsMaxSeed 700 Hits 700 CoinType jewels Coins 1000||||||4390|2591|-127|7|5|1440|5|0|1|1|0|0|0|0|0
+*|NeptarWizard localspawn setafter Name "Atlantian Occultist" Title (-null-) HitsMaxSeed 700 Hits 700 CoinType jewels Coins 1000||||||4419|2596|-127|7|5|1440|5|0|1|1|0|0|0|0|0
+*|SeaDragon localspawn setafter DamageMax 150 DamageMin 120 HitsMaxSeed 500 Hits 500 CoinType jewels||||||4260|2572|-127|7|5|60|10|5|1|1|0|0|0|0|0
+*|SeaGiant localspawn setafter HitsMaxSeed 1200||||||4249|2639|-127|7|5|10|5|0|1|1|0|0|0|0|0
+*|Serpyn localspawn setafter Name "Royal Guard" DamageMax 310 DamageMin 300 CoinType jewels||||||4276|2608|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|Serpyn localspawn setafter Name "Royal Guard" DamageMax 310 DamageMin 300 CoinType jewels||||||4276|2613|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|Serpyn localspawn setafter Name "Royal Guard" DamageMax 310 DamageMin 300 CoinType jewels||||||4320|2561|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|Serpyn localspawn setafter Name "Royal Guard" DamageMax 310 DamageMin 300 CoinType jewels||||||4320|2565|-127|7|5|60|0|0|1|1|0|0|0|0|0
+*|SerpynChampion localspawn setafter Name "Atlantian Commander" HitsMaxSeed 1000 DamageMax 200 DamageMin 199 MagicDamageAbsorb 100 Coins 2000 CoinType jewels||||||4284|2587|-127|7|5|420|1|0|1|1|0|0|0|0|0
+*|SerpynChampion localspawn setafter Name "Atlantian Commander" HitsMaxSeed 1000 DamageMax 200 DamageMin 199 MagicDamageAbsorb 100 Coins 2000 CoinType jewels||||||4292|2566|-127|7|5|420|1|0|1|1|0|0|0|0|0
+
+# Booty Bay, world encounters and wild nest populations
+*|Scallywag localspawn refillone|rogue localspawn|piratecaptain localspawn|dungeonchest localspawn|goblinranger localspawn|treasuregoblin localspawn|57|717|0|5|60|120|29|30|1|22|22|3|20|20|1
+*|ratmannest localspawn refillone bounds 0 0 5120 4094|lizardmannest localspawn bounds 0 0 5120 4094|||||2496|1983|1|1|120|240|5|0|1|4|4|0|0|0|0
+*|ratmannest localspawn refillone bounds 0 0 5120 3128|lizardmannest localspawn bounds 0 0 5120 3128|||||2514|1531|0|2|120|240|5|0|1|4|4|0|0|0|0
+*|Vintner localspawn||||||2449|898|2|2|5|10|3|1|1|1|0|0|0|0|0
+*|atlas localspawn:blackbartroberts localspawn:nero localspawn:abysscrawler localspawn:twoface localspawn:fallenangel localspawn:forestgiant localspawn:garuda localspawn:spiderqueen localspawn:stitches localspawn:unspeakable localspawn:treasuregoblin localspawn:ImmortalGenie localspawn:GrumpyEarthSpirit localspawn:dragonhydra localspawn:fireangel localspawn:managolem localspawn:oldmanwillow localspawn:scientist localspawn:plaguegod localspawn:lovecraftian localspawn:deepone localspawn:atlantian localspawn:atlantianparagon localspawn:skinwalker localspawn:crusader localspawn:skyspirit localspawn:olympus localspawn:assassin localspawn:cosmicgargoyle localspawn:PrimevalRunicDragon localspawn:cursedadventurer localspawn:voidwraith localspawn:darkunicorn localspawn:xdryad localspawn:reddeath localspawn:PrimevalAbysmalDragon localspawn:PrimevalRoyalDragon localspawn:PrimevalSilverDragon localspawn:HeadlessOne localspawn:Rattlebones localspawn:Honorguard localspawn:hydra localspawn:energyhydra localspawn:RoyalSphinx localspawn||||||3462|800|0|2|60|120|5|0|1|1|0|0|0|0|0
+
+# Staff event staging
+# HandS - Shalza Moonspire
+*|XmlQuestNPC localspawn setafter Name "Shalza Moonspire" Female True TalkText hello||||||5138|3003|0|2|5|10|0|0|1|1|0|0|0|0|0
+# HandS - Brother Bob
+*|XmlQuestNPC localspawn setafter Name "Brother Bob" TalkText hey||||||5138|3005|0|2|5|10|0|0|1|1|0|0|0|0|0
+# HandS-Ed Forestmight
+*|XmlQuestNPC localspawn setafter Name "Ed Forestmight" TalkText greetings||||||5138|3001|0|2|5|10|0|0|1|1|0|0|0|0|0
+# HandS-UndeadInformant
+*|StaffUndeadInformant localspawn||||||5145|3005|0|2|5|10|0|0|1|1|0|0|0|0|0
+# HandS-Gypsy
+*|StaffEventQuestNpc localspawn MadameEva||||||5141|3005|0|2|5|10|0|0|1|1|0|0|0|0|0
+# HandS-Katara
+*|StaffEventQuestNpc localspawn Katara||||||5143|3005|0|2|5|10|0|0|1|1|0|0|0|0|0
+# 01-RatsRent
+*|StaffEventQuestNpc localspawn Silas||||||5130|3019|0|2|5|10|0|0|1|1|0|0|0|0|0
+# Arena Spawner
+*|Goat localspawn:Moose localspawn:Brigand localspawn:Skeleton localspawn:Lizardman localspawn:Ogre localspawn:EarthElemental localspawn:Cyclops localspawn:Giant localspawn:TitanLithos localspawn||||||5141|2958|0|2|5|10|5|5|1|0|0|0|0|0|0
+# Discord
+*|TownHerald localspawn||||||5148|3027|0|2|5|10|0|0|1|0|0|0|0|0|0
+
+# Hide and Seek event entrances. Enable and respawn the controller when the event opens.
+stopped|Teleporter localspawn setafter Visible True ItemID 3546 MapDest Sosaria PointDest "(2925, 1063, 1)" Name "Hide and Seek Event Portal"||||||5142|3019|0|2|5|10|0|0|1|1|0|0|0|0|0
+stopped|Teleporter localspawn setafter Visible True ItemID 3546 MapDest Sosaria PointDest "(2908, 1051, 1)" Name "Hide and Seek Event Portal"||||||3441|3424|0|2|5|10|0|0|1|1|0|0|0|0|0
+
+# Saved public spawn anchors reviewed against the rebuild baseline.
+
+# Lodor
+*|fallenangel||||||5658|711|0|1|240|540|-1|3|1|1|0|0|0|0|0
+*|runeknight||||||5688|772|0|1|55|60|-1|2|1|1|0|0|0|0|0
+*|wisp||||||5688|818|0|1|5|60|-1|9|1|3|0|0|0|0|0
+*|immortalgenie||||||5712|732|0|1|120|660|-1|1|1|1|0|0|0|0|0
+*|garuda||||||5724|732|0|1|120|240|-1|2|1|1|0|0|0|0|0
+*|treasuregoblin||||||5737|732|0|1|5|10|-1|4|1|1|0|0|0|0|0
+*|stygiangargoyle||||||6640|3582|1|1|5|10|-1|4|1|3|0|0|0|0|0
+*|fireservant||||||7025|569|5|1|5|120|-1|4|1|2|0|0|0|0|0
+
+# Sosaria
+*|scallywag||||||1887|3383|22|2|60|120|-1|0|1|1|0|0|0|0|0
+*|honorguard||||||1892|3370|20|2|60|120|-1|4|1|2|0|0|0|0|0
+*|berserker:assassin||||||1892|3371|0|2|60|120|-1|8|1|3|0|0|0|0|0
+*|nero||||||1893|3367|80|2|60|120|-1|4|1|1|0|0|0|0|0
+*|treasuregoblin||||||1893|3371|60|2|1320|1440|-1|4|1|1|0|0|0|0|0
+*|urukkai||||||2313|1802|0|2|1320|1440|-1|4|1|1|0|0|0|0|0
+*|goblinarcher||||||2328|1802|20|2|1320|1440|-1|7|1|10|0|0|0|0|0
+*|wisp||||||2452|2352|0|2|5|60|-1|9|1|2|0|0|0|0|0
+*|crusader||||||2472|2399|0|2|5|120|-1|6|1|1|0|0|0|0|0
+*|innkeeper||||||2489|2431|0|2|5|10|-1|4|1|1|0|0|0|0|0
+*|provisioner||||||2490|2435|0|2|5|10|-1|4|1|1|0|0|0|0|0
+*|crusader||||||2506|2415|0|2|5|10|-1|0|1|1|0|0|0|0|0
+*|wisp||||||2509|2420|0|2|5|60|-1|9|1|2|0|0|0|0|0
+*|crusader||||||2539|2403|0|2|5|10|-1|44|1|3|0|0|0|0|0
+*|pixie||||||2553|2361|0|2|5|10|-1|24|1|3|0|0|0|0|0
+*|holymage||||||2559|2326|0|2|60|1440|-1|0|1|1|0|0|0|0|0
+*|xdryad||||||2621|2341|0|2|5|60|-1|22|1|4|0|0|0|0|0
+*|frailskeleton:skeletalsamurai:skeletalwarrior||||||2717|1059|0|2|1320|1440|-1|7|1|20|0|0|0|0|0
+*|ghostofladyeverdear||||||2738|1044|31|2|660|1320|-1|0|1|1|0|0|0|0|0
+*|thegroundskeeper||||||2758|1043|0|2|60|1320|-1|3|1|1|0|0|0|0|0
+*|rangerofthebritainmilitia||||||2902|1313|40|2|1320|1440|-1|0|1|1|0|0|0|0|0
+*|rangerofthebritainmilitia||||||2908|1319|40|2|1320|1440|-1|0|1|1|0|0|0|0|0
+*|rangerofthebritainmilitia||||||2922|1319|0|2|1320|1440|-1|0|1|1|0|0|0|0|0
+*|rangerofthebritainmilitia||||||2927|1318|0|2|1320|1440|-1|0|1|1|0|0|0|0|0
+*|banditking||||||3011|382|0|2|1380|1440|-1|4|1|1|0|0|0|0|0
+*|rangerofthebritainmilitia||||||3075|1050|0|2|5|10|-1|0|1|1|0|0|0|0|0
+*|bookguidetoadventure||||||3083|1038|0|2|5|10|-1|0|1|1|0|0|0|0|0
+*|rangerofthebritainmilitia||||||3161|1048|20|2|5|10|-1|0|1|1|0|0|0|0|0
+*|adventurers||||||3175|1046|0|2|5|60|-1|0|1|1|0|0|0|0|0
+*|provisioner||||||3182|1044|0|2|5|10|-1|2|1|1|0|0|0|0|0
+*|gypsylady||||||3189|1035|9|2|5|10|-1|0|1|1|0|0|0|0|0
+*|rangerofthebritainmilitia||||||3190|1045|40|2|5|10|-1|0|1|1|0|0|0|0|0
+*|witches||||||3198|1035|0|2|5|10|-1|1|1|1|0|0|0|0|0
+*|rangerofthebritainmilitia||||||3203|1043|0|2|5|10|-1|2|1|1|0|0|0|0|0
+*|gort||||||3287|934|0|2|60|120|0|1|1|1|0|0|0|0|0
+*|koboldringleader||||||3307|900|0|2|60|120|-1|3|1|1|0|0|0|0|0
+stopped|koboldfootsoldier||||||3420|933|0|2|1320|1440|-1|7|1|18|0|0|0|0|0
+*|skinwalker||||||4106|342|20|2|60|1440|-1|33|1|3|0|0|0|0|0
+*|skinwalker||||||4155|354|20|2|60|1440|-1|23|1|2|0|0|0|0|0
+*|skinwalker||||||4186|439|20|2|60|1440|-1|23|1|2|0|0|0|0|0
+*|rangerofthebritainmilitia||||||4208|362|0|2|60|120|-1|2|1|1|0|0|0|0|0
+*|rangerofthebritainmilitia||||||4208|393|0|2|60|120|-1|0|1|1|0|0|0|0|0
+*|rangerofthebritainmilitia||||||4215|361|0|2|60|120|-1|0|1|1|0|0|0|0|0
+*|rangerofthebritainmilitia||||||4223|409|0|2|60|120|-1|0|1|1|0|0|0|0|0
+*|voidwraith||||||4354|4002|0|2|120|1320|-1|4|1|1|0|0|0|0|0
+*|bookguidetoadventure:learnmetalbook:learnmiscbook:learnreagentsbook:learntitles:learntraps:learnstealingbook:weaponabilitybook:blankscroll:lorebook:healscroll:reactivearmorscroll:curescroll:protectionscroll:teleportscroll|resurrectionscroll:runebook:recallrune:blankscroll:wizardwand:lorebook:tomeoflostknowledge:tomeofenlightenment:tomeofwands:jokebook:learnmetalbook:learnreagentsbook:weaponabilitybook:bookguidetoadventure|||||4545|3185|0|2|10|20|-1|4|1|3|0|0|0|0|0
+*|bookguidetoadventure:learnmetalbook:learnmiscbook:learnreagentsbook:learntitles:learntraps:learnstealingbook:weaponabilitybook:blankscroll:lorebook:healscroll:reactivearmorscroll:curescroll:protectionscroll:teleportscroll|resurrectionscroll:runebook:recallrune:blankscroll:wizardwand:lorebook:tomeoflostknowledge:tomeofenlightenment:tomeofwands:jokebook:learnmetalbook:learnreagentsbook:weaponabilitybook:bookguidetoadventure|||||4547|3164|0|2|10|20|-1|4|1|3|0|0|0|0|0
+*|archcurescroll:greaterhealscroll:markscroll:recallscroll:recallrune:runebook:blankscroll:lorebook:tomeofenlightenment:meteorswarmscroll:teleportscroll:tomeofwands:magicaldyes:reagents_magic_jar3:magesband||||||4548|3228|0|2|5|10|-1|4|1|2|0|0|0|0|0
+*|archcurescroll:greaterhealscroll:markscroll:recallscroll:recallrune:runebook:blankscroll:lorebook:tomeofenlightenment:meteorswarmscroll:teleportscroll:tomeofwands:magicaldyes:reagents_magic_jar3:scribespen||||||4553|3198|0|2|5|10|-1|4|1|2|0|0|0|0|0
+*|bookguidetoadventure:learnmetalbook:learnmiscbook:learnreagentsbook:learntitles:learntraps:learnstealingbook:weaponabilitybook:blankscroll:lorebook:healscroll:reactivearmorscroll:curescroll:protectionscroll:teleportscroll|resurrectionscroll:runebook:recallrune:blankscroll:wizardwand:lorebook:tomeoflostknowledge:tomeofenlightenment:tomeofwands:jokebook:learnmetalbook:learnreagentsbook:weaponabilitybook:bookguidetoadventure|||||4570|3167|0|2|10|20|-1|4|1|3|0|0|0|0|0
+*|archcurescroll:greaterhealscroll:markscroll:recallscroll:recallrune:runebook:blankscroll:lorebook:tomeofenlightenment:meteorswarmscroll:teleportscroll:tomeofwands:magicaldyes:reagents_magic_jar3:blankscroll||||||4576|3225|0|2|5|10|-1|4|1|2|0|0|0|0|0
+*|lorebook:learngranitebook:learnmetalbook:learnmiscbook:learnreagentsbook:learnscalesbook:learnstealingbook:learntitles:learntraps:learnwoodbook:bookofknowledge:bookguidetoadventure:mychivalrybook:myspellbook:mynecromancerspellbook||||||4654|3169|0|2|5|10|-1|3|1|5|0|0|0|0|0
+*|wyrmling||||||5009|3229|0|2|30|60|-1|4|1|3|0|0|0|0|0
+*|dreadspider||||||5009|3278|0|2|5|60|-1|4|1|2|0|0|0|0|0
+*|fireservant||||||5058|3231|0|2|33|60|-1|4|1|1|0|0|0|0|0
+*|zombiemage:skeletalwizard||||||5060|3280|0|2|5|10|-1|4|1|5|0|0|0|0|0
+*|skeletalwizard||||||5388|298|0|2|5|60|-1|4|1|2|0|0|0|0|0
+*|skeletalwizard||||||5401|6|5|2|5|10|-1|0|1|1|0|0|0|0|0
+*|themadduke||||||5422|72|0|2|20|60|-1|2|1|1|0|0|0|0|0
+*|dungeonchest:hoardpiles:hydratooth||||||6054|1477|0|2|5|10|-1|5|1|7|0|0|0|0|0
+*|dungeonchest:hoardpiles:hydratooth||||||6063|1616|0|2|5|10|-1|5|1|1|0|0|0|0|0
+*|dungeonchest:hoardpiles:hydratooth||||||6069|1479|0|2|5|10|-1|5|1|7|0|0|0|0|0
+*|firegiantforge||||||6663|2830|0|2|5|10|-1|4|1|1|0|0|0|0|0
+
+# Underworld
+*|guardianoftheunderworld||||||1347|601|0|3|5|60|-1|4|1|1|0|0|0|0|0
+
+# Serpent Island
+*|skinwalker||||||1627|834|1|4|5|1320|-1|8|1|1|0|0|0|0|0
+
+# Isles of Dread
+*|Blackbartroberts||||||67|691|20|5|120|1440|-1|1|1|1|0|0|0|0|0
+*|icegolem||||||266|446|9|5|5|60|-1|2|1|1|0|0|0|0|0
+*|icegolem||||||266|452|5|5|5|60|-1|2|1|1|0|0|0|0|0
+
+# Savaged Empire
+*|icegolem||||||224|2849|0|6|5|10|-1|1|1|1|0|0|0|0|0
+*|icegolem||||||224|2855|0|6|5|10|-1|1|1|1|0|0|0|0|0
+*|voidwraith||||||916|3428|0|6|120|1440|-1|4|1|1|0|0|0|0|0

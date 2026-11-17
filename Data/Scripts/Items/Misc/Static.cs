@@ -101,4 +101,48 @@ namespace Server.Items
             }
         }
     }
+
+    public sealed class WeightedDecorationStatic : Static
+    {
+        public WeightedDecorationStatic() { }
+
+        public WeightedDecorationStatic(Serial serial)
+            : base(serial) { }
+
+        public override bool DisplayWeight
+        {
+            get
+            {
+                if (Weight != -2)
+                    return base.DisplayWeight;
+
+                return DefaultWeight > 0 && (Movable || IsLockedDown || IsSecure || ItemData.Weight != 255);
+            }
+        }
+
+        public override void AddWeightProperty(ObjectPropertyList list)
+        {
+            if (Weight != -2)
+            {
+                base.AddWeightProperty(list);
+                return;
+            }
+
+            // Preserve the default art weight in the tooltip while decoration owns the item.
+            int weight = (int)Math.Ceiling(DefaultWeight * Amount) + TotalWeight;
+            list.Add(weight == 1 ? 1072788 : 1072789, weight.ToString());
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write(0);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            reader.ReadInt();
+        }
+    }
 }

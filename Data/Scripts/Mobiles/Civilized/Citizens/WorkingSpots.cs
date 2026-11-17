@@ -42,15 +42,8 @@ namespace Server.Items
             {
                 foreach (Item item in eable1)
                 {
-                    if (
-                        !(item is WorkingSpots)
-                        && item.X == spot.X
-                        && item.Y == spot.Y
-                        && item.Map == spot.Map
-                    )
-                    {
+                    if (IsGeneratedProp(spot, item))
                         clean.Add(item);
-                    }
                 }
             }
             finally
@@ -103,6 +96,93 @@ namespace Server.Items
                     ((Mobile)clean[i]).Delete();
                 }
             }
+        }
+
+        private static bool IsGeneratedProp(Item spot, Item item)
+        {
+            if (item.Weight != -2.0 || item.IsLockedDown || item.IsSecure
+                || item.Map != spot.Map || item.X != spot.X || item.Y != spot.Y)
+                return false;
+
+            if (spot.Name == "potion" && item is CauldronHit)
+            {
+                // Add lowers large cauldrons two Z units below their marker.
+                int z = item.ItemID >= 0x5760 && item.ItemID <= 0x5769 ? spot.Z - 2 : spot.Z;
+                return item.Z == z;
+            }
+
+            if (spot.Name == "music" && item is BardHit)
+                return IsWorksiteInstrument(spot, item);
+
+            if (item.Z != spot.Z)
+                return false;
+
+            switch (spot.Name)
+            {
+                case "anvil":
+                case "hidden anvil":
+                    return item is AnvilHit;
+                case "dummy":
+                    return item is TrainingDummy;
+                case "forge":
+                case "hidden forge":
+                    return item is ForgeHit;
+                case "hide":
+                case "hidden hide":
+                    return item is LeatherHit;
+                case "pentagram":
+                    return item is MagicHit;
+                case "rock":
+                    return item is RockHit;
+                case "saw":
+                    return item is SawHit;
+                case "target":
+                    return item is ArcheryButte;
+                case "tree":
+                    return item is TreeHit;
+                case "water":
+                    return item is WaterHit;
+                case "pan":
+                case "hidden pan":
+                    return item is StoveHit;
+                case "carcass":
+                    return item is ButcherHit;
+                default:
+                    return false;
+            }
+        }
+
+        private static bool IsWorksiteInstrument(Item spot, Item instrument)
+        {
+            if (instrument.Z == spot.Z)
+                return true;
+
+            // BardHit.SetInstrument raises equipped art relative to the bard, whose marker can be on a step.
+            int art = instrument.ItemID;
+            if (art < 0x64BE || art > 0x64CD)
+                return false;
+
+            int height = 9;
+            switch (art & ~1)
+            {
+                case 0x64C0: height = 11; break;
+                case 0x64C2:
+                case 0x64C4: height = 8; break;
+                case 0x64C6: height = 10; break;
+            }
+
+            IPooledEnumerable nearby = spot.GetItemsInRange(1);
+            try
+            {
+                foreach (Item item in nearby)
+                    if (item is WorkingSpots && item.Name == "bard" && item.Z + height == instrument.Z)
+                        return true;
+            }
+            finally
+            {
+                nearby.Free();
+            }
+            return false;
         }
 
         public static void Setup()

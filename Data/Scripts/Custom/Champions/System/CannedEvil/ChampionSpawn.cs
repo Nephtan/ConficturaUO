@@ -249,6 +249,16 @@ namespace Server.Engines.CannedEvil
             return m_Creatures.Contains(m);
         }
 
+        internal void CollectOwnedMobiles(Dictionary<Mobile, bool> mobiles)
+        {
+            foreach (Mobile creature in m_Creatures)
+                if (creature != null)
+                    mobiles[creature] = true;
+
+            if (m_Champion != null)
+                mobiles[m_Champion] = true;
+        }
+
         public void SetWhiteSkullCount(int val)
         {
             for (int i = m_WhiteSkulls.Count - 1; i >= val; --i)
@@ -476,14 +486,7 @@ namespace Server.Engines.CannedEvil
                         m_Platform.Hue = 0x497;
 
                     if (m_Altar != null)
-                    {
                         m_Altar.Hue = 0;
-
-                        if (!Core.ML || Map == Map.Lodor)
-                        {
-                            new StarRoomGate(true, m_Altar.Location, m_Altar.Map);
-                        }
-                    }
 
                     m_Champion = null;
                     Stop();

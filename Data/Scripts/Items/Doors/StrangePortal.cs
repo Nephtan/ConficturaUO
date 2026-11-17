@@ -1,4 +1,7 @@
+using Server.Engines.XmlSpawner2;
+using Server.Multis;
 using System;
+using System.Collections.Generic;
 using Server;
 using Server.Misc;
 using Server.Mobiles;
@@ -9,6 +12,8 @@ namespace Server.Items
     public class StrangePortal : Item
     {
         public int GateLocation;
+        private Strange_Portal m_ReturnGate;
+        private bool m_ReadLegacyVersion;
 
         [CommandProperty(AccessLevel.Owner)]
         public int Gate_Location
@@ -108,30 +113,56 @@ namespace Server.Items
         {
             base.OnAfterSpawn();
 
-            GateLocation = Utility.RandomMinMax(15, 26);
+            int first = 15;
+            int last = 26;
             string world = Worlds.GetMyWorld(this.Map, this.Location, this.X, this.Y);
             if (world == "the Land of Lodoria")
             {
-                GateLocation = Utility.RandomMinMax(0, 14);
+                first = 0;
+                last = 14;
             }
             else if (world == "the Serpent Island")
             {
-                GateLocation = Utility.RandomMinMax(27, 41);
+                first = 27;
+                last = 41;
             }
             else if (world == "the Isles of Dread")
             {
-                GateLocation = Utility.RandomMinMax(42, 47);
+                first = 42;
+                last = 47;
             }
             else if (world == "the Savaged Empire")
             {
-                GateLocation = Utility.RandomMinMax(48, 56);
+                first = 48;
+                last = 56;
             }
             else if (world == "the Underworld")
             {
-                GateLocation = Utility.RandomMinMax(57, 64);
+                first = 57;
+                last = 64;
             }
 
-            Strange_Portal gate = new Strange_Portal();
+            if (m_ReturnGate != null && !m_ReturnGate.Deleted)
+                m_ReturnGate.Delete();
+
+            List<int> available = new List<int>();
+            for (int route = first; route <= last; route++)
+            {
+                Point3D landing;
+                Map facet;
+                GetDestination(route, out landing, out facet);
+                if (Strange_Portal.FindActiveReturn(facet, landing) == null)
+                    available.Add(route);
+            }
+
+            if (available.Count == 0)
+            {
+                Delete();
+                return;
+            }
+
+            GateLocation = available[Utility.Random(available.Count)];
+            Strange_Portal gate = new Strange_Portal(this);
             gate.Gate_Location_X = this.X;
             gate.Gate_Location_Y = this.Y;
             gate.Gate_Location_Z = this.Z;
@@ -139,12 +170,87 @@ namespace Server.Items
             gate.Hue = this.Hue;
             gate.Name = this.Name;
             UseGate(null, GateLocation, gate);
+            m_ReturnGate = gate;
         }
 
-        public static void UseGate(Mobile m, int portal, Item gate)
+        public override void OnAfterDelete()
         {
-            Point3D loc = new Point3D(0, 0, 0);
-            Map map = Map.Sosaria;
+            base.OnAfterDelete();
+
+            if (m_ReturnGate != null && !m_ReturnGate.Deleted)
+                m_ReturnGate.Delete();
+        }
+
+        internal bool OwnsReturn(Strange_Portal gate)
+        {
+            return !Deleted && Parent == null && Map != null && Map != Map.Internal && m_ReturnGate == gate;
+        }
+
+        public static void Initialize()
+        {
+            RestoreLegacyReturns();
+        }
+
+        private static void RestoreLegacyReturns()
+        {
+            Dictionary<Strange_Portal, StrangePortal> candidates = new Dictionary<Strange_Portal, StrangePortal>();
+            foreach (Item item in World.Items.Values)
+            {
+                StrangePortal entrance = item as StrangePortal;
+                if (entrance == null || !entrance.m_ReadLegacyVersion)
+                    continue;
+
+                Strange_Portal gate = entrance.FindLegacyReturn();
+                if (gate == null)
+                    continue;
+
+                // Reject a return claimed by multiple entrances before changing either side.
+                candidates[gate] = candidates.ContainsKey(gate) ? null : entrance;
+            }
+
+            foreach (KeyValuePair<Strange_Portal, StrangePortal> pair in candidates)
+            {
+                if (pair.Value != null)
+                {
+                    pair.Value.m_ReturnGate = pair.Key;
+                    pair.Key.LinkEntrance(pair.Value);
+                }
+            }
+        }
+
+        private Strange_Portal FindLegacyReturn()
+        {
+            if (GetType() != typeof(StrangePortal) || Deleted || Parent != null || Map == null || Map == Map.Internal
+                || m_ReturnGate != null || ItemID != 0x3D5E || !Visible || Movable || String.IsNullOrEmpty(Name)
+                || GateLocation < 0 || GateLocation > 64)
+                return null;
+
+            Point3D landing;
+            Map facet;
+            GetDestination(GateLocation, out landing, out facet);
+            Strange_Portal match = null;
+            foreach (Item item in facet.GetSector(landing).Items)
+            {
+                Strange_Portal gate = item as Strange_Portal;
+                if (gate == null || gate.Deleted || gate.Parent != null || gate.Location != landing
+                    || gate.GateLocation_M != Map || gate.GateLocation_X != X || gate.GateLocation_Y != Y || gate.GateLocation_Z != Z
+                    || gate.ItemID != ItemID || gate.Hue != Hue || gate.Name != Name)
+                    continue;
+
+                // Count even protected lookalikes as ambiguous rather than picking an eligible one.
+                if (match != null)
+                    return null;
+                match = gate;
+            }
+
+            return match != null && match.CanLinkLegacyEntrance() ? match : null;
+        }
+
+
+        private static void GetDestination(int portal, out Point3D loc, out Map map)
+        {
+            loc = Point3D.Zero;
+            map = Map.Sosaria;
 
             switch (portal)
             {
@@ -414,6 +520,13 @@ namespace Server.Items
                     map = Map.Lodor;
                     break; // the Ancient Sky Ship
             }
+        }
+
+        public static void UseGate(Mobile m, int portal, Item gate)
+        {
+            Point3D loc;
+            Map map;
+            GetDestination(portal, out loc, out map);
 
             if (m is PlayerMobile)
             {
@@ -433,8 +546,9 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)0); // version
+            writer.Write((int)1); // version
             writer.Write(GateLocation);
+            writer.Write(m_ReturnGate);
         }
 
         public override void Deserialize(GenericReader reader)
@@ -442,6 +556,9 @@ namespace Server.Items
             base.Deserialize(reader);
             int version = reader.ReadInt();
             GateLocation = reader.ReadInt();
+            m_ReadLegacyVersion = version == 0;
+            if (version >= 1)
+                m_ReturnGate = reader.ReadItem() as Strange_Portal;
         }
     }
 
@@ -451,6 +568,7 @@ namespace Server.Items
         public int GateLocation_Y;
         public int GateLocation_Z;
         public Map GateLocation_M;
+        private StrangePortal m_Entrance;
 
         [CommandProperty(AccessLevel.Owner)]
         public int Gate_Location_X
@@ -505,6 +623,50 @@ namespace Server.Items
             Name = "portal";
         }
 
+        internal Strange_Portal(StrangePortal entrance)
+            : this()
+        {
+            m_Entrance = entrance;
+        }
+
+        internal bool CanLinkLegacyEntrance()
+        {
+            return GetType() == typeof(Strange_Portal) && m_Entrance == null && Visible && !Movable
+                && !IsLockedDown && !IsSecure && !Insured && BlessedFor == null && LootType == LootType.Regular
+                && Spawner == null && Items.Count == 0 && Weight != -2 && Weight != -3
+                && BaseHouse.FindHouseAt(this) == null && XmlAttach.FindAttachment(this) == null;
+        }
+
+        internal void LinkEntrance(StrangePortal entrance)
+        {
+            m_Entrance = entrance;
+        }
+
+        private bool HasActiveEntrance
+        {
+            get { return m_Entrance != null && m_Entrance.OwnsReturn(this); }
+        }
+
+        internal static Strange_Portal FindActiveReturn(Map map, Point3D point)
+        {
+            IPooledEnumerable nearby = map.GetItemsInRange(point, 0);
+            try
+            {
+                foreach (Item item in nearby)
+                {
+                    Strange_Portal gate = item as Strange_Portal;
+                    if (gate != null && !gate.Deleted && gate.Location == point && gate.HasActiveEntrance)
+                        return gate;
+                }
+
+                return null;
+            }
+            finally
+            {
+                nearby.Free();
+            }
+        }
+
         public Strange_Portal(Serial serial)
             : base(serial) { }
 
@@ -512,6 +674,10 @@ namespace Server.Items
         {
             if (m is PlayerMobile)
             {
+                // The linked route has priority over legacy returns at the same landing.
+                if (m_Entrance != null ? !HasActiveEntrance : FindActiveReturn(Map, Location) != null)
+                    return true;
+
                 UseGate(m);
                 Effects.PlaySound(m.Location, m.Map, 0x1FC);
             }
@@ -521,8 +687,8 @@ namespace Server.Items
 
         public void UseGate(Mobile m)
         {
-            Point3D loc = new Point3D(GateLocation_X, GateLocation_Y, GateLocation_Z);
-            Map map = GateLocation_M;
+            Point3D loc = HasActiveEntrance ? m_Entrance.Location : new Point3D(GateLocation_X, GateLocation_Y, GateLocation_Z);
+            Map map = HasActiveEntrance ? m_Entrance.Map : GateLocation_M;
 
             if (m is PlayerMobile)
             {
@@ -538,11 +704,12 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)0); // version
+            writer.Write((int)1); // version
             writer.Write(GateLocation_X);
             writer.Write(GateLocation_Y);
             writer.Write(GateLocation_Z);
             writer.Write(GateLocation_M);
+            writer.Write(m_Entrance);
         }
 
         public override void Deserialize(GenericReader reader)
@@ -553,6 +720,8 @@ namespace Server.Items
             GateLocation_Y = reader.ReadInt();
             GateLocation_Z = reader.ReadInt();
             GateLocation_M = reader.ReadMap();
+            if (version >= 1)
+                m_Entrance = reader.ReadItem() as StrangePortal;
         }
     }
 }

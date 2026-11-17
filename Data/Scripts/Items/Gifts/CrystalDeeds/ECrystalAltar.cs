@@ -63,6 +63,13 @@ namespace Server.Items
             AddComponent(new ECrystalAltarComponent(0x3603), 0, 0, 0);
             AddComponent(new ECrystalAltarComponent(0x3602), 1, 0, 0);
             AddComponent(new ECrystalAltarComponent(0x3604), 1, -1, 0);
+
+            // An empty custom name suppresses the component's localized altar label.
+            foreach (AddonComponent component in Components)
+            {
+                if (component.Name == String.Empty)
+                    component.Name = null;
+            }
         }
 
         public ECrystalAltarAddon(Serial serial)

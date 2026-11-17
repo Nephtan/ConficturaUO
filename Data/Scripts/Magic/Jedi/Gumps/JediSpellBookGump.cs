@@ -13,20 +13,28 @@ namespace Server.Gumps
 {
     public class JediSpellbookGump : Gump
     {
-        private JediSpellbook m_Book;
+        private const int CastButtonOffset = 100;
+        private const int SwordCost = 10000;
+        private readonly JediSpellbook m_Book;
 
-        public bool HasSpell(Mobile from, int spellID)
+        private enum Button
         {
-            if (m_Book.RootParentEntity == from)
-                return (m_Book.HasSpell(spellID));
-            else
-                return false;
+            Main = 1,
+            Help,
+            HorizontalBar,
+            VerticalBar,
+            ToggleBarNames,
+            SwordPage,
+            SingleSword,
+            DoubleSword,
+            CloseBars
         }
 
         public JediSpellbookGump(Mobile from, JediSpellbook book, int page)
             : base(25, 25)
         {
             m_Book = book;
+            from.CloseGump(typeof(JediSpellbookGump));
 
             this.Closable = true;
             this.Disposable = true;
@@ -50,7 +58,7 @@ namespace Server.Gumps
                     (bool)false
                 );
 
-                AddButton(443, 40, 3610, 3610, 2, GumpButtonType.Reply, 0);
+                AddButton(443, 40, 3610, 3610, (int)Button.Help, GumpButtonType.Reply, 0);
 
                 AddItem(43, 81, 16314);
                 AddItem(60, 131, 9698);
@@ -170,7 +178,7 @@ namespace Server.Gumps
                     (bool)false,
                     (bool)false
                 );
-                AddButton(60, 236, 4005, 4005, 3, GumpButtonType.Reply, 0);
+                AddButton(60, 236, 4005, 4005, (int)Button.HorizontalBar, GumpButtonType.Reply, 0);
                 AddHtml(
                     105,
                     276,
@@ -180,7 +188,7 @@ namespace Server.Gumps
                     (bool)false,
                     (bool)false
                 );
-                AddButton(60, 276, 4005, 4005, 4, GumpButtonType.Reply, 0);
+                AddButton(60, 276, 4005, 4005, (int)Button.VerticalBar, GumpButtonType.Reply, 0);
 
                 int name_show = 3609;
                 if (m_Book.names > 0)
@@ -197,7 +205,7 @@ namespace Server.Gumps
                     (bool)false,
                     (bool)false
                 );
-                AddButton(60, 316, name_show, name_show, 5, GumpButtonType.Reply, 0);
+                AddButton(60, 316, name_show, name_show, (int)Button.ToggleBarNames, GumpButtonType.Reply, 0);
 
                 AddHtml(
                     350,
@@ -208,7 +216,7 @@ namespace Server.Gumps
                     (bool)false,
                     (bool)false
                 );
-                AddButton(305, 236, 4005, 4005, 9, GumpButtonType.Reply, 0);
+                AddButton(305, 236, 4005, 4005, (int)Button.CloseBars, GumpButtonType.Reply, 0);
 
                 AddHtml(
                     350,
@@ -219,15 +227,15 @@ namespace Server.Gumps
                     (bool)false,
                     (bool)false
                 );
-                AddButton(305, 316, 4011, 4011, 6, GumpButtonType.Reply, 0);
+                AddButton(305, 316, 4011, 4011, (int)Button.SwordPage, GumpButtonType.Reply, 0);
 
                 string wordColor = "#308EB3";
 
                 wordColor = "#308EB3";
-                if (HasSpell(from, 280))
+                if (m_Book.HasSpell(280))
                 {
                     wordColor = "#00FF06";
-                    AddButton(100, 380, 4005, 4005, 380, GumpButtonType.Reply, 0);
+                    AddButton(100, 380, 4005, 4005, 280 + CastButtonOffset, GumpButtonType.Reply, 0);
                 }
                 else
                 {
@@ -250,10 +258,10 @@ namespace Server.Gumps
                 AddButton(305, 380, 4011, 4011, 280, GumpButtonType.Reply, 0);
 
                 wordColor = "#308EB3";
-                if (HasSpell(from, 281))
+                if (m_Book.HasSpell(281))
                 {
                     wordColor = "#00FF06";
-                    AddButton(100, 430, 4005, 4005, 381, GumpButtonType.Reply, 0);
+                    AddButton(100, 430, 4005, 4005, 281 + CastButtonOffset, GumpButtonType.Reply, 0);
                 }
                 else
                 {
@@ -276,10 +284,10 @@ namespace Server.Gumps
                 AddButton(305, 430, 4011, 4011, 281, GumpButtonType.Reply, 0);
 
                 wordColor = "#308EB3";
-                if (HasSpell(from, 282))
+                if (m_Book.HasSpell(282))
                 {
                     wordColor = "#00FF06";
-                    AddButton(100, 480, 4005, 4005, 382, GumpButtonType.Reply, 0);
+                    AddButton(100, 480, 4005, 4005, 282 + CastButtonOffset, GumpButtonType.Reply, 0);
                 }
                 else
                 {
@@ -302,10 +310,10 @@ namespace Server.Gumps
                 AddButton(305, 480, 4011, 4011, 282, GumpButtonType.Reply, 0);
 
                 wordColor = "#308EB3";
-                if (HasSpell(from, 283))
+                if (m_Book.HasSpell(283))
                 {
                     wordColor = "#00FF06";
-                    AddButton(100, 530, 4005, 4005, 383, GumpButtonType.Reply, 0);
+                    AddButton(100, 530, 4005, 4005, 283 + CastButtonOffset, GumpButtonType.Reply, 0);
                 }
                 else
                 {
@@ -328,10 +336,10 @@ namespace Server.Gumps
                 AddButton(305, 530, 4011, 4011, 283, GumpButtonType.Reply, 0);
 
                 wordColor = "#308EB3";
-                if (HasSpell(from, 284))
+                if (m_Book.HasSpell(284))
                 {
                     wordColor = "#00FF06";
-                    AddButton(100, 580, 4005, 4005, 384, GumpButtonType.Reply, 0);
+                    AddButton(100, 580, 4005, 4005, 284 + CastButtonOffset, GumpButtonType.Reply, 0);
                 }
                 else
                 {
@@ -354,10 +362,10 @@ namespace Server.Gumps
                 AddButton(305, 580, 4011, 4011, 284, GumpButtonType.Reply, 0);
 
                 wordColor = "#308EB3";
-                if (HasSpell(from, 285))
+                if (m_Book.HasSpell(285))
                 {
                     wordColor = "#00FF06";
-                    AddButton(470, 380, 4005, 4005, 385, GumpButtonType.Reply, 0);
+                    AddButton(470, 380, 4005, 4005, 285 + CastButtonOffset, GumpButtonType.Reply, 0);
                 }
                 else
                 {
@@ -380,10 +388,10 @@ namespace Server.Gumps
                 AddButton(675, 380, 4011, 4011, 285, GumpButtonType.Reply, 0);
 
                 wordColor = "#308EB3";
-                if (HasSpell(from, 286))
+                if (m_Book.HasSpell(286))
                 {
                     wordColor = "#00FF06";
-                    AddButton(470, 430, 4005, 4005, 386, GumpButtonType.Reply, 0);
+                    AddButton(470, 430, 4005, 4005, 286 + CastButtonOffset, GumpButtonType.Reply, 0);
                 }
                 else
                 {
@@ -406,10 +414,10 @@ namespace Server.Gumps
                 AddButton(675, 430, 4011, 4011, 286, GumpButtonType.Reply, 0);
 
                 wordColor = "#308EB3";
-                if (HasSpell(from, 287))
+                if (m_Book.HasSpell(287))
                 {
                     wordColor = "#00FF06";
-                    AddButton(470, 480, 4005, 4005, 387, GumpButtonType.Reply, 0);
+                    AddButton(470, 480, 4005, 4005, 287 + CastButtonOffset, GumpButtonType.Reply, 0);
                 }
                 else
                 {
@@ -432,10 +440,10 @@ namespace Server.Gumps
                 AddButton(675, 480, 4011, 4011, 287, GumpButtonType.Reply, 0);
 
                 wordColor = "#308EB3";
-                if (HasSpell(from, 288))
+                if (m_Book.HasSpell(288))
                 {
                     wordColor = "#00FF06";
-                    AddButton(470, 530, 4005, 4005, 388, GumpButtonType.Reply, 0);
+                    AddButton(470, 530, 4005, 4005, 288 + CastButtonOffset, GumpButtonType.Reply, 0);
                 }
                 else
                 {
@@ -458,10 +466,10 @@ namespace Server.Gumps
                 AddButton(675, 530, 4011, 4011, 288, GumpButtonType.Reply, 0);
 
                 wordColor = "#308EB3";
-                if (HasSpell(from, 289))
+                if (m_Book.HasSpell(289))
                 {
                     wordColor = "#00FF06";
-                    AddButton(470, 580, 4005, 4005, 389, GumpButtonType.Reply, 0);
+                    AddButton(470, 580, 4005, 4005, 289 + CastButtonOffset, GumpButtonType.Reply, 0);
                 }
                 else
                 {
@@ -503,7 +511,7 @@ namespace Server.Gumps
                     (bool)false,
                     (bool)true
                 );
-                AddButton(691, 38, 4017, 4017, 1, GumpButtonType.Reply, 0);
+                AddButton(691, 38, 4017, 4017, (int)Button.Main, GumpButtonType.Reply, 0);
                 AddItem(634, 34, 0x543D);
             }
             else if (page == 6)
@@ -517,7 +525,7 @@ namespace Server.Gumps
                     (bool)false,
                     (bool)false
                 );
-                AddButton(691, 38, 4017, 4017, 1, GumpButtonType.Reply, 0);
+                AddButton(691, 38, 4017, 4017, (int)Button.Main, GumpButtonType.Reply, 0);
                 AddImage(52, 78, 11435);
 
                 AddItem(273, 80, 7153, 0x7A9);
@@ -588,82 +596,26 @@ namespace Server.Gumps
                 AddItem(132, 416, 16314);
                 AddItem(136, 525, 11499);
 
-                Region reg = Region.Find(from.Location, from.Map);
-
-                if (
-                    !Server.Misc.GetPlayerInfo.isJedi(from, false)
-                    || from.Skills[SkillName.Psychology].Value < 100
-                    || from.Skills[SkillName.Tactics].Value < 100
-                    || from.Skills[SkillName.Swords].Value < 100
-                    || from.Fame < 15000
-                    || from.Karma < 15000
-                )
+                string error = GetSwordConstructionError(from);
+                if (error != null)
                 {
                     AddHtml(
                         281,
                         182,
                         430,
                         20,
-                        @"<BODY><BASEFONT Color=#308EB3>You lack the attributes as a Jedi to construct a laser sword.</BASEFONT></BODY>",
-                        (bool)false,
-                        (bool)false
-                    );
-                }
-                else if (!(reg.IsPartOf("the Tomb of Zoda the Jedi Master")))
-                {
-                    AddHtml(
-                        281,
-                        182,
-                        430,
-                        20,
-                        @"<BODY><BASEFONT Color=#308EB3>You need to be at Zoda's tomb to construct a laser sword.</BASEFONT></BODY>",
-                        (bool)false,
-                        (bool)false
-                    );
-                }
-                else if (m_Book.steel < 1)
-                {
-                    AddHtml(
-                        281,
-                        182,
-                        430,
-                        20,
-                        @"<BODY><BASEFONT Color=#308EB3>You need a piece of durasteel to construct a laser sword.</BASEFONT></BODY>",
-                        (bool)false,
-                        (bool)false
-                    );
-                }
-                else if (m_Book.gem < 1)
-                {
-                    AddHtml(
-                        281,
-                        182,
-                        430,
-                        20,
-                        @"<BODY><BASEFONT Color=#308EB3>You need an ordinary gem to construct a laser sword.</BASEFONT></BODY>",
-                        (bool)false,
-                        (bool)false
-                    );
-                }
-                else if (GetWealth(from) < 10000)
-                {
-                    AddHtml(
-                        281,
-                        182,
-                        430,
-                        20,
-                        @"<BODY><BASEFONT Color=#308EB3>You need 10,000 gold to construct a laser sword.</BASEFONT></BODY>",
-                        (bool)false,
-                        (bool)false
+                        "<BODY><BASEFONT Color=#308EB3>" + error + "</BASEFONT></BODY>",
+                        false,
+                        false
                     );
                 }
                 else
                 {
-                    AddButton(97, 426, 4005, 4005, 7, GumpButtonType.Reply, 0);
-                    AddButton(97, 538, 4005, 4005, 8, GumpButtonType.Reply, 0);
+                    AddButton(97, 426, 4005, 4005, (int)Button.SingleSword, GumpButtonType.Reply, 0);
+                    AddButton(97, 538, 4005, 4005, (int)Button.DoubleSword, GumpButtonType.Reply, 0);
                 }
             }
-            else if (page >= 280 && page < 290)
+            else if (page >= m_Book.BookOffset && page < m_Book.BookOffset + JediSpellbook.PowerCount)
             {
                 AddHtml(
                     50,
@@ -674,7 +626,7 @@ namespace Server.Gumps
                     (bool)false,
                     (bool)false
                 );
-                AddButton(691, 38, 4017, 4017, 1, GumpButtonType.Reply, 0);
+                AddButton(691, 38, 4017, 4017, (int)Button.Main, GumpButtonType.Reply, 0);
 
                 AddImage(510, 43, 11433);
                 AddItem(307, 82, 21564, 0xB3E);
@@ -702,12 +654,12 @@ namespace Server.Gumps
                     (bool)false
                 );
 
-                int prev = m_Book.page - 1;
+                int prev = page - 1;
                 if (prev < 280)
                 {
                     prev = 289;
                 }
-                int next = m_Book.page + 1;
+                int next = page + 1;
                 if (next > 289)
                 {
                     next = 280;
@@ -789,7 +741,7 @@ namespace Server.Gumps
                     (bool)false
                 );
 
-                if (HasSpell(from, page))
+                if (m_Book.HasSpell(page))
                 {
                     AddHtml(
                         352,
@@ -939,143 +891,135 @@ namespace Server.Gumps
             return name;
         }
 
+        private string GetSwordConstructionError(Mobile from)
+        {
+            if (
+                !from.Alive
+                || !GetPlayerInfo.isJedi(from, false)
+                || from.Skills[SkillName.Psychology].Value < 100
+                || from.Skills[SkillName.Tactics].Value < 100
+                || from.Skills[SkillName.Swords].Value < 100
+                || from.Fame < 15000
+                || from.Karma < 15000
+            )
+                return "You lack the attributes as a Jedi to construct a laser sword.";
+
+            if (!from.Region.IsPartOf("the Tomb of Zoda the Jedi Master"))
+                return "You need to be at Zoda's tomb to construct a laser sword.";
+
+            if (m_Book.steel < 1)
+                return "You need a piece of durasteel to construct a laser sword.";
+
+            if (m_Book.gem < 1)
+                return "You need an ordinary gem to construct a laser sword.";
+
+            if (GetWealth(from) < SwordCost)
+                return "You need 10,000 gold to construct a laser sword.";
+
+            return null;
+        }
+
+        private void ConstructSword(Mobile from, bool doubleBladed)
+        {
+            // A player can move or lose eligibility while the construction page is open.
+            string error = GetSwordConstructionError(from);
+            if (error != null)
+            {
+                from.SendMessage(error);
+                ShowPage(from, (int)Button.SwordPage);
+                return;
+            }
+
+            if (!from.Backpack.ConsumeTotal(typeof(Gold), SwordCost))
+            {
+                ShowPage(from, (int)Button.SwordPage);
+                return;
+            }
+
+            Item sword = doubleBladed ? (Item)new LevelDoubleLaserSword() : new LevelLaserSword();
+            sword.Hue = m_Book.gem;
+            from.Fame = 0;
+            from.Karma = 0;
+            m_Book.gem = 0;
+            m_Book.steel = 0;
+            sword.Name = SwordName(sword.Name, from);
+            from.AddToBackpack(sword);
+            LoggingFunctions.LogCreatedJedi(from, sword.Name);
+            from.SendMessage("You have constructed a laser sword.");
+            from.FixedParticles(0x373A, 9, 32, 5030, 0xB41, 0, EffectLayer.Waist);
+            from.PlaySound(0x5C9);
+        }
+
+        private void ShowPage(Mobile from, int page)
+        {
+            m_Book.page = page;
+            from.SendGump(new JediSpellbookGump(from, m_Book, page));
+            from.SendSound(0x54B);
+        }
+
         public override void OnResponse(NetState state, RelayInfo info)
         {
             Mobile from = state.Mobile;
+            int buttonID = info.ButtonID;
+            if (from == null || from.Deleted || buttonID <= 0)
+                return;
 
-            if (info.ButtonID >= 280 && info.ButtonID < 290)
+            if (!m_Book.IsUsableByOwner(from))
             {
-                m_Book.page = info.ButtonID;
-                from.SendSound(0x54B);
-                int page = info.ButtonID;
-                from.SendGump(new JediSpellbookGump(from, m_Book, page));
+                from.SendMessage("You must carry your datacron directly in your backpack or equip it.");
+                return;
             }
-            else if (info.ButtonID >= 380 && HasSpell(from, info.ButtonID))
-            {
-                m_Book.page = 1;
-                int spell = info.ButtonID - 100;
-                if (spell == 280 && HasSpell(from, 280))
-                {
-                    new ForceGrip(from, null).Cast();
-                }
-                else if (spell == 281 && HasSpell(from, 281))
-                {
-                    new MindsEye(from, null).Cast();
-                }
-                else if (spell == 282 && HasSpell(from, 282))
-                {
-                    new Mirage(from, null).Cast();
-                }
-                else if (spell == 283 && HasSpell(from, 283))
-                {
-                    new ThrowSabre(from, null).Cast();
-                }
-                else if (spell == 284 && HasSpell(from, 284))
-                {
-                    new Celerity(from, null).Cast();
-                }
-                else if (spell == 285 && HasSpell(from, 285))
-                {
-                    new PsychicAura(from, null).Cast();
-                }
-                else if (spell == 286 && HasSpell(from, 286))
-                {
-                    new Deflection(from, null).Cast();
-                }
-                else if (spell == 287 && HasSpell(from, 287))
-                {
-                    new SoothingTouch(from, null).Cast();
-                }
-                else if (spell == 288 && HasSpell(from, 288))
-                {
-                    new StasisField(from, null).Cast();
-                }
-                else if (spell == 289 && HasSpell(from, 289))
-                {
-                    new Replicate(from, null).Cast();
-                }
 
-                from.SendGump(new JediSpellbookGump(from, m_Book, 1));
-                from.SendSound(0x54B);
-            }
-            else if (info.ButtonID == 2)
+            int firstSpell = m_Book.BookOffset;
+            int endSpell = firstSpell + JediSpellbook.PowerCount;
+            if (buttonID >= firstSpell && buttonID < endSpell)
             {
-                m_Book.page = 2;
-                from.SendGump(new JediSpellbookGump(from, m_Book, 2));
-                from.SendSound(0x54B);
+                ShowPage(from, buttonID);
+                return;
             }
-            else if (info.ButtonID == 3)
+
+            int spell = buttonID - CastButtonOffset;
+            if (spell >= firstSpell && spell < endSpell)
             {
-                from.SendSound(0x54D);
-                from.CloseGump(typeof(Server.Items.JediSpellbook.PowerColumn));
-                from.CloseGump(typeof(Server.Items.JediSpellbook.PowerRow));
-                from.SendGump(new Server.Items.JediSpellbook.PowerRow(from, m_Book));
-            }
-            else if (info.ButtonID == 4)
-            {
-                from.SendSound(0x54D);
-                from.CloseGump(typeof(Server.Items.JediSpellbook.PowerColumn));
-                from.CloseGump(typeof(Server.Items.JediSpellbook.PowerRow));
-                from.SendGump(new Server.Items.JediSpellbook.PowerColumn(from, m_Book));
-            }
-            else if (info.ButtonID == 5)
-            {
-                if (m_Book.names == 1)
-                {
-                    m_Book.names = 0;
-                }
+                if (m_Book.HasSpell(spell))
+                    JediSpell.CastSpell(from, spell);
                 else
-                {
-                    m_Book.names = 1;
-                }
-                from.SendGump(new JediSpellbookGump(from, m_Book, 1));
-                from.SendSound(0x54B);
+                    from.SendLocalizedMessage(500015); // You do not have that spell!
+
+                ShowPage(from, (int)Button.Main);
+                return;
             }
-            else if (info.ButtonID == 6)
+
+            switch ((Button)buttonID)
             {
-                m_Book.page = 6;
-                from.SendGump(new JediSpellbookGump(from, m_Book, 6));
-                from.SendSound(0x54B);
-            }
-            else if (info.ButtonID == 7 || info.ButtonID == 8)
-            {
-                Container pack = from.Backpack;
-                if (pack.ConsumeTotal(typeof(Gold), 10000))
-                {
-                    Item sword = new LevelLaserSword();
-                    if (info.ButtonID == 8)
-                    {
-                        sword.Delete();
-                        sword = new LevelDoubleLaserSword();
-                    }
-                    sword.Hue = m_Book.gem;
-                    from.Fame = 0;
-                    from.Karma = 0;
-                    m_Book.gem = 0;
-                    m_Book.steel = 0;
-                    sword.Name = SwordName(sword.Name, from);
-                    from.AddToBackpack(sword);
-                    LoggingFunctions.LogCreatedJedi(from, sword.Name);
-                    from.SendMessage("You can construct your own laser sword.");
-                    from.FixedParticles(0x373A, 9, 32, 5030, 0xB41, 0, EffectLayer.Waist);
-                    from.PlaySound(0x5C9);
-                }
-            }
-            else if (info.ButtonID == 9)
-            {
-                from.SendSound(0x54D);
-                from.CloseGump(typeof(Server.Items.JediSpellbook.PowerColumn));
-                from.CloseGump(typeof(Server.Items.JediSpellbook.PowerRow));
-            }
-            else if (m_Book.page > 1)
-            {
-                m_Book.page = 1;
-                from.SendGump(new JediSpellbookGump(from, m_Book, 1));
-                from.SendSound(0x54B);
-            }
-            else
-            {
-                from.SendSound(0x54D);
+                case Button.Main:
+                case Button.Help:
+                case Button.SwordPage:
+                    ShowPage(from, buttonID);
+                    break;
+                case Button.HorizontalBar:
+                case Button.VerticalBar:
+                    from.SendSound(0x54D);
+                    from.CloseGump(typeof(JediSpellbook.PowerColumn));
+                    from.CloseGump(typeof(JediSpellbook.PowerRow));
+                    if (buttonID == (int)Button.HorizontalBar)
+                        from.SendGump(new JediSpellbook.PowerRow(from, m_Book));
+                    else
+                        from.SendGump(new JediSpellbook.PowerColumn(from, m_Book));
+                    break;
+                case Button.ToggleBarNames:
+                    m_Book.names = m_Book.names == 1 ? 0 : 1;
+                    ShowPage(from, (int)Button.Main);
+                    break;
+                case Button.SingleSword:
+                case Button.DoubleSword:
+                    ConstructSword(from, buttonID == (int)Button.DoubleSword);
+                    break;
+                case Button.CloseBars:
+                    from.SendSound(0x54D);
+                    from.CloseGump(typeof(JediSpellbook.PowerColumn));
+                    from.CloseGump(typeof(JediSpellbook.PowerRow));
+                    break;
             }
         }
     }

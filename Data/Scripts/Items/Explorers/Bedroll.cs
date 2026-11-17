@@ -35,7 +35,7 @@ namespace Server.Items
 
         private bool BedsNearby(Mobile from)
         {
-            IPooledEnumerable eable = GetItemsInRange(20);
+            IPooledEnumerable eable = from.GetItemsInRange(20);
 
             try
             {
@@ -60,15 +60,14 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (Deleted)
+                return;
+
             if (from is PlayerMobile)
             {
                 PlayerMobile pm = (PlayerMobile)from;
 
-                if (
-                    from.Region is PublicRegion
-                    || from.Region is ProtectedRegion
-                    || from.Region is SafeRegion
-                )
+                if (!Kindling.CampAllowed(from))
                 {
                     from.SendMessage("You cannot use a bedroll in this location.");
                 }
@@ -76,7 +75,7 @@ namespace Server.Items
                 {
                     from.SendMessage("You already have a bedroll laid out!");
                 }
-                else if (Server.Items.Kindling.EnemiesNearby(from))
+                else if (!BedrolledOut.IsSafeCamp(from))
                 {
                     from.SendMessage("It is not safe enough to setup camp!");
                 }
@@ -111,6 +110,7 @@ namespace Server.Items
                                 from.PlaceInBackpack(this);
 
                             new BedrolledOut(from).MoveToWorld(bedLocation, from.Map);
+                            from.SendMessage("Your bedroll is ready. You may log out instantly while you remain within 3 paces and it is safe to camp.");
                             pm.Bedroll = DateTime.Now + TimeSpan.FromMinutes(10.0);
                             this.Delete();
                         }

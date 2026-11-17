@@ -1,3 +1,35 @@
+[*]November 7th, 2026
+Nephtan
+Announcements:
+
+The shard changes go live at the next restart, scheduled for Wednesday, November 11 at 9:00 a.m. Central (CST). If the shard restarts sooner, the changes will go live then.
+
+This update adds safer pet logout and weekly stable billing, along with fixes for dungeon movement, ghosts, Datacrons, and skill elixirs.
+
+Pets, stables, and camping
+
+- Instant logout shelters eligible pets and their cargo even if your stable is full. Pets return on login when you have enough follower slots. Animal trainers can also stable loaded pack animals.
+- A laid-out bedroll lets you log out instantly while you are within three paces of it at a safe camp. Log out before the bedroll rolls itself up.
+- Each stable stay begins with seven free real-world days. After that, the weekly fee is 30 gold per pet plus 1 gold per stone of pack cargo at intake. Existing stabled pets get seven free days from the start of the new billing system.
+- Automatic billing uses bank gold or checks. If you cannot cover the fee, your pet and cargo stay safe in the stable until you settle the balance and claim them.
+
+Travel and magic
+
+- Ghosts can run after using moongates and regain the grayscale ghost view when reconnecting.
+- Eligible Animal Form speed boosts carry into dungeons. This fixes the crawl that could happen when entering with Boots of Hermes or Cheetah Paws equipped.
+- Jedi and Sith powers work from their Datacrons and both quick bars. Laser sword construction rechecks requirements before taking gold or materials.
+- Elixir recipe pages and duration listings in Alchemical Elixirs have been corrected. Empty containers are returned when a keg pour fails because your backpack is full, and worn-out mortars stop after their last use.
+- Fixed a server crash that could occur when an unnamed creature died.
+
+Client artwork update available now
+
+- The separate client update aligns Wraith Form, both Fungal forms, Salamander, both Neptars, and both Trituns with their world tiles. It also fixes a Wraith animation crash in affected clients.
+- The official Confictura launcher, client ZIP, and mobile client files ZIP all include this update. Close ClassicUO before updating, then reopen it.
+
+Please include your location, pet or form, and any message shown when reporting an issue.
+
+Good hunting!
+
 [*]October 27th, 2026
 Nephtan
 Announcements:

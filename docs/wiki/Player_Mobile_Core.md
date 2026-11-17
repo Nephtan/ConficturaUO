@@ -160,11 +160,11 @@ Insurance is enabled when `Core.AOS` is true.
 
 | Operation | Compiled behavior |
 | --- | --- |
-| Startup `CheckPets()` | Under `Core.SE`, scans all world mobiles. If a player has more followers than auto-stabled pets can account for, it calls `AutoStablePets()`. |
-| `AutoStablePets()` | Runs on logout. It skips summoned pets on the same map, ridden mounts, pack animals with backpack contents, and cases where stable capacity is full. Eligible pets are ordered to stay, internalized, unmastered, marked stabled, restored to max loyalty, added to `Stabled`, and added to `m_AutoStabled`. |
+| Startup `CheckPets()` | Under `Core.SE`, scans all world mobiles. Offline players with active followers receive recovery without comparing active and auto-stabled counts. |
+| `AutoStablePets()` | Runs during instant disconnect and as a logout fallback. Instant logout bypasses stable capacity and accepts loaded carriers; delayed logout keeps those exclusions. Summons and ridden mounts retain their existing handling. Eligible pets are ordered to stay, internalized, unmastered, marked stabled, restored to max loyalty, added to `Stabled`, and added to `m_AutoStabled`. |
 | Summoned pet cleanup | Summoned pets off the player's map play anger sound and are deleted on a zero-delay timer. |
 | `ClaimAutoStabledPets()` | Runs on login. Alive players reclaim pets if `Followers + pet.ControlSlots <= FollowersMax`. The pet is remastered, moved to the player's location/map, ordered to follow, unstabled, and removed from `Stabled`. |
-| Over-cap claim | Pets that cannot fit stay in the stable and send localized message `1049612`. |
+| Over-cap claim | Pets that cannot fit stay safely stabled, remain pending for later automatic return, and send localized message `1049612`. Unpaid pets also remain pending. |
 
 ## Young Player System
 
@@ -204,10 +204,11 @@ Insurance is enabled when `Core.AOS` is true.
 
 ## Serialization
 
-`PlayerMobile` writes version `37`. Every block is positional and falls through on read. New fields must be added with a version bump and read before falling through to older cases.
+`PlayerMobile` writes version `38`. Every block is positional and falls through on read. New fields must be added with a version bump and read before falling through to older cases.
 
 | Version | Data introduced or handled |
 | --- | --- |
+| `38` | Captured instant-logout protection and inline stable billing records. See [Pet stabling and billing](Animal_Trainer_Stable_Claim.md). |
 | `37` | `m_LastDecoConfirmTime`. |
 | `36` | `UsingAncientBook`, `SpellBarsArch1-4`. |
 | `35` | `SkillStart`, `SkillBoost`, `SkillEther`, plus cap migration from old `Skills.Cap` values. |
@@ -251,7 +252,6 @@ Notable non-serialized runtime state includes anti-macro tables, staff disguise 
 | Issue | Evidence from code trace |
 | --- | --- |
 | Movement throttling dereferences `pm` before checking it for null. | `MovementThrottle_Callback(NetState ns)` assigns `PlayerMobile pm = ns.Mobile as PlayerMobile;` and immediately calculates `pm.m_NextMovementTime - DateTime.Now` before the `pm != null` guard. A non-player `NetState.Mobile` would throw. |
-| Auto-stabled pet claim has a broken null/deleted guard. | `ClaimAutoStabledPets()` checks `if (pet == null || pet.Deleted)`, but the branch then sets `pet.IsStabled = false` and checks `Stabled.Contains(pet)`. The null case still dereferences `pet`. |
 | Some pooled range/client enumerables are not freed. | `SendToStaffMessage()` iterates `from.GetClientsInRange(8)` directly, and `DeltaEnemies()` iterates `this.GetMobilesInRange(18)` directly. Nearby code in `OnDroppedItemToWorld()` shows the expected `IPooledEnumerable` plus `Free()` pattern. |
 | Guard-prison death cleanup assumes every player has a backpack. | The guard sentencing branch in `OnBeforeDeath()` loops through `this.Backpack.Items` without first checking `Backpack != null`, unlike the later insurance backpack scan. |
 | Young death teleport defines non-Sosaria destination arrays but never selects them. | `YoungDeathTeleport()` declares Underworld, Serpent Island, and Isles of Dread destination arrays, but always assigns `list = m_SosariaDeathDestinations` before choosing the nearest point. |

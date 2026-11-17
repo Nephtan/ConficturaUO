@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Server;
 using Server.Mobiles;
 using Server.Regions;
@@ -12,7 +12,7 @@ namespace Server.Items
 
         public CityLandLord Lord
         {
-            get { return m_Lord; }
+            get { return m_Sign == null ? null : m_Sign.ActiveMarketKeeper; }
         }
         public CivicSign Sign
         {
@@ -49,10 +49,17 @@ namespace Server.Items
                     CityMarketRegion cityreg = (CityMarketRegion)r;
                     if (cityreg.Sign == this.Sign)
                     {
+                        CityLandLord keeper = Lord;
+                        if (keeper == null || cityreg.LandLord != keeper)
+                        {
+                            from.SendMessage("The marketkeeper is unavailable. Please try again later.");
+                            return;
+                        }
+
                         VendorRentalDuration m_Expire;
                         m_Expire = VendorRentalDuration.Instances[(int)this.Duration];
                         CityRentedVendor vendor = new CityRentedVendor(
-                            m_Lord,
+                            keeper,
                             this.Owner,
                             m_Expire,
                             this.Rent,

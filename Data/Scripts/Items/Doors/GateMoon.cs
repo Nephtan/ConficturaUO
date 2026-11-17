@@ -67,7 +67,7 @@ namespace Server.Items
                                             pet.Hidden = true;
                                     }
                                 }
-                                m.Hidden = true;
+                                ApplyTravelConcealment(m);
                             }
                         )
                     );
@@ -678,7 +678,13 @@ namespace Server.Items
                         pet.Hidden = true;
                 }
             }
-            m.Hidden = true;
+            ApplyTravelConcealment(m);
+        }
+
+        internal static void ApplyTravelConcealment(Mobile traveler)
+        {
+            // Ghost visibility already follows war mode. The hidden flag can make the client walk.
+            traveler.Hidden = traveler.Alive || traveler.AccessLevel > AccessLevel.Player;
         }
 
         public GateMoon(Serial serial)

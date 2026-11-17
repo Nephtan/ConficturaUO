@@ -1,3 +1,4 @@
+using Server.Custom.Confictura.Stabling;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -201,6 +202,18 @@ namespace Server.Mobiles
 
         private int m_GuildMessageHue,
             m_AllianceMessageHue;
+
+        private bool m_ProtectedPetLogout;
+        private List<StableAccount> m_StableAccounts;
+        public List<StableAccount> StableAccounts
+        {
+            get
+            {
+                if (m_StableAccounts == null)
+                    m_StableAccounts = new List<StableAccount>();
+                return m_StableAccounts;
+            }
+        }
 
         private List<Mobile> m_AutoStabled;
         private List<Mobile> m_AllFollowers;
@@ -805,22 +818,14 @@ namespace Server.Mobiles
 
         private static void CheckPets()
         {
-            foreach (Mobile m in World.Mobiles.Values)
+            foreach (Mobile mobile in new List<Mobile>(World.Mobiles.Values))
             {
-                if (m is PlayerMobile)
-                {
-                    PlayerMobile pm = (PlayerMobile)m;
-
-                    if (
-                        (
-                            (!pm.Mounted || (pm.Mount != null && pm.Mount is EtherealMount))
-                            && (pm.AllFollowers.Count > pm.AutoStabled.Count)
-                        ) || (pm.Mounted && (pm.AllFollowers.Count > (pm.AutoStabled.Count + 1)))
-                    )
-                    {
-                        pm.AutoStablePets(); /* autostable checks summons, et al: no need here */
-                    }
-                }
+                PlayerMobile owner = mobile as PlayerMobile;
+                if (owner == null || owner.Deleted || owner.NetState != null)
+                    continue;
+                StableService.Reconcile(owner);
+                if (owner.AllFollowers.Count > 0)
+                    owner.AutoStablePets();
             }
         }
 
@@ -1347,6 +1352,7 @@ namespace Server.Mobiles
                 if (pm.m_Quest != null)
                     pm.m_Quest.StartTimer();
 
+                pm.m_ProtectedPetLogout = false;
                 pm.BedrollLogout = false;
                 pm.LastOnline = DateTime.Now;
             }
@@ -1365,6 +1371,14 @@ namespace Server.Mobiles
             Mobile from = (Mobile)state;
 
             SpecialMove.ClearAllMoves(from);
+        }
+
+        public override void OnDisconnected()
+        {
+            base.OnDisconnected();
+            m_ProtectedPetLogout = GetLogoutDelay() == TimeSpan.Zero;
+            if (m_ProtectedPetLogout)
+                AutoStablePets();
         }
 
         private static void EventSink_Disconnected(DisconnectedEventArgs e)
@@ -2636,17 +2650,11 @@ namespace Server.Mobiles
                     )
                     {
                         Item shoes = this.FindItemOnLayer(Layer.Shoes);
-                        if (
-                            (
-                                shoes is BootsofHermes
-                                || shoes is Artifact_BootsofHermes
-                                || shoes is Artifact_SprintersSandals
-                                || (shoes is HikingBoots && RaceID > 0)
-                            )
-                            && shoes.Weight < 5.0
-                        )
+                        bool suppressFootwear = AnimalTrainer.IsSpeedFootwear(this, shoes)
+                            && shoes.Weight < 5.0;
+
+                        if (suppressFootwear)
                         {
-                            this.Send(SpeedControl.Disable);
                             shoes.Weight = 5.0;
                             if (!(shoes is HikingBoots))
                             {
@@ -2660,6 +2668,9 @@ namespace Server.Mobiles
                         Server.Spells.Syth.SythSpeed.RemoveEffect(this);
                         Server.Spells.Jedi.Celerity.RemoveEffect(this);
                         Server.Spells.Shinobi.CheetahPaws.RemoveEffect(this);
+
+                        if (suppressFootwear)
+                            AnimalTrainer.RefreshMovementSpeed(this);
                     }
                     Server.Misc.HenchmanFunctions.DismountHenchman(this);
                 }
@@ -2667,25 +2678,10 @@ namespace Server.Mobiles
             else if (speedAble && !mountAble && !Mounted && Alive)
             {
                 Item shoes = this.FindItemOnLayer(Layer.Shoes);
-                if (shoes is BootsofHermes && shoes.Weight > 3.0)
+                if (AnimalTrainer.IsSpeedFootwear(this, shoes) && shoes.Weight > 3.0)
                 {
                     shoes.Weight = 3.0;
-                    this.Send(SpeedControl.MountSpeed);
-                }
-                else if (shoes is Artifact_BootsofHermes && shoes.Weight > 3.0)
-                {
-                    shoes.Weight = 3.0;
-                    this.Send(SpeedControl.MountSpeed);
-                }
-                else if (shoes is Artifact_SprintersSandals && shoes.Weight > 3.0)
-                {
-                    shoes.Weight = 3.0;
-                    this.Send(SpeedControl.MountSpeed);
-                }
-                else if (shoes is HikingBoots && shoes.Weight > 3.0 && RaceID > 0)
-                {
-                    shoes.Weight = 3.0;
-                    this.Send(SpeedControl.MountSpeed);
+                    AnimalTrainer.RefreshMovementSpeed(this);
                 }
             }
             else if (mountAble && !Mounted && Alive)
@@ -2693,25 +2689,10 @@ namespace Server.Mobiles
                 Server.Mobiles.AnimalTrainer.GetLastMounted(this);
 
                 Item shoes = this.FindItemOnLayer(Layer.Shoes);
-                if (shoes is BootsofHermes && shoes.Weight > 3.0)
+                if (AnimalTrainer.IsSpeedFootwear(this, shoes) && shoes.Weight > 3.0)
                 {
                     shoes.Weight = 3.0;
-                    this.Send(SpeedControl.MountSpeed);
-                }
-                else if (shoes is Artifact_BootsofHermes && shoes.Weight > 3.0)
-                {
-                    shoes.Weight = 3.0;
-                    this.Send(SpeedControl.MountSpeed);
-                }
-                else if (shoes is Artifact_SprintersSandals && shoes.Weight > 3.0)
-                {
-                    shoes.Weight = 3.0;
-                    this.Send(SpeedControl.MountSpeed);
-                }
-                else if (shoes is HikingBoots && shoes.Weight > 3.0 && RaceID > 0)
-                {
-                    shoes.Weight = 3.0;
-                    this.Send(SpeedControl.MountSpeed);
+                    AnimalTrainer.RefreshMovementSpeed(this);
                 }
 
                 if (this.Mount != null)
@@ -4568,6 +4549,14 @@ namespace Server.Mobiles
             // every dependent system.
             switch (version)
             {
+                case 38:
+                    {
+                        m_ProtectedPetLogout = reader.ReadBool();
+                        int accountCount = reader.ReadInt();
+                        for (int i = 0; i < accountCount; ++i)
+                            StableAccounts.Add(new StableAccount(reader));
+                        goto case 37;
+                    }
                 case 37:
                     {
                         m_LastDecoConfirmTime = reader.ReadDateTime();
@@ -4995,7 +4984,13 @@ namespace Server.Mobiles
 
             base.Serialize(writer);
 
-            writer.Write((int)37); // version
+            writer.Write((int)38); // version
+
+            // Version 38 prefixes the unchanged version-37 payload.
+            writer.Write(m_ProtectedPetLogout);
+            writer.Write(StableAccounts.Count);
+            foreach (StableAccount account in StableAccounts)
+                account.Serialize(writer);
 
             writer.Write(m_LastDecoConfirmTime);
 
@@ -6052,7 +6047,7 @@ namespace Server.Mobiles
 
         public override TimeSpan GetLogoutDelay()
         {
-            if (BedrollLogout)
+            if (BedrollLogout || BedrolledOut.CanLogout(this))
                 return TimeSpan.Zero;
 
             return base.GetLogoutDelay();
@@ -6682,15 +6677,19 @@ namespace Server.Mobiles
 
         public void AutoStablePets()
         {
-            if (Core.SE && AllFollowers.Count > 0)
+            if (!Core.SE)
+                return;
+
+            bool protect = m_ProtectedPetLogout || StableService.IsInstantLogout(this);
+            List<Mobile> followers = new List<Mobile>(AllFollowers);
+            followers.Reverse();
+            foreach (Mobile mobile in followers)
             {
-                for (int i = m_AllFollowers.Count - 1; i >= 0; --i)
+                BaseCreature pet = mobile as BaseCreature;
+                if (pet == null || pet.Deleted || pet.ControlMaster != this)
+                    continue;
+                try
                 {
-                    BaseCreature pet = AllFollowers[i] as BaseCreature;
-
-                    if (pet == null || pet.ControlMaster == null)
-                        continue;
-
                     if (pet.Summoned)
                     {
                         if (pet.Map != Map)
@@ -6700,91 +6699,30 @@ namespace Server.Mobiles
                         }
                         continue;
                     }
-
-                    if (pet is IMount && ((IMount)pet).Rider != null)
-                        continue;
-
-                    if (
-                        (
-                            pet is PackLlama
-                            || pet is PackHorse
-                            || pet is Beetle
-                            || pet is HordeMinionFamiliar
-                        ) && (pet.Backpack != null && pet.Backpack.Items.Count > 0)
-                    )
-                        continue;
-
-                    if (this.Stabled.Count >= Server.Mobiles.AnimalTrainer.GetMaxStabled(this))
-                        continue;
-
-                    pet.ControlTarget = null;
-                    pet.ControlOrder = OrderType.Stay;
-                    pet.Internalize();
-
-                    pet.SetControlMaster(null);
-                    pet.SummonMaster = null;
-
-                    pet.IsStabled = true;
-
-                    pet.Loyalty = BaseCreature.MaxLoyalty; // Wonderfully happy
-
-                    Stabled.Add(pet);
-                    m_AutoStabled.Add(pet);
+                    StableService.TryStable(this, pet, true, protect, null);
+                }
+                catch (Exception exception)
+                {
+                    StableService.ReportFailure(this, pet, exception);
                 }
             }
         }
 
         public void ClaimAutoStabledPets()
         {
-            if (!Core.SE || m_AutoStabled.Count <= 0)
+            if (!Core.SE)
                 return;
-
+            StableService.Reconcile(this);
             if (!Alive)
             {
-                SendLocalizedMessage(1076251); // Your pet was unable to join you while you are a ghost.  Please re-login once you have ressurected to claim your pets.
+                if (m_AutoStabled.Count > 0)
+                    SendLocalizedMessage(1076251);
                 return;
             }
-
-            for (int i = m_AutoStabled.Count - 1; i >= 0; --i)
-            {
-                BaseCreature pet = m_AutoStabled[i] as BaseCreature;
-
-                if (pet == null || pet.Deleted)
-                {
-                    pet.IsStabled = false;
-
-                    if (Stabled.Contains(pet))
-                        Stabled.Remove(pet);
-
-                    continue;
-                }
-
-                if ((Followers + pet.ControlSlots) <= FollowersMax)
-                {
-                    pet.SetControlMaster(this);
-
-                    if (pet.Summoned)
-                        pet.SummonMaster = this;
-
-                    pet.ControlTarget = this;
-                    pet.ControlOrder = OrderType.Follow;
-
-                    pet.MoveToWorld(Location, Map);
-
-                    pet.IsStabled = false;
-
-                    pet.Loyalty = BaseCreature.MaxLoyalty; // Wonderfully Happy
-
-                    if (Stabled.Contains(pet))
-                        Stabled.Remove(pet);
-                }
-                else
-                {
-                    SendLocalizedMessage(1049612, pet.Name); // ~1_NAME~ remained in the stables because you have too many followers.
-                }
-            }
-
-            m_AutoStabled.Clear();
+            List<Mobile> pending = new List<Mobile>(m_AutoStabled);
+            pending.Reverse();
+            foreach (Mobile mobile in pending)
+                StableService.TryReturn(this, mobile as BaseCreature, false);
         }
 
         // Taking care of the autoloot bag

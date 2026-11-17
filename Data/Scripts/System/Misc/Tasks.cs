@@ -19,6 +19,8 @@ namespace Server.Items
 {
     public class TaskManager150Min : Item
     {
+        private Timer m_TaskTimer;
+
         [Constructable]
         public TaskManager150Min()
             : base(0x0EDE)
@@ -26,8 +28,24 @@ namespace Server.Items
             Movable = false;
             Name = "Task Manager 150 Min";
             Visible = false;
-            TaskTimer thisTimer = new TaskTimer(this);
-            thisTimer.Start();
+            StartTaskTimer(new TaskTimer(this));
+        }
+
+        private void StartTaskTimer(Timer timer)
+        {
+            m_TaskTimer = timer;
+            timer.Start();
+        }
+
+        public override void OnAfterDelete()
+        {
+            if (m_TaskTimer != null)
+            {
+                m_TaskTimer.Stop();
+                m_TaskTimer = null;
+            }
+
+            base.OnAfterDelete();
         }
 
         public TaskManager150Min(Serial serial)
@@ -46,13 +64,11 @@ namespace Server.Items
 
             if (Server.Misc.MyServerSettings.RunRoutinesAtStartup())
             {
-                FirstTimer thisTimer = new FirstTimer(this);
-                thisTimer.Start();
+                StartTaskTimer(new FirstTimer(this));
             }
             else
             {
-                TaskTimer thisTimer = new TaskTimer(this);
-                thisTimer.Start();
+                StartTaskTimer(new TaskTimer(this));
             }
         }
 
@@ -92,11 +108,14 @@ namespace Server.Items
 
         public static void RunThis(bool DoAction, Item item)
         {
+            TaskManager150Min owner = item as TaskManager150Min;
+            if (owner == null || owner.Deleted)
+                return;
+
             ///// PLANT THE GARDENS //////////////////////////////////////
             Farms.PlantGardens();
             LoggingFunctions.LogServer("Done - Planting Gardens");
-            TaskTimer thisTimer = new TaskTimer(item);
-            thisTimer.Start();
+            owner.StartTaskTimer(new TaskTimer(owner));
         }
     }
 }
@@ -105,6 +124,8 @@ namespace Server.Items
 {
     public class TaskManager200Min : Item
     {
+        private Timer m_TaskTimer;
+
         [Constructable]
         public TaskManager200Min()
             : base(0x0EDE)
@@ -112,8 +133,24 @@ namespace Server.Items
             Movable = false;
             Name = "Task Manager 200 Minutes";
             Visible = false;
-            TaskTimer thisTimer = new TaskTimer(this);
-            thisTimer.Start();
+            StartTaskTimer(new TaskTimer(this));
+        }
+
+        private void StartTaskTimer(Timer timer)
+        {
+            m_TaskTimer = timer;
+            timer.Start();
+        }
+
+        public override void OnAfterDelete()
+        {
+            if (m_TaskTimer != null)
+            {
+                m_TaskTimer.Stop();
+                m_TaskTimer = null;
+            }
+
+            base.OnAfterDelete();
         }
 
         public TaskManager200Min(Serial serial)
@@ -132,13 +169,11 @@ namespace Server.Items
 
             if (Server.Misc.MyServerSettings.RunRoutinesAtStartup())
             {
-                FirstTimer thisTimer = new FirstTimer(this);
-                thisTimer.Start();
+                StartTaskTimer(new FirstTimer(this));
             }
             else
             {
-                TaskTimer thisTimer = new TaskTimer(this);
-                thisTimer.Start();
+                StartTaskTimer(new TaskTimer(this));
             }
         }
 
@@ -178,8 +213,11 @@ namespace Server.Items
 
         public static void RunThis(bool DoAction, Item it)
         {
-            TaskTimer thisTimer = new TaskTimer(it);
-            thisTimer.Start();
+            TaskManager200Min owner = it as TaskManager200Min;
+            if (owner == null || owner.Deleted)
+                return;
+
+            owner.StartTaskTimer(new TaskTimer(owner));
 
             ArrayList spawns = new ArrayList();
             foreach (Item item in World.Items.Values)
@@ -235,6 +273,8 @@ namespace Server.Items
 {
     public class TaskManager250Min : Item
     {
+        private Timer m_TaskTimer;
+
         [Constructable]
         public TaskManager250Min()
             : base(0x0EDE)
@@ -242,8 +282,24 @@ namespace Server.Items
             Movable = false;
             Name = "Task Manager 250 Minutes";
             Visible = false;
-            TaskTimer thisTimer = new TaskTimer(this);
-            thisTimer.Start();
+            StartTaskTimer(new TaskTimer(this));
+        }
+
+        private void StartTaskTimer(Timer timer)
+        {
+            m_TaskTimer = timer;
+            timer.Start();
+        }
+
+        public override void OnAfterDelete()
+        {
+            if (m_TaskTimer != null)
+            {
+                m_TaskTimer.Stop();
+                m_TaskTimer = null;
+            }
+
+            base.OnAfterDelete();
         }
 
         public TaskManager250Min(Serial serial)
@@ -262,13 +318,11 @@ namespace Server.Items
 
             if (Server.Misc.MyServerSettings.RunRoutinesAtStartup())
             {
-                FirstTimer thisTimer = new FirstTimer(this);
-                thisTimer.Start();
+                StartTaskTimer(new FirstTimer(this));
             }
             else
             {
-                TaskTimer thisTimer = new TaskTimer(this);
-                thisTimer.Start();
+                StartTaskTimer(new TaskTimer(this));
             }
         }
 
@@ -308,8 +362,11 @@ namespace Server.Items
 
         public static void RunThis(bool DoAction, Item item)
         {
-            TaskTimer thisTimer = new TaskTimer(item);
-            thisTimer.Start();
+            TaskManager250Min owner = item as TaskManager250Min;
+            if (owner == null || owner.Deleted)
+                return;
+
+            owner.StartTaskTimer(new TaskTimer(owner));
 
             // SWITCH UP THE VENDOR BOOKS
             Server.Items.MerchantsBook.SetupSaleBooks();
@@ -326,6 +383,8 @@ namespace Server.Items
 {
     public class TaskManagerDaily : Item
     {
+        private Timer m_TaskTimer;
+
         [Constructable]
         public TaskManagerDaily()
             : base(0x0EDE)
@@ -333,8 +392,24 @@ namespace Server.Items
             Movable = false;
             Name = "Task Manager Daily";
             Visible = false;
-            TaskTimer thisTimer = new TaskTimer(this);
-            thisTimer.Start();
+            StartTaskTimer(new TaskTimer(this));
+        }
+
+        private void StartTaskTimer(Timer timer)
+        {
+            m_TaskTimer = timer;
+            timer.Start();
+        }
+
+        public override void OnAfterDelete()
+        {
+            if (m_TaskTimer != null)
+            {
+                m_TaskTimer.Stop();
+                m_TaskTimer = null;
+            }
+
+            base.OnAfterDelete();
         }
 
         public TaskManagerDaily(Serial serial)
@@ -353,13 +428,11 @@ namespace Server.Items
 
             if (Server.Misc.MyServerSettings.RunRoutinesAtStartup())
             {
-                FirstTimer thisTimer = new FirstTimer(this);
-                thisTimer.Start();
+                StartTaskTimer(new FirstTimer(this));
             }
             else
             {
-                TaskTimer thisTimer = new TaskTimer(this);
-                thisTimer.Start();
+                StartTaskTimer(new TaskTimer(this));
             }
         }
 
@@ -399,8 +472,11 @@ namespace Server.Items
 
         public static void RunThis(Item item)
         {
-            TaskTimer thisTimer = new TaskTimer(item);
-            thisTimer.Start();
+            TaskManagerDaily owner = item as TaskManagerDaily;
+            if (owner == null || owner.Deleted)
+                return;
+
+            owner.StartTaskTimer(new TaskTimer(owner));
 
             LoggingFunctions.LogServer("Start - Arrange Quest Search Crates");
 
@@ -646,6 +722,9 @@ namespace Server.Items
 {
     public class TaskManager : Item
     {
+        private Timer m_TaskTimer;
+        private Timer m_ColorTimer;
+
         [Constructable]
         public TaskManager()
             : base(0x0EDE)
@@ -653,8 +732,30 @@ namespace Server.Items
             Movable = false;
             Name = "Task Manager 1 Hour";
             Visible = false;
-            TaskTimer thisTimer = new TaskTimer(this);
-            thisTimer.Start();
+            StartTaskTimer(new TaskTimer(this));
+        }
+
+        private void StartTaskTimer(Timer timer)
+        {
+            m_TaskTimer = timer;
+            timer.Start();
+        }
+
+        public override void OnAfterDelete()
+        {
+            if (m_TaskTimer != null)
+            {
+                m_TaskTimer.Stop();
+                m_TaskTimer = null;
+            }
+
+            if (m_ColorTimer != null)
+            {
+                m_ColorTimer.Stop();
+                m_ColorTimer = null;
+            }
+
+            base.OnAfterDelete();
         }
 
         public TaskManager(Serial serial)
@@ -673,17 +774,15 @@ namespace Server.Items
 
             if (Server.Misc.MyServerSettings.RunRoutinesAtStartup())
             {
-                FirstTimer thisTimer = new FirstTimer(this);
-                thisTimer.Start();
+                StartTaskTimer(new FirstTimer(this));
             }
             else
             {
-                TaskTimer thisTimer = new TaskTimer(this);
-                thisTimer.Start();
+                StartTaskTimer(new TaskTimer(this));
             }
 
-            ColorTimer colorTimer = new ColorTimer(this);
-            colorTimer.Start();
+            m_ColorTimer = new ColorTimer(this);
+            m_ColorTimer.Start();
         }
 
         public class TaskTimer : Timer
@@ -699,8 +798,11 @@ namespace Server.Items
 
             protected override void OnTick()
             {
-                TaskTimer thisTimer = new TaskTimer(i_item);
-                thisTimer.Start();
+                TaskManager owner = (TaskManager)i_item;
+                if (owner.Deleted)
+                    return;
+
+                owner.StartTaskTimer(new TaskTimer(owner));
                 RunThis();
             }
         }
@@ -718,8 +820,11 @@ namespace Server.Items
 
             protected override void OnTick()
             {
-                TaskTimer thisTimer = new TaskTimer(i_item);
-                thisTimer.Start();
+                TaskManager owner = (TaskManager)i_item;
+                if (owner.Deleted)
+                    return;
+
+                owner.StartTaskTimer(new TaskTimer(owner));
                 RunThis();
             }
         }
@@ -737,7 +842,8 @@ namespace Server.Items
 
             protected override void OnTick()
             {
-                Server.Misc.ServerUpdate.UpdateMaterialColors();
+                if (!i_item.Deleted)
+                    Server.Misc.ServerUpdate.UpdateMaterialColors();
             }
         }
 

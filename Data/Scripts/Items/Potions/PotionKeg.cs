@@ -169,21 +169,29 @@ namespace Server.Items
                 if (m_Held > 0)
                 {
                     Container pack = from.Backpack;
+                    Item empty = pack == null ? null : pack.FindItemByType(IsJarPotion(m_Type) ? typeof(Jar) : typeof(Bottle));
 
-                    if (
-                        pack != null
-                        && (
-                            (IsJarPotion(m_Type) && pack.ConsumeTotal(typeof(Jar), 1))
-                            || (!IsJarPotion(m_Type) && pack.ConsumeTotal(typeof(Bottle), 1))
-                        )
-                    )
+                    if (empty != null)
                     {
+                        Container originalContainer = (Container)empty.Parent;
+                        Point3D originalLocation = empty.Location;
+                        bool wholeStack = empty.Amount == 1;
+
+                        // Reserve the container so a rejected fill can restore the original stack and slot.
+                        if (wholeStack)
+                            empty.Internalize();
+                        else
+                            --empty.Amount;
+
                         from.SendLocalizedMessage(502242); // You pour some of the keg's contents into an empty bottle...
 
                         BasePotion pot = FillBottle();
 
                         if (pack.TryDropItem(from, pot, false))
                         {
+                            if (wholeStack)
+                                empty.Delete();
+
                             from.SendLocalizedMessage(502243); // ...and place it into your backpack.
                             from.PlaySound(0x240);
 
@@ -194,6 +202,14 @@ namespace Server.Items
                         {
                             from.SendLocalizedMessage(502244); // ...but there is no room for the bottle in your backpack.
                             pot.Delete();
+
+                            if (wholeStack)
+                            {
+                                originalContainer.AddItem(empty);
+                                empty.Location = originalLocation;
+                            }
+                            else
+                                ++empty.Amount;
                         }
                     }
                     else

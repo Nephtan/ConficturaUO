@@ -50,8 +50,11 @@ namespace Server.Spells.Mystic
 
         public static void RemoveEffect(Mobile m)
         {
-            m.Send(SpeedControl.Disable);
+            if (!UnderEffect(m))
+                return;
+
             TableWindRunning.Remove(m);
+            AnimalTrainer.RefreshMovementSpeed(m);
             m.EndAction(typeof(WindRunner));
             BuffInfo.RemoveBuff(m, BuffIcon.WindRunner);
         }
@@ -87,7 +90,7 @@ namespace Server.Spells.Mystic
 
                 int TotalTime = (int)(Caster.Skills[SkillName.FistFighting].Value * 5);
                 TableWindRunning[Caster] = SpeedControl.MountSpeed;
-                Caster.Send(SpeedControl.MountSpeed);
+                AnimalTrainer.RefreshMovementSpeed(Caster);
                 new InternalTimer(Caster, TimeSpan.FromSeconds(TotalTime)).Start();
                 BuffInfo.RemoveBuff(Caster, BuffIcon.WindRunner);
                 BuffInfo.AddBuff(

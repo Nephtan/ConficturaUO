@@ -174,6 +174,7 @@
     <Compile Include="Custom\ChangeSeason\ChangeSeason.cs" />
     <Compile Include="Custom\Character Swap\CharacterSwap.cs" />
     <Compile Include="Custom\ClearDeckCommand\ClearDeckCommand.cs" />
+    <Compile Include="Custom\PetStabling\StableService.cs" />
     <Compile Include="Custom\PvE\CloneOfflinePlayerCharacters\CloneOfflinePlayerCharacters.cs" />
     <Compile Include="Custom\PvE\CloneOfflinePlayerCharacters\BackpackClone.cs" />
     <Compile Include="Custom\PvE\CloneOfflinePlayerCharacters\CharacterClone.cs" />
@@ -353,6 +354,9 @@
     <Compile Include="Custom\Government System\Items\Misc\CityMallToken.cs" />
     <Compile Include="Custom\Government System\Items\Misc\CityVendorDismissTimer.cs" />
     <Compile Include="Custom\Government System\Items\Misc\MoveVendorTarget.cs" />
+    <Compile Include="Custom\Government System\Items\Signs\CivicBarkeeperSlot.cs" />
+    <Compile Include="Custom\Government System\Items\Signs\CivicMarketKeeperSlot.cs" />
+    <Compile Include="Custom\Government System\Items\Signs\CivicMarketVendorSlot.cs" />
     <Compile Include="Custom\Government System\Items\Signs\CivicSign.cs" />
     <Compile Include="Custom\Government System\Items\Signs\RecCivicSign.cs" />
     <Compile Include="Custom\Government System\Items\Stones\CityBankStone.cs" />
@@ -495,6 +499,8 @@
     <Compile Include="Custom\Mobiles\Civilized\GraveRobber.cs" />
     <Compile Include="Custom\Mobiles\Civilized\Malachi.cs" />
     <Compile Include="Custom\Mobiles\Civilized\RangerOfTheBritainMilitia.cs" />
+    <Compile Include="Custom\Mobiles\Civilized\RatRentSpawner.cs" />
+    <Compile Include="Custom\Mobiles\Civilized\StaffEventQuestNpc.cs" />
     <Compile Include="Custom\Mobiles\Constructs\CursedAdventurer.cs" />
     <Compile Include="Custom\Mobiles\Constructs\DiosMonster.cs" />
     <Compile Include="Custom\Mobiles\Constructs\FinalExodus.cs" />
@@ -661,6 +667,7 @@
     <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddStairGump.cs" />
     <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddWallGump.cs" />
     <Compile Include="Custom\StaffTools\StaticGumpTool\StaticGump%28Alternative%29.cs" />
+    <Compile Include="Custom\StaffTools\WorldXmlCutover.cs" />
     <Compile Include="Custom\PandorasGiftBox\PandorasGiftBox.cs" />
     <Compile Include="Custom\Player Range Sensitive Mod\setdeactivation.cs" />
     <Compile Include="Custom\Point Command [2.0]\Point.cs" />
@@ -1485,6 +1492,7 @@
     <Compile Include="Items\Books\SwordsAndShackles.cs" />
     <Compile Include="Items\Books\TanBook.cs" />
     <Compile Include="Items\Books\TitleChangeDeed.cs" />
+    <Compile Include="Items\Books\WolfgangCryptBooks.cs" />
     <Compile Include="Items\Carpets\MagicCarpetA.cs" />
     <Compile Include="Items\Carpets\MagicCarpetB.cs" />
     <Compile Include="Items\Carpets\MagicCarpetC.cs" />

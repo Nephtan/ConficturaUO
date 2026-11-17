@@ -4722,7 +4722,8 @@ namespace Server.Mobiles
             }
             else if (!(m is HouseVisitor))
             {
-                BaseMount mount = new Horse();
+                BaseMount fallback = new Horse();
+                BaseMount mount = fallback;
 
                 int roll = 0;
 
@@ -5014,6 +5015,9 @@ namespace Server.Mobiles
                         }
                         break;
                 }
+
+                if (mount != fallback)
+                    fallback.Delete();
 
                 if (mount is Horse && Utility.RandomMinMax(1, 50) == 1)
                 {

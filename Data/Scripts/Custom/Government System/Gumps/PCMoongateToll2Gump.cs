@@ -100,7 +100,7 @@ namespace Server.Gumps
                         BaseCreature.TeleportPets(from, m_LocDes, m_MapDes);
                         from.Combatant = null;
                         from.Warmode = false;
-                        from.Hidden = true;
+                        GateMoon.ApplyTravelConcealment(from);
                         from.MoveToWorld(m_LocDes, m_MapDes);
                         Effects.PlaySound(m_LocDes, m_MapDes, 0x1FE);
                     }

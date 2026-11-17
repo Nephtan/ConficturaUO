@@ -570,7 +570,7 @@ namespace Server.Items
 
                     m_Mobile.Combatant = null;
                     m_Mobile.Warmode = false;
-                    m_Mobile.Hidden = true;
+                    GateMoon.ApplyTravelConcealment(m_Mobile);
 
                     m_Mobile.MoveToWorld(entry.Location, list.Map);
 

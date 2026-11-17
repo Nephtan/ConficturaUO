@@ -781,6 +781,9 @@ namespace Server.Items
 
         public void RemoveDungeonChest()
         {
+            if (Deleted)
+                return;
+
             LoggingFunctions.LogServer("Start - Remove Dungeon Chest");
 
             Item spawnBox = new DungeonChest(SpawnerLevel);

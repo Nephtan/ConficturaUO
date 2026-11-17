@@ -304,6 +304,34 @@ namespace Server.Items
         }
     }
 
+    public class LethalTeleporter : Teleporter
+    {
+        [Constructable]
+        public LethalTeleporter() { }
+
+        public LethalTeleporter(Serial serial)
+            : base(serial) { }
+
+        public override bool OnMoveOver(Mobile m)
+        {
+            // A separate lethal tile can be skipped when the portal handles movement first.
+            KillerTile.ApplyEffect(m, "killer");
+            return base.OnMoveOver(m);
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((int)0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            int version = reader.ReadInt();
+        }
+    }
+
     public class SkillTeleporter : Teleporter
     {
         private SkillName m_Skill;

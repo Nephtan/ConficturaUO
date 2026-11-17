@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
@@ -20,6 +20,7 @@ namespace Server.Mobiles
         private Rectangle3D[] m_Area;
         public CityMarketRegion m_Region;
         private CivicSign m_Sign;
+        private CivicMarketKeeperSlot m_KeeperSlot;
         private List<PremiumSpawner> m_vendorSpawners;
 
         public List<PremiumSpawner> VendorSpawners
@@ -103,6 +104,8 @@ namespace Server.Mobiles
             m_Stone = stone;
             m_Area = area;
             m_Sign = sign;
+            if (sign.toDelete == null)
+                sign.toDelete = new ArrayList();
 
             UpdateMarketRegion();
             CreateRandomVendors(loc, map);
@@ -110,8 +113,25 @@ namespace Server.Mobiles
 
         public void UpdateMarketRegion()
         {
+            if (m_Region != null && m_Region.Registered)
+                return;
+
             m_Region = new CityMarketRegion(m_Stone, this, this.Map, m_Area, m_Sign);
             m_Region.Register();
+        }
+
+        internal void BindMarketKeeper(
+            CivicMarketKeeperSlot slot, CivicSign sign, Rectangle3D[] area, CityMarketRegion region)
+        {
+            m_KeeperSlot = slot;
+            m_Sign = sign;
+            m_Stone = sign.Stone;
+            m_Area = area;
+            m_Region = region;
+            Home = slot.Location;
+            RangeHome = 5;
+            Frozen = true;
+            Direction = Direction.South;
         }
 
         public override void InitSBInfo()
@@ -177,7 +197,16 @@ namespace Server.Mobiles
 
         public override void OnDelete()
         {
-            m_Region.Unregister();
+            if (m_KeeperSlot != null && m_KeeperSlot.KeeperDeleted(this))
+            {
+                base.OnDelete();
+                return;
+            }
+
+            if (m_Region != null)
+                m_Region.Unregister();
+
+            DeleteVendorSlots(false);
 
             if (m_vendorSpawners.Count > 0)
             {
@@ -194,84 +223,48 @@ namespace Server.Mobiles
             }
         }
 
+        private void DeleteVendorSlots(bool removeFromSign)
+        {
+            if (m_Sign == null || m_Sign.toDelete == null)
+                return;
+
+            List<CivicMarketVendorSlot> owned = new List<CivicMarketVendorSlot>();
+            foreach (Item item in m_Sign.toDelete)
+            {
+                CivicMarketVendorSlot slot = item as CivicMarketVendorSlot;
+                if (slot != null && slot.Sign == m_Sign)
+                    owned.Add(slot);
+            }
+
+            foreach (CivicMarketVendorSlot slot in owned)
+            {
+                slot.Delete();
+                if (removeFromSign)
+                    m_Sign.toDelete.Remove(slot);
+            }
+        }
+
         public void CreateRandomVendors(Point3D p, Map map)
         {
-            if (m_vendorSpawners.Count > 0)
+            if (Deleted || m_Sign == null || m_Sign.Deleted || m_Sign.toDelete == null
+                || map == null || map == Map.Internal)
+                return;
+
+            DeleteVendorSlots(true);
+            foreach (PremiumSpawner spawner in m_vendorSpawners)
             {
-                foreach (PremiumSpawner sp in m_vendorSpawners)
-                    sp.Delete();
-
-                m_vendorSpawners.Clear();
+                spawner.Delete();
+                m_Sign.toDelete.Remove(spawner);
             }
+            m_vendorSpawners.Clear();
 
-            int index = Utility.RandomMinMax(0, types.Length - 1);
-            int index2 = Utility.RandomMinMax(0, types.Length - 1);
-            while (index == index2)
-                index2 = Utility.RandomMinMax(0, types.Length - 1);
+            int first = Utility.Random(types.Length);
+            int second = Utility.Random(types.Length - 1);
+            if (second >= first)
+                ++second;
 
-            Type type1 = types[index];
-            Type type2 = types[index2];
-
-            PremiumSpawner sp1 = new PremiumSpawner(type1.Name);
-            sp1.Count = 1;
-            sp1.Running = true;
-            sp1.HomeRange = 5;
-                sp1.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                sp1.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-            sp1.Visible = false;
-            sp1.Movable = false;
-            sp1.MoveToWorld(new Point3D(p.X + 1, p.Y, p.Z), map);
-            sp1.Respawn();
-
-            PremiumSpawner sp2 = new PremiumSpawner(type2.Name);
-            sp2.Count = 1;
-            sp2.Running = true;
-            sp2.HomeRange = 5;
-                sp2.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
-                sp2.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
-            sp2.Visible = false;
-            sp2.Movable = false;
-            sp2.MoveToWorld(new Point3D(p.X + 2, p.Y, p.Z), map);
-            sp2.Respawn();
-
-            IPooledEnumerable sp1Mobiles = sp1.GetMobilesInRange(0);
-
-            try
-            {
-                foreach (Mobile m in sp1Mobiles)
-                {
-                    m.Frozen = true;
-                    m.Direction = Direction.South;
-                }
-            }
-            finally
-            {
-                sp1Mobiles.Free();
-            }
-
-            IPooledEnumerable sp2Mobiles = sp2.GetMobilesInRange(0);
-
-            try
-            {
-                foreach (Mobile m in sp2Mobiles)
-                {
-                    m.Frozen = true;
-                    m.Direction = Direction.South;
-                }
-            }
-            finally
-            {
-                sp2Mobiles.Free();
-            }
-
-            m_vendorSpawners.Add(sp1);
-            m_vendorSpawners.Add(sp2);
-
-            if (m_Sign != null && m_Sign.toDelete != null)
-            {
-                m_Sign.toDelete.Add(sp1);
-                m_Sign.toDelete.Add(sp2);
-            }
+            new CivicMarketVendorSlot(m_Sign, types[first], new Point3D(p.X + 1, p.Y, p.Z), map);
+            new CivicMarketVendorSlot(m_Sign, types[second], new Point3D(p.X + 2, p.Y, p.Z), map);
         }
 
         public CityLandLord(Serial serial)
@@ -308,30 +301,39 @@ namespace Server.Mobiles
             m_Area = Server.Items.CityManagementStone.ReadRect3DArray(reader);
 
             Frozen = true;
+            // Spawner item data is read after mobile data during World.Load.
+            Timer.DelayCall(TimeSpan.Zero, RestoreMarket);
+        }
 
-            foreach (PremiumSpawner sp in m_vendorSpawners)
-            {
-                sp.Respawn();
-                IPooledEnumerable vendorMobiles = sp.GetMobilesInRange(0);
-
-                try
-                {
-                    foreach (Mobile m in vendorMobiles)
-                    {
-                        m.Frozen = true;
-                        m.Direction = Direction.South;
-                    }
-                }
-                finally
-                {
-                    vendorMobiles.Free();
-                }
-
-                if (m_Sign != null && m_Sign.toDelete != null && !m_Sign.toDelete.Contains(sp))
-                    m_Sign.toDelete.Add(sp);
-            }
+        private void RestoreMarket()
+        {
+            if (Deleted || m_Stone == null || m_Stone.Deleted || m_Sign == null || m_Sign.Deleted
+                || m_Area == null || m_Area.Length == 0 || Map == null || Map == Map.Internal)
+                return;
 
             UpdateMarketRegion();
+            foreach (PremiumSpawner spawner in m_vendorSpawners)
+            {
+                if (spawner == null || spawner.Deleted)
+                    continue;
+
+                Dictionary<Mobile, bool> vendors = new Dictionary<Mobile, bool>();
+                spawner.CollectLivingChildren(vendors);
+                if (vendors.Count == 0 && spawner.Running)
+                {
+                    spawner.Respawn();
+                    spawner.CollectLivingChildren(vendors);
+                }
+
+                foreach (Mobile vendor in vendors.Keys)
+                {
+                    vendor.Frozen = true;
+                    vendor.Direction = Direction.South;
+                }
+
+                if (m_Sign.toDelete != null && !m_Sign.toDelete.Contains(spawner))
+                    m_Sign.toDelete.Add(spawner);
+            }
         }
     }
 }

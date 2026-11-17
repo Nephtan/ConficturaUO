@@ -1,12 +1,12 @@
 <Spawns>
   <Points>
     <Name>RWChamp_Sosaria</Name>
-    <UniqueId>0cd3687e-3f58-44bc-a7dd-5676019a877f</UniqueId>
+    <UniqueId>adbbd591-5d98-4f32-a38c-ded36564af73</UniqueId>
     <Map>Sosaria</Map>
-    <X>1</X>
-    <Y>1</Y>
-    <Width>5119</Width>
-    <Height>3127</Height>
+    <X>0</X>
+    <Y>0</Y>
+    <Width>5120</Width>
+    <Height>3128</Height>
     <CentreX>2515</CentreX>
     <CentreY>1531</CentreY>
     <CentreZ>0</CentreZ>

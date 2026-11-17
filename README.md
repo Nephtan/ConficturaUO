@@ -21,6 +21,8 @@ This README is the repository hub for contributors, staff, and returning maintai
 4. For script work, keep in mind that `Scripts.csproj` references `Server.csproj`; building scripts also builds the server dependency.
 5. Review [AGENTS.md](AGENTS.md) before changing code. It records repository conventions, serialization rules, and current build expectations.
 
+For an empty shard, follow the [fresh world bootstrap guide](docs/world-bootstrap.md).
+
 ## Build Workflows
 
 The preferred build entry point is the solution:

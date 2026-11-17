@@ -60,8 +60,11 @@ namespace Server.Spells.Syth
 
         public static void RemoveEffect(Mobile m)
         {
-            m.Send(SpeedControl.Disable);
+            if (!UnderEffect(m))
+                return;
+
             TableSythRunning.Remove(m);
+            AnimalTrainer.RefreshMovementSpeed(m);
             m.EndAction(typeof(SythSpeed));
             BuffInfo.RemoveBuff(m, BuffIcon.Speed);
         }
@@ -99,7 +102,7 @@ namespace Server.Spells.Syth
                     TotalTime = 600;
                 }
                 TableSythRunning[Caster] = SpeedControl.MountSpeed;
-                Caster.Send(SpeedControl.MountSpeed);
+                AnimalTrainer.RefreshMovementSpeed(Caster);
                 new InternalTimer(Caster, TimeSpan.FromSeconds(TotalTime)).Start();
                 BuffInfo.RemoveBuff(Caster, BuffIcon.Speed);
                 BuffInfo.AddBuff(
