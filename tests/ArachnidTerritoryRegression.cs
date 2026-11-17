@@ -201,8 +201,9 @@ internal static class ArachnidTerritoryRegression
             ((Dictionary<Mobile,DateTime>)Get(owner,"m_QueenThreats"))[player]=now;
             Call(owner,"StartQueenBackup",queen,now);
             Check(owner.QueenBackupPending==3 && owner.QueenBackupSpent==0 && owner.QueenRallyPatch==patch.Id,"queen backup is finite, warned and tied to a real living source");
-            owner.GetType().GetField("m_QueenBackupDue",Hidden).SetValue(owner,now.AddSeconds(-1));
-            for(int work=0;work<256 && owner.QueenBackupPending>0;++work)Call(owner,"ServiceQueenBackup",queen,now);
+            Call(owner,"ServiceQueenBackup",queen,now.AddSeconds(14));
+            Check(owner.QueenBackupPending==3 && owner.QueenBackupSpent==0,"the fifteen-second queen warning prevents early births");
+            for(int work=0;work<256 && owner.QueenBackupPending>0;++work)Call(owner,"ServiceQueenBackup",queen,now.AddSeconds(15));
             Check(owner.QueenBackupSpent==3 && owner.QueenBackupPending==0,"first queen call creates exactly three real defenders");
             now=now.AddSeconds(61);((Dictionary<Mobile,DateTime>)Get(owner,"m_QueenThreats"))[player]=now;Call(owner,"StartQueenBackup",queen,now);
             Check(owner.QueenBackupPending==3,"second call can use only the remaining finite allowance");

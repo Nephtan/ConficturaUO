@@ -12,7 +12,7 @@ namespace Server.Custom.Confictura.Champions
         public int QueenRetreatPercent = 45;
         public int QueenReengagePercent = 70;
         public int QueenBackupCount = 6;
-        public int QueenBackupDelaySeconds = 10;
+        public int QueenBackupDelaySeconds = 15;
         public bool FrontierSuppliesEnabled = true;
 
         public ArachnidOutbreakTuning Copy() { return (ArachnidOutbreakTuning)MemberwiseClone(); }

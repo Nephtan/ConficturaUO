@@ -18,7 +18,7 @@ Settings belong to a controller, survive saves, and govern its next attempt. The
 | `QueenRetreatPercent` |45 |20-70 | Low-health withdrawal threshold. Recent substantial damage or being outnumbered while injured can also signal a losing fight. |
 | `QueenReengagePercent` |70 |45-95 | Recovery needed to leave withdrawal. Must exceed retreat by at least15 percentage points. There is also a commitment interval and a readable challenge tell; crossing a single threshold does not cause oscillation. |
 | `QueenBackupCount` |6 |0-12 | Lifetime backup births for the attempt, normally up to three per call.0 disables new queen backup. Spent births are saved and never refunded by recovery or killing guards. Distinct from each outskirts nest's nine-birth budget. |
-| `QueenBackupDelaySeconds` |10 |5-30 | Warning window at a visible living rally guardian. Destroying that source cancels pending births. Existing guards remain real; they are not erased. A call expires if safe birth ground or eligible nearby participants cannot be found. |
+| `QueenBackupDelaySeconds` |15 |5-30 | Warning window at a visible living rally guardian. Destroying that source cancels pending births. Existing guards remain real; they are not erased. A call expires if safe birth ground or eligible nearby participants cannot be found. Controllers with saved tuning retain their configured value. |
 | `FrontierSuppliesEnabled` |true |true/false | One small supply claim per qualifying character per attempt after a frontier reclamation. This is not a rare-item lottery or a power reward scaled to level. |
 
 ## Queen decisions and limits
